@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://adorzia.com/sitemap.xml
+
+# Disallow admin and private routes
+Disallow: /admin
+Disallow: /admin-login
+Disallow: /api/

@@ -24,6 +24,9 @@ const Header = () => {
             <Link to="/spotlight-event" className="text-gray-700 hover:text-purple-600 transition-colors">
               Spotlight Event
             </Link>
+            <Link to="/marketplace" className="text-gray-700 hover:text-purple-600 transition-colors">
+              Marketplace
+            </Link>
             <Link to="/contact" className="text-gray-700 hover:text-purple-600 transition-colors">
               Contact
             </Link>

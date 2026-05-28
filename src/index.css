@@ -1,1 +1,73 @@
 @import "tailwindcss";
+
+/* Technical SEO & Performance Optimizations */
+
+/* Mobile-first responsive base */
+html {
+  font-size: 16px; /* Minimum 16px for mobile readability */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Touch targets minimum 44px for mobile */
+button, a, input[type="submit"], input[type="button"] {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Image optimization - lazy loading defaults */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent layout shift */
+img:not([width]) {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* Font optimization */
+@font-face {
+  font-display: swap;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Performance: Hardware acceleration for animations */
+.animate-ambient-swell {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Print styles for accessibility */
+@media print {
+  nav, footer, button, .no-print {
+    display: none !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+}
