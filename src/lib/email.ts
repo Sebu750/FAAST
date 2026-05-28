@@ -1,5 +1,3 @@
-import { supabase } from '../lib/supabase'
-
 export const sendEmail = async (
   to: string,
   subject: string,
