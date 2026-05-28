@@ -27,8 +27,6 @@ const SEO = ({
   localBusinessSchema = [],
   keywords = ''
 }: SEOProps) => {
-  const siteURL = 'https://adorzia.com'
-  
   const baseSchema = {
     "@context": "https://schema.org",
     "@type": schemaType,

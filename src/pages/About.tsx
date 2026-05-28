@@ -74,14 +74,6 @@ const TeamGrid = ({ eyebrow, title, intro, members, columns }: { eyebrow: string
 )
 
 const About = () => {
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
-  
-  const testimonials = [
-    { quote: "Adorzia provided our first capsule line with an uncompromised physical stage and the deep layout discipline required to finish it. The workspace operates like a true legacy couture house.", name: "Ayesha K.", role: "Spotlight Cohort Winner" },
-    { quote: "The strategic procurement introductions completely altered our platform's curve. Direct buyer placement, critical media exposure, and institutional capital.", name: "Bilal R.", role: "Marketplace Designer" },
-    { quote: "It is the closest thing to an intense technical masterclass I have completed-except the final critiques come directly from global enterprise buyers.", name: "Sara M.", role: "Resident Designer" }
-  ]
-
   const imgs = {
     craft: heroHome,
     d1: founder,

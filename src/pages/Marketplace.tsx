@@ -20,12 +20,6 @@ const Marketplace = () => {
     setEmail('')
   }
 
-  const handleSellerSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitted(true)
-    setSellerEmail('')
-  }
-
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <SEO

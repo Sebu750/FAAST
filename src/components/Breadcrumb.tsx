@@ -1,12 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
-import SEO from './SEO'
 
 interface BreadcrumbProps {
   currentPage: string
-  schema?: Record<string, any>
 }
 
-const Breadcrumb = ({ currentPage, schema }: BreadcrumbProps) => {
+const Breadcrumb = ({ currentPage }: BreadcrumbProps) => {
   const location = useLocation()
   const pathnames = location.pathname.split('/').filter((x) => x)
 
