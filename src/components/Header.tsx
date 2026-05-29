@@ -50,91 +50,105 @@ const Header = () => {
   }, [lastScrollY])
 
   return (
-    <header 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      } ${
-        lastScrollY > 50 
-          ? 'bg-neutral-950/80 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50' 
-          : 'bg-neutral-950 border-b border-neutral-900'
-      }`}
-    >
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="text-xl sm:text-2xl font-serif text-white tracking-[0.15em] hover:text-[#bb9457] transition-all duration-300">
-            ADORZIA
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8 xl:space-x-10">
-            {[{
-              label: 'Home',
-              path: '/'
-            }, {
-              label: 'About',
-              path: '/about'
-            }, {
-              label: 'For Creatives',
-              path: '/for-creatives'
-            }, {
-              label: 'For Partners',
-              path: '/for-partners'
-            }, {
-              label: 'Spotlight',
-              path: '/spotlight-event'
-            }, {
-              label: 'Marketplace',
-              path: '/marketplace'
-            }, {
-              label: 'Contact',
-              path: '/contact'
-            }].map(({ label, path }) => (
-              <Link 
-                key={path}
-                to={path} 
-                className={`relative text-sm tracking-wide transition-all duration-300 group ${
-                  location.pathname === path 
-                    ? 'text-white' 
-                    : 'text-neutral-400 hover:text-white'
-                }`}
-              >
-                {label}
-                <span className={`absolute -bottom-1 left-0 h-px bg-[#bb9457] transition-all duration-300 ${
-                  location.pathname === path ? 'w-full' : 'w-0 group-hover:w-full'
-                }`} />
-              </Link>
-            ))}
-            <Link to="/contact" className="ml-6 px-6 py-2.5 border border-[#bb9457]/60 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] hover:bg-[#bb9457] hover:text-black hover:border-[#bb9457] transition-all duration-300">
-              Get in Touch
+    <>
+      <header 
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        } ${
+          lastScrollY > 50 
+            ? 'bg-neutral-950/90 backdrop-blur-xl border-b border-white/5 shadow-2xl shadow-black/50' 
+            : 'bg-neutral-950 border-b border-neutral-900'
+        }`}
+      >
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+          <div className="flex justify-between items-center">
+            <Link to="/" className="text-lg sm:text-xl lg:text-2xl font-serif text-white tracking-[0.15em] hover:text-[#bb9457] transition-all duration-300">
+              ADORZIA
             </Link>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center space-x-8 xl:space-x-10">
+              {[{
+                label: 'Home',
+                path: '/'
+              }, {
+                label: 'About',
+                path: '/about'
+              }, {
+                label: 'For Creatives',
+                path: '/for-creatives'
+              }, {
+                label: 'For Partners',
+                path: '/for-partners'
+              }, {
+                label: 'Spotlight',
+                path: '/spotlight-event'
+              }, {
+                label: 'Marketplace',
+                path: '/marketplace'
+              }, {
+                label: 'Contact',
+                path: '/contact'
+              }].map(({ label, path }) => (
+                <Link 
+                  key={path}
+                  to={path} 
+                  className={`relative text-sm tracking-wide transition-all duration-300 group ${
+                    location.pathname === path 
+                      ? 'text-white' 
+                      : 'text-neutral-400 hover:text-white'
+                  }`}
+                >
+                  {label}
+                  <span className={`absolute -bottom-1 left-0 h-px bg-[#bb9457] transition-all duration-300 ${
+                    location.pathname === path ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
+                </Link>
+              ))}
+              <Link to="/contact" className="ml-6 px-6 py-2.5 border border-[#bb9457]/60 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] hover:bg-[#bb9457] hover:text-black hover:border-[#bb9457] transition-all duration-300">
+                Get in Touch
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden relative w-10 h-10 flex items-center justify-center text-white hover:text-[#bb9457] transition-all duration-300 rounded-sm hover:bg-white/5"
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            >
+              <div className="relative w-6 h-6">
+                <span className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 ${mobileMenuOpen ? 'top-3 rotate-45' : 'top-1'}`} />
+                <span className={`absolute left-0 top-3 w-6 h-0.5 bg-current transition-all duration-300 ${mobileMenuOpen ? 'opacity-0 translate-x-3' : 'opacity-100'}`} />
+                <span className={`absolute left-0 w-6 h-0.5 bg-current transition-all duration-300 ${mobileMenuOpen ? 'top-3 -rotate-45' : 'top-5'}`} />
+              </div>
+            </button>
           </div>
+        </nav>
+      </header>
 
-          {/* Mobile Menu Button */}
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden text-white hover:text-[#bb9457] transition-colors p-2 -mr-2"
-            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile Navigation Overlay */}
-      {mobileMenuOpen && (
+      {/* Mobile Navigation Overlay - Outside header for proper z-index */}
+      <div 
+        className={`lg:hidden fixed inset-0 z-[100] transition-all duration-500 ${
+          mobileMenuOpen ? 'visible' : 'invisible'
+        }`}
+      >
+        {/* Backdrop */}
         <div 
-          className="lg:hidden fixed inset-0 top-[72px] bg-neutral-950/98 backdrop-blur-xl z-40 overflow-y-auto"
+          className={`absolute inset-0 bg-neutral-950/98 backdrop-blur-xl transition-opacity duration-500 ${
+            mobileMenuOpen ? 'opacity-100' : 'opacity-0'
+          }`}
           onClick={() => setMobileMenuOpen(false)}
+        />
+        
+        {/* Menu Panel */}
+        <div 
+          className={`relative h-full overflow-y-auto transition-transform duration-500 ease-out ${
+            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
         >
-          <div className="px-6 py-8 min-h-full" onClick={(e) => e.stopPropagation()}>
+          <div className="min-h-full px-6 py-8">
             {/* Navigation Links */}
-            <div className="flex flex-col space-y-1 mb-8">
+            <div className="flex flex-col space-y-2 mb-8">
               {[
                 { label: 'Home', path: '/', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
                 { label: 'About', path: '/about', icon: 'M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
@@ -147,20 +161,33 @@ const Header = () => {
                 <Link 
                   key={path}
                   to={path} 
-                  className={`group flex items-center gap-4 px-4 py-5 rounded-sm transition-all duration-300 ${
+                  className={`group flex items-center gap-4 px-5 py-4 rounded-sm transition-all duration-300 ${
                     location.pathname === path 
-                      ? 'bg-white/5 text-white' 
-                      : 'text-neutral-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-white/10 text-white border-l-2 border-[#bb9457]' 
+                      : 'text-neutral-400 hover:text-white hover:bg-white/5 border-l-2 border-transparent'
                   }`}
                   onClick={() => setMobileMenuOpen(false)}
-                  style={{ animationDelay: `${idx * 50}ms` }}
+                  style={{ 
+                    animationDelay: `${idx * 50}ms`,
+                    transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(20px)',
+                    opacity: mobileMenuOpen ? 1 : 0,
+                    transition: `all 0.4s ease-out ${idx * 50}ms`
+                  }}
                 >
-                  <svg className={`w-5 h-5 transition-colors ${location.pathname === path ? 'text-[#bb9457]' : 'text-neutral-600 group-hover:text-[#bb9457]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-5 h-5 transition-all duration-300 ${
+                    location.pathname === path 
+                      ? 'text-[#bb9457] scale-110' 
+                      : 'text-neutral-600 group-hover:text-[#bb9457] group-hover:scale-105'
+                  }`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d={icon} />
                   </svg>
                   <span className="text-lg font-light tracking-wide">{label}</span>
                   {location.pathname === path && (
-                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-[#bb9457]" />
+                    <div className="ml-auto">
+                      <svg className="w-4 h-4 text-[#bb9457]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
                   )}
                 </Link>
               ))}
@@ -200,8 +227,8 @@ const Header = () => {
             </div>
           </div>
         </div>
-      )}
-    </header>
+      </div>
+    </>
   )
 }
 
