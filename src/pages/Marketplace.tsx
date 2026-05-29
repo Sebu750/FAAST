@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import SEO from '../components/SEO'
-import Breadcrumb from '../components/Breadcrumb'
 import heroHome from '../assets/hero-home.jpg'
 import studio from '../assets/studio.jpg'
 import craft from '../assets/craft.jpg'
@@ -13,11 +12,64 @@ const Marketplace = () => {
   const [email, setEmail] = useState('')
   const [sellerEmail, setSellerEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [sellerSubmitted, setSellerSubmitted] = useState(false)
+  const [sellerSubmitting, setSellerSubmitting] = useState(false)
+  const [sellerFormData, setSellerFormData] = useState({
+    full_name: '',
+    email: '',
+    brand_name: '',
+    category: '',
+    location: '',
+    creative_practice: '',
+    portfolio_url: ''
+  })
 
   const handleBuyerSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitted(true)
     setEmail('')
+  }
+
+  const handleSellerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSellerSubmitting(true)
+
+    try {
+      const { supabase } = await import('../lib/supabase')
+      
+      const { error } = await supabase
+        .from('marketplace_applications')
+        .insert([{
+          brand_name: sellerFormData.brand_name,
+          founder_name: sellerFormData.full_name,
+          email: sellerFormData.email,
+          phone: '',
+          location: sellerFormData.location,
+          product_category: sellerFormData.category,
+          product_description: sellerFormData.creative_practice,
+          website: sellerFormData.portfolio_url || null,
+          unique_selling_proposition: sellerFormData.creative_practice,
+          target_customer: ''
+        }])
+
+      if (error) throw error
+
+      setSellerSubmitted(true)
+      setSellerFormData({
+        full_name: '',
+        email: '',
+        brand_name: '',
+        category: '',
+        location: '',
+        creative_practice: '',
+        portfolio_url: ''
+      })
+    } catch (err) {
+      console.error('Error submitting seller application:', err)
+      alert('Failed to submit application. Please try again.')
+    } finally {
+      setSellerSubmitting(false)
+    }
   }
 
   return (
@@ -38,7 +90,7 @@ const Marketplace = () => {
         }}
         keywords="Pakistani fashion marketplace online, buy Pakistani designer fashion online, sell Pakistani craft online, heritage craft marketplace, emerging Pakistani designer clothing, authentic Pakistani handmade fashion, Pakistani clothing, Pakistani textile, Heritage craft Pakistan, Traditional Pakistani craft for sale, Where to buy authentic Pakistani designer clothing online, Best online marketplace for Pakistani fashion brands, Artisan fashion Pakistan, Handcrafted Pakistani clothing, South Asian fashion marketplace, Pakistani textile heritage, Adorzia marketplace, Adorzia fashion"
       />
-      <Breadcrumb currentPage="Marketplace" />
+
       <style>{`
         @keyframes ambientSwell {
           0%, 100% { transform: scale(1.02) translate(0px, 0px); }
@@ -511,56 +563,123 @@ const Marketplace = () => {
             </p>
           </div>
 
-          <form className="space-y-8">
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Full name *</label>
-              <input type="text" required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Your full name" />
+          {sellerSubmitted ? (
+            <div className="p-10 border border-[#bb9457]/30 rounded-sm bg-neutral-950 text-center">
+              <p className="text-white font-light text-lg mb-4">
+                Your seller application has been received. Our curation team reviews every application and will respond within seven working days.
+              </p>
+              <button 
+                onClick={() => setSellerSubmitted(false)} 
+                className="mt-6 px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300"
+              >
+                Submit another application
+              </button>
             </div>
+          ) : (
+            <form onSubmit={handleSellerSubmit} className="space-y-8">
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Full name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={sellerFormData.full_name}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, full_name: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
+                  placeholder="Your full name" 
+                />
+              </div>
 
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Email address *</label>
-              <input type="email" required value={sellerEmail} onChange={(e) => setSellerEmail(e.target.value)} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="your@email.com" />
-            </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Email address *</label>
+                <input 
+                  type="email" 
+                  required 
+                  value={sellerFormData.email}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, email: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
+                  placeholder="your@email.com" 
+                />
+              </div>
 
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Brand or maker name *</label>
-              <input type="text" required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Your brand name" />
-            </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Brand or maker name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={sellerFormData.brand_name}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, brand_name: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
+                  placeholder="Your brand name" 
+                />
+              </div>
 
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Category *</label>
-              <select required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
-                <option value="" className="bg-neutral-950">Select category</option>
-                <option value="contemporary" className="bg-neutral-950">Contemporary designer</option>
-                <option value="heritage" className="bg-neutral-950">Heritage craft</option>
-              </select>
-            </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Category *</label>
+                <select 
+                  required 
+                  value={sellerFormData.category}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, category: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                >
+                  <option value="" className="bg-neutral-950">Select category</option>
+                  <option value="fashion" className="bg-neutral-950">Contemporary designer</option>
+                  <option value="textiles" className="bg-neutral-950">Heritage craft</option>
+                  <option value="accessories" className="bg-neutral-950">Accessories</option>
+                  <option value="home-decor" className="bg-neutral-950">Home decor</option>
+                  <option value="other" className="bg-neutral-950">Other</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">City and province *</label>
-              <input type="text" required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Lahore, Punjab" />
-            </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">City and province *</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={sellerFormData.location}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, location: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
+                  placeholder="Lahore, Punjab" 
+                />
+              </div>
 
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                Describe your creative practice and what you plan to sell on Adorzia *<br />
-                <span className="text-neutral-600">(Minimum 100 words)</span>
-              </label>
-              <textarea required rows={8} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Tell us about your work..." />
-            </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
+                  Describe your creative practice and what you plan to sell on Adorzia *<br />
+                  <span className="text-neutral-600">(Minimum 100 words)</span>
+                </label>
+                <textarea 
+                  required 
+                  rows={8} 
+                  value={sellerFormData.creative_practice}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, creative_practice: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" 
+                  placeholder="Tell us about your work..." 
+                />
+              </div>
 
-            <div>
-              <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                Share a link to your work - website, Instagram, or portfolio<br />
-                <span className="text-neutral-600">(Optional)</span>
-              </label>
-              <input type="url" className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="https://" />
-            </div>
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
+                  Share a link to your work - website, Instagram, or portfolio<br />
+                  <span className="text-neutral-600">(Optional)</span>
+                </label>
+                <input 
+                  type="url" 
+                  value={sellerFormData.portfolio_url}
+                  onChange={(e) => setSellerFormData({ ...sellerFormData, portfolio_url: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
+                  placeholder="https://" 
+                />
+              </div>
 
-            <button type="submit" className="inline-flex items-center bg-[#bb9457] text-black px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-colors">
-              Submit seller application
-            </button>
-          </form>
+              <button 
+                type="submit" 
+                disabled={sellerSubmitting}
+                className="inline-flex items-center bg-[#bb9457] text-black px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-colors disabled:opacity-50"
+              >
+                {sellerSubmitting ? 'Submitting...' : 'Submit seller application'}
+              </button>
+            </form>
+          )}
         </div>
       </section>
 

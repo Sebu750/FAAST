@@ -1,213 +1,126 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
 
 const Footer = () => {
-  const [email, setEmail] = useState('')
-  const [subscribing, setSubscribing] = useState(false)
-  const [subscribed, setSubscribed] = useState(false)
-  const [error, setError] = useState('')
-
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubscribing(true)
-    setError('')
-
-    try {
-      const { error: supabaseError } = await supabase
-        .from('newsletter_subscriptions')
-        .insert([{ email }])
-
-      if (supabaseError) {
-        if (supabaseError.code === '23505') {
-          setError('Email already subscribed')
-        } else {
-          throw supabaseError
-        }
-        return
-      }
-
-      setSubscribed(true)
-      setEmail('')
-      setTimeout(() => setSubscribed(false), 5000)
-    } catch (err) {
-      setError('Failed to subscribe. Please try again.')
-      console.error(err)
-    } finally {
-      setSubscribing(false)
-    }
-  }
   return (
-    <footer className="relative overflow-hidden border-t border-neutral-900 bg-black text-neutral-400 mt-24">
+    <footer className="relative overflow-hidden border-t border-neutral-900 bg-black text-neutral-400">
       
-      {/* ========================= CINEMATIC BACKGROUND CANVAS START ========================= */}
-      {/* Dynamic Animated Ambient Glow Layer */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(187,148,87,0.06),transparent_50%)] pointer-events-none z-0 animate-[ambientBreathe_15s_ease-in-out_infinite_alternate]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,0,0,0.8),transparent_70%)] pointer-events-none z-0" />
-      
-      {/* Structural Fine Alignment Vector Overlay */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0 mix-blend-screen">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="footer-architecture" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path 
-                d="M 40 0 L 80 40 L 40 80 L 0 40 Z" 
-                fill="none" 
-                stroke="#bb9457" 
-                strokeWidth="0.5" 
-              />
-              <line x1="40" y1="0" x2="40" y2="80" stroke="#bb9457" strokeWidth="0.25" />
-              <line x1="0" y1="40" x2="80" y2="40" stroke="#bb9457" strokeWidth="0.25" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#footer-architecture)" />
-        </svg>
-      </div>
+      {/* Cinematic Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,rgba(187,148,87,0.04),transparent_50%)] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent" />
 
-      {/* Top Border Accent Laser Line */}
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent z-10" />
-      {/* ========================= CINEMATIC BACKGROUND CANVAS END ========================= */}
-
-      {/* Main Grid Interface */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 md:px-10 py-16 grid gap-12 sm:grid-cols-2 md:grid-cols-12">
-        
-        {/* Brand Core Manifesto Pillar */}
-        <div className="md:col-span-12 lg:col-span-4 flex flex-col justify-between gap-4">
-          <div>
-            <div className="font-serif text-2xl tracking-[0.25em] uppercase text-white font-normal cursor-default">
-              FAAST<span className="text-[#bb9457] italic font-light">.</span>
+      {/* Main Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+          
+          {/* Brand */}
+          <div className="md:col-span-4 lg:col-span-4">
+            <div className="font-serif text-2xl tracking-[0.2em] text-white mb-3">
+              ADORZIA<span className="text-[#bb9457]">.</span>
             </div>
-            <p className="mt-4 text-xs text-neutral-500 max-w-sm leading-relaxed font-light">
-              Engineered physical production atelier clusters, sovereign validation programs, and digital multi-channel commerce pathways for independent fashion houses.
+            <p className="text-xs text-neutral-500 leading-relaxed font-light max-w-xs">
+              Pakistan's first fashion entrepreneurship ecosystem. Studios, marketplace, and spotlight for the next generation of fashion visionaries.
             </p>
           </div>
-        </div>
 
-        {/* Navigation Deck: Column 1 */}
-        <div className="sm:col-span-1 md:col-span-3 lg:col-span-2 lg:col-start-6">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-semibold font-mono mb-4">
-            Architecture
-          </div>
-          <ul className="space-y-3 text-xs font-light text-neutral-400">
-            {["Home", "About", "For Creatives", "For Partners", "Spotlight Event"].map((item) => (
-              <li key={item}>
-                <Link 
-                  to={item === "Home" ? "/" : `/${item.toLowerCase().replace(/\s+/g, "-")}`} 
-                  className="transition-all duration-300 hover:text-white tracking-wide block hover:translate-x-0.5 transform"
-                >
-                  {item}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Navigation Deck: Column 2 */}
-        <div className="sm:col-span-1 md:col-span-3 lg:col-span-2">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-semibold font-mono mb-4">
-            Governance
-          </div>
-          <ul className="space-y-3 text-xs font-light text-neutral-400">
-            <li>
-              <Link to="/contact" className="transition-all duration-300 hover:text-white tracking-wide block hover:translate-x-0.5 transform">
-                Contact Inquiry
-              </Link>
-            </li>
-            <li>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="transition-all duration-300 hover:text-white tracking-wide block hover:translate-x-0.5 transform">
-                Instagram Intel
-              </a>
-            </li>
-            <li>
-              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="transition-all duration-300 hover:text-white tracking-wide block hover:translate-x-0.5 transform">
-                LinkedIn Portal
-              </a>
-            </li>
-            <li>
-              <Link to="/admin/login" className="text-neutral-700 text-[10px] font-mono transition-colors duration-300 hover:text-[#bb9457] block pt-2">
-                System Console // Admin
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Ecosystem Footprint Block */}
-        <div className="sm:col-span-2 md:col-span-6 lg:col-span-4">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-semibold font-mono mb-4">
-            Operational Footprint
-          </div>
-          <p className="text-xs text-neutral-500 leading-relaxed font-light mb-4">
-            Karachi Atelier Complex · Lahore Node · Islamabad Hub
-          </p>
-          <div className="h-[1px] w-full bg-gradient-to-r from-neutral-900 via-[#bb9457]/20 to-transparent" />
-        </div>
-
-        {/* Newsletter Subscription Block */}
-        <div className="sm:col-span-2 md:col-span-12 lg:col-span-4 lg:col-start-9">
-          <div className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-semibold font-mono mb-4">
-            Intelligence Feed // Newsletter
-          </div>
-          <p className="text-xs text-neutral-500 leading-relaxed font-light mb-4">
-            Receive sovereign updates on Spotlight cohorts, marketplace launches, and atelier innovations.
-          </p>
-          
-          {subscribed ? (
-            <div className="p-4 border border-[#bb9457]/30 bg-[#bb9457]/5 rounded-sm">
-              <p className="text-xs text-[#bb9457] font-light">
-                ✓ Intelligence feed activated. Expect sovereign updates.
-              </p>
+          {/* Navigation */}
+          <div className="md:col-span-2 lg:col-span-2">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+              Navigate
             </div>
-          ) : (
-            <form onSubmit={handleSubscribe} className="space-y-3">
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  className="flex-1 bg-neutral-900 border border-neutral-800 px-4 py-3 text-xs text-white placeholder-neutral-600 focus:border-[#bb9457] focus:outline-none transition-colors rounded-sm"
-                />
-                <button
-                  type="submit"
-                  disabled={subscribing}
-                  className="px-6 py-3 bg-[#bb9457] text-black text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-white transition-colors disabled:opacity-50 rounded-sm whitespace-nowrap"
-                >
-                  {subscribing ? 'Activating...' : 'Subscribe'}
-                </button>
-              </div>
-              {error && (
-                <p className="text-xs text-red-400 font-light">{error}</p>
-              )}
-            </form>
-          )}
-        </div>
+            <ul className="space-y-2.5 text-xs font-light">
+              {[
+                { label: 'Home', path: '/' },
+                { label: 'About', path: '/about' },
+                { label: 'For Creatives', path: '/for-creatives' },
+                { label: 'For Partners', path: '/for-partners' },
+              ].map(({ label, path }) => (
+                <li key={path}>
+                  <Link 
+                    to={path} 
+                    className="transition-all duration-300 hover:text-white hover:translate-x-0.5 inline-block"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
+          {/* Programs */}
+          <div className="md:col-span-2 lg:col-span-2">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+              Programs
+            </div>
+            <ul className="space-y-2.5 text-xs font-light">
+              {[
+                { label: 'Spotlight', path: '/spotlight-event' },
+                { label: 'Marketplace', path: '/marketplace' },
+                { label: 'Contact', path: '/contact' },
+              ].map(({ label, path }) => (
+                <li key={path}>
+                  <Link 
+                    to={path} 
+                    className="transition-all duration-300 hover:text-white hover:translate-x-0.5 inline-block"
+                  >
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Studios */}
+          <div className="md:col-span-4 lg:col-span-4">
+            <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+              Studios
+            </div>
+            <div className="space-y-2 text-xs font-light text-neutral-500">
+              <p>Lahore · Islamabad · Karachi</p>
+              <p className="text-[10px] text-neutral-600">Opening 2026</p>
+            </div>
+            
+            {/* Social Links */}
+            <div className="mt-6 pt-6 border-t border-neutral-900">
+              <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+                Follow
+              </div>
+              <div className="flex gap-4">
+                {[
+                  { name: 'Instagram', url: 'https://instagram.com' },
+                  { name: 'LinkedIn', url: 'https://linkedin.com' },
+                  { name: 'TikTok', url: 'https://tiktok.com' },
+                  { name: 'Facebook', url: 'https://facebook.com' },
+                ].map(({ name, url }) => (
+                  <a 
+                    key={name}
+                    href={url} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="text-neutral-500 hover:text-[#bb9457] transition-colors duration-300 text-xs"
+                    aria-label={name}
+                  >
+                    {name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Sub-Footer Base Interface */}
-      <div className="border-t border-neutral-900 bg-neutral-950/50 relative z-10">
-        <div className="mx-auto max-w-7xl px-6 md:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[9px] uppercase tracking-[0.3em] text-neutral-600 font-mono">
+      {/* Bottom Bar */}
+      <div className="border-t border-neutral-900 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] uppercase tracking-[0.2em] text-neutral-600">
           <div>
-            © {new Date().getFullYear()} FAAST Architectural Systems. Sovereign rights retained.
+            © {new Date().getFullYear()} Adorzia. All rights reserved.
           </div>
           <div className="flex gap-x-4 items-center text-neutral-500">
-            <span className="hover:text-[#bb9457] transition-colors duration-300 cursor-default">Atelier Facility</span>
-            <span className="text-neutral-800 font-sans">·</span>
-            <span className="hover:text-[#bb9457] transition-colors duration-300 cursor-default">Marketplace Engine</span>
-            <span className="text-neutral-800 font-sans">·</span>
-            <span className="hover:text-[#bb9457] transition-colors duration-300 cursor-default">Sovereign Spotlight</span>
+            <Link to="/admin/login" className="hover:text-[#bb9457] transition-colors duration-300">
+              ___
+            </Link>
           </div>
         </div>
       </div>
-
-      {/* Inline Injection for Fluid Breathing Track */}
-      <style>{`
-        @keyframes ambientBreathe {
-          0% { transform: scale(1) translate(0px, 0px); opacity: 0.6; }
-          100% { transform: scale(1.03) translate(6px, -3px); opacity: 0.9; }
-        }
-      `}</style>
     </footer>
   )
 }

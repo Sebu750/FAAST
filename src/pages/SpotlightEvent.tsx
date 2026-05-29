@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
-import { sendSpotlightApplicationNotification } from '../lib/email'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
-import Breadcrumb from '../components/Breadcrumb'
 import spotlightImg from '../assets/spotlight.jpg'
 import heroRunway from '../assets/hero-runway.jpg'
 import studio from '../assets/studio.jpg'
@@ -12,22 +10,20 @@ import winner2 from '../assets/winner-2.jpg'
 import winner3 from '../assets/winner-3.jpg'
 import designer1 from '../assets/designer-1.jpg'
 import designer2 from '../assets/designer-2.jpg'
+import designer3 from '../assets/designer-3.jpg'
 
 const SpotlightEvent = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    brand_name: '',
-    location: '',
-    instagram: '',
-    portfolio_url: '',
-    description: ''
-  })
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
+  const navigate = useNavigate()
+  const [scrollY, setScrollY] = useState(0)
+  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({})
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [daysLeft, setDaysLeft] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useEffect(() => {
     const target = new Date("2026-06-01T00:00:00").getTime()
@@ -39,40 +35,27 @@ const SpotlightEvent = () => {
     return () => clearInterval(interval)
   }, [])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitting(true)
-    setError('')
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }))
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    )
 
-    try {
-      const { error: supabaseError } = await supabase
-        .from('spotlight_applications')
-        .insert([{
-          name: formData.name,
-          email: formData.email,
-          brand_name: formData.brand_name,
-          portfolio_url: formData.portfolio_url,
-          description: `${formData.phone ? 'Phone: ' + formData.phone + '\n' : ''}${formData.location ? 'Location: ' + formData.location + '\n' : ''}${formData.instagram ? 'Instagram: ' + formData.instagram + '\n\n' : ''}${formData.description}`
-        }])
+    Object.values(sectionRefs.current).forEach((ref) => {
+      if (ref) observer.observe(ref)
+    })
 
-      if (supabaseError) throw supabaseError
+    return () => observer.disconnect()
+  }, [])
 
-      await sendSpotlightApplicationNotification({
-        name: formData.name,
-        email: formData.email,
-        brand_name: formData.brand_name,
-        portfolio_url: formData.portfolio_url || undefined,
-        description: formData.description
-      })
-
-      setSubmitted(true)
-      setFormData({ name: '', email: '', phone: '', brand_name: '', location: '', instagram: '', portfolio_url: '', description: '' })
-    } catch (err) {
-      setError('Failed to submit application. Please try again.')
-      console.error(err)
-    } finally {
-      setSubmitting(false)
-    }
+  const setSectionRef = (id: string) => (el: HTMLDivElement | null) => {
+    sectionRefs.current[id] = el
   }
 
   const scrollToSection = (id: string) => {
@@ -80,19 +63,8 @@ const SpotlightEvent = () => {
     if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
-  if (submitted) {
-    return (
-      <div className="min-h-screen py-20 flex items-center justify-center bg-neutral-950">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <div className="text-6xl mb-6">✨</div>
-          <h1 className="font-serif text-4xl md:text-5xl text-white font-normal mb-4 tracking-tight">Application Received</h1>
-          <p className="text-neutral-400 text-lg mb-8 font-light">Your portfolio has been entered into the archive. Expect evaluation updates via secure mail.</p>
-          <button onClick={() => setSubmitted(false)} className="bg-[#bb9457] text-black px-8 py-3 font-semibold uppercase tracking-[0.2em] text-[10px] rounded-sm hover:bg-white transition-colors">
-            Submit Another Application
-          </button>
-        </div>
-      </div>
-    )
+  const handleApplyNow = () => {
+    navigate('/spotlight/apply')
   }
 
   return (
@@ -130,13 +102,77 @@ const SpotlightEvent = () => {
         }}
         keywords="Pakistan fashion talent competition 2026, Adorzia Spotlight 2026, fashion event Pakistan 2026, apply fashion competition Pakistan, fashion investment event Pakistan, Pakistani fashion designer application, Fashion event Pakistan, Emerging designer Pakistan, Fashion talent competition Pakistan, Pakistani fashion event 2026, How to apply for fashion talent competition in Pakistan, Pakistani fashion event 2026 applications open, Fashion talent discovery Pakistan, Fashion ecosystem South Asia, Spotlight fashion event 2026, Adorzia Spotlight, Adorzia Spotlight 2026, Pakistani fashion visionary, Where visionaries rise"
       />
-      <Breadcrumb currentPage="Spotlight Event" />
+
       <style>{`
         @keyframes ambientSwell {
           0%, 100% { transform: scale(1.02) translate(0px, 0px); }
           50% { transform: scale(1.06) translate(4px, -3px); }
         }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(60px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInLeft {
+          from { opacity: 0; transform: translateX(-60px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes fadeInRight {
+          from { opacity: 0; transform: translateX(60px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes scaleIn {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 20px rgba(187, 148, 87, 0.3); }
+          50% { box-shadow: 0 0 40px rgba(187, 148, 87, 0.6); }
+        }
         .animate-ambient-swell { animation: ambientSwell 20s infinite ease-in-out; }
+        .animate-fade-in-up { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fade-in-left { animation: fadeInLeft 1s ease-out forwards; }
+        .animate-fade-in-right { animation: fadeInRight 1s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.8s ease-out forwards; }
+        .animate-shimmer {
+          background: linear-gradient(90deg, transparent, rgba(187, 148, 87, 0.4), transparent);
+          background-size: 200% 100%;
+          animation: shimmer 3s infinite;
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        .glass {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-dark {
+          background: rgba(0, 0, 0, 0.4);
+          backdrop-filter: blur(30px);
+          -webkit-backdrop-filter: blur(30px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .text-gradient {
+          background: linear-gradient(135deg, #bb9457 0%, #d4af37 50%, #bb9457 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .hover-lift {
+          transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(187, 148, 87, 0.15);
+        }
       `}</style>
 
       {/* Urgency Bar */}
@@ -156,19 +192,22 @@ const SpotlightEvent = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroRunway} alt="" className="w-full h-full object-cover grayscale opacity-40" />
+          <img src={heroRunway} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-40" style={{ transform: `translateY(${scrollY * 0.3}px)` }} />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-950/95 to-neutral-900/90" />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(187,148,87,0.2),transparent_60%)]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-32">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
-            Adorzia Spotlight - Fall 2026
-          </span>
+          <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+              Adorzia Spotlight - Fall 2026
+            </span>
+          </div>
 
           <h1 className="mt-8 font-serif text-5xl md:text-7xl lg:text-8xl text-white font-normal leading-[1.05] tracking-tight max-w-5xl">
-            Pakistan has never had a stage like this. Now it does.
+            Pakistan has never had a stage like this. <span className="text-gradient italic font-light">Now it does.</span>
           </h1>
 
           <div className="mt-8 max-w-3xl space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
@@ -184,10 +223,10 @@ const SpotlightEvent = () => {
           </div>
 
           <div className="mt-12 flex flex-wrap gap-6">
-            <button onClick={() => scrollToSection('apply')} className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300">
-              Submit your application
+            <button onClick={handleApplyNow} className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-0.5">
+              Apply now
             </button>
-            <button onClick={() => scrollToSection('mission')} className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button onClick={() => scrollToSection('mission')} className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
               Learn how it works
             </button>
           </div>
@@ -197,20 +236,21 @@ const SpotlightEvent = () => {
       {/* What Is Spotlight - The Mission */}
       <section id="mission" className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(187,148,87,0.08),transparent_70%)]" />
+        <div className="absolute top-20 right-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-5">
               <div className="sticky top-32">
-                <div className="aspect-[4/5] overflow-hidden rounded-sm mb-8">
-                  <img src={designer1} alt="" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                <div className="aspect-[4/5] overflow-hidden rounded-sm mb-8 hover-lift">
+                  <img src={designer1} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="aspect-square overflow-hidden rounded-sm">
-                    <img src={studio} alt="" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                  <div className="aspect-square overflow-hidden rounded-sm hover-lift">
+                    <img src={studio} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
                   </div>
-                  <div className="aspect-square overflow-hidden rounded-sm">
-                    <img src={craft} alt="" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                  <div className="aspect-square overflow-hidden rounded-sm hover-lift">
+                    <img src={craft} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
                   </div>
                 </div>
               </div>
@@ -250,15 +290,20 @@ const SpotlightEvent = () => {
       </section>
 
       {/* Submissions Open Section */}
-      <section className="py-40 relative overflow-hidden bg-neutral-900 border-t border-neutral-900">
+      <section id="submissions" className="py-40 relative overflow-hidden bg-neutral-900 border-t border-neutral-900">
         <div className="absolute inset-0 opacity-15">
-          <img src={spotlightImg} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+          <img src={spotlightImg} alt="" className="w-full h-full object-cover scale-110 grayscale animate-ambient-swell" />
         </div>
+        <div className="absolute top-20 left-20 w-56 h-56 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
         
         <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10 text-center">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The moment is coming</span>
+          <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The moment is coming</span>
+          </div>
           <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-            Submissions open June 1, 2026. Be ready.
+            Submissions open June 1, 2026. <span className="text-gradient italic font-light">Be ready.</span>
           </h2>
 
           <div className="mt-8 max-w-3xl mx-auto text-neutral-400 font-light text-base md:text-lg leading-relaxed">
@@ -275,7 +320,7 @@ const SpotlightEvent = () => {
               { label: "September 2026", detail: "Finalist presentations" },
               { label: "Fall 2026", detail: "Spotlight event" }
             ].map((item, i) => (
-              <div key={i} className="text-center">
+              <div key={i} className="text-center p-6 glass rounded-sm hover-lift transition-all duration-500">
                 <div className="font-mono text-[10px] text-[#bb9457] uppercase tracking-[0.2em] mb-2">{item.detail}</div>
                 <div className="text-white font-serif text-lg">{item.label}</div>
               </div>
@@ -292,10 +337,10 @@ const SpotlightEvent = () => {
           </div>
 
           <div className="mt-12 flex flex-wrap gap-6 justify-center">
-            <button className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300">
-              Notify me when submissions open
+            <button onClick={handleApplyNow} className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-0.5">
+              Apply now
             </button>
-            <button className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
               Share with a creative you believe in
             </button>
           </div>
@@ -303,12 +348,17 @@ const SpotlightEvent = () => {
       </section>
 
       {/* Who Should Apply */}
-      <section className="py-40 border-t border-neutral-900">
+      <section id="who-should-apply" className="py-40 border-t border-neutral-900 relative overflow-hidden">
+        <div className="absolute top-20 right-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+        
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-4xl mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Is this for you</span>
+            <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Is this for you</span>
+            </div>
             <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-              If any of this sounds like you - apply.
+              If any of this sounds like you - <span className="text-gradient italic font-light">apply.</span>
             </h2>
             <p className="mt-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
               Spotlight is not reserved for people who already have everything figured out. It is designed for people who have the foundation of something extraordinary and need the platform, the investment, and the support to build it properly. Here is who we are looking for.
@@ -338,12 +388,12 @@ const SpotlightEvent = () => {
                 image: designer2
               }
             ].map((profile, i) => (
-              <div key={i} className="group p-10 border border-neutral-900 rounded-sm hover:border-[#bb9457]/30 transition-colors duration-300 bg-neutral-950">
+              <div key={i} className="group glass p-10 rounded-sm hover:border-[#bb9457]/30 transition-all duration-500 hover-lift">
                 <div className="aspect-[4/3] overflow-hidden rounded-sm mb-6">
-                  <img src={profile.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                  <img src={profile.image} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-120 transition-all duration-700" />
                 </div>
-                <h3 className="font-serif text-2xl text-white font-normal mb-4">{profile.title}</h3>
-                <p className="text-neutral-400 font-light leading-relaxed">{profile.body}</p>
+                <h3 className="font-serif text-2xl text-white font-normal mb-4 group-hover:text-[#bb9457] transition-colors">{profile.title}</h3>
+                <p className="text-neutral-300 font-light leading-relaxed">{profile.body}</p>
               </div>
             ))}
           </div>
@@ -376,14 +426,18 @@ const SpotlightEvent = () => {
       </section>
 
       {/* What Winners Receive */}
-      <section className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
+      <section id="winners" className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(187,148,87,0.1),transparent_70%)]" />
+        <div className="absolute top-20 left-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">What Spotlight changes</span>
+            <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">What Spotlight changes</span>
+            </div>
             <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-              We do not hand out trophies. We build brands.
+              We do not hand out trophies. <span className="text-gradient italic font-light">We build brands.</span>
             </h2>
             <p className="mt-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
               Every element of what Spotlight winners receive is designed around one goal - turning an extraordinary creative into a commercially viable, internationally visible fashion brand. This is what that looks like in practice.
@@ -397,8 +451,8 @@ const SpotlightEvent = () => {
               { img: winner2, caption: "Marketplace launch with full support" },
               { img: winner3, caption: "Industry mentorship and media exposure" }
             ].map((item, i) => (
-              <div key={i} className="group relative aspect-[3/4] overflow-hidden rounded-sm">
-                <img src={item.img} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+              <div key={i} className="group relative aspect-[3/4] overflow-hidden rounded-sm hover-lift">
+                <img src={item.img} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-120 transition-all duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
                   <p className="text-white font-light text-sm">{item.caption}</p>
@@ -434,10 +488,10 @@ const SpotlightEvent = () => {
                 body: "Being a Spotlight winner means permanent membership in the Adorzia creative ecosystem - access to our studios, our community, our investor relationships, our buyer network, and every opportunity that the Adorzia platform generates going forward. You do not win Spotlight and go back to where you were. You enter a new chapter entirely."
               }
             ].map((prize, i) => (
-              <div key={i} className="p-10 border border-neutral-900 rounded-sm bg-neutral-950 hover:border-[#bb9457]/30 transition-colors duration-300">
+              <div key={i} className="glass p-10 rounded-sm hover:border-[#bb9457]/30 transition-all duration-500 hover-lift">
                 <div className="font-mono text-[10px] text-[#bb9457] uppercase tracking-[0.2em] mb-4">PRIZE {String(i + 1).padStart(2, '0')}</div>
                 <h3 className="font-serif text-2xl text-white font-normal mb-4">{prize.title}</h3>
-                <p className="text-neutral-400 font-light leading-relaxed text-sm">{prize.body}</p>
+                <p className="text-neutral-300 font-light leading-relaxed text-sm">{prize.body}</p>
               </div>
             ))}
           </div>
@@ -445,17 +499,23 @@ const SpotlightEvent = () => {
       </section>
 
       {/* How It Works - Process Timeline */}
-      <section className="py-40 border-t border-neutral-900">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="how-it-works" className="py-40 border-t border-neutral-900 relative overflow-hidden">
+        <div className="absolute top-20 right-20 w-56 h-56 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-16">
             <div className="lg:col-span-4">
               <div className="sticky top-32">
                 <div className="aspect-[4/5] overflow-hidden rounded-sm mb-8">
-                  <img src={spotlightImg} alt="" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                  <img src={spotlightImg} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-120 transition-all duration-700" />
                 </div>
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The journey</span>
+                <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full">
+                  <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The journey</span>
+                </div>
                 <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
-                  Six stages from application to investment.
+                  Six stages from application <span className="text-gradient italic font-light">to investment.</span>
                 </h2>
               </div>
             </div>
@@ -499,14 +559,14 @@ const SpotlightEvent = () => {
                 body: "Winners are announced and investment partnerships are formalized. The work of building begins immediately - with Adorzia alongside every winner for as long as it takes to turn the vision into a brand that lasts."
               }
             ].map((item, i) => (
-              <div key={i} className="grid md:grid-cols-12 gap-8 p-10 border border-neutral-900 rounded-sm bg-neutral-950 hover:border-[#bb9457]/30 transition-colors duration-300">
+              <div key={i} className="grid md:grid-cols-12 gap-8 p-10 glass rounded-sm hover:border-[#bb9457]/30 transition-all duration-500 hover-lift">
                 <div className="md:col-span-2">
                   <div className="font-mono text-[10px] text-[#bb9457] uppercase tracking-[0.3em] mb-2">Stage {item.stage}</div>
                   <div className="font-mono text-[11px] text-neutral-500">{item.timeline}</div>
                 </div>
                 <div className="md:col-span-10">
                   <h3 className="font-serif text-2xl text-white font-normal mb-4">{item.title}</h3>
-                  <p className="text-neutral-400 font-light leading-relaxed">{item.body}</p>
+                  <p className="text-neutral-300 font-light leading-relaxed">{item.body}</p>
                 </div>
               </div>
             ))}
@@ -514,14 +574,18 @@ const SpotlightEvent = () => {
           </div>
         </div>
       </section>
-      <section className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
+      <section id="judging-panel" className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.08),transparent_70%)]" />
+        <div className="absolute top-20 left-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
         
         <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Who will be in the room</span>
+            <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Who will be in the room</span>
+            </div>
             <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-              The people who decide deserve to be here as much as you do.
+              The people who decide <span className="text-gradient italic font-light">deserve to be here as much as you do.</span>
             </h2>
           </div>
 
@@ -535,270 +599,77 @@ const SpotlightEvent = () => {
           </div>
 
           <div className="max-w-3xl mx-auto mb-16">
-            <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-6 text-center">What we can tell you about our panel criteria</h3>
-            <ul className="space-y-4 text-neutral-400 font-light">
-              <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Deep knowledge of Pakistani fashion and craft - not just international fashion credentials</span></li>
-              <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Commercial experience - people who understand what it takes to build a brand, not just appreciate one</span></li>
-              <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Diversity of perspective - across geography, discipline, generation, and background</span></li>
-              <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>A genuine investment in the future of Pakistani fashion entrepreneurship, not just a high-profile name on a poster</span></li>
+            <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">What we can tell you about our panel criteria</span>
+            </div>
+            <ul className="space-y-4">
+              {[
+                "Deep knowledge of Pakistani fashion and craft - not just international fashion credentials",
+                "Commercial experience - people who understand what it takes to build a brand, not just appreciate one",
+                "Diversity of perspective - across geography, discipline, generation, and background",
+                "A genuine investment in the future of Pakistani fashion entrepreneurship, not just a high-profile name on a poster"
+              ].map((criteria, i) => (
+                <li key={i} className="flex gap-4 items-start p-4 glass rounded-sm hover:bg-white/5 transition-colors duration-300">
+                  <span className="text-[#bb9457] mt-1 flex-shrink-0 w-6 h-6 rounded-full border border-[#bb9457]/30 flex items-center justify-center text-xs">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="text-neutral-300 font-light">{criteria}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="text-center">
-            <div className="p-8 border border-neutral-900 rounded-sm bg-neutral-950 mb-8">
+            <div className="p-8 glass rounded-sm mb-8">
               <p className="text-neutral-400 font-light">Judge and mentor announcements coming soon. Follow Adorzia on Instagram and LinkedIn for updates.</p>
             </div>
-            <button className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
               Follow us for panel announcements
             </button>
           </div>
         </div>
       </section>
 
-      {/* Submission Application Form */}
-      <section id="apply" className="py-40 border-t border-neutral-900">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Adorzia Spotlight Fall 2026 - application</span>
-            <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
-              This is your application. Take your time with it.
-            </h2>
-            <p className="mt-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
-              We read every submission carefully. There is no word count that guarantees selection and no format that automatically impresses us. Be honest, be specific, and show us what makes your creative vision worth investing in.
-            </p>
-            <p className="mt-4 text-white font-normal">Submissions open June 1, 2026.</p>
+      {/* Application CTA Section */}
+      <section id="apply" className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_70%)]" />
+        <div className="absolute top-20 left-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10 text-center">
+          <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Your moment is here</span>
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-12">
-            {/* Personal Information */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Personal information</h3>
-              <div className="space-y-8">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Full name *</label>
-                    <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Your full name" />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">City and province *</label>
-                    <input type="text" required value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Lahore, Punjab" />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Email address *</label>
-                    <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="your@email.com" />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Phone number *</label>
-                    <input type="tel" required value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="+92 xxx xxxxxxx" />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Age - must be eighteen or older *</label>
-                    <input type="number" required min="18" className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="25" />
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">How did you hear about Spotlight? *</label>
-                    <select required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
-                      <option value="" className="bg-neutral-950">Select an option</option>
-                      <option value="instagram" className="bg-neutral-950">Instagram</option>
-                      <option value="word-of-mouth" className="bg-neutral-950">Word of mouth</option>
-                      <option value="website" className="bg-neutral-950">Adorzia website</option>
-                      <option value="press" className="bg-neutral-950">Press coverage</option>
-                      <option value="friend" className="bg-neutral-950">A friend or mentor</option>
-                      <option value="other" className="bg-neutral-950">Other</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Creative Background */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Creative background</h3>
-              <div className="space-y-8">
-                <div className="grid md:grid-cols-2 gap-8">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Discipline *</label>
-                    <select required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
-                      <option value="" className="bg-neutral-950">Select your discipline</option>
-                      <option value="fashion-design" className="bg-neutral-950">Fashion design</option>
-                      <option value="textile-craft" className="bg-neutral-950">Textile and heritage craft</option>
-                      <option value="entrepreneurship" className="bg-neutral-950">Fashion entrepreneurship</option>
-                      <option value="accessories" className="bg-neutral-950">Accessories design</option>
-                      <option value="mixed" className="bg-neutral-950">Mixed or interdisciplinary</option>
-                      <option value="other" className="bg-neutral-950">Other</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Years working in your discipline *</label>
-                    <select required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
-                      <option value="" className="bg-neutral-950">Select duration</option>
-                      <option value="<1" className="bg-neutral-950">Less than 1 year</option>
-                      <option value="1-3" className="bg-neutral-950">1 to 3 years</option>
-                      <option value="3-5" className="bg-neutral-950">3 to 5 years</option>
-                      <option value="5+" className="bg-neutral-950">5 or more years</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Formal education in fashion or design *</label>
-                  <select required className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
-                    <option value="" className="bg-neutral-950">Select an option</option>
-                    <option value="yes" className="bg-neutral-950">Yes</option>
-                    <option value="no" className="bg-neutral-950">No</option>
-                    <option value="studying" className="bg-neutral-950">Currently studying</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">If yes - institution name (optional)</label>
-                  <input type="text" className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Institution name" />
-                </div>
-              </div>
-            </div>
-
-            {/* Your Work */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Your work</h3>
-              <div className="space-y-8">
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    Describe your creative practice in your own words. What do you make, how do you make it, and what makes it distinctly yours. *<br />
-                    <span className="text-neutral-600">(Minimum 100 words)</span>
-                  </label>
-                  <textarea required rows={8} value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Describe your creative practice..." />
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    Upload images of your work<br />
-                    <span className="text-neutral-600">Up to 8 images, JPG or PNG, maximum 5 MB each</span>
-                  </label>
-                  <input type="file" multiple accept="image/jpeg,image/png" className="w-full text-neutral-400 file:bg-neutral-900 file:text-white file:border-0 file:px-4 file:py-2 file:rounded-sm file:cursor-pointer hover:file:bg-neutral-800 transition-colors" />
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    If you have a website, portfolio, or social media presence that shows your work, share the link here<br />
-                    <span className="text-neutral-600">(Optional)</span>
-                  </label>
-                  <input type="url" value={formData.portfolio_url} onChange={(e) => setFormData({ ...formData, portfolio_url: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="https://your-portfolio.com" />
-                </div>
-              </div>
-            </div>
-
-            {/* Your Vision */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Your vision</h3>
-              <div className="space-y-8">
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    If Adorzia invested in you and gave you everything Spotlight offers - what would you build? Describe the brand, the product, the customer, and the future you are working toward. *<br />
-                    <span className="text-neutral-600">(Minimum 150 words)</span>
-                  </label>
-                  <textarea required rows={10} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Describe what you would build..." />
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    What is the single biggest obstacle between where you are now and where you want to be? *
-                  </label>
-                  <textarea required rows={5} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Describe your biggest obstacle..." />
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    Why is now the right moment for what you are building? *
-                  </label>
-                  <textarea required rows={5} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Explain why now is the right moment..." />
-                </div>
-              </div>
-            </div>
-
-            {/* Heritage and Identity */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Heritage and identity - optional section</h3>
-              <div className="space-y-8">
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Does your work draw from a specific Pakistani craft tradition or cultural heritage? *</label>
-                  <select className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
-                    <option value="" className="bg-neutral-950">Select an option</option>
-                    <option value="yes" className="bg-neutral-950">Yes</option>
-                    <option value="no" className="bg-neutral-950">No</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                    If yes - describe the tradition, how it informs your work, and how you are evolving or preserving it
-                  </label>
-                  <textarea rows={7} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Describe the craft tradition..." />
-                </div>
-              </div>
-            </div>
-
-            {/* Final Question */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Final question</h3>
-              <div>
-                <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                  Is there anything about your background, your circumstances, or your creative journey that you want us to know that the questions above did not give you space to share?<br />
-                  <span className="text-neutral-600">(Optional)</span>
-                </label>
-                <textarea rows={7} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Share anything else you want us to know..." />
-              </div>
-            </div>
-
-            {/* Declaration */}
-            <div>
-              <h3 className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-8">Declaration</h3>
-              <div className="space-y-4">
-                <label className="flex gap-3 items-start cursor-pointer">
-                  <input type="checkbox" required className="mt-1 accent-[#bb9457]" />
-                  <span className="text-neutral-400 font-light text-sm">I confirm that all work submitted is my own original creative work</span>
-                </label>
-                <label className="flex gap-3 items-start cursor-pointer">
-                  <input type="checkbox" required className="mt-1 accent-[#bb9457]" />
-                  <span className="text-neutral-400 font-light text-sm">I confirm that I am based in Pakistan and am eighteen years of age or older</span>
-                </label>
-                <label className="flex gap-3 items-start cursor-pointer">
-                  <input type="checkbox" required className="mt-1 accent-[#bb9457]" />
-                  <span className="text-neutral-400 font-light text-sm">I understand that if shortlisted I will be expected to participate in presentation sessions in person or virtually</span>
-                </label>
-                <label className="flex gap-3 items-start cursor-pointer">
-                  <input type="checkbox" required className="mt-1 accent-[#bb9457]" />
-                  <span className="text-neutral-400 font-light text-sm">I have read and agree to the Spotlight application terms and conditions</span>
-                </label>
-              </div>
-            </div>
-
-            {error && <div className="text-red-500 text-sm">{error}</div>}
-
-            <div>
-              <button type="submit" disabled={submitting} className="inline-flex items-center bg-[#bb9457] text-black px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-colors disabled:opacity-50">
-                {submitting ? 'Submitting…' : 'Submit my application'}
-              </button>
-              <p className="mt-6 text-neutral-500 font-light text-sm leading-relaxed">
-                Submissions close July 31, 2026 at midnight PKT. We will confirm receipt of every complete application within five working days. Incomplete applications will not be reviewed. For any questions about the application process write to spotlight@adorzia.com
-              </p>
-            </div>
-          </form>
+          <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
+            This is where it begins. <span className="text-gradient italic font-light">Your application awaits.</span>
+          </h2>
+          <p className="mt-8 text-neutral-400 font-light text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
+            The stage is ready. The investment is real. The only question is whether you will take the step. Submissions open June 1, 2026 - and we will be reading every single one.
+          </p>
+          <div className="mt-12">
+            <button onClick={handleApplyNow} className="px-12 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.25em] text-[12px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
+              Apply now
+            </button>
+          </div>
+          <p className="mt-8 text-neutral-500 font-light text-sm">
+            Submissions close July 31, 2026 at midnight PKT. For questions write to spotlight@adorzia.com
+          </p>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+      <section id="faq" className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
+        <div className="absolute top-20 right-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-20 left-20 w-56 h-56 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Questions we hear most</span>
+            <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Questions we hear most</span>
+            </div>
             <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-              Everything you want to know before you apply.
+              Everything you want to know <span className="text-gradient italic font-light">before you apply.</span>
             </h2>
           </div>
 
@@ -816,9 +687,14 @@ const SpotlightEvent = () => {
               { q: "Can I apply for Spotlight and also apply to list on the Adorzia Marketplace?", a: "Yes. These are separate applications and one does not affect the other. We encourage serious applicants to explore every part of the Adorzia ecosystem." },
               { q: "What if I have a question that is not answered here?", a: "Write to us at spotlight@adorzia.com. We answer every question personally." }
             ].map((faq, i) => (
-              <div key={i} className="p-8 border border-neutral-900 rounded-sm bg-neutral-950">
-                <h3 className="font-serif text-xl text-white font-normal mb-4">{faq.q}</h3>
-                <p className="text-neutral-400 font-light leading-relaxed">{faq.a}</p>
+              <div key={i} className="p-8 glass rounded-sm hover:border-[#bb9457]/30 transition-all duration-500 hover-lift">
+                <div className="flex items-start gap-4">
+                  <span className="text-[#bb9457] font-mono text-xs flex-shrink-0 mt-1">{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <h3 className="font-serif text-xl text-white font-normal mb-4">{faq.q}</h3>
+                    <p className="text-neutral-300 font-light leading-relaxed">{faq.a}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -826,11 +702,27 @@ const SpotlightEvent = () => {
       </section>
 
       {/* Share and Spread the Word */}
-      <section className="py-40 border-t border-neutral-900">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">This belongs to all of Pakistan</span>
+      <section id="share" className="py-40 relative overflow-hidden border-t border-neutral-900">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={spotlightImg}
+            alt="" 
+            className="w-full h-full object-cover scale-110 opacity-20 grayscale"
+            style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.12),transparent_70%)]" />
+        </div>
+        <div className="absolute top-20 left-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
+        <div className="absolute bottom-20 right-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
+          <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
+            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">This belongs to all of Pakistan</span>
+          </div>
           <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-            You might not be the visionary we are looking for. But you probably know who is.
+            You might not be the visionary we are looking for. <span className="text-gradient italic font-light">But you probably know who is.</span>
           </h2>
 
           <div className="mt-8 max-w-3xl mx-auto space-y-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
@@ -858,18 +750,18 @@ const SpotlightEvent = () => {
           </div>
 
           <div className="mt-12 flex flex-wrap gap-6 justify-center">
-            <button className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform">
               Share on Instagram
             </button>
-            <button className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform">
               Share on WhatsApp
             </button>
-            <button className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform">
               Copy the link
             </button>
           </div>
 
-          <div className="mt-20 p-10 border border-[#bb9457]/30 rounded-sm bg-neutral-950">
+          <div className="mt-20 p-10 glass border border-[#bb9457]/30 rounded-sm">
             <p className="text-white font-serif text-xl md:text-2xl font-normal tracking-tight">
               Spotlight Fall 2026. Submissions open June 1. The stage is real. The investment is real. The moment is now.
             </p>

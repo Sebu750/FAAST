@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
-import Breadcrumb from '../components/Breadcrumb'
 import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
 import studio from '../assets/hero-banner-coworking-studio-2.png'
 import spotlight from '../assets/fashion-icon.png'
@@ -10,13 +9,11 @@ import coworking from '../assets/coworking-studio-image .png'
 
 const ForPartners = () => {
   const [form, setForm] = useState({
-    full_name: '',
-    organization: '',
-    investment_focus: '',
-    interest: '',
-    contact_method: '',
+    contact_name: '',
+    company_name: '',
     email: '',
-    phone: ''
+    phone: '',
+    message: ''
   })
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -35,7 +32,7 @@ const ForPartners = () => {
       if (supabaseError) throw supabaseError
 
       setSubmitted(true)
-      setForm({ full_name: '', organization: '', investment_focus: '', interest: '', contact_method: '', email: '', phone: '' })
+      setForm({ contact_name: '', company_name: '', email: '', phone: '', message: '' })
     } catch (err) {
       setError('Failed to submit inquiry. Please try again.')
       console.error(err)
@@ -56,7 +53,7 @@ const ForPartners = () => {
         schemaType="WebPage"
         keywords="invest in Pakistani fashion, Pakistani fashion investment opportunity, fashion entrepreneurship Pakistan, Adorzia investor deck, Spotlight co-investment Pakistan, Fashion investment Pakistan, Fashion entrepreneurship, Pakistani fashion startup, Invest in Pakistani fashion entrepreneurs, Pakistani fashion brand investment opportunity, Fashion brand building Pakistan, Pakistani fashion investment, Adorzia, Adorzia fashion"
       />
-      <Breadcrumb currentPage="For Partners" />
+
       
       {/* Luxury Custom Animation Matrix Injections */}
       <style>{`
@@ -410,8 +407,8 @@ const ForPartners = () => {
                     <input
                       type="text"
                       required
-                      value={form.full_name}
-                      onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                      value={form.contact_name}
+                      onChange={(e) => setForm({ ...form, contact_name: e.target.value })}
                       className="w-full border-b border-neutral-900 bg-transparent py-3 outline-none focus:border-[#bb9457] transition-colors text-white"
                       placeholder="Your name"
                     />
@@ -419,33 +416,16 @@ const ForPartners = () => {
 
                   <div>
                     <label className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-semibold block mb-3">
-                      Organization or fund name
+                      Organization or fund name *
                     </label>
                     <input
                       type="text"
-                      value={form.organization}
-                      onChange={(e) => setForm({ ...form, organization: e.target.value })}
+                      required
+                      value={form.company_name}
+                      onChange={(e) => setForm({ ...form, company_name: e.target.value })}
                       className="w-full border-b border-neutral-900 bg-transparent py-3 outline-none focus:border-[#bb9457] transition-colors text-white"
                       placeholder="Your organization"
                     />
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-semibold block mb-3">
-                      Investment focus *
-                    </label>
-                    <select
-                      required
-                      value={form.investment_focus}
-                      onChange={(e) => setForm({ ...form, investment_focus: e.target.value })}
-                      className="w-full border-b border-neutral-900 bg-transparent py-3 outline-none focus:border-[#bb9457] transition-colors text-white"
-                    >
-                      <option value="" className="bg-neutral-950">Select focus</option>
-                      <option value="fashion" className="bg-neutral-950">Fashion</option>
-                      <option value="consumer" className="bg-neutral-950">Consumer</option>
-                      <option value="creative-economy" className="bg-neutral-950">Creative economy</option>
-                      <option value="other" className="bg-neutral-950">Other</option>
-                    </select>
                   </div>
 
                   <div>
@@ -455,27 +435,11 @@ const ForPartners = () => {
                     <textarea
                       required
                       rows={4}
-                      value={form.interest}
-                      onChange={(e) => setForm({ ...form, interest: e.target.value })}
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
                       className="w-full border-b border-neutral-900 bg-transparent py-3 outline-none focus:border-[#bb9457] transition-colors resize-none text-white"
                       placeholder="Tell us what excites you..."
                     />
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-semibold block mb-3">
-                      Preferred contact method *
-                    </label>
-                    <select
-                      required
-                      value={form.contact_method}
-                      onChange={(e) => setForm({ ...form, contact_method: e.target.value })}
-                      className="w-full border-b border-neutral-900 bg-transparent py-3 outline-none focus:border-[#bb9457] transition-colors text-white"
-                    >
-                      <option value="" className="bg-neutral-950">Select method</option>
-                      <option value="email" className="bg-neutral-950">Email</option>
-                      <option value="call" className="bg-neutral-950">Call</option>
-                    </select>
                   </div>
 
                   <div>
@@ -494,7 +458,7 @@ const ForPartners = () => {
 
                   <div>
                     <label className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-semibold block mb-3">
-                      Phone number (optional)
+                      Phone number
                     </label>
                     <input
                       type="tel"

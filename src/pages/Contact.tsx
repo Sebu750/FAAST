@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
-import Breadcrumb from '../components/Breadcrumb'
 import studio from '../assets/studio.jpg'
 import craft from '../assets/craft.jpg'
 import designer1 from '../assets/designer-1.jpg'
@@ -135,7 +134,7 @@ const Contact = () => {
         ]}
         keywords="contact Adorzia Pakistan, Adorzia Lahore, Adorzia Karachi, Adorzia Islamabad, Adorzia email, Spotlight application contact, creatives@adorzia.com, investors@adorzia.com, press@adorzia.com, hello@adorzia.com, spotlight@adorzia.com, fashion studio Lahore, fashion studio Islamabad, fashion studio Karachi"
       />
-      <Breadcrumb currentPage="Contact Us" />
+
       <style>{`
         @keyframes ambientSwell {
           0%, 100% { transform: scale(1.02) translate(0px, 0px); }
@@ -144,14 +143,16 @@ const Contact = () => {
         .animate-ambient-swell { animation: ambientSwell 20s infinite ease-in-out; }
       `}</style>
 
-      {/* Hero Section */}
+      {/* Hero Section with Full Banner */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={designer1} alt="" className="w-full h-full object-cover grayscale opacity-30" />
+          <img src={designer1} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-950/95 to-neutral-900/90" />
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(187,148,87,0.2),transparent_60%)]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-950/90 to-neutral-900/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(187,148,87,0.3),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(187,148,87,0.2),transparent_50%)]" />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-32">
           <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
@@ -177,8 +178,13 @@ const Contact = () => {
       </section>
 
       {/* Four Contact Paths */}
-      <section className="py-40 border-t border-neutral-900">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="py-40 relative overflow-hidden border-t border-neutral-900">
+        <div className="absolute inset-0 opacity-10">
+          <img src={designer2} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/98 to-neutral-950" />
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-20">
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">How can we help you</span>
             <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
@@ -221,7 +227,8 @@ const Contact = () => {
                 image: designer1
               }
             ].map((path, i) => (
-              <div key={i} className="group p-10 border border-neutral-900 rounded-sm bg-neutral-950 hover:border-[#bb9457]/30 transition-colors duration-300">
+              <div key={i} className="group relative p-10 border border-neutral-900 rounded-sm bg-neutral-950 hover:border-[#bb9457]/30 transition-colors duration-300">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="aspect-[16/9] overflow-hidden rounded-sm mb-6">
                   <img src={path.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
                 </div>
@@ -241,12 +248,14 @@ const Contact = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
-        <div className="absolute inset-0 opacity-10">
-          <img src={craft} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+      <section className="py-40 relative overflow-hidden border-t border-neutral-900">
+        <div className="absolute inset-0">
+          <img src={designer2} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/85 to-neutral-950/95" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-900/95 to-neutral-900" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.08),transparent_70%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/90 to-neutral-950" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(187,148,87,0.1),transparent_50%)]" />
         
         <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
@@ -338,8 +347,13 @@ const Contact = () => {
       </section>
 
       {/* Studio Locations */}
-      <section className="py-40 border-t border-neutral-900">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="py-40 relative overflow-hidden border-t border-neutral-900">
+        <div className="absolute inset-0 opacity-15">
+          <img src={studio} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mb-20">
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Find us</span>
             <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
@@ -377,9 +391,10 @@ const Contact = () => {
                 image: craft
               }
             ].map((location, i) => (
-              <div key={i} className="group border border-neutral-900 rounded-sm bg-neutral-950 overflow-hidden hover:border-[#bb9457]/30 transition-colors duration-300">
-                <div className="aspect-[4/3] overflow-hidden">
+              <div key={i} className="group relative border border-neutral-900 rounded-sm bg-neutral-950 overflow-hidden hover:border-[#bb9457]/30 transition-colors duration-300">
+                <div className="aspect-[4/3] overflow-hidden relative">
                   <img src={location.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 </div>
                 <div className="p-8">
                   <div className="flex justify-between items-start mb-4">
@@ -411,7 +426,12 @@ const Contact = () => {
 
       {/* Social Media Links */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.08),transparent_70%)]" />
+        <div className="absolute inset-0 opacity-20">
+          <img src={designer1} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-900/95 to-black" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.1),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(187,148,87,0.08),transparent_50%)]" />
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-20">
@@ -451,7 +471,8 @@ const Contact = () => {
                 cta: "Follow on Facebook"
               }
             ].map((platform, i) => (
-              <div key={i} className="p-8 border border-neutral-900 rounded-sm bg-neutral-950 hover:border-[#bb9457]/30 transition-colors duration-300">
+              <div key={i} className="relative p-8 border border-neutral-900 rounded-sm bg-neutral-950/80 backdrop-blur-sm hover:border-[#bb9457]/30 transition-colors duration-300">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-sm" />
                 <div className="text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono font-semibold mb-2">{platform.channel}</div>
                 <div className="text-white font-serif text-xl mb-4">{platform.handle}</div>
                 <p className="text-neutral-400 font-light leading-relaxed text-sm mb-6">{platform.description}</p>
@@ -481,8 +502,15 @@ const Contact = () => {
       </section>
 
       {/* Spotlight Submissions Redirect */}
-      <section className="py-40 border-t border-neutral-900">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center">
+      <section className="py-40 relative overflow-hidden border-t border-neutral-900">
+        <div className="absolute inset-0">
+          <img src={studio} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/95 via-neutral-950/90 to-black" />
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(187,148,87,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(187,148,87,0.1),transparent_50%)]" />
+        
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
           <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Here for Spotlight</span>
           <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
             Looking to apply for Spotlight Fall 2026? You are one click away.
