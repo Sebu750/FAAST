@@ -10,9 +10,6 @@ import spotlight from '../assets/fashion-icon.png'
 import craft from '../assets/craft.jpg'
 import coworking from '../assets/coworking-studio-image .png'
 import heroRunway from '../assets/hero-runway.jpg'
-import designer1 from '../assets/designer-1.jpg'
-import designer2 from '../assets/designer-2.jpg'
-import designer3 from '../assets/designer-3.jpg'
 
 // --- REUSABLE EDITORIAL GRID MODULES ---
 const Eyebrow = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (

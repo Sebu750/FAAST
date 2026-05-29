@@ -10,7 +10,6 @@ import spotlightImg from '../assets/spotlight.jpg'
 
 const Marketplace = () => {
   const [email, setEmail] = useState('')
-  const [sellerEmail, setSellerEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [sellerSubmitted, setSellerSubmitted] = useState(false)
   const [sellerSubmitting, setSellerSubmitting] = useState(false)

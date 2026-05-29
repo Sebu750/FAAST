@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import type { NewsletterSubscription, ContactInquiry, PartnershipInquiry, MarketplaceApplication, StudioApplication, HeritageApplication, InvestorDeckRequest, PressInquiry, StudioWaitlist } from '../types/database'
+import type { NewsletterSubscription, ContactInquiry, PartnershipInquiry, MarketplaceApplication, StudioWaitlist } from '../types/database'
 
 interface SpotlightApplication {
   id: string
@@ -48,7 +48,7 @@ interface DashboardCounts {
 
 // Simple SVG Icon Component
 const Icon = ({ name, className = '', color = '' }: { name: string; className?: string; color?: string }) => {
-  const icons: Record<string, JSX.Element> = {
+  const icons: Record<string, ReactNode> = {
     'grid': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>,
     'star': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" /></svg>,
     'mail': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
@@ -73,10 +73,6 @@ const AdminDashboard = () => {
   const [partnershipInquiries, setPartnershipInquiries] = useState<PartnershipInquiry[]>([])
   const [spotlightApplications, setSpotlightApplications] = useState<SpotlightApplication[]>([])
   const [marketplaceApplications, setMarketplaceApplications] = useState<MarketplaceApplication[]>([])
-  const [studioApplications, setStudioApplications] = useState<StudioApplication[]>([])
-  const [heritageApplications, setHeritageApplications] = useState<HeritageApplication[]>([])
-  const [investorRequests, setInvestorRequests] = useState<InvestorDeckRequest[]>([])
-  const [pressInquiries, setPressInquiries] = useState<PressInquiry[]>([])
   const [studioWaitlist, setStudioWaitlist] = useState<StudioWaitlist[]>([])
   const [dashboardCounts, setDashboardCounts] = useState<DashboardCounts | null>(null)
   const [loading, setLoading] = useState(true)
@@ -230,16 +226,6 @@ const AdminDashboard = () => {
     await supabase.auth.signOut()
     navigate('/admin/login')
   }
-
-  const tabs = [
-    { id: 'overview' as const, label: 'Overview', icon: 'grid', count: null },
-    { id: 'spotlight' as const, label: 'Spotlight', icon: 'star', count: spotlightApplications.length },
-    { id: 'marketplace' as const, label: 'Marketplace', icon: 'shopping-bag', count: marketplaceApplications.length },
-    { id: 'studio-waitlist' as const, label: 'Studio Waitlist', icon: 'users', count: studioWaitlist.length },
-    { id: 'partnership' as const, label: 'Partnership', icon: 'handshake', count: partnershipInquiries.length },
-    { id: 'newsletter' as const, label: 'Newsletter', icon: 'mail', count: newsletterSubscriptions.length },
-    { id: 'contact' as const, label: 'Contact', icon: 'message-square', count: contactInquiries.length },
-  ]
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex">
@@ -1200,214 +1186,6 @@ const MarketplaceTable = ({ data }: { data: MarketplaceApplication[] }) => {
         </div>
       )}
     </>
-  )
-}
-
-// Studio Table
-const StudioTable = ({ data }: { data: StudioApplication[] }) => {
-  if (data.length === 0) {
-    return <p className="text-center text-neutral-400 py-12">No studio applications yet</p>
-  }
-
-  return (
-    <div className="bg-neutral-900 border border-neutral-800 rounded-sm">
-      <div className="p-6 border-b border-neutral-800">
-        <h3 className="text-lg font-semibold font-serif text-white">Studio Membership Applications ({data.length})</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-neutral-800">
-          <thead className="bg-neutral-950">
-            <tr>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Discipline</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Membership</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Location</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Date</th>
-            </tr>
-          </thead>
-          <tbody className="bg-neutral-900 divide-y divide-neutral-800">
-            {data.map((item) => (
-              <tr key={item.id} className="hover:bg-neutral-800/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{item.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.discipline}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.membership_type}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.location}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-3 py-1 rounded-sm text-xs uppercase tracking-wider border ${
-                    item.status === 'pending' ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30' :
-                    item.status === 'under_review' ? 'bg-blue-600/20 text-blue-400 border-blue-600/30' :
-                    item.status === 'approved' ? 'bg-green-600/20 text-green-400 border-green-600/30' :
-                    'bg-red-600/20 text-red-400 border-red-600/30'
-                  }`}>
-                    {item.status.replace('_', ' ')}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
-                  {new Date(item.created_at).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
-// Heritage Table
-const HeritageTable = ({ data }: { data: HeritageApplication[] }) => {
-  if (data.length === 0) {
-    return <p className="text-center text-neutral-400 py-12">No heritage craft applications yet</p>
-  }
-
-  return (
-    <div className="bg-neutral-900 border border-neutral-800 rounded-sm">
-      <div className="p-6 border-b border-neutral-800">
-        <h3 className="text-lg font-semibold font-serif text-white">Heritage Craft Program Applications ({data.length})</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-neutral-800">
-          <thead className="bg-neutral-950">
-            <tr>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Artisan</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Craft Type</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Tradition</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Location</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Date</th>
-            </tr>
-          </thead>
-          <tbody className="bg-neutral-900 divide-y divide-neutral-800">
-            {data.map((item) => (
-              <tr key={item.id} className="hover:bg-neutral-800/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{item.artisan_name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.craft_type}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.craft_tradition}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.location}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-3 py-1 rounded-sm text-xs uppercase tracking-wider border ${
-                    item.status === 'pending' ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30' :
-                    item.status === 'under_review' ? 'bg-blue-600/20 text-blue-400 border-blue-600/30' :
-                    item.status === 'accepted' ? 'bg-green-600/20 text-green-400 border-green-600/30' :
-                    'bg-red-600/20 text-red-400 border-red-600/30'
-                  }`}>
-                    {item.status.replace('_', ' ')}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
-                  {new Date(item.created_at).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
-// Investor Table
-const InvestorTable = ({ data }: { data: InvestorDeckRequest[] }) => {
-  if (data.length === 0) {
-    return <p className="text-center text-neutral-400 py-12">No investor deck requests yet</p>
-  }
-
-  return (
-    <div className="bg-neutral-900 border border-neutral-800 rounded-sm">
-      <div className="p-6 border-b border-neutral-800">
-        <h3 className="text-lg font-semibold font-serif text-white">Investor Deck Requests ({data.length})</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-neutral-800">
-          <thead className="bg-neutral-950">
-            <tr>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Name</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Organization</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Focus</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Deck Sent</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Date</th>
-            </tr>
-          </thead>
-          <tbody className="bg-neutral-900 divide-y divide-neutral-800">
-            {data.map((item) => (
-              <tr key={item.id} className="hover:bg-neutral-800/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{item.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.organization}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.investment_focus}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.deck_sent ? 'Yes' : 'No'}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-3 py-1 rounded-sm text-xs uppercase tracking-wider border ${
-                    item.status === 'pending' ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30' :
-                    item.status === 'sent' ? 'bg-blue-600/20 text-blue-400 border-blue-600/30' :
-                    item.status === 'in_discussion' ? 'bg-purple-600/20 text-purple-400 border-purple-600/30' :
-                    'bg-neutral-600/20 text-neutral-400 border-neutral-600/30'
-                  }`}>
-                    {item.status.replace('_', ' ')}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
-                  {new Date(item.created_at).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  )
-}
-
-// Press Table
-const PressTable = ({ data }: { data: PressInquiry[] }) => {
-  if (data.length === 0) {
-    return <p className="text-center text-neutral-400 py-12">No press inquiries yet</p>
-  }
-
-  return (
-    <div className="bg-neutral-900 border border-neutral-800 rounded-sm">
-      <div className="p-6 border-b border-neutral-800">
-        <h3 className="text-lg font-semibold font-serif text-white">Press Inquiries ({data.length})</h3>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-neutral-800">
-          <thead className="bg-neutral-950">
-            <tr>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Journalist</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Publication</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Article Type</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Topic</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Status</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Date</th>
-            </tr>
-          </thead>
-          <tbody className="bg-neutral-900 divide-y divide-neutral-800">
-            {data.map((item) => (
-              <tr key={item.id} className="hover:bg-neutral-800/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{item.journalist_name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.publication}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.article_type}</td>
-                <td className="px-6 py-4 text-sm text-neutral-300 max-w-xs truncate">{item.topic}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-3 py-1 rounded-sm text-xs uppercase tracking-wider border ${
-                    item.status === 'pending' ? 'bg-yellow-600/20 text-yellow-400 border-yellow-600/30' :
-                    item.status === 'in_progress' ? 'bg-blue-600/20 text-blue-400 border-blue-600/30' :
-                    item.status === 'published' ? 'bg-green-600/20 text-green-400 border-green-600/30' :
-                    'bg-red-600/20 text-red-400 border-red-600/30'
-                  }`}>
-                    {item.status.replace('_', ' ')}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
-                  {new Date(item.created_at).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
   )
 }
 

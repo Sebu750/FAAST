@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
 import spotlightImg from '../assets/spotlight.jpg'
@@ -10,13 +10,10 @@ import winner2 from '../assets/winner-2.jpg'
 import winner3 from '../assets/winner-3.jpg'
 import designer1 from '../assets/designer-1.jpg'
 import designer2 from '../assets/designer-2.jpg'
-import designer3 from '../assets/designer-3.jpg'
 
 const SpotlightEvent = () => {
   const navigate = useNavigate()
   const [scrollY, setScrollY] = useState(0)
-  const [isVisible, setIsVisible] = useState<Record<string, boolean>>({})
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const [daysLeft, setDaysLeft] = useState(0)
 
   useEffect(() => {
@@ -34,29 +31,6 @@ const SpotlightEvent = () => {
     }, 1000)
     return () => clearInterval(interval)
   }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }))
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    )
-
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref)
-    })
-
-    return () => observer.disconnect()
-  }, [])
-
-  const setSectionRef = (id: string) => (el: HTMLDivElement | null) => {
-    sectionRefs.current[id] = el
-  }
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id)
