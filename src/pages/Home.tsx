@@ -216,7 +216,7 @@ const Home = () => {
       <section className="relative overflow-hidden border-b border-neutral-900 bg-black min-h-screen flex items-center">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)] z-10" />
+          <div className="absolute inset-0 sm:bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)] bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.2),transparent_50%)] z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/60 z-10" />
 
           {slides.map((slide, index) => (
@@ -224,11 +224,11 @@ const Home = () => {
               key={index}
               src={slide.image}
               alt=""
-              className={`absolute inset-0 h-full w-full object-cover transition-all duration-[1400ms] cubic-bezier(0.25, 1, 0.5, 1) ${
-                index === currentIndex ? 'opacity-45 scale-110 animate-ambient-swell' : 'opacity-0 scale-115'
+              className={`absolute inset-0 h-full w-full object-cover object-center sm:object-cover transition-all duration-[1400ms] cubic-bezier(0.25, 1, 0.5, 1) ${
+                index === currentIndex ? 'opacity-40 sm:opacity-45 scale-110 animate-ambient-swell' : 'opacity-0 scale-115'
               }`}
               style={{
-                transform: `translateY(${scrollY * 0.3}px) scale(${index === currentIndex ? 1.1 : 1.15})`
+                transform: `translateY(${scrollY * 0.2}px) scale(${index === currentIndex ? 1.1 : 1.15})`
               }}
             />
           ))}
@@ -248,16 +248,16 @@ const Home = () => {
           </svg>
         </div>
 
-        <div className="relative z-20 max-w-7xl mx-auto w-full px-6 md:px-12 lg:px-8 py-32">
+        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-12 lg:px-8 py-24 sm:py-32">
           <div className="max-w-4xl">
-            <div className="inline-flex items-center gap-3 glass px-4 py-2 rounded-full mb-8 transform translate-y-4 animate-fade-in">
+            <div className="inline-flex items-center gap-3 glass px-3 sm:px-4 py-2 rounded-full mb-6 sm:mb-8 transform translate-y-4 animate-fade-in">
               <span className="w-1.5 h-1.5 rounded-full bg-[#bb9457] animate-pulse-glow" />
-              <span className="text-[10px] uppercase tracking-[0.3em] text-neutral-300 font-medium font-mono">
+              <span className="text-[9px] sm:text-[10px] uppercase tracking-[0.25em] sm:tracking-[0.3em] text-neutral-300 font-medium font-mono">
                 {slides[currentIndex].eyebrow}
               </span>
             </div>
 
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.05] tracking-tight text-white font-normal transition-all duration-700">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.1] sm:leading-[1.05] tracking-tight text-white font-normal transition-all duration-700">
               {slides[currentIndex].title.split(' ').map((word, i) => {
                 const clean = word.replace(/[.,]/g, '');
                 const target = ['creators', 'Atelier', 'Spotlight', 'global'].includes(clean);
@@ -269,20 +269,20 @@ const Home = () => {
               })}
             </h1>
 
-            <p className="mt-8 max-w-2xl text-neutral-400 text-base md:text-lg leading-relaxed font-light transition-all duration-700">
+            <p className="mt-6 sm:mt-8 max-w-2xl text-neutral-400 text-sm sm:text-base md:text-lg leading-relaxed sm:leading-relaxed font-light transition-all duration-700">
               {slides[currentIndex].subtitle}
             </p>
 
-            <div className="mt-12 flex flex-wrap gap-5">
+            <div className="mt-8 sm:mt-12 flex flex-col sm:flex-row gap-4 sm:gap-5">
               <Link
                 to={slides[currentIndex].ctaPrimary.to}
-                className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-0.5"
+                className="px-6 sm:px-8 py-3.5 sm:py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[10px] sm:text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-0.5 text-center"
               >
                 {slides[currentIndex].ctaPrimary.label}
               </Link>
               <Link
                 to={slides[currentIndex].ctaSecondary.to}
-                className="px-8 py-4 border border-white/20 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 backdrop-blur-sm"
+                className="px-6 sm:px-8 py-3.5 sm:py-4 border border-white/20 text-white font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[10px] sm:text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 backdrop-blur-sm text-center"
               >
                 {slides[currentIndex].ctaSecondary.label}
               </Link>
@@ -291,21 +291,21 @@ const Home = () => {
         </div>
 
         {/* Cinematic Slide Indicators */}
-        <div className="absolute bottom-12 left-6 right-6 z-20 max-w-7xl mx-auto px-2 flex justify-between items-center border-t border-white/10 pt-6">
-          <div className="flex gap-3">
+        <div className="absolute bottom-8 sm:bottom-12 left-4 sm:left-6 right-4 sm:right-6 z-20 max-w-7xl mx-auto px-2 flex justify-between items-center border-t border-white/10 pt-4 sm:pt-6">
+          <div className="flex gap-2 sm:gap-3">
             {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`rounded-full transition-all duration-500 ${
                   index === currentIndex 
-                    ? 'w-3 h-3 bg-[#bb9457] shadow-lg shadow-[#bb9457]/30' 
+                    ? 'w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#bb9457] shadow-lg shadow-[#bb9457]/30' 
                     : 'w-2 h-2 bg-white/20 hover:bg-white/40 hover:scale-125'
                 }`}
               />
             ))}
           </div>
-          <span className="font-mono text-[10px] tracking-[0.25em] text-neutral-500 uppercase">
+          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.2em] sm:tracking-[0.25em] text-neutral-500 uppercase">
             System Index // 0{currentIndex + 1}
           </span>
         </div>

@@ -68,6 +68,8 @@ const Icon = ({ name, className = '', color = '' }: { name: string; className?: 
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'spotlight' | 'marketplace' | 'studio-waitlist' | 'partnership' | 'newsletter' | 'contact'>('overview')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [newsletterSubscriptions, setNewsletterSubscriptions] = useState<NewsletterSubscription[]>([])
   const [contactInquiries, setContactInquiries] = useState<ContactInquiry[]>([])
   const [partnershipInquiries, setPartnershipInquiries] = useState<PartnershipInquiry[]>([])
@@ -229,136 +231,240 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex">
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/80 z-40 lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Left Sidebar Navigation */}
-      <aside className="w-64 bg-neutral-900 border-r border-neutral-800 flex flex-col fixed h-full">
+      <aside className={`bg-neutral-900 border-r border-neutral-800 flex flex-col fixed h-full transition-all duration-300 z-50 ${
+        mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      } ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'} w-64`}>
         {/* Logo */}
-        <div className="p-6 border-b border-neutral-800">
-          <h1 className="text-lg font-semibold tracking-wider text-white uppercase">
-            Adorzia <span className="text-[#bb9457] font-light">Admin</span>
-          </h1>
-          <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-widest">Management Console</p>
+        <div className={`border-b border-neutral-800 ${sidebarCollapsed ? 'lg:p-4' : 'p-6'} p-6`}>
+          <div className="flex items-center justify-between">
+            <h1 className={`font-semibold tracking-wider text-white uppercase transition-all duration-300 ${
+              sidebarCollapsed ? 'lg:text-xs lg:tracking-widest' : 'text-lg'
+            }`}>
+              {sidebarCollapsed ? (
+                <span className="hidden lg:block text-[#bb9457] text-2xl font-serif">A</span>
+              ) : (
+                <>Adorzia <span className="text-[#bb9457] font-light">Admin</span></>
+              )}
+            </h1>
+            {/* Desktop Toggle Button */}
+            <button
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className="hidden lg:flex p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors rounded-sm"
+              title={sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            >
+              <svg 
+                className={`w-5 h-5 transition-transform duration-300 ${sidebarCollapsed ? 'rotate-180' : ''}`} 
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+              </svg>
+            </button>
+          </div>
+          {!sidebarCollapsed && (
+            <p className="text-[10px] text-neutral-500 mt-1 uppercase tracking-widest hidden lg:block">Management Console</p>
+          )}
         </div>
 
         {/* Navigation Menu */}
         <nav className="flex-1 overflow-y-auto py-4">
-          <div className="px-4 mb-2">
-            <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold">Main</p>
+          <div className={`mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
+            {!sidebarCollapsed && (
+              <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold hidden lg:block">Main</p>
+            )}
           </div>
           <button
-            onClick={() => setActiveTab('overview')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('overview')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'overview'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Overview' : ''}
           >
-            <Icon name="grid" className="w-5 h-5" />
-            <span>Overview</span>
+            <Icon name="grid" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Overview</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Overview</span>}
           </button>
 
-          <div className="px-4 mt-6 mb-2">
-            <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold">Applications</p>
+          <div className={`mt-6 mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
+            {!sidebarCollapsed && (
+              <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold hidden lg:block">Applications</p>
+            )}
           </div>
           <button
-            onClick={() => setActiveTab('spotlight')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('spotlight')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'spotlight'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Spotlight' : ''}
           >
-            <Icon name="star" className="w-5 h-5" />
-            <span>Spotlight</span>
+            <Icon name="star" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Spotlight</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Spotlight</span>}
             {spotlightApplications.length > 0 && (
-              <span className="ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full">
+              <span className={`ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full ${
+                sidebarCollapsed ? 'lg:ml-0 lg:absolute lg:top-2 lg:right-2 lg:px-1.5 lg:py-0.5 lg:text-[10px]' : ''
+              }`}>
                 {spotlightApplications.length}
               </span>
             )}
           </button>
           <button
-            onClick={() => setActiveTab('marketplace')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('marketplace')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'marketplace'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Marketplace' : ''}
           >
-            <Icon name="shopping-bag" className="w-5 h-5" />
-            <span>Marketplace</span>
+            <Icon name="shopping-bag" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Marketplace</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Marketplace</span>}
             {marketplaceApplications.length > 0 && (
-              <span className="ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full">
+              <span className={`ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full ${
+                sidebarCollapsed ? 'lg:ml-0 lg:absolute lg:top-2 lg:right-2 lg:px-1.5 lg:py-0.5 lg:text-[10px]' : ''
+              }`}>
                 {marketplaceApplications.length}
               </span>
             )}
           </button>
           <button
-            onClick={() => setActiveTab('studio-waitlist')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('studio-waitlist')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'studio-waitlist'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Studio Waitlist' : ''}
           >
-            <Icon name="users" className="w-5 h-5" />
-            <span>Studio Waitlist</span>
+            <Icon name="users" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Studio Waitlist</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Studio Waitlist</span>}
             {studioWaitlist.length > 0 && (
-              <span className="ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full">
+              <span className={`ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full ${
+                sidebarCollapsed ? 'lg:ml-0 lg:absolute lg:top-2 lg:right-2 lg:px-1.5 lg:py-0.5 lg:text-[10px]' : ''
+              }`}>
                 {studioWaitlist.length}
               </span>
             )}
           </button>
 
-          <div className="px-4 mt-6 mb-2">
-            <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold">Inquiries</p>
+          <div className={`mt-6 mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
+            {!sidebarCollapsed && (
+              <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold hidden lg:block">Inquiries</p>
+            )}
           </div>
           <button
-            onClick={() => setActiveTab('partnership')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('partnership')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'partnership'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Partnership' : ''}
           >
-            <Icon name="handshake" className="w-5 h-5" />
-            <span>Partnership</span>
+            <Icon name="handshake" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Partnership</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Partnership</span>}
             {partnershipInquiries.length > 0 && (
-              <span className="ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full">
+              <span className={`ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full ${
+                sidebarCollapsed ? 'lg:ml-0 lg:absolute lg:top-2 lg:right-2 lg:px-1.5 lg:py-0.5 lg:text-[10px]' : ''
+              }`}>
                 {partnershipInquiries.length}
               </span>
             )}
           </button>
           <button
-            onClick={() => setActiveTab('contact')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('contact')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'contact'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Contact' : ''}
           >
-            <Icon name="message-square" className="w-5 h-5" />
-            <span>Contact</span>
+            <Icon name="message-square" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Contact</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Contact</span>}
             {contactInquiries.length > 0 && (
-              <span className="ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full">
+              <span className={`ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full ${
+                sidebarCollapsed ? 'lg:ml-0 lg:absolute lg:top-2 lg:right-2 lg:px-1.5 lg:py-0.5 lg:text-[10px]' : ''
+              }`}>
                 {contactInquiries.length}
               </span>
             )}
           </button>
 
-          <div className="px-4 mt-6 mb-2">
-            <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold">Subscribers</p>
+          <div className={`mt-6 mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
+            {!sidebarCollapsed && (
+              <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold hidden lg:block">Subscribers</p>
+            )}
           </div>
           <button
-            onClick={() => setActiveTab('newsletter')}
-            className={`w-full px-4 py-3 flex items-center gap-3 text-sm transition-all ${
+            onClick={() => {
+              setActiveTab('newsletter')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
               activeTab === 'newsletter'
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
+            title={sidebarCollapsed ? 'Newsletter' : ''}
           >
-            <Icon name="mail" className="w-5 h-5" />
-            <span>Newsletter</span>
+            <Icon name="mail" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Newsletter</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Newsletter</span>}
             {newsletterSubscriptions.length > 0 && (
-              <span className="ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full">
+              <span className={`ml-auto bg-[#bb9457]/20 text-[#bb9457] text-xs px-2 py-0.5 rounded-full ${
+                sidebarCollapsed ? 'lg:ml-0 lg:absolute lg:top-2 lg:right-2 lg:px-1.5 lg:py-0.5 lg:text-[10px]' : ''
+              }`}>
                 {newsletterSubscriptions.length}
               </span>
             )}
@@ -366,44 +472,62 @@ const AdminDashboard = () => {
         </nav>
 
         {/* Logout */}
-        <div className="p-4 border-t border-neutral-800">
+        <div className={`border-t border-neutral-800 ${sidebarCollapsed ? 'lg:p-3' : 'p-4'} p-4`}>
           <button
-            onClick={handleLogout}
-            className="w-full px-4 py-3 flex items-center gap-3 text-sm text-red-400 hover:bg-red-600/10 transition-all rounded-sm"
+            onClick={() => {
+              handleLogout()
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all text-red-400 hover:bg-red-600/10 rounded-sm ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3 lg:py-3' : 'px-4 py-3'
+            } px-4 py-3 gap-3 text-sm`}
+            title={sidebarCollapsed ? 'Sign Out' : ''}
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v0a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v0" />
             </svg>
-            <span>Sign Out</span>
+            {!sidebarCollapsed && <span className="hidden lg:inline">Sign Out</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Sign Out</span>}
           </button>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-1 ml-64">
+      <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'}`}>
         {/* Top Bar */}
-        <header className="bg-neutral-900 border-b border-neutral-800 sticky top-0 z-40">
-          <div className="px-8 py-4 flex justify-between items-center">
-            <div>
-              <h2 className="text-xl font-semibold text-white capitalize">
-                {activeTab === 'studio-waitlist' ? 'Studio Waitlist' : activeTab}
-              </h2>
-              <p className="text-xs text-neutral-500 mt-0.5">Manage and monitor</p>
+        <header className="bg-neutral-900 border-b border-neutral-800 sticky top-0 z-30">
+          <div className="px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              {/* Mobile Menu Toggle */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 transition-colors rounded-sm"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+              <div>
+                <h2 className="text-base sm:text-xl font-semibold text-white capitalize">
+                  {activeTab === 'studio-waitlist' ? 'Studio Waitlist' : activeTab}
+                </h2>
+                <p className="text-xs text-neutral-500 mt-0.5 hidden sm:block">Manage and monitor</p>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="text-right">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="text-right hidden sm:block">
                 <p className="text-sm text-white font-medium">Admin User</p>
                 <p className="text-xs text-neutral-500">Administrator</p>
               </div>
-              <div className="w-10 h-10 bg-[#bb9457]/20 border border-[#bb9457]/30 rounded-full flex items-center justify-center">
-                <span className="text-[#bb9457] font-semibold">A</span>
+              <div className="w-9 h-9 sm:w-10 sm:h-10 bg-[#bb9457]/20 border border-[#bb9457]/30 rounded-full flex items-center justify-center">
+                <span className="text-[#bb9457] font-semibold text-sm sm:text-base">A</span>
               </div>
             </div>
           </div>
         </header>
 
         {/* Content */}
-        <main className="p-8">
+        <main className="p-4 sm:p-6 lg:p-8">
           {loading ? (
             <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-16 text-center">
               <div className="w-12 h-12 border-2 border-[#bb9457] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
@@ -444,24 +568,24 @@ const OverviewTab = ({ counts, spotlightRecent, inquiriesRecent }: {
   ]
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {statCards.map((stat, index) => (
-          <div key={index} className={`bg-gradient-to-br ${stat.color} border ${stat.borderColor} rounded-sm p-6 hover:scale-105 transition-transform`}>
+          <div key={index} className={`bg-gradient-to-br ${stat.color} border ${stat.borderColor} rounded-sm p-4 sm:p-6 hover:scale-105 transition-transform`}>
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs uppercase tracking-wider text-neutral-400 mb-2">{stat.label}</p>
-                <p className={`text-5xl font-light font-serif ${stat.textColor}`}>{stat.value}</p>
+                <p className="text-[10px] sm:text-xs uppercase tracking-wider text-neutral-400 mb-2">{stat.label}</p>
+                <p className={`text-3xl sm:text-4xl lg:text-5xl font-light font-serif ${stat.textColor}`}>{stat.value}</p>
               </div>
-              <Icon name={stat.icon} className="w-8 h-8" color={stat.textColor} />
+              <Icon name={stat.icon} className="w-6 h-6 sm:w-8 sm:h-8" color={stat.textColor} />
             </div>
           </div>
         ))}
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-8">
+      <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-4 sm:p-6 lg:p-8">
         <h3 className="text-lg font-semibold font-serif text-white mb-8 flex items-center gap-3">
           <span className="w-1 h-6 bg-[#bb9457]" />
           Recent Activity

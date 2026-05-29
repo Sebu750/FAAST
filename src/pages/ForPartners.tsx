@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
 import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
 import studio from '../assets/hero-banner-coworking-studio-2.png'
@@ -30,6 +31,15 @@ const ForPartners = () => {
         .insert([form])
 
       if (supabaseError) throw supabaseError
+
+      // Send email notification
+      await sendEmailNotification('partnership', {
+        name: form.contact_name,
+        email: form.email,
+        company: form.company_name,
+        partnership_type: 'General Partnership',
+        message: form.message
+      })
 
       setSubmitted(true)
       setForm({ contact_name: '', company_name: '', email: '', phone: '', message: '' })

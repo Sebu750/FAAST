@@ -9,22 +9,22 @@ const Footer = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent" />
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12">
           
           {/* Brand */}
-          <div className="md:col-span-4 lg:col-span-4">
-            <div className="font-serif text-2xl tracking-[0.2em] text-white mb-3">
+          <div className="sm:col-span-2 md:col-span-4 lg:col-span-4">
+            <div className="font-serif text-xl sm:text-2xl tracking-[0.15em] sm:tracking-[0.2em] text-white mb-3">
               ADORZIA<span className="text-[#bb9457]">.</span>
             </div>
-            <p className="text-xs text-neutral-500 leading-relaxed font-light max-w-xs">
+            <p className="text-xs text-neutral-500 leading-relaxed font-light">
               Pakistan's first fashion entrepreneurship ecosystem. Studios, marketplace, and spotlight for the next generation of fashion visionaries.
             </p>
           </div>
 
           {/* Navigation */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+          <div className="sm:col-span-1 md:col-span-2 lg:col-span-2">
+            <div className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
               Navigate
             </div>
             <ul className="space-y-2.5 text-xs font-light">
@@ -47,8 +47,8 @@ const Footer = () => {
           </div>
 
           {/* Programs */}
-          <div className="md:col-span-2 lg:col-span-2">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+          <div className="sm:col-span-1 md:col-span-2 lg:col-span-2">
+            <div className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
               Programs
             </div>
             <ul className="space-y-2.5 text-xs font-light">
@@ -70,8 +70,8 @@ const Footer = () => {
           </div>
 
           {/* Studios */}
-          <div className="md:col-span-4 lg:col-span-4">
-            <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+          <div className="sm:col-span-2 md:col-span-4 lg:col-span-4">
+            <div className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
               Studios
             </div>
             <div className="space-y-2 text-xs font-light text-neutral-500">
@@ -81,15 +81,15 @@ const Footer = () => {
             
             {/* Social Links */}
             <div className="mt-6 pt-6 border-t border-neutral-900">
-              <div className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
+              <div className="text-[10px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#bb9457] font-semibold mb-4">
                 Follow
               </div>
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-3 sm:gap-4">
                 {[
-                  { name: 'Instagram', url: 'https://instagram.com' },
-                  { name: 'LinkedIn', url: 'https://linkedin.com' },
-                  { name: 'TikTok', url: 'https://tiktok.com' },
-                  { name: 'Facebook', url: 'https://facebook.com' },
+                  { name: 'Instagram', url: 'https://www.instagram.com/adorziaofficial/' },
+                  { name: 'LinkedIn', url: 'https://www.linkedin.com/company/adorzia/' },
+                  { name: 'TikTok', url: 'https://www.tiktok.com/@adorziaofficial' },
+                  { name: 'Facebook', url: 'https://www.facebook.com/adorziaofficial/' },
                 ].map(({ name, url }) => (
                   <a 
                     key={name}
@@ -110,11 +110,20 @@ const Footer = () => {
 
       {/* Bottom Bar */}
       <div className="border-t border-neutral-900 relative z-10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] uppercase tracking-[0.2em] text-neutral-600">
-          <div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-neutral-600">
+          <div className="text-center sm:text-left">
             © {new Date().getFullYear()} Adorzia. All rights reserved.
           </div>
-          <div className="flex gap-x-4 items-center text-neutral-500">
+          <div className="flex gap-x-4 sm:gap-x-6 items-center text-neutral-500">
+            <Link to="/legal/privacy" className="hover:text-[#bb9457] transition-colors duration-300">
+              Privacy Policy
+            </Link>
+            <Link to="/legal/terms" className="hover:text-[#bb9457] transition-colors duration-300">
+              Terms & Conditions
+            </Link>
+            <Link to="/legal/spotlight-terms" className="hover:text-[#bb9457] transition-colors duration-300">
+              Spotlight Terms
+            </Link>
             <Link to="/admin/login" className="hover:text-[#bb9457] transition-colors duration-300">
               ___
             </Link>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
 import studio from '../assets/studio.jpg'
 import craft from '../assets/craft.jpg'
@@ -41,6 +42,14 @@ const Contact = () => {
 
       if (supabaseError) throw supabaseError
 
+      // Send email notification
+      await sendEmailNotification('contact', {
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message
+      })
+
       setContactSubmitted(true)
       setFormData({ name: '', email: '', subject: '', role: '', message: '', heard_from: '', newsletter: false })
     } catch (err) {
@@ -62,10 +71,20 @@ const Contact = () => {
 
       if (supabaseError) throw supabaseError
 
+      // Send email notification
+      await sendEmailNotification('newsletter', {
+        email: newsletterEmail
+      })
+
       setNewsletterSubmitted(true)
       setNewsletterEmail('')
-    } catch (err) {
-      setError('Failed to subscribe. Please try again.')
+    } catch (err: any) {
+      // Check if it's a duplicate email error
+      if (err?.code === '23505') {
+        setError('This email is already subscribed to our newsletter.')
+      } else {
+        setError('Failed to subscribe. Please try again.')
+      }
     } finally {
       setNewsletterSubmitting(false)
     }

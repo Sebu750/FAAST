@@ -330,7 +330,7 @@ const SpotlightApplicationForm = ({ onSuccess }: SpotlightApplicationFormProps) 
               </label>
               <label className="flex gap-3 items-start cursor-pointer p-4 rounded-sm hover:bg-white/5 transition-colors duration-300">
                 <input type="checkbox" required className="mt-1 accent-[#bb9457] w-4 h-4" />
-                <span className="text-neutral-300 font-light text-sm">I have read and agree to the Spotlight application terms and conditions</span>
+                <span className="text-neutral-300 font-light text-sm">I have read and agree to the <a href="/legal/spotlight-terms" className="text-[#bb9457] hover:underline font-medium">Spotlight Event Terms and Conditions</a>, <a href="/legal/terms" className="text-[#bb9457] hover:underline font-medium">General Terms and Conditions</a>, and <a href="/legal/privacy" className="text-[#bb9457] hover:underline font-medium">Privacy Policy</a></span>
               </label>
             </div>
           </div>

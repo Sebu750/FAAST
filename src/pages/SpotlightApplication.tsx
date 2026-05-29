@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { sendSpotlightApplicationNotification } from '../lib/email'
+import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
 import heroRunway from '../assets/hero-runway.jpg'
 
@@ -69,12 +69,17 @@ const SpotlightApplication = () => {
       if (supabaseError) throw supabaseError
 
       // Send email notification
-      await sendSpotlightApplicationNotification({
+      await sendEmailNotification('spotlight', {
         name: formData.name,
         email: formData.email,
-        brand_name: formData.location,
+        phone: formData.phone,
+        location: formData.location,
+        age: formData.age,
+        discipline: formData.discipline,
+        years_experience: formData.years_experience,
         portfolio_url: formData.portfolio_url || undefined,
-        description: formData.creative_practice
+        vision_description: formData.vision_description,
+        biggest_obstacle: formData.biggest_obstacle
       })
 
       setFormData({

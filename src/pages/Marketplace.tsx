@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
 import heroHome from '../assets/hero-home.jpg'
 import studio from '../assets/studio.jpg'
@@ -52,6 +53,17 @@ const Marketplace = () => {
         }])
 
       if (error) throw error
+
+      // Send email notification
+      await sendEmailNotification('marketplace', {
+        designer_name: sellerFormData.full_name,
+        name: sellerFormData.full_name,
+        email: sellerFormData.email,
+        phone: '',
+        brand_name: sellerFormData.brand_name,
+        category: sellerFormData.category,
+        description: sellerFormData.creative_practice
+      })
 
       setSellerSubmitted(true)
       setSellerFormData({

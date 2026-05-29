@@ -14,6 +14,9 @@ import Contact from './pages/Contact'
 import AdminDashboard from './pages/AdminDashboard'
 import AdminLogin from './pages/AdminLogin'
 import Marketplace from './pages/Marketplace'
+import Legal from './pages/Legal'
+import Terms from './pages/Terms'
+import SpotlightTerms from './pages/SpotlightTerms'
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -51,6 +54,9 @@ function App() {
                   <Route path="/spotlight/apply" element={<SpotlightApplication />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/legal/privacy" element={<Legal />} />
+                  <Route path="/legal/terms" element={<Terms />} />
+                  <Route path="/legal/spotlight-terms" element={<SpotlightTerms />} />
                 </Routes>
               </main>
               <Footer />

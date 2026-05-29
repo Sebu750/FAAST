@@ -105,8 +105,8 @@ const Header = () => {
                   }`} />
                 </Link>
               ))}
-              <Link to="/contact" className="ml-6 px-6 py-2.5 border border-[#bb9457]/60 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] hover:bg-[#bb9457] hover:text-black hover:border-[#bb9457] transition-all duration-300">
-                Get in Touch
+              <Link to="/spotlight/apply" className="ml-6 px-6 py-2.5 bg-[#bb9457] text-black text-[10px] uppercase tracking-[0.2em] font-semibold hover:bg-white hover:text-black transition-all duration-300 rounded-sm">
+                Apply Now
               </Link>
             </div>
 
@@ -196,11 +196,11 @@ const Header = () => {
             {/* CTA Button */}
             <div className="pt-6 border-t border-neutral-900">
               <Link 
-                to="/contact" 
+                to="/spotlight/apply" 
                 className="flex items-center justify-center gap-3 w-full px-6 py-4 bg-[#bb9457] text-black text-xs uppercase tracking-[0.2em] font-semibold hover:bg-white transition-all duration-300 rounded-sm group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Get in Touch
+                Apply Now
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>

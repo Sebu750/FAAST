@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
 import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
 import studio from '../assets/hero-banner-coworking-studio-2.png'
@@ -52,6 +53,15 @@ const ForCreatives = () => {
 
       if (error) throw error
 
+      // Send email notification
+      await sendEmailNotification('studio-waitlist', {
+        name: waitlistForm.name,
+        email: waitlistForm.email,
+        phone: waitlistForm.phone,
+        discipline: waitlistForm.discipline,
+        preferred_city: waitlistForm.preferred_city
+      })
+
       setWaitlistSubmitted(true)
       setWaitlistForm({
         name: '',
@@ -68,9 +78,15 @@ const ForCreatives = () => {
         portfolio_url: '',
         instagram_handle: ''
       })
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error submitting waitlist:', err)
-      alert('Failed to join waitlist. Please try again.')
+      
+      // Check if it's a duplicate email error
+      if (err?.code === '23505') {
+        alert('This email is already on the waitlist. We will contact you soon!')
+      } else {
+        alert('Failed to join waitlist. Please try again.')
+      }
     } finally {
       setWaitlistSubmitting(false)
     }

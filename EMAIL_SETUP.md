@@ -1,75 +1,72 @@
-# FAAST Email Notification Setup Guide
+# Adorzia Email Notification Setup Guide
 
 ## Overview
-The Spotlight application form now sends email notifications to `haseeb.49251@gmail.com` every time a new application is submitted.
+The Adorzia platform now sends email notifications to `haseeb.49251@gmail.com` for all types of submissions:
+- ✅ **Spotlight Applications** - New talent applications
+- ✅ **Marketplace Applications** - Designer/seller applications
+- ✅ **Studio Waitlist** - Creative membership signups
+- ✅ **Partnership Inquiries** - Business partnership requests
+- ✅ **Contact Inquiries** - General contact form submissions
+- ✅ **Newsletter Subscriptions** - New newsletter subscribers
 
 ## What's Been Created
 
-### 1. Email Notification System (`src/lib/email.ts`)
-- Uses **Resend** API to send professional HTML email notifications
-- Emails include all application details formatted in a premium design
+### 1. Unified Email API (`api/send-notification.ts`)
+- Single endpoint handles all notification types
+- Professional HTML email templates with Adorzia branding
+- Premium black and gold design
+- Detailed submission information for each type
 - Sends to: `haseeb.49251@gmail.com`
-- Includes: Applicant name, email, brand name, portfolio URL, concept statement, and submission timestamp
 
-### 2. Updated Spotlight Application Form (`src/pages/SpotlightEvent.tsx`)
-- Form submission now triggers email notification after successful Supabase insertion
-- Email sends asynchronously without blocking the user experience
-- Error handling ensures form submission succeeds even if email fails
+### 2. Email Service (`src/lib/email.ts`)
+- `sendEmailNotification(type, data)` - Main function
+- Supports 6 notification types
+- Backward compatible with old `sendSpotlightApplicationNotification`
+- Error handling and logging
 
-### 3. Admin Dashboard (Already Exists)
-- Navigate to `/admin` to view all spotlight applications
-- Login required for security
-- Applications displayed in table format with all details
+### 3. Integrated Forms
+All forms now trigger email notifications:
+- **SpotlightApplication.tsx** - Spotlight applications
+- **Marketplace.tsx** - Marketplace seller applications
+- **ForCreatives.tsx** - Studio waitlist signups
+- **ForPartners.tsx** - Partnership inquiries
+- **Contact.tsx** - Contact forms & newsletter subscriptions
+
+### 4. Admin Dashboard
+- Navigate to `/admin` to view all submissions
+- Real-time data from Supabase
+- Email notifications arrive instantly
 
 ## Setup Instructions
 
-### Step 1: Get Resend API Key
+### Step 1: Resend API Key (Already Configured ✅)
 
-1. Go to [https://resend.com](https://resend.com)
-2. Sign up for a free account
-3. Navigate to **API Keys** section
-4. Create a new API key
-5. Copy the API key (starts with `re_`)
-
-### Step 2: Update Environment Variables
-
-Edit `.env` file and replace the placeholder:
-
+Your Resend API key is already set in `.env`:
 ```env
-VITE_RESEND_API_KEY=re_your_actual_api_key_here
+RESEND_API_KEY=re_2tisSzuU_GAXYdiia57Pnc17DYZxbjL64
+VITE_RESEND_API_KEY=re_2tisSzuU_GAXYdiia57Pnc17DYZxbjL64
 ```
 
-Replace with your actual Resend API key:
+### Step 2: Configure Verified Domain (Recommended for Production)
 
-```env
-VITE_RESEND_API_KEY=re_AbCdEfGhIjKlMnOpQrStUvWxYz1234567890
-```
-
-### Step 3: Configure Verified Domain (Optional but Recommended)
-
-For production use, you should:
+For production use with custom domain:
 
 1. In Resend dashboard, go to **Domains**
-2. Add your domain (e.g., `faast.com`)
+2. Add your domain (e.g., `adorzia.com`)
 3. Update DNS records as instructed
-4. Change the `from` email in `src/lib/email.ts` from:
+4. Change the `from` email in `api/send-notification.ts`:
    ```typescript
-   from: 'FAAST Applications <onboarding@resend.dev>'
-   ```
-   to:
-   ```typescript
-   from: 'FAAST Applications <noreply@yourdomain.com>'
+   from: 'Adorzia Admin <noreply@adorzia.com>'
    ```
 
-### Step 4: Deploy to Vercel
+### Step 3: Deploy to Vercel
 
-Add environment variables in Vercel:
-
-1. Go to your Vercel project settings
-2. Navigate to **Environment Variables**
-3. Add `VITE_RESEND_API_KEY` with your Resend API key
-4. Add `VITE_SITE_URL` with your production URL
-5. Redeploy the application
+Environment variables are already configured. Just redeploy:
+```bash
+git add .
+git commit -m "feat: add comprehensive email notifications"
+git push
+```
 
 ## Testing
 
@@ -80,49 +77,88 @@ Add environment variables in Vercel:
    npm run dev
    ```
 
-2. Navigate to `/spotlight-event`
-3. Fill out and submit the application form
-4. Check `haseeb.49251@gmail.com` inbox for notification email
-5. Check `/admin` dashboard to verify application was saved
+2. Test each form:
+   - **Spotlight**: `/spotlight/apply`
+   - **Marketplace**: `/marketplace` (Seller application)
+   - **Studio Waitlist**: `/for-creatives` (Waitlist form)
+   - **Partnership**: `/for-partners` (Contact form)
+   - **Contact**: `/contact`
+   - **Newsletter**: `/contact` or homepage footer
 
-### Email Preview
+3. Check `haseeb.49251@gmail.com` inbox for notifications
+4. Verify in `/admin` dashboard
 
-The notification email includes:
-- **Header**: FAAST branding with burgundy background and gold accent
-- **Applicant Details**: Name, email, brand name, portfolio URL
-- **Concept Statement**: Full text in a highlighted box
-- **Submission Timestamp**: Date and time of submission
-- **Next Steps**: Action items for admin review
-- **Footer**: Link to admin dashboard
+### Email Templates
+
+Each notification type has a unique template:
+
+#### Spotlight Application
+- Name, Email, Phone, Location, Age
+- Discipline, Years of Experience
+- Portfolio URL
+- Vision Description
+- Biggest Obstacle
+- Submission timestamp
+
+#### Marketplace Application
+- Designer Name, Email, Phone
+- Brand Name, Category
+- Description
+- Submission timestamp
+
+#### Studio Waitlist
+- Name, Email, Phone
+- Discipline, Preferred City
+- Submission timestamp
+
+#### Partnership Inquiry
+- Name, Email, Company
+- Partnership Type
+- Message
+- Submission timestamp
+
+#### Contact Inquiry
+- Name, Email
+- Subject
+- Message
+- Submission timestamp
+
+#### Newsletter Subscription
+- Email address
+- Subscription timestamp
+
+## Email Design
+
+All emails feature:
+- **Header**: Adorzia branding with black gradient background and gold accent
+- **Content**: Clean table layout with submission details
+- **Highlighted Sections**: Important information in gold-bordered boxes
+- **Footer**: Automated notification disclaimer
+- **Responsive**: Works on all email clients
 
 ## Admin Dashboard Access
 
-To view all spotlight applications:
+To view all submissions:
 
 1. Navigate to `/admin/login`
-2. Login with your Supabase credentials
-3. Click on "Spotlight Applications" tab
-4. View all submitted applications with full details
-
-## Database Schema
-
-Applications are stored in `spotlight_applications` table with:
-- `id` (UUID, auto-generated)
-- `name` (Applicant full name)
-- `email` (Applicant email)
-- `brand_name` (Fashion brand name)
-- `portfolio_url` (Optional portfolio link)
-- `description` (Contains phone, location, Instagram, and concept statement)
-- `created_at` (Timestamp)
+2. Login with Supabase credentials
+3. Select tab:
+   - **Spotlight** - Talent applications
+   - **Marketplace** - Seller applications
+   - **Studio Waitlist** - Membership signups
+   - **Partnership** - Business inquiries
+   - **Contact** - Contact messages
+   - **Newsletter** - Subscriber list
 
 ## Troubleshooting
 
 ### Email Not Sending
 
-1. Check console for Resend API errors
-2. Verify `VITE_RESEND_API_KEY` is correctly set
-3. Check Resend dashboard for delivery status
-4. Ensure you're not exceeding free tier limits (100 emails/day, 3,000/month)
+1. Check browser console for errors
+2. Verify `VITE_RESEND_API_KEY` is set correctly
+3. Check Resend dashboard at https://resend.com/emails
+4. Ensure you're within free tier limits (100 emails/day, 3,000/month)
+5. Check network tab for API call status
 
 ### Form Submission Fails
 
@@ -131,33 +167,41 @@ Applications are stored in `spotlight_applications` table with:
 3. Check browser console for errors
 4. Ensure all required fields are filled
 
-### Admin Dashboard Empty
+### Receiving Duplicate Emails
 
-1. Verify you're logged in
-2. Check Supabase table has data
-3. Verify RLS policies allow authenticated selects
-4. Refresh the page
+- Check if form is being submitted multiple times
+- Verify no duplicate event listeners
+- Check Resend dashboard for duplicate sends
 
 ## Security Notes
 
-- API key is exposed in client-side code (acceptable for Resend)
+- API key is in client-side code (acceptable for Resend)
 - Admin dashboard requires authentication
 - RLS policies restrict database access
-- Consider adding reCAPTCHA for production to prevent spam
+- Consider adding reCAPTCHA for production spam prevention
+- Email validation on all forms
 
 ## Cost
 
 Resend Free Tier:
 - 100 emails per day
 - 3,000 emails per month
-- Sufficient for application notifications
+- Sufficient for notification volume
 - Upgrade if needed: $20/month for 50,000 emails
+
+## Current Status
+
+✅ Resend API key configured
+✅ Email templates created for all 6 types
+✅ All forms integrated with notifications
+✅ Admin dashboard functional
+✅ Error handling implemented
+✅ Professional email design
 
 ## Next Steps
 
-- [ ] Get Resend API key
-- [ ] Update `.env` file
-- [ ] Test email notification
+- [ ] Test all notification types
 - [ ] Configure verified domain (optional)
-- [ ] Deploy to Vercel with environment variables
 - [ ] Monitor email delivery in Resend dashboard
+- [ ] Add reCAPTCHA for spam protection (optional)
+- [ ] Set up email analytics/tracking (optional)
