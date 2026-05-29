@@ -103,25 +103,6 @@ const Home = () => {
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0)
-  
-  // Calculate time until June 1, 2026
-  const calculateTimeLeft = () => {
-    const submissionDate = new Date('June 1, 2026 00:00:00').getTime()
-    const now = new Date().getTime()
-    const difference = submissionDate - now
-
-    if (difference > 0) {
-      return {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((difference % (1000 * 60)) / 1000)
-      }
-    }
-    return { days: 0, hours: 0, minutes: 0, seconds: 0 }
-  }
-
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -129,13 +110,6 @@ const Home = () => {
     }, 7000)
     return () => clearInterval(timer)
   }, [slides.length])
-
-  useEffect(() => {
-    const countdownInterval = setInterval(() => {
-      setTimeLeft(calculateTimeLeft())
-    }, 1000)
-    return () => clearInterval(countdownInterval)
-  }, [])
 
   return (
     <div className="min-h-screen bg-black text-neutral-100 selection:bg-[#bb9457] selection:text-black font-sans antialiased overflow-x-hidden">
@@ -238,20 +212,6 @@ const Home = () => {
         }
       `}</style>
 
-      {/* Industrial Application Countdown Bar */}
-      <div className="w-full bg-[#bb9457] text-black font-mono text-[10px] tracking-[0.35em] uppercase py-3 px-6 fixed top-0 left-0 right-0 z-50 flex justify-between items-center border-b border-black/5 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <span className="inline-block w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
-          <span className="font-semibold">Spotlight Submissions Open - June 1, 2026</span>
-        </div>
-        <div className="font-bold tracking-[0.2em] bg-black/10 px-3 py-1 rounded-sm">
-          <span>{timeLeft.days}D : {timeLeft.hours}H : {timeLeft.minutes}M : {timeLeft.seconds}S</span>
-        </div>
-      </div>
-
-      {/* Spacer for fixed countdown bar + header */}
-      <div className="h-[108px]" />
-
       {/* Section 1: Cinematic Full-Bleed Carousel Hero */}
       <section className="relative overflow-hidden border-b border-neutral-900 bg-black min-h-screen flex items-center">
         <div className="absolute inset-0 z-0">
@@ -332,13 +292,15 @@ const Home = () => {
 
         {/* Cinematic Slide Indicators */}
         <div className="absolute bottom-12 left-6 right-6 z-20 max-w-7xl mx-auto px-2 flex justify-between items-center border-t border-white/10 pt-6">
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             {slides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`h-[2px] transition-all duration-500 ${
-                  index === currentIndex ? 'w-20 bg-[#bb9457]' : 'w-6 bg-white/20 hover:bg-white/40'
+                className={`rounded-full transition-all duration-500 ${
+                  index === currentIndex 
+                    ? 'w-3 h-3 bg-[#bb9457] shadow-lg shadow-[#bb9457]/30' 
+                    : 'w-2 h-2 bg-white/20 hover:bg-white/40 hover:scale-125'
                 }`}
               />
             ))}

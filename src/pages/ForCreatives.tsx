@@ -135,39 +135,41 @@ const ForCreatives = () => {
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 lg:px-20 py-32 animate-fade-in-up">
-          <span className="inline-flex items-center gap-2 text-[#bb9457] uppercase tracking-[0.3em] text-[10px] font-mono font-semibold">
-            <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full animate-pulse" />
-            This page is for you
-          </span>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-32 animate-fade-in-up">
+          <div className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 text-[#bb9457] uppercase tracking-[0.3em] text-[10px] font-mono font-semibold">
+              <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full animate-pulse" />
+              This page is for you
+            </span>
 
-          <h1 className="mt-6 font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-white tracking-tight font-normal">
-            You have the talent.<br />
-            We built <span className="text-[#bb9457] italic font-light">everything else.</span>
-          </h1>
+            <h1 className="mt-6 font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.05] text-white tracking-tight font-normal">
+              You have the talent.<br />
+              We built <span className="text-[#bb9457] italic font-light">everything else.</span>
+            </h1>
 
-          <div className="mt-8 max-w-3xl space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
-            <p>
-              The workspace. The marketplace. The investor network. The national stage. Adorzia was designed from the ground up for one kind of person - the Pakistani creative who is serious about turning their craft into a career, and their career into a brand.
-            </p>
-            <p>
-              Whether you are a fashion graduate with your first collection forming, an independent designer ready to scale, a heritage craftsperson whose work deserves a global audience, or a fashion entrepreneur with a vision bigger than your current resources - you are exactly who Adorzia was built for.
-            </p>
-          </div>
+            <div className="mt-8 space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
+              <p>
+                The workspace. The marketplace. The investor network. The national stage. Adorzia was designed from the ground up for one kind of person - the Pakistani creative who is serious about turning their craft into a career, and their career into a brand.
+              </p>
+              <p>
+                Whether you are a fashion graduate with your first collection forming, an independent designer ready to scale, a heritage craftsperson whose work deserves a global audience, or a fashion entrepreneur with a vision bigger than your current resources - you are exactly who Adorzia was built for.
+              </p>
+            </div>
 
-          <div className="mt-12 flex flex-wrap gap-5">
-            <a
-              href="/spotlight-event"
-              className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300"
-            >
-              Apply for Spotlight 2026
-            </a>
-            <a
-              href="#what-we-offer"
-              className="px-8 py-4 border border-white/20 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300"
-            >
-              Explore what we offer
-            </a>
+            <div className="mt-12 flex flex-wrap gap-5">
+              <a
+                href="/spotlight-event"
+                className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300"
+              >
+                Apply for Spotlight 2026
+              </a>
+              <a
+                href="#what-we-offer"
+                className="px-8 py-4 border border-white/20 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300"
+              >
+                Explore what we offer
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -200,7 +202,11 @@ const ForCreatives = () => {
             ].map((offer, idx) => (
               <div key={idx} className="group relative bg-neutral-950/60 backdrop-blur-md border border-neutral-800 rounded-sm overflow-hidden hover:border-[#bb9457]/40 transition-all duration-500">
                 <div className="aspect-[4/3] overflow-hidden relative">
-                  <img src={offer.image} alt={offer.title} className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700" />
+                  <img 
+                    src={offer.image} 
+                    alt={offer.title} 
+                    className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
                 <div className="p-8 relative">
@@ -215,11 +221,7 @@ const ForCreatives = () => {
       </section>
 
       {/* Coworking Studios */}
-      <section className="py-40 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={coworking} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-neutral-950" />
-        </div>
+      <section className="py-40 bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
           <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -235,14 +237,14 @@ const ForCreatives = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="space-y-6">
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Adorzia Studios</span>
-              <h2 className="font-serif text-3xl md:text-5xl text-white font-normal tracking-tight">
+              <h2 className="font-serif text-3xl md:text-5xl text-neutral-900 font-normal tracking-tight">
                 Your city has a studio waiting for you.
               </h2>
-              <div className="space-y-4 text-neutral-400 font-light text-base leading-relaxed">
+              <div className="space-y-4 text-neutral-600 font-light text-base leading-relaxed">
                 <p>
                   Great fashion is not made in isolation. It is made in spaces where ideas collide, where fabric and form and ambition share the same room, where the person at the next table understands exactly what you are building and why it matters.
                 </p>
-                <p className="text-white font-normal">
+                <p className="text-neutral-900 font-normal">
                   That is what Adorzia Studios are.
                 </p>
                 <p>
@@ -250,9 +252,12 @@ const ForCreatives = () => {
                 </p>
               </div>
             </div>
-            <div className="aspect-[4/5] overflow-hidden rounded-sm border border-neutral-900 relative group">
-              <img src={coworking} alt="Studio Workspace" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            <div className="aspect-[4/5] overflow-hidden rounded-sm border border-neutral-200 relative group">
+              <img 
+                src={coworking} 
+                alt="Studio Workspace" 
+                className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+              />
             </div>
           </div>
 
@@ -263,25 +268,25 @@ const ForCreatives = () => {
               { title: "Business infrastructure", body: "High-speed internet, meeting rooms for client sessions, photography corners for product shoots, and the professional environment your brand needs to operate from." },
               { title: "Mentorship access", body: "Studio members get first access to Adorzia's growing network of industry mentors, business advisors, and creative professionals who visit, host sessions, and invest time in our community." }
             ].map((item, idx) => (
-              <div key={idx} className="p-8 bg-neutral-950/50 backdrop-blur-md border border-neutral-800 rounded-sm hover:border-[#bb9457]/40 transition-all duration-500">
-                <h3 className="font-serif text-xl text-white font-normal mb-3">{item.title}</h3>
-                <p className="text-sm text-neutral-400 font-light leading-relaxed">{item.body}</p>
+              <div key={idx} className="p-8 bg-neutral-50 border border-neutral-200 rounded-sm hover:border-[#bb9457]/40 hover:shadow-lg hover:shadow-[#bb9457]/10 transition-all duration-500">
+                <h3 className="font-serif text-xl text-neutral-900 font-normal mb-3">{item.title}</h3>
+                <p className="text-sm text-neutral-600 font-light leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
 
           <div className="mt-20 grid md:grid-cols-3 gap-8">
-            <div className="border border-neutral-900 p-8 rounded-sm text-center">
+            <div className="border border-neutral-200 bg-white p-8 rounded-sm text-center hover:border-[#bb9457]/40 hover:shadow-lg transition-all duration-300">
               <h4 className="font-serif text-2xl text-[#bb9457] mb-2">Lahore</h4>
-              <p className="text-neutral-400 text-sm">Opening 2026</p>
+              <p className="text-neutral-600 text-sm">Opening 2026</p>
             </div>
-            <div className="border border-neutral-900 p-8 rounded-sm text-center">
+            <div className="border border-neutral-200 bg-white p-8 rounded-sm text-center hover:border-[#bb9457]/40 hover:shadow-lg transition-all duration-300">
               <h4 className="font-serif text-2xl text-[#bb9457] mb-2">Islamabad</h4>
-              <p className="text-neutral-400 text-sm">Opening 2026</p>
+              <p className="text-neutral-600 text-sm">Opening 2026</p>
             </div>
-            <div className="border border-neutral-900 p-8 rounded-sm text-center">
+            <div className="border border-neutral-200 bg-white p-8 rounded-sm text-center hover:border-[#bb9457]/40 hover:shadow-lg transition-all duration-300">
               <h4 className="font-serif text-2xl text-[#bb9457] mb-2">Karachi</h4>
-              <p className="text-neutral-400 text-sm">Opening 2026</p>
+              <p className="text-neutral-600 text-sm">Opening 2026</p>
             </div>
           </div>
 
@@ -311,24 +316,29 @@ const ForCreatives = () => {
       </section>
 
       {/* Studio Waitlist Form */}
-      <section id="studio-waitlist" className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
+      <section id="studio-waitlist" className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-950">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.08),transparent_70%)]" />
         
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Join the waitlist</span>
             <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
               Secure your place in the first Adorzia Studio.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-lg">
-              Studios open in 2026. Join the waitlist now and get priority access when we launch.
+              Studios open in 2026. Join the waitlist now and get priority access.
             </p>
           </div>
 
           {waitlistSubmitted ? (
-            <div className="p-12 border border-[#bb9457]/30 rounded-sm bg-neutral-950 text-center">
+            <div className="p-12 border border-[#bb9457]/30 rounded-sm bg-neutral-900/50 text-center">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-[#bb9457]/20 flex items-center justify-center">
+                <svg className="w-8 h-8 text-[#bb9457]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
               <p className="text-white font-light text-lg mb-4">
-                You are on the list. We will reach out before our studios open with priority membership offers and founding member rates.
+                You are on the list. We will reach out before our studios open with priority membership offers.
               </p>
               <button 
                 onClick={() => setWaitlistSubmitted(false)} 
@@ -338,237 +348,218 @@ const ForCreatives = () => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleWaitlistSubmit} className="space-y-8">
-              {/* Personal Information */}
-              <div className="p-8 border border-neutral-800 rounded-sm bg-neutral-950/50">
-                <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold mb-6">Personal information</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Full name *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      value={waitlistForm.name}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
-                      placeholder="Your full name" 
-                    />
-                  </div>
+            <form onSubmit={handleWaitlistSubmit} className="space-y-6 p-10 border border-neutral-800 rounded-sm bg-neutral-900/30 backdrop-blur-sm">
+              {/* Name */}
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Full name *</label>
+                <input 
+                  type="text" 
+                  required 
+                  value={waitlistForm.name}
+                  onChange={(e) => setWaitlistForm({ ...waitlistForm, name: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors placeholder:text-neutral-600" 
+                  placeholder="Your full name" 
+                />
+              </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Email address *</label>
-                      <input 
-                        type="email" 
-                        required 
-                        value={waitlistForm.email}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
-                        className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
-                        placeholder="your@email.com" 
-                      />
-                    </div>
-                    <div>
-                      <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Phone number *</label>
-                      <input 
-                        type="tel" 
-                        required 
-                        value={waitlistForm.phone}
-                        onChange={(e) => setWaitlistForm({ ...waitlistForm, phone: e.target.value })}
-                        className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
-                        placeholder="+92 XXX XXXXXXX" 
-                      />
-                    </div>
-                  </div>
+              {/* Email & Phone */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Email address *</label>
+                  <input 
+                    type="email" 
+                    required 
+                    value={waitlistForm.email}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, email: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors placeholder:text-neutral-600" 
+                    placeholder="your@email.com" 
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Phone number *</label>
+                  <input 
+                    type="tel" 
+                    required 
+                    value={waitlistForm.phone}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, phone: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors placeholder:text-neutral-600" 
+                    placeholder="+92 XXX XXXXXXX" 
+                  />
                 </div>
               </div>
 
               {/* Location */}
-              <div className="p-8 border border-neutral-800 rounded-sm bg-neutral-950/50">
-                <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold mb-6">Location preferences</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Current city *</label>
-                    <input 
-                      type="text" 
-                      required 
-                      value={waitlistForm.current_city}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, current_city: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
-                      placeholder="Lahore" 
-                    />
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Preferred studio location *</label>
-                    <select 
-                      required 
-                      value={waitlistForm.preferred_city}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, preferred_city: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
-                    >
-                      <option value="" className="bg-neutral-950">Select a city</option>
-                      <option value="lahore" className="bg-neutral-950">Lahore</option>
-                      <option value="islamabad" className="bg-neutral-950">Islamabad</option>
-                      <option value="karachi" className="bg-neutral-950">Karachi</option>
-                    </select>
-                  </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Current city *</label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={waitlistForm.current_city}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, current_city: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors placeholder:text-neutral-600" 
+                    placeholder="Lahore" 
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Preferred studio *</label>
+                  <select 
+                    required 
+                    value={waitlistForm.preferred_city}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, preferred_city: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                  >
+                    <option value="" className="bg-neutral-950">Select a city</option>
+                    <option value="lahore" className="bg-neutral-950">Lahore</option>
+                    <option value="islamabad" className="bg-neutral-950">Islamabad</option>
+                    <option value="karachi" className="bg-neutral-950">Karachi</option>
+                  </select>
                 </div>
               </div>
 
-              {/* Creative Background */}
-              <div className="p-8 border border-neutral-800 rounded-sm bg-neutral-950/50">
-                <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold mb-6">Creative background</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Primary discipline *</label>
-                    <select 
-                      required 
-                      value={waitlistForm.discipline}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, discipline: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
-                    >
-                      <option value="" className="bg-neutral-950">Select your discipline</option>
-                      <option value="fashion design" className="bg-neutral-950">Fashion design</option>
-                      <option value="textile design" className="bg-neutral-950">Textile design</option>
-                      <option value="accessories" className="bg-neutral-950">Accessories</option>
-                      <option value="photography" className="bg-neutral-950">Photography</option>
-                      <option value="styling" className="bg-neutral-950">Styling</option>
-                      <option value="other" className="bg-neutral-950">Other</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Years of experience *</label>
-                    <select 
-                      required 
-                      value={waitlistForm.years_experience}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, years_experience: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
-                    >
-                      <option value="" className="bg-neutral-950">Select experience level</option>
-                      <option value="less than 1 year" className="bg-neutral-950">Less than 1 year</option>
-                      <option value="1-3 years" className="bg-neutral-950">1-3 years</option>
-                      <option value="3-5 years" className="bg-neutral-950">3-5 years</option>
-                      <option value="5+ years" className="bg-neutral-950">5+ years</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Current workspace *</label>
-                    <select 
-                      required 
-                      value={waitlistForm.current_workspace}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, current_workspace: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
-                    >
-                      <option value="" className="bg-neutral-950">Select current workspace</option>
-                      <option value="home studio" className="bg-neutral-950">Home studio</option>
-                      <option value="shared space" className="bg-neutral-950">Shared space</option>
-                      <option value="no workspace" className="bg-neutral-950">No dedicated workspace</option>
-                      <option value="other" className="bg-neutral-950">Other</option>
-                    </select>
-                  </div>
+              {/* Discipline & Experience */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Primary discipline *</label>
+                  <select 
+                    required 
+                    value={waitlistForm.discipline}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, discipline: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                  >
+                    <option value="" className="bg-neutral-950">Select discipline</option>
+                    <option value="fashion design" className="bg-neutral-950">Fashion design</option>
+                    <option value="textile design" className="bg-neutral-950">Textile design</option>
+                    <option value="accessories" className="bg-neutral-950">Accessories</option>
+                    <option value="photography" className="bg-neutral-950">Photography</option>
+                    <option value="styling" className="bg-neutral-950">Styling</option>
+                    <option value="other" className="bg-neutral-950">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Years of experience *</label>
+                  <select 
+                    required 
+                    value={waitlistForm.years_experience}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, years_experience: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                  >
+                    <option value="" className="bg-neutral-950">Select experience</option>
+                    <option value="less than 1 year" className="bg-neutral-950">Less than 1 year</option>
+                    <option value="1-3 years" className="bg-neutral-950">1-3 years</option>
+                    <option value="3-5 years" className="bg-neutral-950">3-5 years</option>
+                    <option value="5+ years" className="bg-neutral-950">5+ years</option>
+                  </select>
                 </div>
               </div>
 
-              {/* Membership Interest */}
-              <div className="p-8 border border-neutral-800 rounded-sm bg-neutral-950/50">
-                <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold mb-6">Membership interest</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Preferred membership type *</label>
-                    <select 
-                      required 
-                      value={waitlistForm.membership_type}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, membership_type: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
-                    >
-                      <option value="" className="bg-neutral-950">Select membership type</option>
-                      <option value="part_time" className="bg-neutral-950">Part-time (2-3 days per week)</option>
-                      <option value="full_time" className="bg-neutral-950">Full-time (5 days per week)</option>
-                      <option value="project_based" className="bg-neutral-950">Project-based (flexible access)</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                      When do you plan to start?<br />
-                      <span className="text-neutral-600">(Optional)</span>
-                    </label>
-                    <select 
-                      value={waitlistForm.intended_start_date}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, intended_start_date: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
-                    >
-                      <option value="" className="bg-neutral-950">Select timeline</option>
-                      <option value="immediately" className="bg-neutral-950">Immediately when available</option>
-                      <option value="within 3 months" className="bg-neutral-950">Within 3 months</option>
-                      <option value="3-6 months" className="bg-neutral-950">3-6 months</option>
-                      <option value="6+ months" className="bg-neutral-950">6+ months</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                      Why do you want to join an Adorzia Studio? *
-                    </label>
-                    <textarea 
-                      required 
-                      rows={5}
-                      value={waitlistForm.why_studio}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, why_studio: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" 
-                      placeholder="Tell us what you are working on and how a dedicated studio space would help..." 
-                    />
-                  </div>
+              {/* Workspace & Membership */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Current workspace *</label>
+                  <select 
+                    required 
+                    value={waitlistForm.current_workspace}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, current_workspace: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                  >
+                    <option value="" className="bg-neutral-950">Select workspace</option>
+                    <option value="home studio" className="bg-neutral-950">Home studio</option>
+                    <option value="shared space" className="bg-neutral-950">Shared space</option>
+                    <option value="no workspace" className="bg-neutral-950">No dedicated workspace</option>
+                    <option value="other" className="bg-neutral-950">Other</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Membership type *</label>
+                  <select 
+                    required 
+                    value={waitlistForm.membership_type}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, membership_type: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                  >
+                    <option value="" className="bg-neutral-950">Select type</option>
+                    <option value="part_time" className="bg-neutral-950">Part-time (2-3 days/week)</option>
+                    <option value="full_time" className="bg-neutral-950">Full-time (5 days/week)</option>
+                    <option value="project_based" className="bg-neutral-950">Project-based</option>
+                  </select>
                 </div>
               </div>
 
-              {/* Optional Links */}
-              <div className="p-8 border border-neutral-800 rounded-sm bg-neutral-950/50">
-                <h3 className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold mb-6">Portfolio and social</h3>
-                
-                <div className="space-y-6">
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                      Portfolio or website<br />
-                      <span className="text-neutral-600">(Optional)</span>
-                    </label>
-                    <input 
-                      type="url" 
-                      value={waitlistForm.portfolio_url}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, portfolio_url: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
-                      placeholder="https://" 
-                    />
-                  </div>
+              {/* Start Date */}
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">When do you plan to start?</label>
+                <select 
+                  value={waitlistForm.intended_start_date}
+                  onChange={(e) => setWaitlistForm({ ...waitlistForm, intended_start_date: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors"
+                >
+                  <option value="" className="bg-neutral-950">Select timeline (optional)</option>
+                  <option value="immediately" className="bg-neutral-950">Immediately when available</option>
+                  <option value="within 3 months" className="bg-neutral-950">Within 3 months</option>
+                  <option value="3-6 months" className="bg-neutral-950">3-6 months</option>
+                  <option value="6+ months" className="bg-neutral-950">6+ months</option>
+                </select>
+              </div>
 
-                  <div>
-                    <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">
-                      Instagram handle<br />
-                      <span className="text-neutral-600">(Optional)</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      value={waitlistForm.instagram_handle}
-                      onChange={(e) => setWaitlistForm({ ...waitlistForm, instagram_handle: e.target.value })}
-                      className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" 
-                      placeholder="@yourhandle" 
-                    />
-                  </div>
+              {/* Why Studio */}
+              <div>
+                <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Why do you want to join? *</label>
+                <textarea 
+                  required 
+                  rows={4}
+                  value={waitlistForm.why_studio}
+                  onChange={(e) => setWaitlistForm({ ...waitlistForm, why_studio: e.target.value })}
+                  className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none placeholder:text-neutral-600" 
+                  placeholder="Tell us what you are working on and how a studio space would help..." 
+                />
+              </div>
+
+              {/* Portfolio & Instagram */}
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Portfolio or website</label>
+                  <input 
+                    type="url" 
+                    value={waitlistForm.portfolio_url}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, portfolio_url: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors placeholder:text-neutral-600" 
+                    placeholder="https://" 
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Instagram handle</label>
+                  <input 
+                    type="text" 
+                    value={waitlistForm.instagram_handle}
+                    onChange={(e) => setWaitlistForm({ ...waitlistForm, instagram_handle: e.target.value })}
+                    className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors placeholder:text-neutral-600" 
+                    placeholder="@yourhandle" 
+                  />
                 </div>
               </div>
 
               <button 
                 type="submit" 
                 disabled={waitlistSubmitting}
-                className="w-full px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 disabled:opacity-50"
+                className="w-full px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300 disabled:opacity-50 flex items-center justify-center gap-3 group"
               >
-                {waitlistSubmitting ? 'Submitting...' : 'Join the studio waitlist'}
+                {waitlistSubmitting ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Join the studio waitlist
+                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </>
+                )}
               </button>
             </form>
           )}
@@ -656,59 +647,42 @@ const ForCreatives = () => {
       </section>
 
       {/* Spotlight Event */}
-      <section className="py-48 relative overflow-hidden">
+      <section className="py-40 relative overflow-hidden">
         <div className="absolute inset-0">
           <img src={spotlight} alt="" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#6f1d1b] via-[#6f1d1b]/90 to-[#6f1d1b]/70" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_60%)] pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(187,148,87,0.1),transparent_50%)] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Adorzia Spotlight</span>
-            <h2 className="mt-4 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
-              One event. One investment. One career that changes forever.
-            </h2>
-            <div className="mt-6 space-y-4 text-white/90 font-light text-base md:text-lg leading-relaxed">
-              <p>
+          <div className="grid lg:grid-cols-2 gap-16 items-start mb-20">
+            <div className="space-y-6">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Adorzia Spotlight</span>
+              <h2 className="font-serif text-4xl md:text-5xl text-white font-normal tracking-tight leading-tight">
+                One event. One investment. One career that changes forever.
+              </h2>
+              <p className="text-white/80 font-light text-base md:text-lg leading-relaxed">
+                Our annual talent competition gives extraordinary Pakistani fashion designers a national stage, direct investment, and the mentorship to become brands the world knows.
               </p>
-              <p>
-              </p>
-              <p>
-              </p>
+            </div>
+            
+            <div className="grid sm:grid-cols-2 gap-6">
+              {[
+                { num: "01", title: "National visibility", body: "Present your work to industry leaders, investors, buyers, and press at a live event." },
+                { num: "02", title: "Direct investment", body: "Winners receive capital to produce, scale, and launch - not a prize, a partnership." },
+                { num: "03", title: "Expert mentorship", body: "Paired with mentors from fashion, business, and creative industries." },
+                { num: "04", title: "Long-term support", body: "We build with you - branding, strategy, positioning, and production support." }
+              ].map((item, idx) => (
+                <div key={idx} className="p-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-sm hover:border-[#bb9457]/60 transition-all duration-500 group">
+                  <div className="font-mono text-[#bb9457] text-xs uppercase tracking-widest mb-3">{item.num}</div>
+                  <h3 className="font-serif text-lg text-white font-normal mb-2 group-hover:text-[#bb9457] transition-colors">{item.title}</h3>
+                  <p className="text-sm text-white/70 font-light leading-relaxed">{item.body}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 mb-20">
-            {[
-              { title: "Visibility at a national scale", body: "Selected finalists are presented to an audience of industry figures, investors, buyers, press, and the Pakistani public - at a live event that puts their work in front of the people who can move their career forward overnight." },
-              { title: "Direct investment", body: "Spotlight winners receive direct investment from Adorzia and our partner network - capital to produce, scale, and launch their brand properly. Not a prize. A partnership." },
-              { title: "Mentorship from people who have done it", body: "Every Spotlight finalist is paired with mentors from within the fashion, business, and creative industries - people who understand both the craft and the commerce of building a fashion brand." },
-              { title: "A brand built with you", body: "Adorzia does not hand winners a trophy and a press release. We sit down with them and build. Branding, strategy, market positioning, production support - we are in it with you for the long term." }
-            ].map((item, idx) => (
-              <div key={idx} className="p-8 bg-white/5 backdrop-blur-md border border-white/20 rounded-sm hover:border-[#bb9457]/60 transition-all duration-500">
-                <h3 className="font-serif text-xl text-white font-normal mb-3">{item.title}</h3>
-                <p className="text-sm text-white/70 font-light leading-relaxed">{item.body}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <div className="inline-block p-12 border border-white/30 rounded-sm bg-black/40 backdrop-blur-xl">
-              <h3 className="font-serif text-2xl text-white font-normal mb-4">Spotlight Fall 2026 - our first ever:</h3>
-              <p className="text-[#bb9457] font-mono text-sm uppercase tracking-widest mb-2">Submissions open: June 1, 2026</p>
-              <p className="text-white/70 font-light">This is the beginning of something. Be part of the first chapter.</p>
-            </div>
-            <div className="mt-8 flex flex-wrap justify-center gap-5">
-              <a href="/spotlight-event" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300">
-                Apply for Spotlight 2026
-              </a>
-              <a href="/spotlight-event" className="inline-block px-8 py-4 border border-white/40 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
-                Learn everything about the event
-              </a>
-            </div>
-          </div>
+          
         </div>
       </section>
 
@@ -745,19 +719,29 @@ const ForCreatives = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-20">
-            {[
-              { title: "A dedicated marketplace presence", body: "Heritage craft listings on Adorzia are presented as their own category - with the context, the cultural story, and the premium positioning that this work commands." },
-              { title: "Storytelling support", body: "We work with every heritage maker to document and communicate the tradition behind their craft - in a language that connects with buyers internationally without diluting the authenticity of what they make." },
-              { title: "Pricing guidance", body: "Heritage craft in Pakistan is chronically underpriced. We help makers understand the true market value of their work and price it accordingly - because what you make is not cheap, and we will never present it as though it is." },
-              { title: "Spotlight eligibility", body: "Heritage craftspeople are fully eligible for Adorzia Spotlight. A master weaver with a vision for how their tradition becomes a contemporary brand is exactly the kind of visionary we are looking for." },
-              { title: "Community and connection", body: "The Heritage Craft Program connects makers with designers who want to collaborate, buyers who want to commission, and a community of people who believe that Pakistan's craft traditions belong at the center of its fashion future - not at the margins." }
-            ].map((item, idx) => (
-              <div key={idx} className="p-8 bg-neutral-950/60 backdrop-blur-md border border-neutral-800 rounded-sm hover:border-[#bb9457]/40 transition-all duration-500">
-                <h3 className="font-serif text-xl text-white font-normal mb-3">{item.title}</h3>
-                <p className="text-sm text-neutral-400 font-light leading-relaxed">{item.body}</p>
-              </div>
-            ))}
+          <div className="mt-20 space-y-6">
+            {/* First Row - 4 Boxes */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: "A dedicated marketplace presence", body: "Heritage craft listings on Adorzia are presented as their own category - with the context, the cultural story, and the premium positioning that this work commands." },
+                { title: "Storytelling support", body: "We work with every heritage maker to document and communicate the tradition behind their craft - in a language that connects with buyers internationally without diluting the authenticity of what they make." },
+                { title: "Pricing guidance", body: "Heritage craft in Pakistan is chronically underpriced. We help makers understand the true market value of their work and price it accordingly - because what you make is not cheap, and we will never present it as though it is." },
+                { title: "Spotlight eligibility", body: "Heritage craftspeople are fully eligible for Adorzia Spotlight. A master weaver with a vision for how their tradition becomes a contemporary brand is exactly the kind of visionary we are looking for." }
+              ].map((item, idx) => (
+                <div key={idx} className="p-8 bg-neutral-950/60 backdrop-blur-md border border-neutral-800 rounded-sm hover:border-[#bb9457]/40 transition-all duration-500">
+                  <div className="font-mono text-[#bb9457] text-xs uppercase tracking-widest mb-4">0{idx + 1}</div>
+                  <h3 className="font-serif text-xl text-white font-normal mb-3">{item.title}</h3>
+                  <p className="text-sm text-neutral-400 font-light leading-relaxed">{item.body}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Second Row - 1 Full Width Box */}
+            <div className="p-8 bg-neutral-950/60 backdrop-blur-md border border-neutral-800 rounded-sm hover:border-[#bb9457]/40 transition-all duration-500">
+              <div className="font-mono text-[#bb9457] text-xs uppercase tracking-widest mb-4">05</div>
+              <h3 className="font-serif text-xl text-white font-normal mb-3">Community and connection</h3>
+              <p className="text-sm text-neutral-400 font-light leading-relaxed">The Heritage Craft Program connects makers with designers who want to collaborate, buyers who want to commission, and a community of people who believe that Pakistan's craft traditions belong at the center of its fashion future - not at the margins.</p>
+            </div>
           </div>
 
           <div className="mt-12 flex flex-wrap justify-center gap-5">
@@ -772,33 +756,49 @@ const ForCreatives = () => {
       </section>
 
       {/* Designer Success Stories */}
-      <section className="py-40 relative overflow-hidden border-b border-neutral-900">
-        <div className="absolute inset-0">
-          <img src={heroHome} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-black" />
+      <section className="py-40 bg-white relative overflow-hidden border-b border-neutral-200">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="stories-grid" width="80" height="80" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 80 40 L 40 80 L 0 40 Z" fill="none" stroke="#bb9457" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#stories-grid)" />
+          </svg>
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.08),transparent_60%)] pointer-events-none" />
         
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The community speaks</span>
-          <h2 className="mt-4 font-serif text-3xl md:text-5xl text-white font-normal tracking-tight">
-            These stories are just beginning. Yours could be next.
-          </h2>
-          <div className="space-y-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-            <p>
-              Adorzia launched in 2025. We are early, we are building, and we are honest about the fact that our greatest success stories are still being written - by the designers, makers, and fashion entrepreneurs who are joining us right now at the ground floor.
-            </p>
-            <p>
-              We will fill this section with real voices, real journeys, and real transformations as our community grows. If you join Adorzia today, your story could be the one that inspires the next generation of Pakistani fashion entrepreneurs.
-            </p>
-          </div>
-          <p className="mt-8 text-[#bb9457] font-mono text-xs uppercase tracking-widest">
-            First stories publishing after Spotlight Fall 2026.
-          </p>
-          <div className="mt-12">
-            <a href="/spotlight-event" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300">
-              Be one of the first
-            </a>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div className="space-y-6">
+              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The community speaks</span>
+              <h2 className="font-serif text-3xl md:text-5xl text-neutral-900 font-normal tracking-tight">
+                These stories are just beginning. Yours could be next.
+              </h2>
+              <div className="space-y-4 text-neutral-600 font-light text-base md:text-lg leading-relaxed">
+                <p>
+                  Adorzia launched in 2025. We are early, we are building, and we are honest about the fact that our greatest success stories are still being written - by the designers, makers, and fashion entrepreneurs who are joining us right now at the ground floor.
+                </p>
+                <p>
+                  We will fill this section with real voices, real journeys, and real transformations as our community grows. If you join Adorzia today, your story could be the one that inspires the next generation of Pakistani fashion entrepreneurs.
+                </p>
+              </div>
+              <p className="text-[#bb9457] font-mono text-xs uppercase tracking-widest">
+                First stories publishing after Spotlight Fall 2026.
+              </p>
+              <div className="pt-4">
+                <a href="/spotlight-event" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-neutral-900 hover:text-white transition-all duration-300">
+                  Be one of the first
+                </a>
+              </div>
+            </div>
+            <div className="aspect-[4/5] overflow-hidden rounded-sm border border-neutral-200 relative group">
+              <img 
+                src={heroHome} 
+                alt="Designer Success Stories" 
+                className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+              />
+            </div>
           </div>
         </div>
       </section>

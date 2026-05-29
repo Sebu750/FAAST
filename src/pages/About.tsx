@@ -40,38 +40,62 @@ interface Member {
   bio: string
 }
 
-const TeamGrid = ({ eyebrow, title, intro, members, columns }: { eyebrow: string; title: string; intro?: string; members: Member[]; columns: number }) => (
+const TeamGrid = ({ eyebrow, title, intro, members, columns }: { eyebrow: string; title: string; intro?: string; members: Member[]; columns: number }) => {
+  const isLightBg = title.includes('operators')
+  
+  return (
   <div>
     <div className="max-w-3xl mb-20">
       <Eyebrow>{eyebrow}</Eyebrow>
-      <h2 className="mt-4 font-serif text-3xl md:text-5xl text-white font-normal tracking-tight">{title}</h2>
-      {intro && <p className="mt-4 text-neutral-400 font-light text-sm md:text-base leading-relaxed">{intro}</p>}
+      <h2 className={`mt-4 font-serif text-3xl md:text-5xl font-normal tracking-tight ${isLightBg ? 'text-neutral-900' : 'text-white'}`}>{title}</h2>
+      {intro && <p className={`mt-4 font-light text-sm md:text-base leading-relaxed ${isLightBg ? 'text-neutral-600' : 'text-neutral-400'}`}>{intro}</p>}
     </div>
     
-    <div className={`grid gap-px bg-neutral-900 border border-neutral-900 rounded-sm overflow-hidden ${
+    <div className={`grid gap-6 ${
       columns === 4 ? 'sm:grid-cols-2 md:grid-cols-4' : 'sm:grid-cols-2 lg:grid-cols-3'
     }`}>
       {members.map((m, idx) => (
-        <div key={idx} className="bg-neutral-950 p-8 hover:bg-neutral-900/60 transition-colors duration-300 flex flex-col justify-between group">
+        <div key={idx} className={`p-6 rounded-sm transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 ${
+          isLightBg 
+            ? 'bg-white border border-neutral-200 hover:border-[#bb9457]/30 hover:shadow-xl hover:shadow-[#bb9457]/10' 
+            : 'bg-neutral-950 border border-neutral-800 hover:bg-neutral-900/60'
+        }`}>
           <div>
             {m.image ? (
-              <div className="aspect-[4/5] w-full overflow-hidden mb-6 bg-neutral-900 rounded-sm">
-                <img src={m.image} alt={m.name} className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+              <div className="aspect-[4/5] w-full overflow-hidden mb-6 rounded-sm">
+                <img 
+                  src={m.image} 
+                  alt={m.name} 
+                  className={`w-full h-full object-cover transition-all duration-700 ${
+                    isLightBg 
+                      ? 'grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105' 
+                      : 'grayscale contrast-125 group-hover:scale-105'
+                  }`} 
+                />
               </div>
             ) : (
-              <div className="aspect-[4/5] w-full mb-6 bg-neutral-900 flex items-center justify-center font-mono text-2xl text-neutral-700 font-light border border-neutral-800 rounded-sm group-hover:text-[#bb9457] transition-colors">
-                {m.initials || "FA"}
+              <div className={`aspect-[4/5] w-full mb-6 flex items-center justify-center font-mono text-2xl font-light border rounded-sm transition-colors ${
+                isLightBg 
+                  ? 'bg-neutral-100 border-neutral-200 text-neutral-400 group-hover:text-[#bb9457] group-hover:border-[#bb9457]/30' 
+                  : 'bg-neutral-900 border-neutral-800 text-neutral-700 group-hover:text-[#bb9457]'
+              }`}>
+                FA
               </div>
             )}
-            <h4 className="font-serif text-lg text-white font-normal group-hover:text-[#bb9457] transition-colors">{m.name}</h4>
+            <h4 className={`font-serif text-lg font-normal transition-colors ${
+              isLightBg ? 'text-neutral-900 group-hover:text-[#bb9457]' : 'text-white group-hover:text-[#bb9457]'
+            }`}>{m.name}</h4>
             <div className="text-[10px] font-mono text-[#bb9457] uppercase tracking-widest mt-1 mb-4">{m.role}</div>
           </div>
-          <p className="text-xs text-neutral-500 font-light leading-relaxed mt-2">{m.bio}</p>
+          <p className={`text-xs font-light leading-relaxed mt-2 ${
+            isLightBg ? 'text-neutral-600' : 'text-neutral-500'
+          }`}>{m.bio}</p>
         </div>
       ))}
     </div>
   </div>
-)
+  )
+}
 
 const About = () => {
   const [scrollY, setScrollY] = useState(0)
@@ -124,8 +148,8 @@ const About = () => {
 
   const coreTeam = [
     { name: "Haseeb Malik", role: "Founder & Creative Director", image: founder, bio: "Multi-disciplinary operator at the intersection of fashion design, enterprise software, and brand strategy. Built Adorzia to close the infrastructure gap for Pakistani fashion entrepreneurs." },
-    { name: "Ayesha Rahman", role: "Head of Studio Operations", image: studio, bio: "Oversees the design, launch, and daily operations of Adorzia's coworking fashion studios across Karachi, Lahore, and Islamabad." },
-    { name: "Sara Malik", role: "Marketplace Curator", image: spotlight, bio: "Manages the curated digital marketplace, connecting independent designers and heritage artisans with international collectors and buyers." }
+    { name: "Ayesha Rahman", role: "Head of Studio Operations", image: founder, bio: "Oversees the design, launch, and daily operations of Adorzia's coworking fashion studios across Karachi, Lahore, and Islamabad." },
+    { name: "Sara Malik", role: "Marketplace Curator", image: founder, bio: "Manages the curated digital marketplace, connecting independent designers and heritage artisans with international collectors and buyers." }
   ]
 
   const advisoryBoard = [
@@ -373,14 +397,6 @@ const About = () => {
               </p>
             </div>
           </div>
-          <div className={`grid lg:grid-cols-2 gap-8 transition-all duration-1000 delay-300 ${isVisible['problem'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
-            <div className="overflow-hidden rounded-sm border border-neutral-200 hover-lift group">
-              <img src={studio} alt="Artisan Craftsmanship" className="w-full h-80 object-cover scale-110 group-hover:scale-115 transition-transform duration-700" />
-            </div>
-            <div className="overflow-hidden rounded-sm border border-neutral-200 hover-lift group">
-              <img src={spotlight} alt="Design Workspace" className="w-full h-80 object-cover scale-110 group-hover:scale-115 transition-transform duration-700" />
-            </div>
-          </div>
         </Container>
       </Section>
 
@@ -519,7 +535,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 6: CORE TEAM --- */}
-      <Section className="border-b border-black bg-neutral-950 py-32">
+      <Section className="border-b border-neutral-200 bg-white py-32">
         <Container>
           <TeamGrid
             eyebrow="06 / CORE TEAM"
@@ -532,15 +548,38 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 7: ADVISORY BOARD --- */}
-      <Section className="border-b border-black bg-neutral-950 py-32">
+      <Section className="border-b border-neutral-800 bg-neutral-950 py-32">
         <Container>
-          <TeamGrid
-            eyebrow="07 / ADVISORY BOARD"
-            title="Strategic guidance from industry leaders."
-            intro="Advisors bringing decades of expertise in textile heritage, fashion business strategy, and sustainable fashion development."
-            members={advisoryBoard}
-            columns={3}
-          />
+          <div className="max-w-3xl mb-20">
+            <Eyebrow>07 / ADVISORY BOARD</Eyebrow>
+            <h2 className="mt-4 font-serif text-3xl md:text-5xl text-white font-normal tracking-tight">Strategic guidance from industry leaders.</h2>
+            <p className="mt-4 text-neutral-400 font-light text-sm md:text-base leading-relaxed">Advisors bringing decades of expertise in textile heritage, fashion business strategy, and sustainable fashion development.</p>
+          </div>
+          
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {advisoryBoard.map((m, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-sm transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 hover:shadow-xl hover:shadow-white/10 border border-neutral-200">
+                <div>
+                  {m.image ? (
+                    <div className="aspect-[4/5] w-full overflow-hidden mb-6 rounded-sm">
+                      <img 
+                        src={m.image} 
+                        alt={m.name} 
+                        className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
+                      />
+                    </div>
+                  ) : (
+                    <div className="aspect-[4/5] w-full mb-6 bg-neutral-100 flex items-center justify-center font-mono text-2xl text-neutral-400 font-light border border-neutral-200 rounded-sm group-hover:text-[#bb9457] group-hover:border-[#bb9457]/30 transition-colors">
+                      FA
+                    </div>
+                  )}
+                  <h4 className="font-serif text-lg text-neutral-900 font-normal group-hover:text-[#bb9457] transition-colors">{m.name}</h4>
+                  <div className="text-[10px] font-mono text-[#bb9457] uppercase tracking-widest mt-1 mb-4">{m.role}</div>
+                </div>
+                <p className="text-xs text-neutral-600 font-light leading-relaxed mt-2">{m.bio}</p>
+              </div>
+            ))}
+          </div>
         </Container>
       </Section>
 
@@ -715,6 +754,16 @@ const About = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
                   <div className="absolute inset-0 glass opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Coming Soon Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="text-center">
+                      <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-3">
+                        <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full animate-pulse" />
+                        <span className="text-[#bb9457] uppercase tracking-[0.3em] text-[10px] font-mono font-semibold">Coming Soon</span>
+                      </div>
+                    </div>
+                  </div>
                   
                   <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform group-hover:-translate-y-2 transition-transform duration-500">
                     <h4 className="font-serif text-2xl text-white font-normal mb-1">{facility.city}</h4>

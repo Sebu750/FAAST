@@ -50,7 +50,7 @@ const Header = () => {
 
   return (
     <header 
-      className={`fixed top-[44px] left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       } ${
         lastScrollY > 50 
@@ -128,7 +128,7 @@ const Header = () => {
       {/* Mobile Navigation Overlay */}
       {mobileMenuOpen && (
         <div 
-          className="lg:hidden fixed inset-0 top-[116px] bg-neutral-950/98 backdrop-blur-xl z-40 overflow-y-auto animate-fadeIn"
+          className="lg:hidden fixed inset-0 top-[72px] bg-neutral-950/98 backdrop-blur-xl z-40 overflow-y-auto animate-fadeIn"
           onClick={() => setMobileMenuOpen(false)}
         >
           <div className="px-6 py-8" onClick={(e) => e.stopPropagation()}>

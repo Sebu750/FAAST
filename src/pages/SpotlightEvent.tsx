@@ -149,20 +149,6 @@ const SpotlightEvent = () => {
         }
       `}</style>
 
-      {/* Urgency Bar */}
-      <div className="w-full bg-[#bb9457] text-black font-mono text-[10px] tracking-[0.3em] uppercase py-2.5 px-4 sticky top-0 z-50 flex justify-between items-center border-b border-black/10">
-        <div className="flex items-center gap-4">
-          <span className="inline-block w-2 h-2 rounded-full bg-black animate-pulse" />
-          <span>Adorzia Spotlight - Fall 2026</span>
-        </div>
-        <div className="font-bold flex gap-4">
-          <span>{daysLeft} Days until submissions open</span>
-          <button onClick={() => scrollToSection('apply')} className="underline hover:opacity-80 transition-opacity">
-            Skip to entry
-          </button>
-        </div>
-      </div>
-
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
