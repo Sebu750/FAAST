@@ -8,8 +8,6 @@ import craft from '../assets/craft.jpg'
 import winner1 from '../assets/winner-1.jpg'
 import winner2 from '../assets/winner-2.jpg'
 import winner3 from '../assets/winner-3.jpg'
-import designer1 from '../assets/designer-1.jpg'
-import designer2 from '../assets/designer-2.jpg'
 
 const SpotlightEvent = () => {
   const navigate = useNavigate()
