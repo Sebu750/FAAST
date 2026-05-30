@@ -609,7 +609,7 @@ const Home = () => {
               </h2>
               <div className="space-y-6 text-neutral-500 font-light text-base md:text-lg leading-relaxed">
                 <p>
-                  From the geometric precision of Multani block prints and the intricate textures of Sindhi craft, to the pristine hand-loomed textiles of the North and the raw, electric energy of Karachi's urban subcultures—Pakistan holds centuries of sophisticated design DNA.
+                  From the geometric precision of Multani block prints and the intricate textures of Sindhi craft, to the pristine hand-loomed textiles of the North and the raw, electric energy of Karachi's urban subcultures-Pakistan holds centuries of sophisticated design DNA.
                 </p>
                 <p className="text-neutral-900 font-medium">
                   Adorzia exists to transition this heritage into a global context. Not as an artifact of nostalgia, but as a living, breathing, commercially formidable design identity that commands respect on any runway worldwide.

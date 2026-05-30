@@ -41,7 +41,7 @@ const Legal = () => {
               </h2>
               <div className="space-y-4 text-neutral-300 font-light leading-relaxed">
                 <p>
-                  Adorzia (referred to as "Adorzia", "we", "us", or "our") is a fashion entrepreneurship ecosystem based in Pakistan, operating the Adorzia website, coworking studios, marketplace, and Spotlight event. We are committed to protecting the privacy of every person who interacts with us — whether you are a creative applying for studio membership, a designer listing on our marketplace, an investor making an enquiry, or a visitor simply exploring what we are building.
+                  Adorzia (referred to as "Adorzia", "we", "us", or "our") is a fashion entrepreneurship ecosystem based in Pakistan, operating the Adorzia website, coworking studios, marketplace, and Spotlight event. We are committed to protecting the privacy of every person who interacts with us - whether you are a creative applying for studio membership, a designer listing on our marketplace, an investor making an enquiry, or a visitor simply exploring what we are building.
                 </p>
                 <p>
                   This Privacy Policy explains what personal information we collect, how we use it, who we share it with, and what rights you have over it. Please read it carefully. By using the Adorzia website or any of our services, you agree to the practices described in this policy.
@@ -63,20 +63,20 @@ const Legal = () => {
                 </p>
                 <ul className="space-y-2 ml-6">
                   <li className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
                     <span>The Adorzia website at adorzia.com</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
                     <span>Adorzia coworking fashion studios in Lahore, Islamabad, and Karachi</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
-                    <span>The Adorzia Marketplace — a curated online platform for Pakistani fashion designers and heritage craftspeople</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
+                    <span>The Adorzia Marketplace - a curated online platform for Pakistani fashion designers and heritage craftspeople</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
-                    <span>Adorzia Spotlight — our annual national fashion talent discovery and investment event</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
+                    <span>Adorzia Spotlight - our annual national fashion talent discovery and investment event</span>
                   </li>
                 </ul>
                 <p className="text-white">For any privacy related questions or concerns you can contact us at:</p>
@@ -99,10 +99,10 @@ const Legal = () => {
               <div className="mb-6">
                 <h3 className="text-xl text-white font-medium mb-4">Information you give us directly:</h3>
                 <p className="text-neutral-300 font-light leading-relaxed mb-4">
-                  When you fill in any form on our website — including contact forms, newsletter signups, studio membership applications, marketplace seller applications, heritage craft program applications, Spotlight event applications, investor deck requests, and buyer early access signups — you provide us with personal information. Depending on the form, this may include your full name, email address, phone number, city and province, age, professional background and discipline, creative portfolio and uploaded images, links to websites and social media profiles, written statements about your work and vision, and information about your business or organization.
+                  When you fill in any form on our website - including contact forms, newsletter signups, studio membership applications, marketplace seller applications, heritage craft program applications, Spotlight event applications, investor deck requests, and buyer early access signups - you provide us with personal information. Depending on the form, this may include your full name, email address, phone number, city and province, age, professional background and discipline, creative portfolio and uploaded images, links to websites and social media profiles, written statements about your work and vision, and information about your business or organization.
                 </p>
                 <p className="text-neutral-300 font-light leading-relaxed">
-                  When you communicate with us directly — by email, through our contact form, or through social media — we retain the contents of that communication and your contact details.
+                  When you communicate with us directly - by email, through our contact form, or through social media - we retain the contents of that communication and your contact details.
                 </p>
               </div>
 
@@ -116,7 +116,7 @@ const Legal = () => {
               <div>
                 <h3 className="text-xl text-white font-medium mb-4">Information from third parties:</h3>
                 <p className="text-neutral-300 font-light leading-relaxed">
-                  We may receive information about you from third party platforms — for example if you follow or interact with Adorzia on Instagram, LinkedIn, TikTok, or Facebook, or if you access our website through a link shared on those platforms. We do not purchase personal data from third party data brokers.
+                  We may receive information about you from third party platforms - for example if you follow or interact with Adorzia on Instagram, LinkedIn, TikTok, or Facebook, or if you access our website through a link shared on those platforms. We do not purchase personal data from third party data brokers.
                 </p>
               </div>
             </div>
@@ -134,21 +134,21 @@ const Legal = () => {
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">To process your applications and enquiries:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    When you apply for studio membership, apply to list on the marketplace, apply to the heritage craft program, submit for Spotlight, or make an investor or press enquiry — we use your information to review your application, communicate with you about its status, and manage the relationship that follows.
+                    When you apply for studio membership, apply to list on the marketplace, apply to the heritage craft program, submit for Spotlight, or make an investor or press enquiry - we use your information to review your application, communicate with you about its status, and manage the relationship that follows.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">To deliver our services:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    If you become a studio member, a marketplace seller, a Spotlight participant, or any other active participant in the Adorzia ecosystem, we use your information to manage that relationship — including sending you relevant communications, processing any transactions, and maintaining accurate records.
+                    If you become a studio member, a marketplace seller, a Spotlight participant, or any other active participant in the Adorzia ecosystem, we use your information to manage that relationship - including sending you relevant communications, processing any transactions, and maintaining accurate records.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">To send you updates and communications:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    If you have subscribed to our newsletter or opted in to mailing list communications, we use your email address to send you updates about Adorzia — including studio news, marketplace launches, Spotlight announcements, and ecosystem developments. You can unsubscribe at any time using the link in any email we send.
+                    If you have subscribed to our newsletter or opted in to mailing list communications, we use your email address to send you updates about Adorzia - including studio news, marketplace launches, Spotlight announcements, and ecosystem developments. You can unsubscribe at any time using the link in any email we send.
                   </p>
                 </div>
 
@@ -169,7 +169,7 @@ const Legal = () => {
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">To protect our legitimate interests:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    We may use your information to protect Adorzia and its users against fraud, abuse, and other harmful activity — and to enforce our terms and conditions where necessary.
+                    We may use your information to protect Adorzia and its users against fraud, abuse, and other harmful activity - and to enforce our terms and conditions where necessary.
                   </p>
                 </div>
               </div>
@@ -188,21 +188,21 @@ const Legal = () => {
                 <div className="p-4 border-l-2 border-[#bb9457] bg-neutral-900/30">
                   <h3 className="text-white font-medium mb-2">Consent:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    Where you have given us clear consent to process your information for a specific purpose — such as subscribing to our newsletter or opting in to marketing communications.
+                    Where you have given us clear consent to process your information for a specific purpose - such as subscribing to our newsletter or opting in to marketing communications.
                   </p>
                 </div>
 
                 <div className="p-4 border-l-2 border-[#bb9457] bg-neutral-900/30">
                   <h3 className="text-white font-medium mb-2">Contract:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    Where processing is necessary to fulfill a contractual relationship with you — such as managing your studio membership, marketplace seller account, or Spotlight participation.
+                    Where processing is necessary to fulfill a contractual relationship with you - such as managing your studio membership, marketplace seller account, or Spotlight participation.
                   </p>
                 </div>
 
                 <div className="p-4 border-l-2 border-[#bb9457] bg-neutral-900/30">
                   <h3 className="text-white font-medium mb-2">Legitimate interests:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    Where we have a legitimate business interest in processing your information that does not override your rights — such as improving our services, communicating relevant updates, and protecting our platform.
+                    Where we have a legitimate business interest in processing your information that does not override your rights - such as improving our services, communicating relevant updates, and protecting our platform.
                   </p>
                 </div>
 
@@ -233,26 +233,26 @@ const Legal = () => {
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">With our service providers:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    We work with trusted third party companies who help us operate our website and services — including web hosting providers, email delivery platforms, analytics tools, and payment processors. These companies only have access to the personal information they need to perform their specific function and are contractually required to keep it secure and confidential.
+                    We work with trusted third party companies who help us operate our website and services - including web hosting providers, email delivery platforms, analytics tools, and payment processors. These companies only have access to the personal information they need to perform their specific function and are contractually required to keep it secure and confidential.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">With our team:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    Your application and enquiry information is accessible to relevant members of the Adorzia internal team — specifically those responsible for reviewing applications, managing communications, and operating the relevant service you have applied for or enquired about.
+                    Your application and enquiry information is accessible to relevant members of the Adorzia internal team - specifically those responsible for reviewing applications, managing communications, and operating the relevant service you have applied for or enquired about.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">With Spotlight judges and mentors:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    If you apply for Adorzia Spotlight and are shortlisted, relevant elements of your application — your creative profile, portfolio, and written statements — will be shared with our panel of judges and mentors for the purpose of evaluation. You will be informed when this sharing occurs.
+                    If you apply for Adorzia Spotlight and are shortlisted, relevant elements of your application - your creative profile, portfolio, and written statements - will be shared with our panel of judges and mentors for the purpose of evaluation. You will be informed when this sharing occurs.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-lg text-white font-medium mb-2">With investors — only with your consent:</h3>
+                  <h3 className="text-lg text-white font-medium mb-2">With investors - only with your consent:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     If you are a Spotlight finalist or winner and we wish to introduce your profile to external investors as part of the co-investment framework, we will always seek your explicit consent before sharing your information with any external investor.
                   </p>
@@ -287,7 +287,7 @@ const Legal = () => {
                 <div className="p-4 border border-neutral-800 bg-neutral-900/20">
                   <h3 className="text-white font-medium mb-2">Application data:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    We retain all application data — for Spotlight, marketplace, studio membership, and heritage craft program — for a minimum of two years from the date of submission, regardless of the outcome of the application. This allows us to consider applicants for future cycles and to maintain accurate records.
+                    We retain all application data - for Spotlight, marketplace, studio membership, and heritage craft program - for a minimum of two years from the date of submission, regardless of the outcome of the application. This allows us to consider applicants for future cycles and to maintain accurate records.
                   </p>
                 </div>
 
@@ -308,7 +308,7 @@ const Legal = () => {
                 <div className="p-4 border border-neutral-800 bg-neutral-900/20">
                   <h3 className="text-white font-medium mb-2">Financial and transaction data:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    We retain financial records as required by Pakistani tax and accounting law — typically a minimum of five years.
+                    We retain financial records as required by Pakistani tax and accounting law - typically a minimum of five years.
                   </p>
                 </div>
 
@@ -350,7 +350,7 @@ const Legal = () => {
                   },
                   {
                     title: "The right to withdraw consent",
-                    description: "Where we are processing your information based on your consent — such as newsletter subscriptions — you can withdraw that consent at any time. Withdrawal does not affect the lawfulness of processing before the withdrawal."
+                    description: "Where we are processing your information based on your consent - such as newsletter subscriptions - you can withdraw that consent at any time. Withdrawal does not affect the lawfulness of processing before the withdrawal."
                   },
                   {
                     title: "The right to object",
@@ -443,7 +443,7 @@ const Legal = () => {
                 Third Party Links
               </h2>
               <p className="text-neutral-300 font-light leading-relaxed">
-                Our website may contain links to third party websites — including social media platforms, press coverage, partner organizations, and other external resources. This Privacy Policy applies only to the Adorzia website and services. We are not responsible for the privacy practices of any third party website and encourage you to read the privacy policy of any site you visit.
+                Our website may contain links to third party websites - including social media platforms, press coverage, partner organizations, and other external resources. This Privacy Policy applies only to the Adorzia website and services. We are not responsible for the privacy practices of any third party website and encourage you to read the privacy policy of any site you visit.
               </p>
             </div>
 

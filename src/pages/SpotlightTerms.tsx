@@ -17,7 +17,7 @@ const SpotlightTerms = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.05),transparent_60%)] pointer-events-none" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-4">
-            Legal — Spotlight Fall 2026
+            Legal - Spotlight Fall 2026
           </div>
           <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white font-normal tracking-tight leading-[1.1]">
             Spotlight Event <span className="text-gradient italic font-light">Terms</span>
@@ -41,7 +41,7 @@ const SpotlightTerms = () => {
               </h2>
               <div className="space-y-4 text-neutral-300 font-light leading-relaxed">
                 <p>
-                  These Spotlight Event Terms and Conditions govern all applications to, participation in, and association with the Adorzia Spotlight Fall 2026 event — Pakistan's first national fashion talent discovery and investment event organised by Adorzia.
+                  These Spotlight Event Terms and Conditions govern all applications to, participation in, and association with the Adorzia Spotlight Fall 2026 event - Pakistan's first national fashion talent discovery and investment event organised by Adorzia.
                 </p>
                 <p className="text-white font-medium">
                   By submitting an application to Adorzia Spotlight Fall 2026 you confirm that you have read, understood, and agree to be bound by these Terms and Conditions in their entirety. If you do not agree with any part of these terms you must not submit an application or participate in the event in any capacity.
@@ -76,7 +76,7 @@ const SpotlightTerms = () => {
                   },
                   {
                     term: "Spotlight or the Event",
-                    definition: "Adorzia Spotlight Fall 2026 — the first annual Adorzia national fashion talent discovery and investment event."
+                    definition: "Adorzia Spotlight Fall 2026 - the first annual Adorzia national fashion talent discovery and investment event."
                   },
                   {
                     term: "Applicant",
@@ -100,7 +100,7 @@ const SpotlightTerms = () => {
                   },
                   {
                     term: "Submission window",
-                    definition: "The period during which applications are accepted — June 1, 2026 to July 31, 2026 at midnight Pakistan Standard Time."
+                    definition: "The period during which applications are accepted - June 1, 2026 to July 31, 2026 at midnight Pakistan Standard Time."
                   },
                   {
                     term: "Application materials",
@@ -177,7 +177,7 @@ const SpotlightTerms = () => {
                   "Anyone currently subject to legal proceedings that would materially affect their ability to enter into a business or investment relationship with Adorzia."
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -250,42 +250,42 @@ const SpotlightTerms = () => {
               
               <div className="space-y-8">
                 <div className="border-l-4 border-[#bb9457] pl-6 py-2">
-                  <h3 className="text-xl text-white font-medium mb-2">Stage one — initial review:</h3>
+                  <h3 className="text-xl text-white font-medium mb-2">Stage one - initial review:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     All complete applications received during the submission window will be reviewed by the Adorzia Spotlight selection team. Applications will be evaluated on the following criteria: creative originality and distinctiveness, quality and craft of submitted work, clarity and ambition of the applicant's vision, commercial potential and entrepreneurial thinking, and overall strength and coherence of the application.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-[#bb9457] pl-6 py-2">
-                  <h3 className="text-xl text-white font-medium mb-2">Stage two — shortlisting:</h3>
+                  <h3 className="text-xl text-white font-medium mb-2">Stage two - shortlisting:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     A shortlist of applicants will be selected following the initial review and communicated to shortlisted applicants in August 2026. Applicants who are not shortlisted will also be notified. Adorzia will not enter into correspondence about individual shortlisting decisions.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-[#bb9457] pl-6 py-2">
-                  <h3 className="text-xl text-white font-medium mb-2">Stage three — shortlist presentations:</h3>
+                  <h3 className="text-xl text-white font-medium mb-2">Stage three - shortlist presentations:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     Shortlisted applicants will be invited to present their work and vision to a panel appointed by Adorzia. Presentations will take place in person at an Adorzia studio where possible or virtually for applicants from cities without an Adorzia studio presence. Presentation format and duration will be communicated to shortlisted applicants at the time of invitation. Failure to attend or participate in the presentation stage without prior notice to Adorzia will result in disqualification.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-[#bb9457] pl-6 py-2">
-                  <h3 className="text-xl text-white font-medium mb-2">Stage four — finalist selection:</h3>
+                  <h3 className="text-xl text-white font-medium mb-2">Stage four - finalist selection:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     Following shortlist presentations a group of finalists will be selected by the panel and announced publicly in September 2026. Finalist selection decisions are final.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-[#bb9457] pl-6 py-2">
-                  <h3 className="text-xl text-white font-medium mb-2">Stage five — the Spotlight live event:</h3>
+                  <h3 className="text-xl text-white font-medium mb-2">Stage five - the Spotlight live event:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     Finalists will present their work and brand vision at the Adorzia Spotlight Fall 2026 live event. Full details of the event format, venue, and logistics will be communicated to finalists at least four weeks prior to the event date.
                   </p>
                 </div>
 
                 <div className="border-l-4 border-[#bb9457] pl-6 py-2">
-                  <h3 className="text-xl text-white font-medium mb-2">Stage six — winner selection and announcement:</h3>
+                  <h3 className="text-xl text-white font-medium mb-2">Stage six - winner selection and announcement:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
                     Winners will be selected by the judging panel at or following the live event and announced publicly. The panel's decision is final and binding. Adorzia will not enter into any correspondence disputing the outcome of any selection decision at any stage.
                   </p>
@@ -310,7 +310,7 @@ const SpotlightTerms = () => {
                 <div className="p-5 border border-neutral-800 bg-neutral-900/20">
                   <h3 className="text-lg text-white font-medium mb-2">Investment structure:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    The investment offered to Spotlight winners is structured as a business investment in the winner's fashion brand or creative enterprise — not as a personal prize payment. The specific terms of investment including amount, equity or revenue share arrangement, milestones, and ongoing obligations will be negotiated individually with each winner and set out in the investment agreement.
+                    The investment offered to Spotlight winners is structured as a business investment in the winner's fashion brand or creative enterprise - not as a personal prize payment. The specific terms of investment including amount, equity or revenue share arrangement, milestones, and ongoing obligations will be negotiated individually with each winner and set out in the investment agreement.
                   </p>
                 </div>
 
@@ -390,7 +390,7 @@ const SpotlightTerms = () => {
                 <div className="p-4 border-l-2 border-[#bb9457] bg-neutral-900/30">
                   <h3 className="text-white font-medium mb-2">Availability:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    If shortlisted, the applicant will make themselves reasonably available for the presentation stage — either in person or virtually. If selected as a finalist, the applicant will make every reasonable effort to attend the live event in person. If attendance is genuinely impossible due to circumstances outside the applicant's control, the applicant must notify Adorzia as soon as possible at <a href="mailto:spotlight@adorzia.com" className="text-[#bb9457] hover:underline">spotlight@adorzia.com</a>.
+                    If shortlisted, the applicant will make themselves reasonably available for the presentation stage - either in person or virtually. If selected as a finalist, the applicant will make every reasonable effort to attend the live event in person. If attendance is genuinely impossible due to circumstances outside the applicant's control, the applicant must notify Adorzia as soon as possible at <a href="mailto:spotlight@adorzia.com" className="text-[#bb9457] hover:underline">spotlight@adorzia.com</a>.
                   </p>
                 </div>
 
@@ -436,7 +436,7 @@ const SpotlightTerms = () => {
                   "Any other behavior that Adorzia determines in its reasonable judgment to be incompatible with participation in the event."
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -465,7 +465,7 @@ const SpotlightTerms = () => {
                   "Any indirect, consequential, or economic loss arising from participation in or exclusion from the Spotlight event."
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <span className="text-[#bb9457] mt-1.5">—</span>
+                    <span className="text-[#bb9457] mt-1.5">-</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -478,7 +478,7 @@ const SpotlightTerms = () => {
                 Event Cancellation or Postponement
               </h2>
               <p className="text-neutral-300 font-light leading-relaxed mb-6">
-                Adorzia reserves the right to cancel, postpone, or significantly alter the format of the Spotlight Fall 2026 event in response to circumstances outside its reasonable control — including but not limited to natural disasters, public health emergencies, civil unrest, government restrictions, or any other force majeure event.
+                Adorzia reserves the right to cancel, postpone, or significantly alter the format of the Spotlight Fall 2026 event in response to circumstances outside its reasonable control - including but not limited to natural disasters, public health emergencies, civil unrest, government restrictions, or any other force majeure event.
               </p>
               
               <div className="space-y-6">
@@ -491,7 +491,7 @@ const SpotlightTerms = () => {
                       "No compensation will be payable to applicants, shortlisted applicants, or finalists in the event of cancellation."
                     ].map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-[#bb9457] mt-1.5">—</span>
+                        <span className="text-[#bb9457] mt-1.5">-</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -506,7 +506,7 @@ const SpotlightTerms = () => {
                       "Selection decisions made prior to postponement will remain valid unless Adorzia determines in its reasonable judgment that a full reselection process is necessary."
                     ].map((item, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-[#bb9457] mt-1.5">—</span>
+                        <span className="text-[#bb9457] mt-1.5">-</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -573,7 +573,7 @@ const SpotlightTerms = () => {
                   </p>
                 </div>
                 <p className="text-white font-medium mt-6">
-                  Adorzia — Where Visionaries Rise
+                  Adorzia - Where Visionaries Rise
                 </p>
               </div>
             </div>

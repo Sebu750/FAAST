@@ -41,7 +41,7 @@ const Terms = () => {
               </h2>
               <div className="space-y-4 text-neutral-300 font-light leading-relaxed">
                 <p>
-                  These Terms and Conditions govern your use of the Adorzia website located at adorzia.com and all services operated by Adorzia — including our coworking fashion studios, the Adorzia Marketplace, the Adorzia Spotlight event, and any other services we offer now or in the future.
+                  These Terms and Conditions govern your use of the Adorzia website located at adorzia.com and all services operated by Adorzia - including our coworking fashion studios, the Adorzia Marketplace, the Adorzia Spotlight event, and any other services we offer now or in the future.
                 </p>
                 <p className="text-white font-medium">
                   Please read these Terms and Conditions carefully before using our website or services. By accessing our website, submitting any application or enquiry, subscribing to our communications, or using any part of our services, you agree to be bound by these Terms and Conditions in full.
@@ -85,7 +85,7 @@ const Terms = () => {
                   By using the Adorzia website or any of our services you confirm that you are at least eighteen years of age. Our website and services are not directed at anyone under eighteen and we do not knowingly allow anyone under eighteen to register, apply, or participate in any Adorzia service.
                 </p>
                 <p>
-                  You confirm that all information you provide to Adorzia — through any form, application, communication, or registration — is accurate, complete, and truthful. Providing false or misleading information to Adorzia is grounds for immediate termination of your application, membership, or participation in any of our services.
+                  You confirm that all information you provide to Adorzia - through any form, application, communication, or registration - is accurate, complete, and truthful. Providing false or misleading information to Adorzia is grounds for immediate termination of your application, membership, or participation in any of our services.
                 </p>
               </div>
             </div>
@@ -121,7 +121,7 @@ const Terms = () => {
                     "To use our website in any way that places an unreasonable load on our infrastructure or interferes with other users' access."
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <span className="text-[#bb9457] mt-1.5">—</span>
+                      <span className="text-[#bb9457] mt-1.5">-</span>
                       <span>{item}</span>
                     </li>
                   ))}
@@ -140,7 +140,7 @@ const Terms = () => {
               </h2>
               <div className="space-y-4 text-neutral-300 font-light leading-relaxed">
                 <p>
-                  All content on the Adorzia website — including but not limited to text, copy, brand identity, logos, visual design, photography, illustrations, graphics, and the overall presentation and structure of the site — is the intellectual property of Adorzia and is protected by applicable copyright, trademark, and intellectual property laws.
+                  All content on the Adorzia website - including but not limited to text, copy, brand identity, logos, visual design, photography, illustrations, graphics, and the overall presentation and structure of the site - is the intellectual property of Adorzia and is protected by applicable copyright, trademark, and intellectual property laws.
                 </p>
                 <p>
                   You may not reproduce, distribute, modify, publicly display, or create derivative works from any Adorzia content without our prior written consent.
@@ -149,10 +149,10 @@ const Terms = () => {
                   The Adorzia name, logo, and all associated brand assets are trademarks of Adorzia. You may not use our trademarks without our prior written permission.
                 </p>
                 <p>
-                  Where our website contains content contributed by third parties — including designer portfolios, product listings, or application materials — the intellectual property rights in that content remain with the original creator. Adorzia does not claim ownership of content submitted by users unless explicitly agreed otherwise in a separate written agreement.
+                  Where our website contains content contributed by third parties - including designer portfolios, product listings, or application materials - the intellectual property rights in that content remain with the original creator. Adorzia does not claim ownership of content submitted by users unless explicitly agreed otherwise in a separate written agreement.
                 </p>
                 <p className="text-white font-medium">
-                  By submitting any content to Adorzia — through application forms, contact forms, or any other means — you grant Adorzia a non-exclusive, royalty-free, worldwide license to use, display, and reproduce that content for the purpose of reviewing your application, operating our services, and communicating about our ecosystem. This license does not allow Adorzia to sell your content or use it in ways unrelated to our services without your consent.
+                  By submitting any content to Adorzia - through application forms, contact forms, or any other means - you grant Adorzia a non-exclusive, royalty-free, worldwide license to use, display, and reproduce that content for the purpose of reviewing your application, operating our services, and communicating about our ecosystem. This license does not allow Adorzia to sell your content or use it in ways unrelated to our services without your consent.
                 </p>
               </div>
             </div>
@@ -160,7 +160,7 @@ const Terms = () => {
             {/* Adorzia Studios */}
             <div className="mb-16">
               <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal tracking-tight mb-6">
-                Adorzia Studios — Terms of Use
+                Adorzia Studios - Terms of Use
               </h2>
               <p className="text-neutral-300 font-light leading-relaxed mb-6">
                 Studio membership and access to Adorzia coworking spaces is subject to a separate Studio Membership Agreement which you will receive and must sign prior to accessing any studio. The following general terms apply to all studio users.
@@ -207,7 +207,7 @@ const Terms = () => {
             {/* Adorzia Marketplace */}
             <div className="mb-16">
               <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal tracking-tight mb-6">
-                Adorzia Marketplace — Terms of Use
+                Adorzia Marketplace - Terms of Use
               </h2>
               <p className="text-neutral-300 font-light leading-relaxed mb-6">
                 The Adorzia Marketplace is subject to separate Marketplace Seller Terms and Marketplace Buyer Terms which apply to all selling and buying activity on the platform. The following general terms apply to all marketplace users.
@@ -240,7 +240,7 @@ const Terms = () => {
             {/* Adorzia Spotlight */}
             <div className="mb-16">
               <h2 className="font-serif text-2xl sm:text-3xl text-white font-normal tracking-tight mb-6">
-                Adorzia Spotlight — Terms of Participation
+                Adorzia Spotlight - Terms of Participation
               </h2>
               <p className="text-neutral-300 font-light leading-relaxed mb-6">
                 Participation in the Adorzia Spotlight event is subject to the separate Spotlight Event Terms and Conditions published on the Spotlight page. The following general terms apply to all applicants and participants.
@@ -257,7 +257,7 @@ const Terms = () => {
                 <div>
                   <h3 className="text-lg text-white font-medium mb-2">Selection:</h3>
                   <p className="text-neutral-300 font-light leading-relaxed">
-                    Adorzia's selection decisions at all stages of the Spotlight process — including shortlisting, finalist selection, and winner announcement — are final. We are not able to enter into correspondence about individual selection decisions beyond the feedback we choose to provide.
+                    Adorzia's selection decisions at all stages of the Spotlight process - including shortlisting, finalist selection, and winner announcement - are final. We are not able to enter into correspondence about individual selection decisions beyond the feedback we choose to provide.
                   </p>
                 </div>
 
@@ -284,7 +284,7 @@ const Terms = () => {
               </h2>
               <div className="space-y-4 text-neutral-300 font-light leading-relaxed">
                 <p className="text-white font-medium">
-                  Submitting an application or enquiry to Adorzia — for studio membership, marketplace listing, heritage craft program participation, Spotlight, investor deck request, or any other purpose — does not create a binding contract or any obligation on the part of Adorzia to accept your application, grant your request, or enter into any agreement with you.
+                  Submitting an application or enquiry to Adorzia - for studio membership, marketplace listing, heritage craft program participation, Spotlight, investor deck request, or any other purpose - does not create a binding contract or any obligation on the part of Adorzia to accept your application, grant your request, or enter into any agreement with you.
                 </p>
                 <p>
                   Adorzia reserves the right to accept or decline any application at its discretion. We are not required to provide reasons for any decision unless we choose to do so.
@@ -332,7 +332,7 @@ const Terms = () => {
               </h2>
               <div className="p-6 border border-[#bb9457]/30 bg-[#bb9457]/5">
                 <p className="text-neutral-300 font-light leading-relaxed">
-                  The Adorzia website and all content on it are provided on an "as-is" and "as-available" basis without any warranties of any kind — express, implied, or statutory. Adorzia makes no warranty that the website will be uninterrupted, error-free, or free of viruses or other harmful components.
+                  The Adorzia website and all content on it are provided on an "as-is" and "as-available" basis without any warranties of any kind - express, implied, or statutory. Adorzia makes no warranty that the website will be uninterrupted, error-free, or free of viruses or other harmful components.
                 </p>
                 <p className="text-neutral-300 font-light leading-relaxed mt-4">
                   While we make every reasonable effort to ensure the accuracy and completeness of content on our website, we do not warrant that any information on the site is accurate, complete, current, or suitable for any particular purpose. You rely on information from our website at your own risk.
@@ -347,7 +347,7 @@ const Terms = () => {
               </h2>
               <div className="space-y-4 text-neutral-300 font-light leading-relaxed">
                 <p>
-                  To the fullest extent permitted by applicable Pakistani law, Adorzia and its founders, directors, employees, and representatives shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our website or services — including but not limited to loss of revenue, loss of data, loss of business opportunity, or any other financial or commercial loss.
+                  To the fullest extent permitted by applicable Pakistani law, Adorzia and its founders, directors, employees, and representatives shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of our website or services - including but not limited to loss of revenue, loss of data, loss of business opportunity, or any other financial or commercial loss.
                 </p>
                 <p>
                   Adorzia's total liability to you for any claim arising from your use of our website or services shall not exceed the amount you have paid to Adorzia in the twelve months preceding the event giving rise to the claim, or five thousand Pakistani rupees, whichever is greater.
@@ -364,7 +364,7 @@ const Terms = () => {
                 Indemnification
               </h2>
               <p className="text-neutral-300 font-light leading-relaxed">
-                You agree to indemnify, defend, and hold harmless Adorzia and its founders, directors, employees, and representatives from and against any claims, liabilities, damages, losses, costs, and expenses — including reasonable legal fees — arising from your use of our website or services, your violation of these Terms and Conditions, or your violation of any third party rights.
+                You agree to indemnify, defend, and hold harmless Adorzia and its founders, directors, employees, and representatives from and against any claims, liabilities, damages, losses, costs, and expenses - including reasonable legal fees - arising from your use of our website or services, your violation of these Terms and Conditions, or your violation of any third party rights.
               </p>
             </div>
 

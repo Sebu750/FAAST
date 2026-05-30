@@ -160,38 +160,77 @@ const Contact = () => {
           50% { transform: scale(1.06) translate(4px, -3px); }
         }
         .animate-ambient-swell { animation: ambientSwell 20s infinite ease-in-out; }
+        
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
+        .animate-fade-up-delay-1 { animation: fadeUp 0.8s ease-out 0.2s forwards; opacity: 0; }
+        .animate-fade-up-delay-2 { animation: fadeUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+        .animate-fade-up-delay-3 { animation: fadeUp 0.8s ease-out 0.6s forwards; opacity: 0; }
+        
+        @keyframes shimmer {
+          0% { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        .animate-shimmer {
+          background: linear-gradient(90deg, transparent, rgba(187,148,87,0.1), transparent);
+          background-size: 200% 100%;
+          animation: shimmer 3s infinite;
+        }
       `}</style>
 
       {/* Hero Section with Full Banner */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={designer1} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
-          <div className="absolute inset-0 bg-black/50" />
+          <img src={designer1} alt="" className="w-full h-full object-cover scale-110 animate-ambient-swell" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-neutral-950" />
+          <div className="absolute inset-0 bg-black/30" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-950/90 to-neutral-900/80" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(187,148,87,0.3),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(187,148,87,0.2),transparent_50%)]" />
+        
+        {/* Cinematic overlays */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(187,148,87,0.25),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(187,148,87,0.15),transparent_50%)]" />
+        
+        {/* Floating elements */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-32">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
-            Get in touch
-          </span>
+          <div className="animate-fade-up">
+            <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/30 bg-black/30 backdrop-blur-sm text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              Get in touch
+            </span>
+          </div>
 
-          <h1 className="mt-8 font-serif text-5xl md:text-7xl lg:text-8xl text-white font-normal leading-[1.05] tracking-tight max-w-5xl">
+          <h1 className="mt-8 font-serif text-5xl md:text-7xl lg:text-8xl text-white font-normal leading-[1.05] tracking-tight max-w-5xl animate-fade-up-delay-1">
             Every conversation at Adorzia starts with a real person.
           </h1>
 
-          <div className="mt-8 max-w-3xl space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
+          <div className="mt-8 max-w-3xl space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed animate-fade-up-delay-2">
             <p>
               We are a small team building something large. That means when you write to us, someone who actually works here reads it, thinks about it, and writes back. No automated responses. No ticket numbers. No holding pattern.
             </p>
             <p>
               Whether you are a creative looking for your next step, an investor who wants to understand what we are building, a journalist covering Pakistani fashion, or someone who just wants to know more - there is a door here with your name on it.
             </p>
-            <p className="text-white font-normal">
-              We respond to every message within three working days.
-            </p>
+          </div>
+          
+          <div className="mt-8 flex items-center gap-4 animate-fade-up-delay-3">
+            <div className="px-6 py-3 rounded-full border border-[#bb9457]/40 bg-[#bb9457]/10 backdrop-blur-sm">
+              <p className="text-white font-normal text-sm">
+                <span className="text-[#bb9457] font-semibold">3-day response guaranteed</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="w-6 h-10 border-2 border-[#bb9457]/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-[#bb9457] rounded-full animate-pulse" />
           </div>
         </div>
       </section>
@@ -205,8 +244,10 @@ const Contact = () => {
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">How can we help you</span>
-            <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
+            <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/20 bg-neutral-950/50 text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+              How can we help you
+            </span>
+            <h2 className="mt-8 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
               Tell us who you are and we will make sure the right person at Adorzia hears from you.
             </h2>
           </div>
@@ -246,20 +287,34 @@ const Contact = () => {
                 image: designer1
               }
             ].map((path, i) => (
-              <div key={i} className="group relative p-10 border border-neutral-900 rounded-sm bg-neutral-950 hover:border-[#bb9457]/30 transition-colors duration-300">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="aspect-[16/9] overflow-hidden rounded-sm mb-6">
-                  <img src={path.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+              <div key={i} className="group relative border border-neutral-900 rounded-sm bg-neutral-950/50 backdrop-blur-sm overflow-hidden hover:border-[#bb9457]/40 transition-all duration-500 hover:shadow-2xl hover:shadow-[#bb9457]/5">
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#bb9457]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Image section */}
+                <div className="aspect-[16/9] overflow-hidden relative">
+                  <img src={path.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />
                 </div>
-                <div className="text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono font-semibold mb-2">{path.label}</div>
-                <h3 className="font-serif text-2xl text-white font-normal mb-4">{path.title}</h3>
-                <p className="text-neutral-400 font-light leading-relaxed mb-6">{path.body}</p>
-                <a href={`mailto:${path.email}`} className="text-[#bb9457] font-light text-sm mb-4 block hover:text-white transition-colors">
-                  {path.email}
-                </a>
-                <a href={`mailto:${path.email}`} className="inline-block px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300">
-                  {path.cta}
-                </a>
+                
+                {/* Content section */}
+                <div className="p-10">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono font-semibold mb-3">{path.label}</div>
+                  <h3 className="font-serif text-3xl text-white font-normal mb-4">{path.title}</h3>
+                  <p className="text-neutral-400 font-light leading-relaxed mb-8 text-base">{path.body}</p>
+                  
+                  {/* Email */}
+                  <a href={`mailto:${path.email}`} className="inline-flex items-center gap-2 text-[#bb9457] font-light text-sm mb-6 hover:text-white transition-colors duration-300 group-hover:translate-x-1">
+                    <span className="w-1 h-1 rounded-full bg-[#bb9457]" />
+                    {path.email}
+                  </a>
+                  
+                  {/* CTA Button */}
+                  <a href={`mailto:${path.email}`} className="inline-flex items-center gap-3 px-8 py-4 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#bb9457]/20">
+                    {path.cta}
+                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  </a>
+                </div>
               </div>
             ))}
           </div>
@@ -268,18 +323,21 @@ const Contact = () => {
 
       {/* Contact Form */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
-        <div className="absolute inset-0">
-          <img src={designer2} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/85 to-neutral-950/95" />
+        <div className="absolute inset-0 z-0">
+          <img src={designer2} alt="" className="w-full h-full object-cover scale-105" />
+          <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/97 via-neutral-950/92 to-neutral-950/97" />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/90 to-neutral-950" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_70%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(187,148,87,0.1),transparent_50%)]" />
         
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 relative z-10">
+        {/* Cinematic overlays */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.12),transparent_70%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(187,148,87,0.08),transparent_50%)]" />
+        
+        <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Send us a message</span>
-            <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
+            <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/20 bg-neutral-950/50 text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+              Send us a message
+            </span>
+            <h2 className="mt-8 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
               We are listening.
             </h2>
             <p className="mt-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed max-w-3xl mx-auto">
@@ -288,38 +346,41 @@ const Contact = () => {
           </div>
 
           {contactSubmitted ? (
-            <div className="p-10 border border-[#bb9457]/30 rounded-sm bg-neutral-950 text-center">
+            <div className="p-12 border border-[#bb9457]/40 rounded-sm bg-neutral-950/80 backdrop-blur-sm text-center shadow-2xl shadow-[#bb9457]/5">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#bb9457]/10 border border-[#bb9457]/30 mb-6">
+                <span className="text-3xl">✓</span>
+              </div>
               <p className="text-white font-light text-lg mb-4">
                 Thank you for reaching out. Your message has arrived with us and a real person will read it and respond within three working days.
               </p>
               <p className="text-neutral-400 font-light text-sm">
                 If your enquiry is urgent please write directly to hello@adorzia.com with the word urgent in your subject line.
               </p>
-              <button onClick={() => setContactSubmitted(false)} className="mt-8 px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300">
+              <button onClick={() => setContactSubmitted(false)} className="mt-8 px-8 py-4 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300">
                 Send another message
               </button>
             </div>
           ) : (
-            <form onSubmit={handleContactSubmit} className="space-y-10">
-              <div className="grid md:grid-cols-2 gap-8">
+            <form onSubmit={handleContactSubmit} className="space-y-12 p-12 border border-neutral-900 rounded-sm bg-neutral-950/60 backdrop-blur-sm">
+              <div className="grid md:grid-cols-2 gap-10">
                 <div>
                   <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Full name *</label>
-                  <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Your full name" />
+                  <input type="text" required value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full border-b-2 border-neutral-800 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300" placeholder="Your full name" />
                 </div>
                 <div>
                   <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Email address *</label>
-                  <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="your@email.com" />
+                  <input type="email" required value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full border-b-2 border-neutral-800 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300" placeholder="your@email.com" />
                 </div>
               </div>
 
               <div>
                 <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Subject *</label>
-                <input type="text" required value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="What is this about?" />
+                <input type="text" required value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} className="w-full border-b-2 border-neutral-800 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300" placeholder="What is this about?" />
               </div>
 
               <div>
                 <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">I am reaching out as *</label>
-                <select required value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
+                <select required value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className="w-full border-b-2 border-neutral-800 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300 cursor-pointer">
                   <option value="" className="bg-neutral-950">Select an option</option>
                   <option value="creative" className="bg-neutral-950">A creative or maker</option>
                   <option value="investor" className="bg-neutral-950">An investor or partner</option>
@@ -332,12 +393,12 @@ const Contact = () => {
 
               <div>
                 <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">Your message *</label>
-                <textarea required rows={8} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors resize-none" placeholder="Tell us what's on your mind..." />
+                <textarea required rows={10} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full border-b-2 border-neutral-800 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300 resize-none" placeholder="Tell us what's on your mind..." />
               </div>
 
               <div>
                 <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-3">How did you hear about Adorzia? *</label>
-                <select required value={formData.heard_from} onChange={(e) => setFormData({ ...formData, heard_from: e.target.value })} className="w-full border-b border-neutral-800 bg-transparent py-3 text-white outline-none focus:border-[#bb9457] transition-colors">
+                <select required value={formData.heard_from} onChange={(e) => setFormData({ ...formData, heard_from: e.target.value })} className="w-full border-b-2 border-neutral-800 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300 cursor-pointer">
                   <option value="" className="bg-neutral-950">Select an option</option>
                   <option value="instagram" className="bg-neutral-950">Instagram</option>
                   <option value="linkedin" className="bg-neutral-950">LinkedIn</option>
@@ -350,16 +411,28 @@ const Contact = () => {
                 </select>
               </div>
 
-              <label className="flex gap-3 items-start cursor-pointer">
-                <input type="checkbox" checked={formData.newsletter} onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })} className="mt-1 accent-[#bb9457]" />
+              <label className="flex gap-3 items-start cursor-pointer p-4 rounded-sm hover:bg-white/5 transition-colors duration-300">
+                <input type="checkbox" checked={formData.newsletter} onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })} className="mt-1 accent-[#bb9457] w-4 h-4" />
                 <span className="text-neutral-400 font-light text-sm">I am happy to be added to the Adorzia mailing list for updates on studios, marketplace, and Spotlight</span>
               </label>
 
-              {error && <div className="text-red-500 text-sm">{error}</div>}
+              {error && <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-sm text-red-400 text-sm">{error}</div>}
 
-              <button type="submit" disabled={contactSubmitting} className="inline-flex items-center bg-[#bb9457] text-black px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-colors disabled:opacity-50">
-                {contactSubmitting ? 'Sending…' : 'Send message'}
-              </button>
+              <div className="pt-6">
+                <button type="submit" disabled={contactSubmitting} className="inline-flex items-center gap-3 bg-[#bb9457] text-black px-10 py-5 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#bb9457]/20 rounded-sm">
+                  {contactSubmitting ? (
+                    <>
+                      <span className="animate-spin">⏳</span>
+                      Sending…
+                    </>
+                  ) : (
+                    <>
+                      Send message
+                      <span>→</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
           )}
         </div>
@@ -374,8 +447,10 @@ const Contact = () => {
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Find us</span>
-            <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
+            <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/20 bg-neutral-950/50 text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+              Find us
+            </span>
+            <h2 className="mt-8 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
               Adorzia is building in three cities. Come and see what we are creating.
             </h2>
             <p className="mt-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
@@ -410,41 +485,55 @@ const Contact = () => {
                 image: craft
               }
             ].map((location, i) => (
-              <div key={i} className="group relative border border-neutral-900 rounded-sm bg-neutral-950 overflow-hidden hover:border-[#bb9457]/30 transition-colors duration-300">
+              <div key={i} className="group relative border border-neutral-900 rounded-sm bg-neutral-950/50 backdrop-blur-sm overflow-hidden hover:border-[#bb9457]/40 transition-all duration-500 hover:shadow-2xl hover:shadow-[#bb9457]/5">
+                {/* Image section */}
                 <div className="aspect-[4/3] overflow-hidden relative">
-                  <img src={location.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
-                </div>
-                <div className="p-8">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="font-serif text-2xl text-white font-normal">{location.city}</h3>
-                    <span className="text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono">{location.status}</span>
+                  <img src={location.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  
+                  {/* City name overlay */}
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <div className="flex justify-between items-end">
+                      <h3 className="font-serif text-3xl text-white font-normal">{location.city}</h3>
+                      <span className="px-3 py-1 rounded-full bg-[#bb9457]/20 border border-[#bb9457]/30 text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono">{location.status}</span>
+                    </div>
                   </div>
+                </div>
+                
+                {/* Content section */}
+                <div className="p-8">
                   <p className="text-neutral-400 font-light leading-relaxed mb-6 text-sm">{location.body}</p>
-                  <a href={`mailto:${location.email}`} className="text-[#bb9457] font-light text-sm mb-4 block hover:text-white transition-colors">
+                  
+                  {/* Email */}
+                  <a href={`mailto:${location.email}`} className="inline-flex items-center gap-2 text-[#bb9457] font-light text-sm mb-6 hover:text-white transition-colors duration-300 group-hover:translate-x-1">
+                    <span className="w-1 h-1 rounded-full bg-[#bb9457]" />
                     {location.email}
                   </a>
-                  <a href={`mailto:${location.email}`} className="inline-block px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300">
+                  
+                  {/* CTA Button */}
+                  <a href={`mailto:${location.email}`} className="inline-flex items-center gap-3 px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#bb9457]/20">
                     {location.cta}
+                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
                   </a>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="text-center p-10 border border-[#bb9457]/30 rounded-sm bg-neutral-950">
-            <p className="text-white font-light text-lg mb-6">
+          <div className="text-center p-12 border border-[#bb9457]/30 rounded-sm bg-neutral-950/60 backdrop-blur-sm">
+            <p className="text-white font-light text-lg mb-8 max-w-3xl mx-auto">
               Not in one of these cities? Write to us. We are planning our next locations and the cities that show us the strongest community interest will shape where we go next.
             </p>
-            <a href="mailto:hello@adorzia.com" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300">
+            <a href="mailto:hello@adorzia.com" className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#bb9457]/20">
               Tell us where Adorzia should come next
+              <span>→</span>
             </a>
           </div>
         </div>
       </section>
 
       {/* Social Media Links */}
-      <section className="py-40 relative overflow-hidden border-t border-neutral-900 bg-neutral-900">
+      <section className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 opacity-20">
           <img src={designer1} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
         </div>
@@ -454,8 +543,10 @@ const Contact = () => {
         
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto mb-20">
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Follow the journey</span>
-            <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
+            <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/20 bg-neutral-950/50 text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+              Follow the journey
+            </span>
+            <h2 className="mt-8 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
               We build in public. Follow along.
             </h2>
             <p className="mt-6 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
@@ -490,28 +581,36 @@ const Contact = () => {
                 cta: "Follow on Facebook"
               }
             ].map((platform, i) => (
-              <div key={i} className="relative p-8 border border-neutral-900 rounded-sm bg-neutral-950/80 backdrop-blur-sm hover:border-[#bb9457]/30 transition-colors duration-300">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-sm" />
-                <div className="text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono font-semibold mb-2">{platform.channel}</div>
-                <div className="text-white font-serif text-xl mb-4">{platform.handle}</div>
-                <p className="text-neutral-400 font-light leading-relaxed text-sm mb-6">{platform.description}</p>
-                <a href="#" className="inline-block px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300">
-                  {platform.cta}
-                </a>
+              <div key={i} className="group relative p-8 border border-neutral-900 rounded-sm bg-neutral-950/60 backdrop-blur-sm hover:border-[#bb9457]/40 transition-all duration-500 hover:shadow-2xl hover:shadow-[#bb9457]/5">
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-sm" />
+                
+                <div className="relative z-10">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-[#bb9457] font-mono font-semibold mb-3">{platform.channel}</div>
+                  <div className="text-white font-serif text-2xl mb-4">{platform.handle}</div>
+                  <p className="text-neutral-400 font-light leading-relaxed text-sm mb-6">{platform.description}</p>
+                  <a href="#" className="inline-flex items-center gap-3 px-6 py-3 border border-[#bb9457]/40 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#bb9457]/20">
+                    {platform.cta}
+                    <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  </a>
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="mt-16 text-center p-10 border border-[#bb9457]/30 rounded-sm bg-neutral-950 max-w-3xl mx-auto">
-            <p className="text-white font-light mb-6">
+          <div className="mt-16 text-center p-12 border border-[#bb9457]/30 rounded-sm bg-neutral-950/60 backdrop-blur-sm max-w-3xl mx-auto">
+            <p className="text-white font-light mb-8 text-lg">
               Prefer to hear from us directly? Join our mailing list for updates that go deeper than social.
             </p>
             {newsletterSubmitted ? (
-              <div className="text-[#bb9457] font-light">Subscribed successfully</div>
+              <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-[#bb9457]/10 border border-[#bb9457]/30 text-[#bb9457] font-light">
+                <span>✓</span>
+                Subscribed successfully
+              </div>
             ) : (
               <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input type="email" required value={newsletterEmail} onChange={(e) => setNewsletterEmail(e.target.value)} className="flex-1 bg-transparent border border-neutral-800 px-4 py-3 text-white outline-none focus:border-[#bb9457] transition-colors" placeholder="Email address" />
-                <button type="submit" disabled={newsletterSubmitting} className="px-8 py-3 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[10px] rounded-sm hover:bg-white transition-all duration-300 disabled:opacity-50">
+                <input type="email" required value={newsletterEmail} onChange={(e) => setNewsletterEmail(e.target.value)} className="flex-1 bg-transparent border-2 border-neutral-800 px-6 py-4 text-white outline-none focus:border-[#bb9457] transition-all duration-300" placeholder="Email address" />
+                <button type="submit" disabled={newsletterSubmitting} className="px-10 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[10px] rounded-sm hover:bg-white transition-all duration-300 disabled:opacity-50 transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-[#bb9457]/20">
                   {newsletterSubmitting ? 'Subscribing…' : 'Subscribe'}
                 </button>
               </form>
@@ -522,16 +621,26 @@ const Contact = () => {
 
       {/* Spotlight Submissions Redirect */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
-        <div className="absolute inset-0">
-          <img src={studio} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/95 via-neutral-950/90 to-black" />
+        <div className="absolute inset-0 z-0">
+          <img src={studio} alt="" className="w-full h-full object-cover scale-110 animate-ambient-swell" />
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/97 via-neutral-950/92 to-black" />
         </div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(187,148,87,0.15),transparent_60%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(187,148,87,0.1),transparent_50%)]" />
+        
+        {/* Cinematic overlays */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,rgba(187,148,87,0.18),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(187,148,87,0.12),transparent_50%)]" />
+        
+        {/* Floating elements */}
+        <div className="absolute top-20 right-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-20 left-20 w-56 h-56 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
         
         <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
-          <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Here for Spotlight</span>
-          <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
+          <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/30 bg-black/30 backdrop-blur-sm text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
+            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            Here for Spotlight
+          </span>
+          
+          <h2 className="mt-8 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
             Looking to apply for Spotlight Fall 2026? You are one click away.
           </h2>
 
@@ -539,34 +648,47 @@ const Contact = () => {
             <p>
               Adorzia Spotlight Fall 2026 is our first-ever national fashion talent event - and submissions open June 1, 2026. If you came to this page looking for the application, everything you need is on the Spotlight page.
             </p>
-            <p className="text-white font-normal">What you will find there:</p>
           </div>
+          
+          <p className="mt-8 text-white font-normal text-lg">What you will find there:</p>
 
-          <ul className="mt-8 space-y-4 text-neutral-400 font-light max-w-2xl mx-auto text-left">
-            <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>The full Spotlight mission and what winners receive</span></li>
-            <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Eligibility criteria and who should apply</span></li>
-            <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>The complete submission application form</span></li>
-            <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>The event timeline from submission to investment</span></li>
-            <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Frequently asked questions</span></li>
+          <ul className="mt-10 space-y-4 text-neutral-400 font-light max-w-2xl mx-auto text-left">
+            {[
+              "The full Spotlight mission and what winners receive",
+              "Eligibility criteria and who should apply",
+              "The complete submission application form",
+              "The event timeline from submission to investment",
+              "Frequently asked questions"
+            ].map((item, idx) => (
+              <li key={idx} className="flex gap-4 items-start group">
+                <span className="text-[#bb9457] mt-1 transform group-hover:scale-125 transition-transform duration-300">→</span>
+                <span className="group-hover:text-white transition-colors duration-300">{item}</span>
+              </li>
+            ))}
           </ul>
 
-          <div className="mt-8 flex flex-wrap gap-4 justify-center items-center">
-            <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.2em]">Submissions open: June 1, 2026</span>
+          <div className="mt-10 flex flex-wrap gap-6 justify-center items-center">
+            <span className="px-4 py-2 rounded-full bg-[#bb9457]/10 border border-[#bb9457]/30 text-neutral-500 font-mono text-[10px] uppercase tracking-[0.2em]">
+              Submissions open: June 1, 2026
+            </span>
             <span className="text-neutral-700">|</span>
-            <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.2em]">Submissions close: July 31, 2026</span>
+            <span className="px-4 py-2 rounded-full bg-[#bb9457]/10 border border-[#bb9457]/30 text-neutral-500 font-mono text-[10px] uppercase tracking-[0.2em]">
+              Submissions close: July 31, 2026
+            </span>
           </div>
 
           <div className="mt-12 flex flex-wrap gap-6 justify-center">
-            <a href="/spotlight-event" className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300">
+            <a href="/spotlight-event" className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-xl hover:shadow-[#bb9457]/20">
               Go to the Spotlight page
+              <span>→</span>
             </a>
-            <button className="px-8 py-4 border border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300">
+            <button className="inline-flex items-center gap-3 px-10 py-5 border-2 border-white/30 text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 transform hover:-translate-y-0.5">
               Get notified when submissions open
             </button>
           </div>
 
-          <p className="mt-12 text-neutral-400 font-light text-sm">
-            Not sure if Spotlight is right for you? Write to us at <a href="mailto:spotlight@adorzia.com" className="text-[#bb9457] hover:text-white transition-colors">spotlight@adorzia.com</a> and we will give you an honest answer.
+          <p className="mt-16 text-neutral-400 font-light text-sm">
+            Not sure if Spotlight is right for you? Write to us at <a href="mailto:spotlight@adorzia.com" className="text-[#bb9457] hover:text-white transition-colors font-medium">spotlight@adorzia.com</a> and we will give you an honest answer.
           </p>
         </div>
       </section>
