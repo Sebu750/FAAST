@@ -17,6 +17,9 @@ import newsletterStudio from '../assets/home-newsletter-studio.png'
 import karachiStudio from '../assets/karachi-coworking-fashion-studio.png'
 import lahoreStudio from '../assets/lahore-coworking-fashion-studio.png'
 import islamabadStudio from '../assets/Islamabad-coworking-fashion-studio.png'
+import brand1 from '../assets/brand1.jpg'
+import brand2 from '../assets/brand2.jpg'
+import brand3 from '../assets/brand3.jpg'
 
 
 const Home = () => {
@@ -776,51 +779,52 @@ const Home = () => {
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {[
-              { name: "Embroidered Silk Kurta", designer: "Designer Name", price: "PKR 18,500", image: designer1 },
-              { name: "Handwoven Shawl", designer: "Designer Name", price: "PKR 12,000", image: designer2 },
-              { name: "Contemporary Lehenga", designer: "Designer Name", price: "PKR 45,000", image: designer3 },
-              { name: "Block Print Tunic", designer: "Designer Name", price: "PKR 8,500", image: designer1 },
-              { name: "Luxury Bridal Ensemble", designer: "Designer Name", price: "PKR 125,000", image: luxuryBridal },
-              { name: "Minimalist Jacket", designer: "Designer Name", price: "PKR 22,000", image: designer3 },
-              { name: "Artisan Clutch Bag", designer: "Designer Name", price: "PKR 6,500", image: designer1 },
-              { name: "Heritage Scarf Collection", designer: "Designer Name", price: "PKR 4,800", image: designer2 }
+              { name: "Embroidered Silk Kurta", designer: "Zainab Ahmed", price: "PKR 18,500", image: brand1 },
+              { name: "Handwoven Shawl", designer: "Ayesha Khan", price: "PKR 12,000", image: brand2 },
+              { name: "Contemporary Lehenga", designer: "Sana Malik", price: "PKR 45,000", image: brand3 },
+             
             ].map((product, idx) => (
               <div 
                 key={idx}
-                className={`group overflow-hidden rounded-sm bg-neutral-900 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-1000 hover-lift ${isVisible['marketplace-preview'] ? 'animate-scale-in' : 'opacity-0 scale-95'}`}
-                style={{ transitionDelay: `${idx * 100}ms` }}
+                className={`group overflow-hidden rounded-lg bg-neutral-900 border border-neutral-800 hover:border-[#bb9457]/60 transition-all duration-700 hover-lift shadow-lg hover:shadow-2xl hover:shadow-[#bb9457]/10 ${isVisible['marketplace-preview'] ? 'animate-scale-in' : 'opacity-0 scale-95'}`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
               >
                 {/* Product Image */}
                 <div className="aspect-[3/4] overflow-hidden relative">
                   <img 
                     src={product.image} 
                     alt={product.name}
-                    className="w-full h-full object-cover scale-110 filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-120 transition-all duration-700" 
+                    className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-70 group-hover:opacity-50 transition-opacity duration-500" />
                   
                   {/* Coming Soon Badge */}
-                  <div className="absolute top-3 right-3 glass px-3 py-1.5 rounded-sm">
-                    <span className="text-[9px] uppercase tracking-[0.2em] text-[#bb9457] font-mono font-semibold">
+                  <div className="absolute top-4 right-4 glass px-4 py-2 rounded-full backdrop-blur-md">
+                    <span className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold">
                       Coming Soon
                     </span>
                   </div>
                   
                   {/* Quick View Overlay */}
-                  <div className="absolute inset-0 glass opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
-                    <span className="text-white text-xs font-light uppercase tracking-wider border border-white/50 px-4 py-2 rounded-sm hover:bg-white hover:text-black transition-all duration-300">
+                  <div className="absolute inset-0 bg-black/40 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                    <span className="text-white text-xs font-medium uppercase tracking-wider border-2 border-white/70 px-6 py-3 rounded-full hover:bg-white hover:text-black hover:border-white transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
                       View Collection
                     </span>
                   </div>
                 </div>
                 
                 {/* Product Info */}
-                <div className="p-4">
-                  <h3 className="text-white text-sm font-light mb-1 truncate">{product.name}</h3>
-                  <p className="text-neutral-500 text-xs font-mono uppercase tracking-wider mb-2">{product.designer}</p>
-                  <p className="text-[#bb9457] text-sm font-medium">{product.price}</p>
+                <div className="p-5 md:p-6">
+                  <h3 className="text-white text-base md:text-lg font-normal mb-2 line-clamp-1">{product.name}</h3>
+                  <p className="text-neutral-400 text-xs md:text-sm font-light mb-3">by {product.designer}</p>
+                  <div className="flex items-center justify-between">
+                    <p className="text-[#bb9457] text-lg md:text-xl font-semibold">{product.price}</p>
+                    <div className="w-8 h-8 rounded-full border border-[#bb9457]/30 flex items-center justify-center group-hover:bg-[#bb9457] group-hover:border-[#bb9457] transition-all duration-300">
+                      <span className="text-[#bb9457] text-sm group-hover:text-black transition-colors duration-300">→</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}
@@ -859,7 +863,7 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {[
               { 
                 category: "Contemporary Womenswear", 
@@ -880,37 +884,27 @@ const Home = () => {
                 category: "Fabric Innovation", 
                 description: "Fabric-forward designers pushing boundaries. Sustainable materials, experimental techniques, new traditions.",
                 image: fabricInnovation 
-              },
-              { 
-                category: "Sustainable Fashion", 
-                description: "Zero-waste design, ethical production, conscious creation. Fashion that respects the planet.",
-                image: sustainableFashion 
-              },
-              { 
-                category: "Luxury Occasionwear", 
-                description: "Bridal, formal, celebration. Pakistani craftsmanship at its most opulent and precise.",
-                image: luxuryBridal 
               }
             ].map((designer, idx) => (
               <div 
                 key={idx} 
-                className={`aspect-[4/5] overflow-hidden rounded-sm bg-neutral-900 border border-neutral-800 group hover:border-[#bb9457]/50 transition-all duration-1000 hover-lift ${isVisible['designers'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}
-                style={{ transitionDelay: `${idx * 200}ms` }}
+                className={`aspect-[3/4] overflow-hidden rounded-lg bg-neutral-900 border border-neutral-800 group hover:border-[#bb9457]/60 transition-all duration-700 hover-lift shadow-lg hover:shadow-2xl hover:shadow-[#bb9457]/10 ${isVisible['designers'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
               >
                 <div className="relative w-full h-full">
                   <img 
                     src={designer.image} 
                     alt={designer.category} 
-                    className="w-full h-full object-cover scale-110 filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-120 transition-all duration-700" 
+                    className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-85 group-hover:opacity-70 transition-opacity duration-500" />
                   
                   {/* Glass overlay on hover */}
-                  <div className="absolute inset-0 glass opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-black/30 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500" />
                   
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform group-hover:-translate-y-2 transition-transform duration-500">
-                    <div className="text-white font-serif text-2xl mb-2">{designer.category}</div>
-                    <div className="text-neutral-300 text-xs font-light leading-relaxed mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 z-10 transform group-hover:-translate-y-2 transition-transform duration-500">
+                    <div className="text-white font-serif text-lg md:text-xl mb-2">{designer.category}</div>
+                    <div className="text-neutral-300 text-xs font-light leading-relaxed mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 line-clamp-3">
                       {designer.description}
                     </div>
                     <div className="text-[#bb9457] text-xs font-mono uppercase tracking-widest flex items-center gap-2">

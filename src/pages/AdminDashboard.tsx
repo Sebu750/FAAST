@@ -229,6 +229,31 @@ const AdminDashboard = () => {
     navigate('/admin/login')
   }
 
+  const handleDelete = async (table: string, id: string) => {
+    if (!confirm('Are you sure you want to delete this entry? This action cannot be undone.')) {
+      return
+    }
+
+    try {
+      const { error } = await supabase
+        .from(table)
+        .delete()
+        .eq('id', id)
+
+      if (error) {
+        alert('Error deleting entry: ' + error.message)
+        return
+      }
+
+      // Refresh data
+      fetchData()
+      alert('Entry deleted successfully')
+    } catch (error) {
+      console.error('Error deleting:', error)
+      alert('Failed to delete entry')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-neutral-950 text-white flex">
       {/* Mobile Menu Overlay */}
@@ -536,12 +561,12 @@ const AdminDashboard = () => {
           ) : (
             <>
               {activeTab === 'overview' && <OverviewTab counts={dashboardCounts} spotlightRecent={spotlightApplications.slice(0, 5)} inquiriesRecent={contactInquiries.slice(0, 5)} />}
-              {activeTab === 'spotlight' && <SpotlightTable data={spotlightApplications} />}
-              {activeTab === 'marketplace' && <MarketplaceTable data={marketplaceApplications} />}
-              {activeTab === 'studio-waitlist' && <StudioWaitlistTable data={studioWaitlist} />}
-              {activeTab === 'partnership' && <PartnershipTable data={partnershipInquiries} />}
-              {activeTab === 'newsletter' && <NewsletterTable data={newsletterSubscriptions} />}
-              {activeTab === 'contact' && <ContactTable data={contactInquiries} />}
+              {activeTab === 'spotlight' && <SpotlightTable data={spotlightApplications} onDelete={(id) => handleDelete('spotlight_applications', id)} />}
+              {activeTab === 'marketplace' && <MarketplaceTable data={marketplaceApplications} onDelete={(id) => handleDelete('marketplace_applications', id)} />}
+              {activeTab === 'studio-waitlist' && <StudioWaitlistTable data={studioWaitlist} onDelete={(id) => handleDelete('studio_waitlist', id)} />}
+              {activeTab === 'partnership' && <PartnershipTable data={partnershipInquiries} onDelete={(id) => handleDelete('partnership_inquiries', id)} />}
+              {activeTab === 'newsletter' && <NewsletterTable data={newsletterSubscriptions} onDelete={(id) => handleDelete('newsletter_subscriptions', id)} />}
+              {activeTab === 'contact' && <ContactTable data={contactInquiries} onDelete={(id) => handleDelete('contact_inquiries', id)} />}
             </>
           )}
         </main>
@@ -569,78 +594,113 @@ const OverviewTab = ({ counts, spotlightRecent, inquiriesRecent }: {
 
   return (
     <div className="space-y-6 sm:space-y-8">
+      {/* Welcome Header */}
+      <div className="bg-gradient-to-r from-neutral-900 to-neutral-900/50 border border-neutral-800 rounded-sm p-6 sm:p-8">
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-serif text-white font-normal mb-2">
+              Welcome to <span className="text-[#bb9457] italic font-light">Adorzia</span> Admin
+            </h2>
+            <p className="text-neutral-400 text-sm font-light">
+              Monitor applications, inquiries, and platform activity
+            </p>
+          </div>
+          <div className="hidden sm:block text-right">
+            <p className="text-neutral-500 text-xs uppercase tracking-widest">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          </div>
+        </div>
+      </div>
+
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {statCards.map((stat, index) => (
-          <div key={index} className={`bg-gradient-to-br ${stat.color} border ${stat.borderColor} rounded-sm p-4 sm:p-6 hover:scale-105 transition-transform`}>
+          <div key={index} className={`bg-gradient-to-br ${stat.color} border ${stat.borderColor} rounded-sm p-5 sm:p-6 hover:border-opacity-60 transition-all duration-300 hover:shadow-lg group`}>
             <div className="flex items-start justify-between">
-              <div>
-                <p className="text-[10px] sm:text-xs uppercase tracking-wider text-neutral-400 mb-2">{stat.label}</p>
-                <p className={`text-3xl sm:text-4xl lg:text-5xl font-light font-serif ${stat.textColor}`}>{stat.value}</p>
+              <div className="flex-1">
+                <p className="text-[10px] sm:text-xs uppercase tracking-widest text-neutral-400 mb-3 font-semibold">{stat.label}</p>
+                <p className={`text-4xl sm:text-5xl lg:text-6xl font-light font-serif ${stat.textColor} group-hover:scale-105 transition-transform duration-300 origin-left`}>{stat.value}</p>
               </div>
-              <Icon name={stat.icon} className="w-6 h-6 sm:w-8 sm:h-8" color={stat.textColor} />
+              <div className={`${stat.textColor} opacity-60 group-hover:opacity-100 transition-opacity duration-300`}>
+                <Icon name={stat.icon} className="w-7 h-7 sm:w-9 sm:h-9" />
+              </div>
             </div>
           </div>
         ))}
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-neutral-900 border border-neutral-800 rounded-sm p-4 sm:p-6 lg:p-8">
-        <h3 className="text-lg font-semibold font-serif text-white mb-8 flex items-center gap-3">
-          <span className="w-1 h-6 bg-[#bb9457]" />
-          Recent Activity
-        </h3>
-        <div className="space-y-4">
-          {spotlightRecent.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold text-[#bb9457] uppercase tracking-widest mb-4">Latest Spotlight Applications</h4>
-              <div className="space-y-3">
-                {spotlightRecent.map((app) => (
-                  <div key={app.id} className="bg-neutral-950/50 border border-neutral-800 rounded-sm p-4">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-white font-medium">{app.name}</p>
-                        <p className="text-sm text-neutral-400">{app.email} • {app.location} • Age {app.age}</p>
-                        <p className="text-xs text-neutral-500 mt-1">{app.discipline} • {app.years_experience} experience</p>
-                      </div>
-                      <span className={`px-3 py-1 rounded-sm text-xs uppercase tracking-wider ${
-                        app.status === 'pending' ? 'bg-yellow-600/20 text-yellow-400 border border-yellow-600/30' :
-                        app.status === 'reviewed' ? 'bg-blue-600/20 text-blue-400 border border-blue-600/30' :
-                        'bg-green-600/20 text-green-400 border border-green-600/30'
-                      }`}>
-                        {app.status}
-                      </span>
-                    </div>
-                    <p className="text-xs text-neutral-500 mt-2">{new Date(app.created_at).toLocaleString()}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {inquiriesRecent.length > 0 && (
-            <div className="mt-6">
-              <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-widest mb-4">Latest Contact Inquiries</h4>
-              <div className="space-y-3">
-                {inquiriesRecent.map((inquiry) => (
-                  <div key={inquiry.id} className="bg-neutral-950/50 border border-neutral-800 rounded-sm p-4">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-white font-medium">{inquiry.name}</p>
-                        <p className="text-sm text-neutral-400">{inquiry.email}</p>
-                        <p className="text-xs text-neutral-500 mt-1 line-clamp-2">{inquiry.message}</p>
+      <div className="bg-neutral-900 border border-neutral-800 rounded-sm overflow-hidden">
+        <div className="p-6 sm:p-8 border-b border-neutral-800">
+          <h3 className="text-xl font-serif text-white font-normal flex items-center gap-4">
+            <span className="w-1.5 h-8 bg-[#bb9457] rounded-sm" />
+            Recent Activity
+          </h3>
+        </div>
+        <div className="p-6 sm:p-8">
+          <div className="space-y-8">
+            {spotlightRecent.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-xs font-semibold text-[#bb9457] uppercase tracking-[0.2em]">Latest Spotlight Applications</h4>
+                  <span className="text-neutral-600 text-xs">{spotlightRecent.length} entries</span>
+                </div>
+                <div className="space-y-3">
+                  {spotlightRecent.map((app) => (
+                    <div key={app.id} className="bg-neutral-950/50 border border-neutral-800 rounded-sm p-5 hover:border-neutral-700 transition-colors duration-300">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium mb-1 truncate">{app.name}</p>
+                          <p className="text-sm text-neutral-400 mb-1">{app.email}</p>
+                          <p className="text-xs text-neutral-500">{app.location} • Age {app.age} • {app.discipline}</p>
+                        </div>
+                        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                          <span className={`px-3 py-1.5 rounded-sm text-xs uppercase tracking-wider font-semibold ${
+                            app.status === 'pending' ? 'bg-yellow-600/20 text-yellow-400 border border-yellow-600/30' :
+                            app.status === 'reviewed' ? 'bg-blue-600/20 text-blue-400 border border-blue-600/30' :
+                            app.status === 'shortlisted' ? 'bg-purple-600/20 text-purple-400 border border-purple-600/30' :
+                            app.status === 'finalist' ? 'bg-[#bb9457]/20 text-[#bb9457] border border-[#bb9457]/30' :
+                            'bg-green-600/20 text-green-400 border border-green-600/30'
+                          }`}>
+                            {app.status}
+                          </span>
+                          <p className="text-xs text-neutral-600 whitespace-nowrap">{new Date(app.created_at).toLocaleDateString()}</p>
+                        </div>
                       </div>
                     </div>
-                    <p className="text-xs text-neutral-500 mt-2">{new Date(inquiry.created_at).toLocaleString()}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
-          {spotlightRecent.length === 0 && inquiriesRecent.length === 0 && (
-            <p className="text-neutral-500 text-center py-8">No recent activity</p>
-          )}
+            {inquiriesRecent.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h4 className="text-xs font-semibold text-blue-400 uppercase tracking-[0.2em]">Latest Contact Inquiries</h4>
+                  <span className="text-neutral-600 text-xs">{inquiriesRecent.length} entries</span>
+                </div>
+                <div className="space-y-3">
+                  {inquiriesRecent.map((inquiry) => (
+                    <div key={inquiry.id} className="bg-neutral-950/50 border border-neutral-800 rounded-sm p-5 hover:border-neutral-700 transition-colors duration-300">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium mb-1">{inquiry.name}</p>
+                          <p className="text-sm text-neutral-400 mb-1">{inquiry.email}</p>
+                          <p className="text-xs text-neutral-500 line-clamp-2">{inquiry.message}</p>
+                        </div>
+                        <p className="text-xs text-neutral-600 whitespace-nowrap flex-shrink-0">{new Date(inquiry.created_at).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {spotlightRecent.length === 0 && inquiriesRecent.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-neutral-600 text-sm">No recent activity</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -648,7 +708,7 @@ const OverviewTab = ({ counts, spotlightRecent, inquiriesRecent }: {
 }
 
 // Table Components
-const NewsletterTable = ({ data }: { data: NewsletterSubscription[] }) => {
+const NewsletterTable = ({ data, onDelete }: { data: NewsletterSubscription[]; onDelete: (id: string) => void }) => {
   if (data.length === 0) {
     return <p className="text-center text-neutral-400 py-12">No newsletter subscriptions yet</p>
   }
@@ -664,6 +724,7 @@ const NewsletterTable = ({ data }: { data: NewsletterSubscription[] }) => {
             <tr>
               <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Email</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Date</th>
+              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-neutral-900 divide-y divide-neutral-800">
@@ -672,6 +733,14 @@ const NewsletterTable = ({ data }: { data: NewsletterSubscription[] }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-white">{item.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
                   {new Date(item.created_at).toLocaleDateString()}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <button
+                    onClick={() => onDelete(item.id)}
+                    className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
@@ -682,7 +751,7 @@ const NewsletterTable = ({ data }: { data: NewsletterSubscription[] }) => {
   )
 }
 
-const ContactTable = ({ data }: { data: ContactInquiry[] }) => {
+const ContactTable = ({ data, onDelete }: { data: ContactInquiry[]; onDelete: (id: string) => void }) => {
   const [selectedItem, setSelectedItem] = useState<ContactInquiry | null>(null)
 
   if (data.length === 0) {
@@ -717,9 +786,15 @@ const ContactTable = ({ data }: { data: ContactInquiry[] }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <button
                     onClick={() => setSelectedItem(item)}
-                    className="text-[#bb9457] hover:text-white font-medium transition-colors"
+                    className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
                   >
                     View Details
+                  </button>
+                  <button
+                    onClick={() => onDelete(item.id)}
+                    className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
@@ -763,7 +838,7 @@ const ContactTable = ({ data }: { data: ContactInquiry[] }) => {
   )
 }
 
-const PartnershipTable = ({ data }: { data: PartnershipInquiry[] }) => {
+const PartnershipTable = ({ data, onDelete }: { data: PartnershipInquiry[]; onDelete: (id: string) => void }) => {
   const [selectedItem, setSelectedItem] = useState<PartnershipInquiry | null>(null)
 
   if (data.length === 0) {
@@ -803,9 +878,15 @@ const PartnershipTable = ({ data }: { data: PartnershipInquiry[] }) => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <button
                       onClick={() => setSelectedItem(item)}
-                      className="text-[#bb9457] hover:text-white font-medium transition-colors"
+                      className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
                     >
                       View Details
+                    </button>
+                    <button
+                      onClick={() => onDelete(item.id)}
+                      className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -858,7 +939,7 @@ const PartnershipTable = ({ data }: { data: PartnershipInquiry[] }) => {
   )
 }
 
-const SpotlightTable = ({ data }: { data: SpotlightApplication[] }) => {
+const SpotlightTable = ({ data, onDelete }: { data: SpotlightApplication[]; onDelete: (id: string) => void }) => {
   const [selectedApp, setSelectedApp] = useState<SpotlightApplication | null>(null)
 
   if (data.length === 0) {
@@ -917,9 +998,15 @@ const SpotlightTable = ({ data }: { data: SpotlightApplication[] }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <button
                     onClick={() => setSelectedApp(item)}
-                    className="text-[#bb9457] hover:text-white font-medium transition-colors"
+                    className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
                   >
                     View Details
+                  </button>
+                  <button
+                    onClick={() => onDelete(item.id)}
+                    className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>
@@ -1128,7 +1215,7 @@ const SpotlightTable = ({ data }: { data: SpotlightApplication[] }) => {
 }
 
 // Marketplace Table
-const MarketplaceTable = ({ data }: { data: MarketplaceApplication[] }) => {
+const MarketplaceTable = ({ data, onDelete }: { data: MarketplaceApplication[]; onDelete: (id: string) => void }) => {
   const [selectedItem, setSelectedItem] = useState<MarketplaceApplication | null>(null)
 
   if (data.length === 0) {
@@ -1177,9 +1264,15 @@ const MarketplaceTable = ({ data }: { data: MarketplaceApplication[] }) => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm">
                     <button
                       onClick={() => setSelectedItem(item)}
-                      className="text-[#bb9457] hover:text-white font-medium transition-colors"
+                      className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
                     >
                       View Details
+                    </button>
+                    <button
+                      onClick={() => onDelete(item.id)}
+                      className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                    >
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -1313,7 +1406,7 @@ const MarketplaceTable = ({ data }: { data: MarketplaceApplication[] }) => {
   )
 }
 
-const StudioWaitlistTable = ({ data }: { data: StudioWaitlist[] }) => {
+const StudioWaitlistTable = ({ data, onDelete }: { data: StudioWaitlist[]; onDelete: (id: string) => void }) => {
   const [selectedItem, setSelectedItem] = useState<StudioWaitlist | null>(null)
 
   if (data.length === 0) {
@@ -1375,9 +1468,15 @@ const StudioWaitlistTable = ({ data }: { data: StudioWaitlist[] }) => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <button
                     onClick={() => setSelectedItem(item)}
-                    className="text-[#bb9457] hover:text-white font-medium transition-colors"
+                    className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
                   >
                     View Details
+                  </button>
+                  <button
+                    onClick={() => onDelete(item.id)}
+                    className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>

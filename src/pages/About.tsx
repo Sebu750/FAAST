@@ -4,6 +4,8 @@ import SEO from '../components/SEO'
 import founder from '../assets/founder.png'
 import advisor1 from '../assets/advisor1.png'
 import team1 from '../assets/team1.jpg'
+import team2 from '../assets/home-designer-portrait-1.png'
+import team3 from '../assets/home-designer-portrait-2.png'
 import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
 import studio from '../assets/hero-banner-coworking-studio-2.png'
 import spotlight from '../assets/fashion-icon.png'
@@ -186,26 +188,27 @@ const About = () => {
 
   const coreTeam = [
     { 
-      name: "Haseeb Malik", 
-      role: "Founder & Creative Director", 
-      image: founder, 
-      location: "Karachi, Pakistan",
-      specialization: "Fashion Ecosystem Strategy & Brand Vision" 
-    },
-    { 
-      name: "Ayesha Rahman", 
+      name: "Zara Ahmed", 
       role: "Head of Studio Operations", 
-      image: founder, 
-      location: "Lahore, Pakistan",
+      image: team1, 
+      location: "Karachi, Pakistan",
       specialization: "Coworking Space Design & Fashion Production Systems" 
     },
     { 
-      name: "Sara Malik", 
-      role: "Marketplace Curator", 
-      image: founder, 
-      location: "Islamabad, Pakistan",
+      name: "Bilal Hussain", 
+      role: "Marketplace Director", 
+      image: team2, 
+      location: "Lahore, Pakistan",
       specialization: "Designer Onboarding & International Buyer Relations" 
-    }
+    },
+    { 
+      name: "Fatima Noor", 
+      role: "Spotlight Program Lead", 
+      image: team3, 
+      location: "Islamabad, Pakistan",
+      specialization: "Talent Discovery & Brand Development Strategy" 
+    },
+    
   ]
 
   const advisoryBoard = [
@@ -215,21 +218,8 @@ const About = () => {
       image: advisor1, 
       location: "Karachi, Pakistan",
       specialization: "Fashion Ecosystem Development & Creative Direction" 
-    },
-    { 
-      name: "Omar Khattak", 
-      role: "Fashion Industry Strategist", 
-      image: team1, 
-      location: "Lahore, Pakistan",
-      specialization: "Global Market Entry & Brand Scaling" 
-    },
-    { 
-      name: "Zainab Tariq", 
-      role: "Sustainable Fashion Advocate", 
-      image: craft, 
-      location: "Islamabad, Pakistan",
-      specialization: "Ethical Supply Chains & Cultural Preservation" 
     }
+    // Additional advisors to be announced
   ]
 
   return (
