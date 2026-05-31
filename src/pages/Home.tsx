@@ -1,15 +1,23 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
-import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
-import studio from '../assets/hero-banner-coworking-studio-2.png'
-import spotlight from '../assets/fashion-icon.png'
-import heroRunway from '../assets/hero-runway.jpg'
-import craft from '../assets/craft.jpg'
-import designer1 from '../assets/designer-1.jpg'
-import designer2 from '../assets/designer-2.jpg'
-import designer3 from '../assets/designer-3.jpg'
-import icon from '../assets/icon.png'
+import hero1 from '../assets/home-hero-ecosystem1.png'
+import hero2 from '../assets/home-hero-runway.png'
+import hero3 from '../assets/home-hero-craft.png'
+import heroRunwayCta from '../assets/home-cta-runway.png'
+import heritageCraft from '../assets/home-heritage-craft.png'
+import designer1 from '../assets/home-designer-portrait-1.png'
+import designer2 from '../assets/home-designer-portrait-2.png'
+import designer3 from '../assets/home-designer-portrait-3.png'
+import trophy from '../assets/home-spotlight-trophy.png'
+import fabricInnovation from '../assets/home-fabric-innovation.png'
+import sustainableFashion from '../assets/home-sustainable-fashion.png'
+import luxuryBridal from '../assets/home-luxury-bridal.png'
+import newsletterStudio from '../assets/home-newsletter-studio.png'
+import karachiStudio from '../assets/karachi-coworking-fashion-studio.png'
+import lahoreStudio from '../assets/lahore-coworking-fashion-studio.png'
+import islamabadStudio from '../assets/Islamabad-coworking-fashion-studio.png'
+
 
 const Home = () => {
   const [scrollY, setScrollY] = useState(0)
@@ -78,7 +86,7 @@ const Home = () => {
   }
   const slides = [
     {
-      image: heroHome,
+      image: hero1,
       eyebrow: 'Pakistan\'s First Fashion Ecosystem',
       title: 'Where Designers Become Fashionpreneurs',
       subtitle: 'Adorzia is Pakistan\'s first complete fashion entrepreneurship ecosystem. We provide premium coworking studios in Karachi, Lahore & Islamabad, a curated global marketplace for emerging designers, and the annual Spotlight event that discovers and invests in Pakistan\'s next great fashion brands. For designers, artisans, and fashion innovators ready to scale.',
@@ -86,7 +94,7 @@ const Home = () => {
       ctaSecondary: { label: 'Explore Locations', to: '/contact' },
     },
     {
-      image: studio,
+      image: hero2,
       eyebrow: 'Spotlight - Fall 2026',
       title: 'Pakistan\'s Premier Talent Investment Program',
       subtitle: 'Once a year, Adorzia scours every province, every city, and every subculture to identify the singular visionary ready to redefine Pakistani fashion on a global scale. Selected designers receive funding, mentorship, and a platform to launch their brand internationally.',
@@ -94,7 +102,7 @@ const Home = () => {
       ctaSecondary: { label: 'Discover the Event', to: '/spotlight-event' },
     },
     {
-      image: spotlight,
+      image: hero3,
       eyebrow: 'The Marketplace',
       title: 'From heritage craft to global curation.',
       subtitle: 'A structured, high-end marketplace connecting independent designers and master craftspeople with international buyers. We bridge Pakistani heritage craftsmanship with global demand, creating sustainable income streams for local artisans and brands.',
@@ -391,7 +399,7 @@ const Home = () => {
             <div className={`lg:col-span-5 relative group overflow-hidden rounded-sm bg-neutral-100 border border-neutral-200 transition-all duration-1000 delay-300 ${isVisible['manifesto'] ? 'animate-fade-in-right' : 'opacity-0 translate-x-[60px]'}`}>
               <div className="absolute inset-0 bg-neutral-950/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
               <img 
-                src={heroHome}
+                src={hero1}
                 alt="Editorial Texture" 
                 className="w-full aspect-[4/5] object-cover scale-110 filter grayscale contrast-125 group-hover:scale-115 transition-transform duration-[1.5s] ease-out"
               />
@@ -428,21 +436,21 @@ const Home = () => {
                 body: "Premium, fully equipped co-working environments engineered specifically for fashion professionals and independent designers. Launching in Karachi, Lahore, and Islamabad.",
                 link: "/for-creatives",
                 linkText: "Explore Studios →",
-                image: heroHome
+                image: hero2
               },
               {
                 title: "The Marketplace",
                 body: "A high-end digital gateway connecting Pakistan's exceptional design talent and heritage artisans directly with discerning global buyers.",
                 link: "/for-partners",
                 linkText: "Enter Marketplace →",
-                image: craft
+                image: hero3
               },
               {
                 title: "Spotlight",
                 body: "Our signature annual incubator designed to identify extraordinary, untapped talent across Pakistan and provide the capital and mentorship to build them into viable brands.",
                 link: "/spotlight-event",
                 linkText: "Learn About Spotlight →",
-                image: heroRunway
+                image: hero2
               }
             ].map((pillar, idx) => (
               <div 
@@ -599,8 +607,8 @@ const Home = () => {
       >
         <div className="absolute inset-0 opacity-30">
           <img 
-            src={heroRunway} 
-            alt="Background" 
+            src={heroRunwayCta} 
+            alt="Spotlight Background" 
             className="w-full h-full object-cover scale-110"
             style={{ transform: `translateY(${(scrollY - 2000) * 0.15}px)` }}
           />
@@ -619,7 +627,7 @@ const Home = () => {
                 {/* Trophy Image */}
                 <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto lg:mx-0">
                   <img 
-                    src={icon} 
+                    src={trophy} 
                     alt="Adorzia Spotlight Award Trophy" 
                     className="w-full h-full object-contain drop-shadow-2xl"
                   />
@@ -692,8 +700,8 @@ const Home = () => {
       >
         <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
           <img 
-            src={heroHome}
-            alt="Background Contrast" 
+            src={newsletterStudio}
+            alt="Newsletter Background" 
             className="w-full h-full object-cover filter grayscale brightness-50"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950 to-transparent" />
@@ -774,7 +782,7 @@ const Home = () => {
               { name: "Handwoven Shawl", designer: "Designer Name", price: "PKR 12,000", image: designer2 },
               { name: "Contemporary Lehenga", designer: "Designer Name", price: "PKR 45,000", image: designer3 },
               { name: "Block Print Tunic", designer: "Designer Name", price: "PKR 8,500", image: designer1 },
-              { name: "Luxury Bridal Ensemble", designer: "Designer Name", price: "PKR 125,000", image: craft },
+              { name: "Luxury Bridal Ensemble", designer: "Designer Name", price: "PKR 125,000", image: luxuryBridal },
               { name: "Minimalist Jacket", designer: "Designer Name", price: "PKR 22,000", image: designer3 },
               { name: "Artisan Clutch Bag", designer: "Designer Name", price: "PKR 6,500", image: designer1 },
               { name: "Heritage Scarf Collection", designer: "Designer Name", price: "PKR 4,800", image: designer2 }
@@ -871,17 +879,17 @@ const Home = () => {
               { 
                 category: "Fabric Innovation", 
                 description: "Fabric-forward designers pushing boundaries. Sustainable materials, experimental techniques, new traditions.",
-                image: designer1 
+                image: fabricInnovation 
               },
               { 
                 category: "Sustainable Fashion", 
                 description: "Zero-waste design, ethical production, conscious creation. Fashion that respects the planet.",
-                image: craft 
+                image: sustainableFashion 
               },
               { 
                 category: "Luxury Occasionwear", 
                 description: "Bridal, formal, celebration. Pakistani craftsmanship at its most opulent and precise.",
-                image: designer2 
+                image: luxuryBridal 
               }
             ].map((designer, idx) => (
               <div 
@@ -951,19 +959,19 @@ const Home = () => {
                 city: "Karachi",
                 subtitle: "The Creative Capital",
                 features: ["15,000 sq ft space", "Industrial sewing labs", "Natural light studios", "Material library"],
-                image: heroHome
+                image: karachiStudio
               },
               {
                 city: "Lahore",
                 subtitle: "Heritage Meets Innovation",
                 features: ["12,000 sq ft space", "Pattern-making suites", "Photography studio", "Collaborative lounge"],
-                image: studio
+                image: lahoreStudio
               },
               {
                 city: "Islamabad",
                 subtitle: "Modern Design Hub",
                 features: ["10,000 sq ft space", "Digital printing lab", "Private workstations", "Event space"],
-                image: craft
+                image: islamabadStudio
               }
             ].map((studio, idx) => (
               <div 
@@ -1113,8 +1121,8 @@ const Home = () => {
             <div className={`lg:col-span-5 order-last lg:order-first transition-all duration-1000 ${isVisible['global-vision'] ? 'animate-fade-in-left' : 'opacity-0 translate-x-[-60px]'}`}>
               <div className="relative group overflow-hidden rounded-sm bg-neutral-100 border border-neutral-200 hover-lift">
                 <img 
-                  src={craft} 
-                  alt="Pakistani Heritage Craft" 
+                  src={heritageCraft} 
+                  alt="Pakistani Heritage Fashion Craft" 
                   loading="lazy" 
                   className="w-full aspect-[4/5] object-cover scale-110 filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-115 transition-all duration-[1.5s] ease-out" 
                 />
@@ -1243,8 +1251,8 @@ const Home = () => {
       <section className="relative h-[60vh] md:h-[80vh] overflow-hidden">
         <div className="absolute inset-0">
           <img 
-            src={heroRunway} 
-            alt="Fashion Runway" 
+            src={heroRunwayCta} 
+            alt="Fashion Runway CTA" 
             className="w-full h-full object-cover scale-110"
             style={{ transform: `translateY(${scrollY * 0.1}px)` }}
           />

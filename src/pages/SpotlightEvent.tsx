@@ -2,12 +2,17 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
 import spotlightImg from '../assets/spotlight.jpg'
-import heroRunway from '../assets/hero-runway.jpg'
+import heroRunway from '../assets/home-hero-runway.png'
 import studio from '../assets/studio.jpg'
 import craft from '../assets/craft.jpg'
 import winner1 from '../assets/adorzia-spotlight-award.png'
 import brand1 from '../assets/brand1.jpg'
-import award2 from '../assets/adorzia-spotlight-awardw.png'
+import trophy from '../assets/home-spotlight-trophy.png'
+import luxuryBridal from '../assets/home-luxury-bridal.png'
+import sustainableFashion from '../assets/home-sustainable-fashion.png'
+import fabricInnovation from '../assets/home-fabric-innovation.png'
+
+
 
 const SpotlightEvent = () => {
   const navigate = useNavigate()
@@ -222,18 +227,18 @@ const SpotlightEvent = () => {
           <div className="grid lg:grid-cols-12 gap-12 md:gap-16 items-start">
             <div className="lg:col-span-5">
               <div className="sticky top-32">
-                {/* Main image - Studio/Workshop */}
-                <div className="aspect-[4/5] overflow-hidden rounded-sm mb-4 md:mb-6 hover-lift shadow-2xl shadow-black/50">
-                  <img src={craft} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
+                {/* Main image - Luxury Bridal */}
+                <div className="aspect-[3/4] overflow-hidden rounded-sm mb-4 md:mb-6 hover-lift shadow-2xl shadow-black/50">
+                  <img src={luxuryBridal} alt="Luxury Pakistani Bridal Fashion" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
                 </div>
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
-                  {/* Craft detail shot */}
-                  <div className="aspect-square overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={craft} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
+                  {/* Sustainable Fashion detail shot */}
+                  <div className="aspect-[4/3] overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
+                    <img src={sustainableFashion} alt="Sustainable Fashion Design" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
                   </div>
-                  {/* Spotlight event image */}
-                  <div className="aspect-square overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={craft} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
+                  {/* Fabric Innovation image */}
+                  <div className="aspect-[4/3] overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
+                    <img src={fabricInnovation} alt="Fabric Innovation" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
                   </div>
                 </div>
               </div>
@@ -363,7 +368,7 @@ const SpotlightEvent = () => {
             {/* Right Image & Countdown - Use winner3 for submissions */}
             <div className="relative space-y-6">
               <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-black/50">
-                <img src={award2} alt="Spotlight Submissions" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700" />
+                <img src={trophy} alt="Spotlight Submissions" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700" />
               </div>
               {/* Countdown Overlay */}
               <div className="absolute -bottom-6 -left-6 w-40 p-6 bg-[#bb9457]/10 backdrop-blur-md border border-[#bb9457]/30 rounded-sm">
@@ -508,7 +513,7 @@ const SpotlightEvent = () => {
                 body: "Capital for production, branding, market entry, and early operational costs.",
                 highlight: "Strategic investment, not prize money.",
                 number: "01",
-                image: award2
+                image: trophy
               },
               {
                 title: "Marketplace launch",
@@ -615,7 +620,7 @@ const SpotlightEvent = () => {
       <section id="award" className="py-32 md:py-40 relative overflow-hidden border-t border-neutral-900">
         {/* Full cinematic background */}
         <div className="absolute inset-0 z-0">
-          <img src={award2} alt="" className="w-full h-full object-cover scale-105 opacity-30 grayscale" />
+          <img src={trophy} alt="" className="w-full h-full object-cover scale-105 opacity-30 grayscale" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/92 to-neutral-950" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(187,148,87,0.18),transparent_65%)]" />
@@ -627,7 +632,7 @@ const SpotlightEvent = () => {
               {/* Left: Trophy Image */}
               <div className="relative group">
                 <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-[#bb9457]/30">
-                  <img src={award2} alt="Adorzia Spotlight Award Trophy" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:scale-115 transition-transform duration-700" />
+                  <img src={trophy} alt="Adorzia Spotlight Award Trophy" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:scale-115 transition-transform duration-700" />
                 </div>
                 {/* Dramatic corner accents */}
                 <div className="absolute -top-6 -left-6 w-24 h-24 border-t-2 border-l-2 border-[#bb9457]/60" />
