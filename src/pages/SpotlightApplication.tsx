@@ -321,7 +321,7 @@ const SpotlightApplication = () => {
     <div className="min-h-screen bg-neutral-950 text-white">
       <SEO
         title="Apply for Adorzia Spotlight Fall 2026 - Pakistan's Fashion Talent Event"
-        description="Submit your application for Adorzia Spotlight Fall 2026. Applications open June 1, 2026. We are looking for Pakistan's next fashion visionaries."
+        description="Submit your application for Adorzia Spotlight Fall 2026. Applications are now open until July 31, 2026. We are looking for Pakistan's next fashion visionaries."
         canonicalURL="https://adorzia.com/spotlight/apply"
         ogTitle="Apply for Adorzia Spotlight Fall 2026"
         ogDescription="Pakistan's first national fashion talent investment event. Submit your application now."
@@ -360,8 +360,8 @@ const SpotlightApplication = () => {
             <div className="text-[10px] uppercase tracking-[0.3em] text-neutral-500 font-mono mb-6 text-center">Application Timeline</div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-serif text-[#bb9457] font-normal mb-2">June 1</div>
-                <div className="text-xs text-neutral-400 font-light uppercase tracking-wider">Applications Open</div>
+                <div className="text-2xl md:text-3xl font-serif text-[#bb9457] font-normal mb-2">Now Open</div>
+                <div className="text-xs text-[#bb9457] font-medium uppercase tracking-wider">Applications Active</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl md:text-3xl font-serif text-[#bb9457] font-normal mb-2">July 31</div>
@@ -580,7 +580,7 @@ const SpotlightApplication = () => {
                     <select required value={formData.discipline} onChange={(e) => setFormData({ ...formData, discipline: e.target.value })} className="w-full border-b border-neutral-700/50 bg-transparent py-4 text-white outline-none focus:border-[#bb9457] transition-colors cursor-pointer">
                       <option value="" className="bg-neutral-950">Select your discipline</option>
                       <option value="fashion-design" className="bg-neutral-950">Fashion design</option>
-                      <option value="textile-craft" className="bg-neutral-950">Textile and heritage craft</option>
+                      <option value="heritage-craft" className="bg-neutral-950">Heritage craft and fashion innovation</option>
                       <option value="entrepreneurship" className="bg-neutral-950">Fashion entrepreneurship</option>
                       <option value="accessories" className="bg-neutral-950">Accessories design</option>
                       <option value="mixed" className="bg-neutral-950">Mixed or interdisciplinary</option>

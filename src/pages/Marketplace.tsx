@@ -214,7 +214,7 @@ const Marketplace = () => {
                   "name": "Who can sell on Adorzia?",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Adorzia is open to emerging fashion designers, independent makers, artisan-led labels, textile innovators, heritage craft practitioners, and fashion accessories brands based in Pakistan. We are looking for creators who produce original work - whether that means designing contemporary fashion or practicing traditional craft. We do not accept resellers, mass-produced imports, or generic wholesale products."
+                    "text": "Adorzia is open to emerging fashion designers, independent makers, artisan-led labels, fashion innovators, heritage craft practitioners, and fashion accessories brands based in Pakistan. We are looking for creators who produce original work - whether that means designing contemporary fashion or practicing traditional craft. We do not accept resellers, mass-produced imports, or generic wholesale products."
                   }
                 },
                 {
@@ -577,7 +577,7 @@ const Marketplace = () => {
                 title: "Story over transaction",
                 body: "Every listing on Adorzia carries more than a product and a price. It carries the name of the person who made it, the story behind the work, the craft tradition it belongs to, and the creative vision it represents. Buyers on Adorzia are not just purchasing a product. They are connecting with the person and the culture behind it.",
                 image: craft,
-                alt: "Traditional artisan creating handcrafted textile work using heritage techniques"
+                alt: "Traditional artisan creating handcrafted fashion work using heritage techniques"
               },
               {
                 title: "Fair value over false modesty",
@@ -716,7 +716,7 @@ const Marketplace = () => {
                 <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Ready-to-wear collections from emerging Pakistani designers</span></li>
                 <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Made-to-order pieces with distinctive creative identities</span></li>
                 <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Fashion accessories and objects</span></li>
-                <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Textile-forward contemporary design</span></li>
+                <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Fabric-forward contemporary design</span></li>
                 <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Small-batch limited collections that will not be available anywhere else</span></li>
                 <li className="flex gap-3"><span className="text-[#bb9457] mt-1">-</span><span>Brands that are one year old, two years old, three years old - and already making work that demands to be seen</span></li>
               </ul>
@@ -731,7 +731,7 @@ const Marketplace = () => {
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="aspect-square overflow-hidden rounded-sm">
-                    <img src={designer3} alt="Independent fashion designer working on textile-forward contemporary design" loading="lazy" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                    <img src={designer3} alt="Independent fashion designer working on fabric-forward contemporary design" loading="lazy" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="aspect-square overflow-hidden rounded-sm">
                     <img src={spotlightImg} alt="Pakistani fashion presentation at Adorzia Spotlight event" loading="lazy" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
@@ -746,7 +746,7 @@ const Marketplace = () => {
             <div className="lg:col-span-5 lg:order-1">
               <div className="sticky top-32 space-y-6">
                 <div className="aspect-[4/5] overflow-hidden rounded-sm">
-                  <img src={craft} alt="Traditional Pakistani artisan creating heritage craft textile using ancestral techniques" loading="lazy" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                  <img src={craft} alt="Traditional Pakistani artisan creating heritage craft fashion using ancestral techniques" loading="lazy" className="w-full h-full object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="aspect-square overflow-hidden rounded-sm">

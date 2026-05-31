@@ -5,9 +5,9 @@ import spotlightImg from '../assets/spotlight.jpg'
 import heroRunway from '../assets/hero-runway.jpg'
 import studio from '../assets/studio.jpg'
 import craft from '../assets/craft.jpg'
-import winner1 from '../assets/winner-1.jpg'
-import winner2 from '../assets/winner-2.jpg'
-import winner3 from '../assets/winner-3.jpg'
+import winner1 from '../assets/adorzia-spotlight-award.png'
+import brand1 from '../assets/brand1.jpg'
+import award2 from '../assets/adorzia-spotlight-awardw.png'
 
 const SpotlightEvent = () => {
   const navigate = useNavigate()
@@ -22,7 +22,7 @@ const SpotlightEvent = () => {
   }, [])
 
   useEffect(() => {
-    const target = new Date("2026-06-01T00:00:00").getTime()
+    const target = new Date("2026-07-31T23:59:59").getTime()
     const interval = setInterval(() => {
       const now = new Date().getTime()
       const difference = target - now
@@ -47,11 +47,11 @@ const SpotlightEvent = () => {
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
       <SEO
-        title="Adorzia Spotlight Fall 2026 - Pakistan's First National Fashion Talent Event | Apply from June 1"
-        description="Adorzia Spotlight Fall 2026 is Pakistan's first national fashion talent discovery and investment event. Applications open June 1 2026. We are searching the entire country for extraordinary fashion designers, heritage craft innovators and fashion entrepreneurs - and investing in the ones who are ready to become brands."
+        title="Adorzia Spotlight Fall 2026 - Pakistan's First National Fashion Talent Event | Apply Now"
+        description="Adorzia Spotlight Fall 2026 is Pakistan's first national fashion talent discovery and investment event. Applications are now open until July 31, 2026. We are searching the entire country for extraordinary fashion designers, heritage craft innovators and fashion entrepreneurs - and investing in the ones who are ready to become brands."
         canonicalURL="https://adorzia.com/spotlight"
-        ogTitle="Adorzia Spotlight Fall 2026 - Apply from June 1"
-        ogDescription="Pakistan's first national fashion talent investment event. We find the visionaries. We invest in the brands. Submissions open June 1 2026."
+        ogTitle="Adorzia Spotlight Fall 2026 - Apply Now"
+        ogDescription="Pakistan's first national fashion talent investment event. We find the visionaries. We invest in the brands. Applications open now until July 31, 2026."
         ogImageAlt="Adorzia Spotlight Fall 2026 - Pakistani fashion talent event"
         schemaType="Event"
         schema={{
@@ -189,7 +189,7 @@ const SpotlightEvent = () => {
           
           <div className="mt-4 md:mt-6 inline-flex items-center gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full border border-[#bb9457]/30 bg-[#bb9457]/10 backdrop-blur-sm animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
             <p className="text-white font-normal text-xs md:text-sm">
-              <span className="text-[#bb9457] font-semibold">Submissions open June 1, 2026</span>
+              <span className="text-[#bb9457] font-semibold">Applications are now open</span>
             </p>
           </div>
 
@@ -224,7 +224,7 @@ const SpotlightEvent = () => {
               <div className="sticky top-32">
                 {/* Main image - Studio/Workshop */}
                 <div className="aspect-[4/5] overflow-hidden rounded-sm mb-4 md:mb-6 hover-lift shadow-2xl shadow-black/50">
-                  <img src={studio} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
+                  <img src={craft} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
                 </div>
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {/* Craft detail shot */}
@@ -233,7 +233,7 @@ const SpotlightEvent = () => {
                   </div>
                   {/* Spotlight event image */}
                   <div className="aspect-square overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={spotlightImg} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
+                    <img src={craft} alt="" className="w-full h-full object-cover scale-110 grayscale contrast-125 hover:scale-115 transition-transform duration-700" />
                   </div>
                 </div>
               </div>
@@ -323,23 +323,23 @@ const SpotlightEvent = () => {
                 <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The moment is coming</span>
               </div>
               <h2 className="mt-4 md:mt-6 font-serif text-3xl md:text-4xl text-white font-normal tracking-tight leading-tight">
-                Submissions open June 1, 2026. <span className="text-gradient italic font-light">Be ready.</span>
+                Applications are open. <span className="text-gradient italic font-light">Submit before July 31.</span>
               </h2>
               <p className="mt-4 text-neutral-400 font-light text-sm md:text-base leading-relaxed">
-                Pakistan's first national fashion talent event. Submissions open June 1.
+                Pakistan's first national fashion talent event. Applications close July 31.
               </p>
               
               {/* Timeline - Visual cards */}
               <div className="mt-8 space-y-3">
                 {[
-                  { label: "June 1 - July 31, 2026", detail: "Submission window", number: "01" },
+                  { label: "June 1 - July 31, 2026", detail: "Submission window — ACTIVE NOW", number: "01", active: true },
                   { label: "August 2026", detail: "Shortlist announced", number: "02" },
                   { label: "September 2026", detail: "Finalist presentations", number: "03" },
                   { label: "Fall 2026", detail: "Spotlight event", number: "04" }
                 ].map((item, i) => (
-                  <div key={i} className="group flex items-center gap-4 p-4 bg-neutral-950 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-300">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-neutral-900 border border-[#bb9457]/40 flex items-center justify-center group-hover:border-[#bb9457] transition-colors duration-300">
-                      <span className="font-mono text-xs text-[#bb9457] font-bold">{item.number}</span>
+                  <div key={i} className={`group flex items-center gap-4 p-4 ${item.active ? 'bg-[#bb9457]/10 border-[#bb9457]/40' : 'bg-neutral-950 border-neutral-800'} border hover:border-[#bb9457]/50 transition-all duration-300`}>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full ${item.active ? 'bg-[#bb9457] border-[#bb9457]' : 'bg-neutral-900 border-[#bb9457]/40'} flex items-center justify-center group-hover:border-[#bb9457] transition-colors duration-300`}>
+                      <span className={`font-mono text-xs ${item.active ? 'text-black' : 'text-[#bb9457]'} font-bold`}>{item.number}</span>
                     </div>
                     <div className="flex-1">
                       <div className="text-white font-normal text-sm">{item.label}</div>
@@ -363,11 +363,11 @@ const SpotlightEvent = () => {
             {/* Right Image & Countdown - Use winner3 for submissions */}
             <div className="relative space-y-6">
               <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-black/50">
-                <img src={winner3} alt="Spotlight Submissions" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700" />
+                <img src={award2} alt="Spotlight Submissions" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700" />
               </div>
               {/* Countdown Overlay */}
               <div className="absolute -bottom-6 -left-6 w-40 p-6 bg-[#bb9457]/10 backdrop-blur-md border border-[#bb9457]/30 rounded-sm">
-                <div className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-mono mb-2">Days until submissions open</div>
+                <div className="text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-mono mb-2">Days until deadline</div>
                 <div className="font-serif text-5xl text-[#bb9457] font-normal">{daysLeft}</div>
               </div>
               {/* Corner accent */}
@@ -436,7 +436,7 @@ const SpotlightEvent = () => {
               <ul className="space-y-3">
                 {[
                   "Based in Pakistan at the time of application",
-                  "Working in fashion design, textile craft, fashion entrepreneurship, or related discipline",
+                  "Working in fashion design, heritage craft, fashion entrepreneurship, or related discipline",
                   "Able to present original work - physical, photographic, or both",
                   "Eighteen years of age or older",
                   "Committed to attending finalist presentations if selected"
@@ -508,14 +508,14 @@ const SpotlightEvent = () => {
                 body: "Capital for production, branding, market entry, and early operational costs.",
                 highlight: "Strategic investment, not prize money.",
                 number: "01",
-                image: winner2
+                image: award2
               },
               {
                 title: "Marketplace launch",
                 body: "Premium launch presence on Adorzia Marketplace with full onboarding and buyer network visibility.",
                 highlight: "Premium visibility from day one.",
                 number: "02",
-                image: spotlightImg
+                image: brand1
               },
               {
                 title: "Industry mentorship",
@@ -615,7 +615,7 @@ const SpotlightEvent = () => {
       <section id="award" className="py-32 md:py-40 relative overflow-hidden border-t border-neutral-900">
         {/* Full cinematic background */}
         <div className="absolute inset-0 z-0">
-          <img src={winner1} alt="" className="w-full h-full object-cover scale-105 opacity-30 grayscale" />
+          <img src={award2} alt="" className="w-full h-full object-cover scale-105 opacity-30 grayscale" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/92 to-neutral-950" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(187,148,87,0.18),transparent_65%)]" />
@@ -627,7 +627,7 @@ const SpotlightEvent = () => {
               {/* Left: Trophy Image */}
               <div className="relative group">
                 <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-[#bb9457]/30">
-                  <img src={winner1} alt="Adorzia Spotlight Award Trophy" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:scale-115 transition-transform duration-700" />
+                  <img src={award2} alt="Adorzia Spotlight Award Trophy" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:scale-115 transition-transform duration-700" />
                 </div>
                 {/* Dramatic corner accents */}
                 <div className="absolute -top-6 -left-6 w-24 h-24 border-t-2 border-l-2 border-[#bb9457]/60" />
@@ -1057,7 +1057,7 @@ const SpotlightEvent = () => {
                   description: "Business leaders who understand creative enterprise and growth"
                 },
                 {
-                  category: "Textile & Heritage Experts",
+                  category: "Fashion & Heritage Experts",
                   description: "Guardians of Pakistani craft traditions and innovation"
                 },
                 {
@@ -1262,9 +1262,9 @@ const SpotlightEvent = () => {
             {[
               { q: "Do I need a formal fashion education to apply?", a: "No. We're open to self-taught creatives, graduates, makers, and entrepreneurs. We evaluate your work and vision - not your qualifications." },
               { q: "I'm not from Lahore or Karachi. Can I still apply?", a: "Yes - and we specifically want to hear from you. Spotlight exists to discover talent the conventional fashion circuit has never reached." },
-              { q: "What kind of work qualifies?", a: "Fashion design in any category - ready-to-wear, couture, streetwear, accessories, textile design, heritage craft. If it's original, Pakistani, and demonstrates creative vision worth investing in, it qualifies." },
+              { q: "What kind of work qualifies?", a: "Fashion design in any category - ready-to-wear, couture, streetwear, accessories, heritage craft, fashion innovation. If it's original, Pakistani, and demonstrates creative vision worth investing in, it qualifies." },
               { q: "Do I need an existing brand or business?", a: "No. You don't need a registered business or established following. You need original work and a compelling vision." },
-              { q: "What does the investment look like?", a: "We're finalizing the structure for Fall 2026 and will publish full details before June 1. It's structured investment in your brand - not prize money - with full Adorzia ecosystem support." },
+              { q: "What does the investment look like?", a: "Full details for Fall 2026 will be published shortly. It's structured investment in your brand - not prize money - with full Adorzia ecosystem support." },
               { q: "Can I apply if I work in traditional craft?", a: "Absolutely. Heritage craft makers are who Spotlight was most specifically built for." },
               { q: "What if I can't travel for presentations?", a: "Virtual presentations are available for applicants outside our studio locations. Geography won't exclude anyone from the shortlist." },
               { q: "Will my application be kept confidential?", a: "Yes. All materials are reviewed only by the selection panel and won't be shared publicly without your consent." },
@@ -1341,25 +1341,38 @@ const SpotlightEvent = () => {
 
           <div className="mt-12 space-y-4">
             <p className="text-neutral-500 font-light text-sm italic">"I just found something every Pakistani creative needs to know about."</p>
-            <p className="text-neutral-500 font-light text-sm italic">"Submissions open June 1. If you make things in Pakistan, this is your moment."</p>
+            <p className="text-neutral-500 font-light text-sm italic">"Applications are open until July 31. If you make things in Pakistan, this is your moment."</p>
             <p className="text-neutral-500 font-light text-sm italic">"Adorzia Spotlight is looking for Pakistan's next fashion visionary. It might be you."</p>
           </div>
 
           <div className="mt-12 flex flex-wrap gap-6 justify-center">
-            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform">
+            <a 
+              href="https://www.instagram.com/adorzia" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform"
+            >
               Share on Instagram
-            </button>
-            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform">
+            </a>
+            <a 
+              href={`https://wa.me/?text=${encodeURIComponent('Adorzia Spotlight is looking for Pakistan\'s next fashion visionary. Applications are open until July 31, 2026. https://adorzia.com/spotlight')}`}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform"
+            >
               Share on WhatsApp
-            </button>
-            <button className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform">
+            </a>
+            <button 
+              onClick={() => navigator.clipboard.writeText('https://adorzia.com/spotlight')}
+              className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300 hover:-translate-y-0.5 transform"
+            >
               Copy the link
             </button>
           </div>
 
           <div className="mt-20 p-10 glass border border-[#bb9457]/30 rounded-sm">
             <p className="text-white font-serif text-xl md:text-2xl font-normal tracking-tight">
-              Spotlight Fall 2026. Submissions open June 1. The stage is real. The investment is real. The moment is now.
+              Spotlight Fall 2026. Applications open now until July 31. The stage is real. The investment is real. The moment is now.
             </p>
           </div>
         </div>
