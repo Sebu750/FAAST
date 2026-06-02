@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
-import spotlightImg from '../assets/spotlight.jpg'
-import heroRunway from '../assets/home-hero-runway.png'
-import studio from '../assets/studio.jpg'
-import craft from '../assets/craft.jpg'
-import winner1 from '../assets/adorzia-spotlight-award.png'
-import brand1 from '../assets/brand1.jpg'
+import spotlightHero from '../assets/spotlight-hero-stage.png'
+import spotlightMissionTalent from '../assets/spotlight-mission-talent.png'
+import spotlightMissionCraft1 from '../assets/spotlight-mission-craft-1.png'
+import spotlightMissionCraft2 from '../assets/spotlight-mission-craft-2.png'
+import spotlightMissionCraft3 from '../assets/spotlight-mission-craft-3.png'
+import spotlightSubmissionsBg from '../assets/spotlight-submissions-bg.png'
+import spotlightInvestment1 from '../assets/spotlight-investment1.png'
+import spotlightMarketplaceLaunch from '../assets/spotlight-marketplace-launch.png'
+import spotlightMentorship from '../assets/spotlight-mentorship.png'
 import trophy from '../assets/home-spotlight-trophy.png'
-import luxuryBridal from '../assets/home-luxury-bridal.png'
-import sustainableFashion from '../assets/home-sustainable-fashion.png'
-import fabricInnovation from '../assets/home-fabric-innovation.png'
+import studio from '../assets/studio.jpg'
+import spotlightImg from '../assets/spotlight.jpg'
 
 
 
@@ -164,7 +166,7 @@ const SpotlightEvent = () => {
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroRunway} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-50 md:opacity-60" style={{ transform: `translateY(${scrollY * 0.3}px)` }} />
+          <img src={spotlightHero} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-50 md:opacity-60" style={{ transform: `translateY(${scrollY * 0.3}px)` }} />
         </div>
         
         {/* Cinematic overlays */}
@@ -227,18 +229,18 @@ const SpotlightEvent = () => {
           <div className="grid lg:grid-cols-12 gap-12 md:gap-16 items-start">
             <div className="lg:col-span-5">
               <div className="sticky top-32">
-                {/* Main image - Luxury Bridal */}
+                {/* Main image - Spotlight Mission Talent */}
                 <div className="aspect-[3/4] overflow-hidden rounded-sm mb-4 md:mb-6 hover-lift shadow-2xl shadow-black/50">
-                  <img src={luxuryBridal} alt="Luxury Pakistani Bridal Fashion" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
+                  <img src={spotlightMissionTalent} alt="Pakistani Fashion Talent" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
                 </div>
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
-                  {/* Sustainable Fashion detail shot */}
+                  {/* Mission Craft detail shot 1 */}
                   <div className="aspect-[4/3] overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={sustainableFashion} alt="Sustainable Fashion Design" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
+                    <img src={spotlightMissionCraft1} alt="Fashion Craft Detail" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
                   </div>
-                  {/* Fabric Innovation image */}
+                  {/* Mission Craft detail shot 2 */}
                   <div className="aspect-[4/3] overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={fabricInnovation} alt="Fabric Innovation" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
+                    <img src={spotlightMissionCraft2} alt="Heritage Craft Innovation" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
                   </div>
                 </div>
               </div>
@@ -314,7 +316,7 @@ const SpotlightEvent = () => {
       {/* Submissions Open Section */}
       <section id="submissions" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={spotlightImg} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-20 animate-ambient-swell" />
+          <img src={spotlightSubmissionsBg} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-20 animate-ambient-swell" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
         
@@ -484,7 +486,7 @@ const SpotlightEvent = () => {
       {/* What Winners Receive */}
       <section id="winners" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={winner1} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale" />
+          <img src={trophy} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         
@@ -513,21 +515,21 @@ const SpotlightEvent = () => {
                 body: "Capital for production, branding, market entry, and early operational costs.",
                 highlight: "Strategic investment, not prize money.",
                 number: "01",
-                image: trophy
+                image: spotlightInvestment1
               },
               {
                 title: "Marketplace launch",
                 body: "Premium launch presence on Adorzia Marketplace with full onboarding and buyer network visibility.",
                 highlight: "Premium visibility from day one.",
                 number: "02",
-                image: brand1
+                image: spotlightMarketplaceLaunch
               },
               {
                 title: "Industry mentorship",
                 body: "Paired with mentors who have built fashion brands and navigated international markets.",
                 highlight: "Ongoing mentorship, not one-time advice.",
                 number: "03",
-                image: studio
+                image: spotlightMentorship
               }
             ].map((prize, i) => (
               <div key={i} className="group relative">
@@ -750,8 +752,7 @@ const SpotlightEvent = () => {
       {/* Selection Criteria */}
       <section id="criteria" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          {/* Use craft imagery for evaluation section */}
-          <img src={craft} alt="" className="w-full h-full object-cover scale-110 opacity-10 grayscale" />
+          <img src={spotlightMissionCraft3} alt="" className="w-full h-full object-cover scale-110 opacity-10 grayscale" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         
@@ -978,8 +979,8 @@ const SpotlightEvent = () => {
           ============================================ */}
       <section id="judging-panel" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          {/* Use spotlight event imagery for judges section */}
-          <img src={spotlightImg} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale" />
+          {/* Spotlight event imagery for judges section */}
+          <img src={spotlightHero} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         

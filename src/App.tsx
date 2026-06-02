@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
+import { SpeedInsights } from '@vercel/speed-insights/react'
+import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -32,6 +34,8 @@ const ScrollToTop = () => {
 function App() {
   return (
     <HelmetProvider>
+      <SpeedInsights />
+      <Analytics />
       <Router>
         <ScrollToTop />
         <Routes>
