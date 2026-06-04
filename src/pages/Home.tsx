@@ -34,6 +34,25 @@ const Home = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Preload hero images when component mounts
+  useEffect(() => {
+    const preloadImages = [hero1, hero2]
+    preloadImages.forEach((src) => {
+      const link = document.createElement('link')
+      link.rel = 'preload'
+      link.as = 'image'
+      link.href = src
+      document.head.appendChild(link)
+    })
+    
+    return () => {
+      preloadImages.forEach((src) => {
+        const existingLink = document.querySelector(`link[href="${src}"]`)
+        if (existingLink) document.head.removeChild(existingLink)
+      })
+    }
+  }, [])
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -199,10 +218,10 @@ const Home = () => {
       `}</style>
 
       {/* Section 1: Cinematic Full-Bleed Carousel Hero */}
-      <section className="relative overflow-hidden border-b border-neutral-900 bg-black min-h-screen flex items-center">
+      <section className="relative overflow-hidden border-b border-neutral-900 bg-black min-h-[60vh] sm:min-h-[70vh] md:min-h-screen flex items-center">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10" />
-          <div className="absolute inset-0 sm:bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)] bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.2),transparent_50%)] z-10" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10 sm:bg-gradient-to-r" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.2),transparent_50%)] sm:bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)] z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/60 z-10" />
 
           {slides.map((slide, index) => (
@@ -210,11 +229,17 @@ const Home = () => {
               key={index}
               src={slide.image}
               alt=""
-              className={`absolute inset-0 h-full w-full object-cover object-center sm:object-cover transition-all duration-[1400ms] cubic-bezier(0.25, 1, 0.5, 1) ${
-                index === currentIndex ? 'opacity-40 sm:opacity-45 scale-110' : 'opacity-0 scale-115'
+              width="1920"
+              height="1080"
+              fetchPriority={index === 0 ? "high" : "low"}
+              loading={index === 0 ? "eager" : "lazy"}
+              className={`absolute inset-0 h-full w-full object-cover object-center transition-all duration-[1400ms] cubic-bezier(0.25, 1, 0.5, 1) ${
+                index === currentIndex ? 'opacity-50 sm:opacity-45 scale-110' : 'opacity-0 scale-115'
               }`}
               style={{
-                transform: `translateY(${scrollY * 0.2}px) scale(${index === currentIndex ? 1.1 : 1.15})`
+                transform: `translateY(${scrollY * 0.2}px) scale(${index === currentIndex ? 1.1 : 1.15})`,
+                aspectRatio: '16 / 9',
+                objectPosition: 'center 30%'
               }}
             />
           ))}

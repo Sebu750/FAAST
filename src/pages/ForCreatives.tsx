@@ -131,9 +131,9 @@ const ForCreatives = () => {
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroHome} alt="Creative Workspace" className="w-full h-full object-cover scale-105" />
+          <img src={heroHome} alt="Creative Workspace" className="w-full h-full object-cover object-center scale-105" style={{ objectPosition: 'center 35%' }} />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-neutral-950" />
         </div>

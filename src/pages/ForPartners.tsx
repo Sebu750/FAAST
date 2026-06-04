@@ -80,9 +80,9 @@ const ForPartners = () => {
       `}</style>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
+      <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroHome} alt="Creative Ecosystem" className="w-full h-full object-cover opacity-25 grayscale contrast-125 scale-105 animate-ambient-swell" />
+          <img src={heroHome} alt="Creative Ecosystem" className="w-full h-full object-cover object-center opacity-25 grayscale contrast-125 scale-105 animate-ambient-swell" style={{ objectPosition: 'center 40%' }} />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/85 to-neutral-950" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)]" />

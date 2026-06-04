@@ -164,9 +164,17 @@ const SpotlightEvent = () => {
           Main landing section with event title, tagline, and primary CTAs
           ============================================ */}
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={spotlightHero} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-50 md:opacity-60" style={{ transform: `translateY(${scrollY * 0.3}px)` }} />
+          <img 
+            src={spotlightHero} 
+            alt="Spotlight Event Stage" 
+            width="1920"
+            height="1080"
+            fetchPriority="high"
+            className="w-full h-full object-cover object-center scale-110 grayscale opacity-60 md:opacity-60" 
+            style={{ transform: `translateY(${scrollY * 0.3}px)`, aspectRatio: '16 / 9', objectPosition: 'center 40%' }} 
+          />
         </div>
         
         {/* Cinematic overlays */}

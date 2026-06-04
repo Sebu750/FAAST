@@ -1,24 +1,34 @@
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Home from './pages/Home'
-import About from './pages/About'
-import ForCreatives from './pages/ForCreatives'
-import ForPartners from './pages/ForPartners'
-import SpotlightEvent from './pages/SpotlightEvent'
-import SpotlightApplication from './pages/SpotlightApplication'
-import SpotlightAdmin from './pages/SpotlightAdmin'
-import Contact from './pages/Contact'
-import AdminDashboard from './pages/AdminDashboard'
-import AdminLogin from './pages/AdminLogin'
-import Marketplace from './pages/Marketplace'
-import Legal from './pages/Legal'
-import Terms from './pages/Terms'
-import SpotlightTerms from './pages/SpotlightTerms'
+import Preloader from './components/Preloader'
+
+// Lazy load all page components for code splitting
+const Home = lazy(() => import('./pages/Home'))
+const About = lazy(() => import('./pages/About'))
+const ForCreatives = lazy(() => import('./pages/ForCreatives'))
+const ForPartners = lazy(() => import('./pages/ForPartners'))
+const SpotlightEvent = lazy(() => import('./pages/SpotlightEvent'))
+const SpotlightApplication = lazy(() => import('./pages/SpotlightApplication'))
+const SpotlightAdmin = lazy(() => import('./pages/SpotlightAdmin'))
+const Contact = lazy(() => import('./pages/Contact'))
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
+const AdminLogin = lazy(() => import('./pages/AdminLogin'))
+const Marketplace = lazy(() => import('./pages/Marketplace'))
+const Legal = lazy(() => import('./pages/Legal'))
+const Terms = lazy(() => import('./pages/Terms'))
+const SpotlightTerms = lazy(() => import('./pages/SpotlightTerms'))
+
+// Loading fallback component
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-black">
+    <div className="text-[#bb9457] text-sm tracking-[0.3em] uppercase">Loading...</div>
+  </div>
+)
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -32,13 +42,17 @@ const ScrollToTop = () => {
 }
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+
   return (
     <HelmetProvider>
+      {isLoading && <Preloader onFinish={() => setIsLoading(false)} />}
       <SpeedInsights />
       <Analytics />
       <Router>
         <ScrollToTop />
-        <Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
           {/* Admin routes - no header/footer */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -67,6 +81,7 @@ function App() {
             </div>
           } />
         </Routes>
+        </Suspense>
       </Router>
     </HelmetProvider>
   )
