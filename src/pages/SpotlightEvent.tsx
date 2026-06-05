@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SEO from '../components/SEO'
-import spotlightHero from '../assets/spotlight-hero-stage.png'
-import spotlightMissionTalent from '../assets/spotlight-mission-talent.png'
-import spotlightMissionCraft1 from '../assets/spotlight-mission-craft-1.png'
-import spotlightMissionCraft2 from '../assets/spotlight-mission-craft-2.png'
-import spotlightMissionCraft3 from '../assets/spotlight-mission-craft-3.png'
-import spotlightSubmissionsBg from '../assets/spotlight-submissions-bg.png'
-import spotlightInvestment1 from '../assets/spotlight-investment1.png'
-import spotlightMarketplaceLaunch from '../assets/spotlight-marketplace-launch.png'
-import spotlightMentorship from '../assets/spotlight-mentorship.png'
-import trophy from '../assets/home-spotlight-trophy.png'
-import studio from '../assets/studio.jpg'
-import spotlightImg from '../assets/spotlight.jpg'
+import spotlightHero from '../assets/spotlight-hero-stage.webp'
+import spotlightMissionTalent from '../assets/spotlight-mission-talent.webp'
+import spotlightMissionCraft1 from '../assets/spotlight-mission-craft-1.webp'
+import spotlightMissionCraft2 from '../assets/spotlight-mission-craft-2.webp'
+import spotlightMissionCraft3 from '../assets/spotlight-mission-craft-3.webp'
+import spotlightSubmissionsBg from '../assets/spotlight-submissions-bg.webp'
+import spotlightInvestment1 from '../assets/spotlight-investment1.webp'
+import spotlightMarketplaceLaunch from '../assets/spotlight-marketplace-launch.webp'
+import spotlightMentorship from '../assets/spotlight-mentorship.webp'
+import trophy from '../assets/home-spotlight-trophy.webp'
+import studio from '../assets/studio.webp'
+import spotlightImg from '../assets/spotlight.webp'
 
 
 
@@ -108,30 +108,11 @@ const SpotlightEvent = () => {
           from { opacity: 0; transform: scale(0.9); }
           to { opacity: 1; transform: scale(1); }
         }
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(187, 148, 87, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(187, 148, 87, 0.6); }
-        }
         .animate-ambient-swell { animation: ambientSwell 20s infinite ease-in-out; }
         .animate-fade-in-up { animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .animate-fade-in-left { animation: fadeInLeft 1s ease-out forwards; }
         .animate-fade-in-right { animation: fadeInRight 1s ease-out forwards; }
         .animate-scale-in { animation: scaleIn 0.8s ease-out forwards; }
-        .animate-shimmer {
-          background: linear-gradient(90deg, transparent, rgba(187, 148, 87, 0.4), transparent);
-          background-size: 200% 100%;
-          animation: shimmer 3s infinite;
-        }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
         .glass {
           background: rgba(255, 255, 255, 0.03);
           backdrop-filter: blur(20px);
@@ -174,7 +155,7 @@ const SpotlightEvent = () => {
             fetchPriority="high"
             className="w-full h-full object-cover object-center scale-110 grayscale opacity-60 md:opacity-60" 
             style={{ transform: `translateY(${scrollY * 0.3}px)`, aspectRatio: '16 / 9', objectPosition: 'center 40%' }} 
-          />
+           loading="lazy" decoding="async" />
         </div>
         
         {/* Cinematic overlays */}
@@ -183,7 +164,7 @@ const SpotlightEvent = () => {
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-24 md:py-32">
           <div className="inline-flex items-center gap-3 glass px-4 md:px-6 py-2 md:py-3 rounded-full mb-6 md:mb-8 animate-fade-in-up">
-            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
             <span className="text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
               Adorzia Spotlight - Fall 2026
             </span>
@@ -209,7 +190,7 @@ const SpotlightEvent = () => {
           </div>
 
           <div className="mt-8 md:mt-12 flex flex-wrap gap-4 md:gap-6 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <button onClick={handleApplyNow} className="inline-flex items-center gap-2 md:gap-3 px-6 md:px-10 py-4 md:py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[10px] md:text-[11px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
+            <button onClick={handleApplyNow} className="inline-flex items-center gap-2 md:gap-3 px-6 md:px-10 py-4 md:py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] md:tracking-[0.25em] text-[10px] md:text-[11px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
               Apply now
               <span className="text-base md:text-lg">→</span>
             </button>
@@ -220,7 +201,7 @@ const SpotlightEvent = () => {
         </div>
         
         {/* Scroll indicator */}
-        <div className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-6 md:bottom-10 left-1/2 transform -translate-x-1/2">
           <div className="w-5 h-8 md:w-6 md:h-10 border-2 border-[#bb9457]/50 rounded-full flex items-start justify-center p-1.5 md:p-2">
             <div className="w-0.5 md:w-1 h-1.5 md:h-2 bg-[#bb9457] rounded-full animate-pulse" />
           </div>
@@ -239,16 +220,16 @@ const SpotlightEvent = () => {
               <div className="sticky top-32">
                 {/* Main image - Spotlight Mission Talent */}
                 <div className="aspect-[3/4] overflow-hidden rounded-sm mb-4 md:mb-6 hover-lift shadow-2xl shadow-black/50">
-                  <img src={spotlightMissionTalent} alt="Pakistani Fashion Talent" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
+                  <img src={spotlightMissionTalent} alt="Pakistani Fashion Talent" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"  loading="lazy" decoding="async" />
                 </div>
                 <div className="grid grid-cols-2 gap-3 md:gap-4">
                   {/* Mission Craft detail shot 1 */}
                   <div className="aspect-[4/3] overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={spotlightMissionCraft1} alt="Fashion Craft Detail" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
+                    <img src={spotlightMissionCraft1} alt="Fashion Craft Detail" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"  loading="lazy" decoding="async" />
                   </div>
                   {/* Mission Craft detail shot 2 */}
                   <div className="aspect-[4/3] overflow-hidden rounded-sm hover-lift shadow-xl shadow-black/50">
-                    <img src={spotlightMissionCraft2} alt="Heritage Craft Innovation" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700" />
+                    <img src={spotlightMissionCraft2} alt="Heritage Craft Innovation" className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"  loading="lazy" decoding="async" />
                   </div>
                 </div>
               </div>
@@ -324,7 +305,7 @@ const SpotlightEvent = () => {
       {/* Submissions Open Section */}
       <section id="submissions" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={spotlightSubmissionsBg} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-20 animate-ambient-swell" />
+          <img src={spotlightSubmissionsBg} alt="" className="w-full h-full object-cover scale-110 grayscale opacity-20 animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
         
@@ -365,7 +346,7 @@ const SpotlightEvent = () => {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
+                <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
                   Apply now
                   <span className="text-lg">→</span>
                 </button>
@@ -378,7 +359,7 @@ const SpotlightEvent = () => {
             {/* Right Image & Countdown - Use winner3 for submissions */}
             <div className="relative space-y-6">
               <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-black/50">
-                <img src={trophy} alt="Spotlight Submissions" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700" />
+                <img src={trophy} alt="Spotlight Submissions" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700"  loading="lazy" decoding="async" />
               </div>
               {/* Countdown Overlay */}
               <div className="absolute -bottom-6 -left-6 w-40 p-6 bg-[#bb9457]/10 backdrop-blur-md border border-[#bb9457]/30 rounded-sm">
@@ -494,7 +475,7 @@ const SpotlightEvent = () => {
       {/* What Winners Receive */}
       <section id="winners" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={trophy} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale" />
+          <img src={trophy} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         
@@ -547,7 +528,7 @@ const SpotlightEvent = () => {
                   
                   {/* Background image overlay */}
                   <div className="absolute inset-0 z-0 opacity-5 group-hover:opacity-10 transition-opacity duration-500">
-                    <img src={prize.image} alt="" className="w-full h-full object-cover grayscale" />
+                    <img src={prize.image} alt="" className="w-full h-full object-cover grayscale"  loading="lazy" decoding="async" />
                   </div>
                   
                   {/* Number */}
@@ -630,7 +611,7 @@ const SpotlightEvent = () => {
       <section id="award" className="py-32 md:py-40 relative overflow-hidden border-t border-neutral-900">
         {/* Full cinematic background */}
         <div className="absolute inset-0 z-0">
-          <img src={trophy} alt="" className="w-full h-full object-cover scale-105 opacity-30 grayscale" />
+          <img src={trophy} alt="" className="w-full h-full object-cover scale-105 opacity-30 grayscale"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/92 to-neutral-950" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(187,148,87,0.18),transparent_65%)]" />
@@ -642,7 +623,7 @@ const SpotlightEvent = () => {
               {/* Left: Trophy Image */}
               <div className="relative group">
                 <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-[#bb9457]/30">
-                  <img src={trophy} alt="Adorzia Spotlight Award Trophy" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:scale-115 transition-transform duration-700" />
+                  <img src={trophy} alt="Adorzia Spotlight Award Trophy" className="w-full h-full object-cover scale-110 grayscale contrast-125 group-hover:scale-115 transition-transform duration-700"  loading="lazy" decoding="async" />
                 </div>
                 {/* Dramatic corner accents */}
                 <div className="absolute -top-6 -left-6 w-24 h-24 border-t-2 border-l-2 border-[#bb9457]/60" />
@@ -655,7 +636,7 @@ const SpotlightEvent = () => {
               <div className="text-left">
                 {/* Award badge - Bold and prominent */}
                 <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#bb9457]/10 border border-[#bb9457]/40 rounded-sm mb-8">
-                  <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+                  <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
                   <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">THE AWARD</span>
                 </div>
                 
@@ -733,7 +714,7 @@ const SpotlightEvent = () => {
           
           {/* CTA */}
           <div className="mb-12 text-center">
-            <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-12 py-6 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.3em] text-[12px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/40">
+            <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-12 py-6 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.3em] text-[12px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/40">
               Apply for the Award
               <span className="text-xl">→</span>
             </button>
@@ -742,9 +723,9 @@ const SpotlightEvent = () => {
           {/* Founding Class 2026 - Solid card */}
           <div className="max-w-3xl mx-auto p-8 bg-neutral-900/90 border border-[#bb9457]/30">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <div className="w-2 h-2 rounded-full bg-[#bb9457]" />
               <span className="text-[#bb9457] font-mono text-[11px] uppercase tracking-[0.3em] font-semibold">Founding Class 2026</span>
-              <div className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <div className="w-2 h-2 rounded-full bg-[#bb9457]" />
             </div>
             <p className="text-white font-light text-sm md:text-base leading-relaxed text-center">
               The first cohort of Spotlight winners will always hold a special place in Adorzia's history. You won't just be winners - you'll be the founding class that proved Pakistani fashion talent deserves the world stage. Applications from this inaugural cycle will be remembered.
@@ -760,7 +741,7 @@ const SpotlightEvent = () => {
       {/* Selection Criteria */}
       <section id="criteria" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={spotlightMissionCraft3} alt="" className="w-full h-full object-cover scale-110 opacity-10 grayscale" />
+          <img src={spotlightMissionCraft3} alt="" className="w-full h-full object-cover scale-110 opacity-10 grayscale"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         
@@ -878,7 +859,7 @@ const SpotlightEvent = () => {
 
           {/* CTA */}
           <div className="mt-12 text-center">
-            <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.25em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
+            <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.25em] text-[11px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
               Apply with confidence
               <span className="text-lg">→</span>
             </button>
@@ -898,7 +879,7 @@ const SpotlightEvent = () => {
           {/* Header */}
           <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/30 bg-[#bb9457]/5 mb-6">
-              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">The journey</span>
             </div>
             <h2 className="mt-4 md:mt-6 font-serif text-3xl md:text-4xl text-neutral-900 font-normal tracking-tight">
@@ -974,7 +955,7 @@ const SpotlightEvent = () => {
 
           {/* CTA */}
           <div className="mt-20 text-center">
-            <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-neutral-900 hover:text-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
+            <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-neutral-900 hover:text-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
               Start your application
               <span className="text-lg">→</span>
             </button>
@@ -988,7 +969,7 @@ const SpotlightEvent = () => {
       <section id="judging-panel" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
           {/* Spotlight event imagery for judges section */}
-          <img src={spotlightHero} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale" />
+          <img src={spotlightHero} alt="" className="w-full h-full object-cover scale-110 opacity-15 grayscale"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         
@@ -1149,7 +1130,7 @@ const SpotlightEvent = () => {
       {/* Application CTA Section */}
       <section id="apply" className="py-24 md:py-32 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={studio} alt="" className="w-full h-full object-cover scale-110 opacity-20 grayscale" />
+          <img src={studio} alt="" className="w-full h-full object-cover scale-110 opacity-20 grayscale"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-black" />
         
@@ -1169,7 +1150,7 @@ const SpotlightEvent = () => {
               {/* Founding Class positioning */}
               <div className="mt-6 p-6 bg-[#bb9457]/10 border-2 border-[#bb9457]/40">
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+                  <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
                   <span className="text-[#bb9457] font-mono text-[10px] uppercase tracking-[0.3em] font-semibold">Founding Class 2026</span>
                 </div>
                 <p className="text-white font-light text-sm md:text-base leading-relaxed">
@@ -1198,7 +1179,7 @@ const SpotlightEvent = () => {
               
               {/* CTA buttons */}
               <div className="mt-8 flex flex-wrap gap-4">
-                <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.25em] text-[12px] rounded-sm hover:bg-white transition-all duration-300 animate-pulse-glow transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
+                <button onClick={handleApplyNow} className="inline-flex items-center gap-3 px-10 py-5 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.25em] text-[12px] rounded-sm hover:bg-white transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#bb9457]/30">
                   Apply now
                   <span className="text-xl">→</span>
                 </button>
@@ -1236,7 +1217,7 @@ const SpotlightEvent = () => {
             {/* Right Image - Use studio/workshop imagery */}
             <div className="relative">
               <div className="aspect-[4/5] overflow-hidden rounded-sm shadow-2xl shadow-black/50">
-                <img src={studio} alt="Apply to Spotlight" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700" />
+                <img src={studio} alt="Apply to Spotlight" className="w-full h-full object-cover scale-110 hover:scale-120 transition-all duration-700"  loading="lazy" decoding="async" />
               </div>
               {/* Decorative overlay */}
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-[#bb9457]/10 backdrop-blur-sm border border-[#bb9457]/30 rounded-sm p-4 flex items-center justify-center">
@@ -1324,7 +1305,7 @@ const SpotlightEvent = () => {
             alt="" 
             className="w-full h-full object-cover scale-110 opacity-20 grayscale"
             style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-          />
+           loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-neutral-950" />
         </div>
         

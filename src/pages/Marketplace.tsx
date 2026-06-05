@@ -1,22 +1,22 @@
 import { useState } from 'react'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
-import heroHome from '../assets/hero-home.jpg'
-import heroBanner from '../assets/hero1.jpg'
-import studio from '../assets/studio.jpg'
-import craft from '../assets/craft.jpg'
-import designer1 from '../assets/designer-1.jpg'
-import designer2 from '../assets/designer-2.jpg'
-import designer3 from '../assets/designer-3.jpg'
-import spotlightImg from '../assets/spotlight.jpg'
-import fashionBanner from '../assets/fashion.jpg'
-import runwayImg from '../assets/runway.jpg'
-import studio1 from '../assets/studio1.jpg'
-import brand1 from '../assets/brand1.jpg'
-import brand2 from '../assets/brand2.jpg'
-import brand3 from '../assets/brand3.jpg'
-import banner3 from '../assets/banner3.jpg'
-import banner4 from '../assets/banner4.jpg'
+import heroHome from '../assets/hero-home.webp'
+import heroBanner from '../assets/hero1.webp'
+import studio from '../assets/studio.webp'
+import craft from '../assets/craft.webp'
+import designer1 from '../assets/designer-1.webp'
+import designer2 from '../assets/designer-2.webp'
+import designer3 from '../assets/designer-3.webp'
+import spotlightImg from '../assets/spotlight.webp'
+import fashionBanner from '../assets/fashion.webp'
+import runwayImg from '../assets/runway.webp'
+import studio1 from '../assets/studio1.webp'
+import brand1 from '../assets/brand1.webp'
+import brand2 from '../assets/brand2.webp'
+import brand3 from '../assets/brand3.webp'
+import banner3 from '../assets/banner3.webp'
+import banner4 from '../assets/banner4.webp'
 
 // ============================================
 // ADORZIA MARKETPLACE PAGE
@@ -330,23 +330,10 @@ const Marketplace = () => {
           z-index: 9999;
         }
 
-        /* Golden divider line animation */
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
+        /* Golden divider line - static gradient */
         .golden-divider {
           background: linear-gradient(90deg, transparent 0%, #bb9457 50%, transparent 100%);
-          background-size: 200% 100%;
-          animation: shimmer 8s infinite linear;
         }
-
-        /* Subtle parallax for hero images */
-        @keyframes parallax {
-          0%, 100% { transform: translateY(0) scale(1); }
-          50% { transform: translateY(-20px) scale(1.02); }
-        }
-        .animate-parallax { animation: parallax 15s infinite ease-in-out; }
 
         /* Image hover lift */
         .hover-lift {
@@ -370,7 +357,7 @@ const Marketplace = () => {
       <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
         {/* Background Image - Enhanced Visibility */}
         <div className="absolute inset-0 z-0">
-          <img src={heroBanner} alt="Pakistani fashion designer presenting contemporary collection in studio" className="w-full h-full object-cover object-center grayscale opacity-70 animate-parallax" style={{ objectPosition: 'center 35%' }} />
+          <img src={heroBanner} alt="Pakistani fashion designer presenting contemporary collection in studio" className="w-full h-full object-cover object-center grayscale opacity-70" style={{ objectPosition: 'center 35%' }}  loading="lazy" decoding="async" />
         </div>
         
         {/* Gradient Overlays - More transparent for better image visibility */}
@@ -958,7 +945,7 @@ const Marketplace = () => {
           ============================================ */}
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div className="absolute inset-0">
-          <img src={banner3} alt="Traditional Pakistani artisan creating heritage craft textile" loading="lazy" className="w-full h-full object-cover animate-parallax" />
+          <img src={banner3} alt="Traditional Pakistani artisan creating heritage craft textile" loading="lazy" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />
@@ -1099,7 +1086,7 @@ const Marketplace = () => {
           ============================================ */}
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div className="absolute inset-0">
-          <img src={fashionBanner} alt="Contemporary Pakistani fashion designer presenting collection" loading="lazy" className="w-full h-full object-cover animate-parallax" />
+          <img src={fashionBanner} alt="Contemporary Pakistani fashion designer presenting collection" loading="lazy" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />
@@ -1778,7 +1765,7 @@ const Marketplace = () => {
           ============================================ */}
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div className="absolute inset-0">
-          <img src={banner4} alt="Contemporary Pakistani fashion collection for international buyers" loading="lazy" className="w-full h-full object-cover animate-parallax" />
+          <img src={banner4} alt="Contemporary Pakistani fashion collection for international buyers" loading="lazy" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />

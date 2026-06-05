@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
-import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
-import studio from '../assets/hero-banner-coworking-studio-2.png'
-import spotlight from '../assets/fashion-icon.png'
-import craft from '../assets/craft.jpg'
-import coworking from '../assets/coworking-studio-image .png'
+import heroHome from '../assets/hero-banner-coworking-studio 1 .webp'
+import studio from '../assets/hero-banner-coworking-studio-2.webp'
+import spotlight from '../assets/fashion-icon.webp'
+import craft from '../assets/craft.webp'
+import coworking from '../assets/coworking-studio-image .webp'
 
 const ForCreatives = () => {
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false)
@@ -133,7 +133,7 @@ const ForCreatives = () => {
       {/* Hero Section */}
       <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroHome} alt="Creative Workspace" className="w-full h-full object-cover object-center scale-105" style={{ objectPosition: 'center 35%' }} />
+          <img src={heroHome} alt="Creative Workspace" className="w-full h-full object-cover object-center scale-105" style={{ objectPosition: 'center 35%' }}  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent to-neutral-950" />
         </div>
@@ -193,7 +193,7 @@ const ForCreatives = () => {
       {/* What Adorzia Offers */}
       <section id="what-we-offer" className="relative py-40 border-b border-neutral-900">
         <div className="absolute inset-0">
-          <img src={craft} alt="" className="w-full h-full object-cover" />
+          <img src={craft} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/90 to-neutral-950/95" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(187,148,87,0.12),transparent_50%)] pointer-events-none" />
@@ -222,7 +222,7 @@ const ForCreatives = () => {
                     src={offer.image} 
                     alt={offer.title} 
                     className="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" 
-                  />
+                   loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 </div>
                 <div className="p-8 relative">
@@ -273,7 +273,7 @@ const ForCreatives = () => {
                 src={coworking} 
                 alt="Studio Workspace" 
                 className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
-              />
+               loading="lazy" decoding="async" />
             </div>
           </div>
 
@@ -585,7 +585,7 @@ const ForCreatives = () => {
       {/* Marketplace */}
       <section className="py-40 relative overflow-hidden border-b border-neutral-900">
         <div className="absolute inset-0">
-          <img src={studio} alt="" className="w-full h-full object-cover" />
+          <img src={studio} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-l from-neutral-950/95 via-neutral-950/90 to-neutral-950/95" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(187,148,87,0.1),transparent_50%)] pointer-events-none" />
@@ -594,7 +594,7 @@ const ForCreatives = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <div className="order-last lg:order-first relative group">
               <div className="aspect-[4/5] overflow-hidden rounded-sm border border-neutral-900">
-                <img src={studio} alt="Marketplace" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                <img src={studio} alt="Marketplace" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700"  loading="lazy" decoding="async" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
             </div>
@@ -665,7 +665,7 @@ const ForCreatives = () => {
       {/* Spotlight Event */}
       <section className="py-40 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={spotlight} alt="" className="w-full h-full object-cover" />
+          <img src={spotlight} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#6f1d1b] via-[#6f1d1b]/90 to-[#6f1d1b]/70" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_60%)] pointer-events-none" />
@@ -705,7 +705,7 @@ const ForCreatives = () => {
       {/* Heritage Craft Program */}
       <section className="py-40 relative overflow-hidden border-b border-neutral-900">
         <div className="absolute inset-0">
-          <img src={craft} alt="" className="w-full h-full object-cover" />
+          <img src={craft} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/95 to-neutral-950" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(187,148,87,0.12),transparent_50%)] pointer-events-none" />
@@ -730,7 +730,7 @@ const ForCreatives = () => {
               </div>
             </div>
             <div className="aspect-[4/5] overflow-hidden rounded-sm border border-neutral-900 relative group">
-              <img src={craft} alt="Heritage Craft" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+              <img src={craft} alt="Heritage Craft" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700"  loading="lazy" decoding="async" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             </div>
           </div>
@@ -813,7 +813,7 @@ const ForCreatives = () => {
                 src={heroHome} 
                 alt="Designer Success Stories" 
                 className="w-full h-full object-cover grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" 
-              />
+               loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -822,7 +822,7 @@ const ForCreatives = () => {
       {/* Apply / Get Started */}
       <section className="py-48 relative overflow-hidden">
         <div className="absolute inset-0">
-          <img src={heroHome} alt="" className="w-full h-full object-cover" />
+          <img src={heroHome} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-neutral-950" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_60%)]" />

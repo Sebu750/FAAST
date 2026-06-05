@@ -2,10 +2,10 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
-import studio from '../assets/studio.jpg'
-import craft from '../assets/craft.jpg'
-import designer1 from '../assets/designer-1.jpg'
-import designer2 from '../assets/designer-2.jpg'
+import studio from '../assets/studio.webp'
+import craft from '../assets/craft.webp'
+import designer1 from '../assets/designer-1.webp'
+import designer2 from '../assets/designer-2.webp'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -169,22 +169,12 @@ const Contact = () => {
         .animate-fade-up-delay-1 { animation: fadeUp 0.8s ease-out 0.2s forwards; opacity: 0; }
         .animate-fade-up-delay-2 { animation: fadeUp 0.8s ease-out 0.4s forwards; opacity: 0; }
         .animate-fade-up-delay-3 { animation: fadeUp 0.8s ease-out 0.6s forwards; opacity: 0; }
-        
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        .animate-shimmer {
-          background: linear-gradient(90deg, transparent, rgba(187,148,87,0.1), transparent);
-          background-size: 200% 100%;
-          animation: shimmer 3s infinite;
-        }
       `}</style>
 
       {/* Hero Section with Full Banner */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={designer1} alt="" className="w-full h-full object-cover scale-110 animate-ambient-swell" />
+          <img src={designer1} alt="" className="w-full h-full object-cover scale-110 animate-ambient-swell"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-neutral-950" />
           <div className="absolute inset-0 bg-black/30" />
         </div>
@@ -194,13 +184,13 @@ const Contact = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(187,148,87,0.15),transparent_50%)]" />
         
         {/* Floating elements */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#bb9457]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl" style={{ animationDelay: '2s' }} />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 py-32">
           <div className="animate-fade-up">
             <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/30 bg-black/30 backdrop-blur-sm text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
-              <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+              <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
               Get in touch
             </span>
           </div>
@@ -238,7 +228,7 @@ const Contact = () => {
       {/* Four Contact Paths */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 opacity-10">
-          <img src={designer2} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+          <img src={designer2} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/98 to-neutral-950" />
         
@@ -293,7 +283,7 @@ const Contact = () => {
                 
                 {/* Image section */}
                 <div className="aspect-[16/9] overflow-hidden relative">
-                  <img src={path.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700" />
+                  <img src={path.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700"  loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />
                 </div>
                 
@@ -324,7 +314,7 @@ const Contact = () => {
       {/* Contact Form */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={designer2} alt="" className="w-full h-full object-cover scale-105" />
+          <img src={designer2} alt="" className="w-full h-full object-cover scale-105"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/97 via-neutral-950/92 to-neutral-950/97" />
         </div>
         
@@ -441,7 +431,7 @@ const Contact = () => {
       {/* Studio Locations */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 opacity-15">
-          <img src={studio} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+          <img src={studio} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/97 to-neutral-950" />
         
@@ -488,7 +478,7 @@ const Contact = () => {
               <div key={i} className="group relative border border-neutral-900 rounded-sm bg-neutral-950/50 backdrop-blur-sm overflow-hidden hover:border-[#bb9457]/40 transition-all duration-500 hover:shadow-2xl hover:shadow-[#bb9457]/5">
                 {/* Image section */}
                 <div className="aspect-[4/3] overflow-hidden relative">
-                  <img src={location.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700" />
+                  <img src={location.image} alt="" className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-700"  loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
                   {/* City name overlay */}
@@ -535,7 +525,7 @@ const Contact = () => {
       {/* Social Media Links */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 opacity-20">
-          <img src={designer1} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+          <img src={designer1} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-neutral-900/95 to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.1),transparent_60%)]" />
@@ -622,7 +612,7 @@ const Contact = () => {
       {/* Spotlight Submissions Redirect */}
       <section className="py-40 relative overflow-hidden border-t border-neutral-900">
         <div className="absolute inset-0 z-0">
-          <img src={studio} alt="" className="w-full h-full object-cover scale-110 animate-ambient-swell" />
+          <img src={studio} alt="" className="w-full h-full object-cover scale-110 animate-ambient-swell"  loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/97 via-neutral-950/92 to-black" />
         </div>
         
@@ -631,12 +621,12 @@ const Contact = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(187,148,87,0.12),transparent_50%)]" />
         
         {/* Floating elements */}
-        <div className="absolute top-20 right-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 left-20 w-56 h-56 bg-[#bb9457]/5 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }} />
+        <div className="absolute top-20 right-20 w-72 h-72 bg-[#bb9457]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-20 w-56 h-56 bg-[#bb9457]/5 rounded-full blur-3xl" style={{ animationDelay: '3s' }} />
         
         <div className="max-w-5xl mx-auto px-6 lg:px-8 text-center relative z-10">
           <span className="inline-flex items-center gap-3 px-6 py-3 rounded-full border border-[#bb9457]/30 bg-black/30 backdrop-blur-sm text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
-            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
             Here for Spotlight
           </span>
           

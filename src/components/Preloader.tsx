@@ -9,16 +9,17 @@ const Preloader = ({ onFinish }: PreloaderProps) => {
   const [isAnimating, setIsAnimating] = useState(false)
 
   useEffect(() => {
-    // Start fade out after initial load
+    // Start fade out quickly to minimize FCP/LCP impact
     const fadeTimer = setTimeout(() => {
       setIsAnimating(true)
-    }, 800)
+      // Fire onFinish when fade STARTS so content renders immediately
+      onFinish?.()
+    }, 500)
 
-    // Complete and hide
+    // Complete and unmount shortly after fade finishes
     const hideTimer = setTimeout(() => {
       setIsVisible(false)
-      onFinish?.()
-    }, 1500)
+    }, 1000)
 
     return () => {
       clearTimeout(fadeTimer)

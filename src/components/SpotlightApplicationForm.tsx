@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { sendSpotlightApplicationNotification } from '../lib/email'
-import heroRunway from '../assets/hero-runway.jpg'
+import heroRunway from '../assets/hero-runway.webp'
 
 interface SpotlightApplicationFormProps {
   onSuccess: () => void
@@ -79,14 +79,14 @@ const SpotlightApplicationForm = ({ onSuccess }: SpotlightApplicationFormProps) 
       </div>
       
       {/* Floating decorative elements */}
-      <div className="absolute top-20 left-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" />
-      <div className="absolute bottom-20 right-20 w-48 h-48 bg-[#bb9457]/5 rounded-full blur-3xl animate-float pointer-events-none" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-20 left-20 w-64 h-64 bg-[#bb9457]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 right-20 w-48 h-48 bg-[#bb9457]/5 rounded-full blur-3xl pointer-events-none" style={{ animationDelay: '2s' }} />
       
       <div className="max-w-5xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header with glassmorphism */}
         <div className="text-center mb-20">
           <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full mb-8">
-            <span className="w-2 h-2 rounded-full bg-[#bb9457] animate-pulse-glow" />
+            <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Adorzia Spotlight Fall 2026 - Application</span>
           </div>
           <h2 className="mt-6 font-serif text-4xl md:text-6xl text-white font-normal tracking-tight">
@@ -224,7 +224,7 @@ const SpotlightApplicationForm = ({ onSuccess }: SpotlightApplicationFormProps) 
                 </label>
                 <div className="relative group">
                   <input type="file" multiple accept="image/jpeg,image/png" className="w-full text-neutral-400 file:bg-white/10 file:text-white file:border-0 file:px-6 file:py-3 file:rounded-sm file:cursor-pointer hover:file:bg-white/20 file:transition-colors transition-all duration-300" />
-                  <div className="absolute inset-0 animate-shimmer opacity-0 group-hover:opacity-100 pointer-events-none rounded-sm" />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none rounded-sm" />
                 </div>
               </div>
 
@@ -338,7 +338,7 @@ const SpotlightApplicationForm = ({ onSuccess }: SpotlightApplicationFormProps) 
           {error && <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-sm text-red-400 text-sm">{error}</div>}
 
           <div className="pt-8">
-            <button type="submit" disabled={submitting} className="inline-flex items-center bg-[#bb9457] text-black px-10 py-5 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 animate-pulse-glow rounded-sm">
+            <button type="submit" disabled={submitting} className="inline-flex items-center bg-[#bb9457] text-black px-10 py-5 text-[11px] uppercase tracking-[0.25em] font-semibold hover:bg-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 rounded-sm">
               {submitting ? (
                 <>
                   <span className="animate-spin mr-3">⏳</span>

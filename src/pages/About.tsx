@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
-import founder from '../assets/founder.png'
-import advisor1 from '../assets/advisor1.png'
-import team1 from '../assets/team1.jpg'
-import team2 from '../assets/home-designer-portrait-1.png'
-import team3 from '../assets/home-designer-portrait-2.png'
-import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
-import studio from '../assets/hero-banner-coworking-studio-2.png'
-import spotlight from '../assets/fashion-icon.png'
-import craft from '../assets/craft.jpg'
-import coworking from '../assets/coworking-studio-image .png'
-import heroRunway from '../assets/hero-runway.jpg'
+import founder from '../assets/founder.webp'
+import advisor1 from '../assets/advisor1.webp'
+import zaraAhmed from '../assets/Zara-ahmad.webp'
+import bilalHussain from '../assets/bilal-hussain.webp'
+import fatimaNoor from '../assets/Fatima-noor.webp'
+import heroHome from '../assets/hero-banner-coworking-studio 1 .webp'
+import studio from '../assets/hero-banner-coworking-studio-2.webp'
+import spotlight from '../assets/fashion-icon.webp'
+import craft from '../assets/craft.webp'
+import coworking from '../assets/coworking-studio-image .webp'
+import heroRunway from '../assets/hero-runway.webp'
 
 // --- REUSABLE EDITORIAL GRID MODULES ---
 const Eyebrow = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
@@ -86,7 +86,7 @@ const TeamGrid = ({ eyebrow, title, intro, members, columns, variant = 'dark' }:
                     ? 'grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105' 
                     : 'grayscale contrast-125 group-hover:scale-105'
                 }`} 
-              />
+               loading="lazy" decoding="async" />
             ) : (
               <div className={`aspect-[4/5] w-full flex items-center justify-center font-mono text-2xl font-light border rounded-sm transition-colors ${
                 isLightBg 
@@ -180,7 +180,7 @@ const About = () => {
     cinematic: heroHome,
     marketplace: studio,
     advisor1: advisor1,
-    advisor2: team1,
+    advisor2: founder,
     advisor3: craft,
     workspace: coworking,
     texture: craft
@@ -190,21 +190,21 @@ const About = () => {
     { 
       name: "Zara Ahmed", 
       role: "Head of Studio Operations", 
-      image: team1, 
+      image: zaraAhmed, 
       location: "Karachi, Pakistan",
       specialization: "Coworking Space Design & Fashion Production Systems" 
     },
     { 
       name: "Bilal Hussain", 
       role: "Marketplace Director", 
-      image: team2, 
+      image: bilalHussain, 
       location: "Lahore, Pakistan",
       specialization: "Designer Onboarding & International Buyer Relations" 
     },
     { 
       name: "Fatima Noor", 
       role: "Spotlight Program Lead", 
-      image: team3, 
+      image: fatimaNoor, 
       location: "Islamabad, Pakistan",
       specialization: "Talent Discovery & Brand Development Strategy" 
     },
@@ -216,7 +216,7 @@ const About = () => {
       name: "Muhammad Fawad Noori", 
       role: "Chief Strategic & Creative Advisor", 
       image: advisor1, 
-      location: "Karachi, Pakistan",
+      location: "Lahore, Pakistan",
       specialization: "Fashion Ecosystem Development & Creative Direction" 
     }
     // Additional advisors to be announced
@@ -300,7 +300,7 @@ const About = () => {
             alt="Tactile Atelier Manufacturing"
             className="w-full h-full object-cover scale-110 opacity-45 grayscale contrast-115"
             style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-          />
+           loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-black/60 z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/50 z-10" />
@@ -326,12 +326,11 @@ const About = () => {
             </div>
 
             <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.05] text-white tracking-tight font-normal">
-              Adorzia was not planned.<br />
-              It was <span className="text-gradient italic font-light">inevitable.</span>
+              A fashion entrepreneurship ecosystem for Pakistani designers to build <span className="text-gradient italic font-light">successful brands.</span>
             </h1>
 
             <p className="mt-8 max-w-2xl text-neutral-400 text-base md:text-lg leading-relaxed font-light">
-              In 2025, a fundamental question was raised in Lahore that demanded an industry shift: Why does a nation with such profound heritage, rigorous craft, and creative velocity lack a structured ecosystem for fashion entrepreneurs? The deficit was not a lack of intent; it was a lack of execution.
+              In 2025, a question that demanded an answer: Why does a nation with profound heritage and extraordinary creative ambition lack a structured ecosystem for fashion entrepreneurs? Adorzia is the response.
             </p>
 
             <div className="mt-12 flex flex-wrap gap-5">
@@ -348,6 +347,23 @@ const About = () => {
                 Enter the Ecosystem
               </Link>
             </div>
+
+            {/* Trust Strip — above the fold */}
+            <div className="mt-16 pt-8 border-t border-white/10">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 text-neutral-500 text-[10px] uppercase tracking-[0.25em] font-mono">
+                <span>Karachi <span className="text-[#bb9457] mx-1.5">·</span> Lahore <span className="text-[#bb9457] mx-1.5">·</span> Islamabad</span>
+                <span className="w-px h-3 bg-white/15" />
+                <span>Studios <span className="text-[#bb9457] mx-1.5">·</span> Marketplace <span className="text-[#bb9457] mx-1.5">·</span> Spotlight</span>
+                <span className="w-px h-3 bg-white/15" />
+                <span className="text-[#bb9457]">Built for Emerging Fashion Designers</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Scroll cue */}
+          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-neutral-600">
+            <span className="text-[9px] uppercase tracking-[0.3em] font-mono">Scroll</span>
+            <div className="w-px h-10 bg-gradient-to-b from-[#bb9457]/50 to-transparent" />
           </div>
         </div>
       </section>
@@ -359,7 +375,7 @@ const About = () => {
             src={imgs.cinematic}
             alt=""
             className="w-full h-full object-cover opacity-15 filter grayscale contrast-150 scale-100"
-          />
+           loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/80 to-neutral-950" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,148,87,0.08),transparent_50%)]" />
         </div>
@@ -396,7 +412,7 @@ const About = () => {
                   Derived from concepts of adornment and ascension, our platform was founded on a singular directive: ensure the next generation of Pakistani fashion designers no longer navigate the global market in isolation.
                 </p>
                 <p className="pt-2">
-                  One year in, operating across three metropolitan hubs, we are fundamentally altering the blueprint. <span className="text-gradient font-normal">We are early. We are intentional. We are building for the long term.</span> <Link to="/spotlight-event" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">Explore Spotlight</Link> to see how we're discovering Pakistan's next fashion visionaries.
+                  One year in, building toward three metropolitan hubs, we are working to reshape the blueprint. <span className="text-gradient font-normal">We are early. We are intentional. We are building for the long term.</span> <Link to="/spotlight-event" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">Explore Spotlight</Link> to see how we're discovering Pakistan's next fashion visionaries.
                 </p>
               </div>
             </div>
@@ -416,7 +432,7 @@ const About = () => {
                     src={founder} 
                     alt="Haseeb Malik, Founder of Adorzia" 
                     className="w-full h-full object-cover grayscale contrast-125 hover:grayscale-0 transition-all duration-700"
-                  />
+                   loading="lazy" decoding="async" />
                 </div>
                 <div className="mt-6 text-center md:text-left">
                   <h3 className="font-serif text-xl text-white font-normal">Haseeb Malik</h3>
@@ -437,19 +453,10 @@ const About = () => {
 
                 <div className="space-y-6 text-neutral-400 font-light leading-relaxed text-base md:text-lg pl-6 md:pl-8">
                   <p>
-                    I created Adorzia to change that.
-                  </p>
-                  <p>
-                    Every designer I met shared the same frustration: brilliant creative vision, limited resources to execute it. They had access to talent but not to workspace. Access to inspiration but not to investment. Access to craft but not to commerce.
-                  </p>
-                  <p>
-                    So we built the missing pieces. Physical <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">studios</Link> where concepts become garments. A curated <Link to="/marketplace" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">marketplace</Link> that connects Pakistani designers with global buyers. A national <Link to="/spotlight-event" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">spotlight event</Link> that transforms emerging talent into funded brands.
+                    I created Adorzia to change that. Every designer I met shared the same frustration: brilliant creative vision, limited resources to execute it. So we are building the missing pieces-physical <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">studios</Link>, a curated <Link to="/marketplace" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">marketplace</Link>, and a national <Link to="/spotlight-event" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">spotlight event</Link>-to ensure the next generation of Pakistani fashion entrepreneurs never has to navigate the global market in isolation.
                   </p>
                   <p className="text-white font-medium">
                     This is not a platform built for designers. It is a platform built by someone who understands what designers need to thrive.
-                  </p>
-                  <p>
-                    Adorzia is my commitment to ensuring that the next generation of Pakistani fashion entrepreneurs never has to navigate the global market in isolation.
                   </p>
                 </div>
 
@@ -485,7 +492,7 @@ const About = () => {
                 The emerging talent lacks a dedicated fashion workspace in Islamabad, Karachi, or Lahore. The heritage artisan is restricted to hyper-localized supply chains. The visionary founder faces an investment climate blind to the commercial power of fashion IP.
               </p>
               <p className="text-neutral-900 font-medium">
-                Adorzia engineered an integrated ecosystem to close this loop. We are moving contemporary Pakistani clothing away from the margins of casual craft and establishing it as a highly professionalized, economically formidable industry through physical spaces, strategic capital, and global market access. <Link to="/for-creatives" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">Learn how designers can access these resources</Link>.
+                Adorzia is engineering an integrated ecosystem to close this loop. We aim to move contemporary Pakistani clothing away from the margins of casual craft and toward a highly professionalized, economically formidable industry through physical spaces, strategic capital, and global market access. <Link to="/for-creatives" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">Learn how designers can access these resources</Link>.
               </p>
             </div>
           </div>
@@ -523,7 +530,7 @@ const About = () => {
                     year: "2025",
                     quarter: "Q3",
                     title: "Marketplace Development",
-                    description: "E-commerce platform engineering begins, seller onboarding systems designed.",
+                    description: "E-commerce platform engineering underway, seller onboarding systems in design phase.",
                     status: "Completed"
                   },
                   {
@@ -544,7 +551,7 @@ const About = () => {
                     year: "2027",
                     quarter: "Q1",
                     title: "Studio Expansion",
-                    description: "Physical atelier spaces open in Karachi and Lahore, Islamabad facility in planning.",
+                    description: "Planned physical atelier spaces in Karachi and Lahore, with Islamabad in early planning stages.",
                     status: "Planned"
                   }
                 ].map((milestone, idx) => (
@@ -606,12 +613,12 @@ const About = () => {
                 {
                   number: "3",
                   label: "Cities Planned",
-                  description: "Karachi, Lahore, Islamabad studio locations by 2027"
+                  description: "Planned studio locations across Karachi, Lahore, and Islamabad by 2027"
                 },
                 {
                   number: "1",
                   label: "National Platform",
-                  description: "First unified talent discovery and funding ecosystem"
+                  description: "Working toward a unified talent discovery and funding ecosystem"
                 },
                 {
                   number: "100+",
@@ -621,7 +628,7 @@ const About = () => {
                 {
                   number: "1",
                   label: "Global Marketplace",
-                  description: "International buyer access for heritage and contemporary fashion"
+                  description: "Planned international buyer access for heritage and contemporary fashion"
                 }
               ].map((metric, idx) => (
                 <div key={idx} className="bg-neutral-950 p-8 md:p-12 text-center group hover:bg-neutral-900/50 transition-colors">
@@ -678,7 +685,7 @@ const About = () => {
             </div>
           </div>
           <div className={`overflow-hidden rounded-sm border border-neutral-800 hover-lift transition-all duration-1000 delay-300 ${isVisible['mission'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
-            <img src={heroHome} alt="Vision and Mission" className="w-full h-96 object-cover scale-110 hover:scale-115 transition-transform duration-700" />
+            <img src={heroHome} alt="Vision and Mission" className="w-full h-96 object-cover scale-110 hover:scale-115 transition-transform duration-700"  loading="lazy" decoding="async" />
           </div>
         </Container>
       </Section>
@@ -728,7 +735,7 @@ const About = () => {
                     src={pillar.image} 
                     alt={pillar.title}
                     className="w-full h-full object-cover scale-110 filter grayscale brightness-50 group-hover:scale-120 group-hover:brightness-75 transition-all duration-700" 
-                  />
+                   loading="lazy" decoding="async" />
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/80 to-transparent" />
                 </div>
                 
@@ -821,7 +828,7 @@ const About = () => {
               Where concepts materialize into <span className="text-gradient italic font-light">garments.</span>
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-sm md:text-base leading-relaxed">
-              Premium, fully equipped coworking environments engineered specifically for fashion professionals. Launching across three metropolitan hubs.
+              Premium, fully equipped coworking environments engineered specifically for fashion professionals. Planned launch across three metropolitan hubs.
             </p>
           </div>
           
@@ -933,7 +940,7 @@ const About = () => {
       {/* --- SECTION 10: PARTNERS & SUPPORTERS --- */}
       <Section className="bg-white text-neutral-900 py-32 relative overflow-hidden" id="partners" ref={setSectionRef('partners') as React.Ref<HTMLDivElement>}>
         <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
-          <img src={imgs.workspace} alt="" className="w-full h-full object-cover" />
+          <img src={imgs.workspace} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
         </div>
         
         <Container>
@@ -971,7 +978,7 @@ const About = () => {
             alt="Fashion Vision" 
             className="w-full h-full object-cover scale-110"
             style={{ transform: `translateY(${scrollY * 0.1}px)` }}
-          />
+           loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/50" />
         </div>
@@ -1017,12 +1024,12 @@ const About = () => {
             src={heroHome}
             alt="Background Contrast" 
             className="w-full h-full object-cover filter grayscale brightness-50"
-          />
+           loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950 to-transparent" />
         </div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.08),transparent_60%)] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-96 h-96 opacity-15 pointer-events-none">
-          <img src={imgs.texture} alt="" className="w-full h-full object-cover grayscale contrast-125" />
+          <img src={imgs.texture} alt="" className="w-full h-full object-cover grayscale contrast-125"  loading="lazy" decoding="async" />
         </div>
         
         <Container>

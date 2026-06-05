@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
-import heroRunway from '../assets/hero-runway.jpg'
+import heroRunway from '../assets/hero-runway.webp'
 
 const SpotlightApplication = () => {
   const [currentStep, setCurrentStep] = useState(1)

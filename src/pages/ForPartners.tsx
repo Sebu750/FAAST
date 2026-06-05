@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
-import heroHome from '../assets/hero-banner-coworking-studio 1 .png'
-import studio from '../assets/hero-banner-coworking-studio-2.png'
-import spotlight from '../assets/fashion-icon.png'
-import craft from '../assets/craft.jpg'
-import coworking from '../assets/coworking-studio-image .png'
+import heroHome from '../assets/hero-banner-coworking-studio 1 .webp'
+import studio from '../assets/hero-banner-coworking-studio-2.webp'
+import spotlight from '../assets/fashion-icon.webp'
+import craft from '../assets/craft.webp'
+import coworking from '../assets/coworking-studio-image .webp'
 
 const ForPartners = () => {
   const [form, setForm] = useState({
@@ -82,7 +82,7 @@ const ForPartners = () => {
       {/* Hero Section */}
       <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={heroHome} alt="Creative Ecosystem" className="w-full h-full object-cover object-center opacity-25 grayscale contrast-125 scale-105 animate-ambient-swell" style={{ objectPosition: 'center 40%' }} />
+          <img src={heroHome} alt="Creative Ecosystem" className="w-full h-full object-cover object-center opacity-25 grayscale contrast-125 scale-105 animate-ambient-swell" style={{ objectPosition: 'center 40%' }}  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/85 to-neutral-950" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)]" />
@@ -138,7 +138,7 @@ const ForPartners = () => {
       {/* Market Size and Gap */}
       <section className="py-32 border-b border-neutral-900 bg-neutral-950 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <img src={craft} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+          <img src={craft} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-20">
@@ -230,7 +230,7 @@ const ForPartners = () => {
       {/* What Adorzia Is Building */}
       <section className="py-32 border-b border-neutral-900 bg-neutral-950 relative overflow-hidden">
         <div className="absolute bottom-0 right-0 w-96 h-96 opacity-15 pointer-events-none">
-          <img src={studio} alt="" className="w-full h-full object-cover grayscale contrast-125" />
+          <img src={studio} alt="" className="w-full h-full object-cover grayscale contrast-125"  loading="lazy" decoding="async" />
         </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-20">
@@ -254,7 +254,7 @@ const ForPartners = () => {
             ].map((biz, idx) => (
               <div key={idx} className="bg-black border border-neutral-900 rounded-sm overflow-hidden group hover:border-[#bb9457]/30 transition-colors duration-300">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={biz.image} alt={biz.title} className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700" />
+                  <img src={biz.image} alt={biz.title} className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 transition-transform duration-700"  loading="lazy" decoding="async" />
                 </div>
                 <div className="p-8">
                   <h3 className="font-serif text-xl text-white font-normal mb-3">{biz.title}</h3>
@@ -308,7 +308,7 @@ const ForPartners = () => {
       {/* Spotlight Pipeline */}
       <section className="py-40 relative overflow-hidden bg-[#6f1d1b]">
         <div className="absolute inset-0 opacity-20">
-          <img src={spotlight} alt="" className="w-full h-full object-cover grayscale contrast-125 animate-ambient-swell" />
+          <img src={spotlight} alt="" className="w-full h-full object-cover grayscale contrast-125 animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#6f1d1b] via-[#6f1d1b]/90 to-transparent" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.1),transparent_60%)] pointer-events-none" />
@@ -360,7 +360,7 @@ const ForPartners = () => {
       {/* Early Stage Deck and Partnership Enquiry */}
       <section id="deck" className="py-40 relative overflow-hidden bg-black">
         <div className="absolute inset-0 opacity-15">
-          <img src={heroHome} alt="" className="w-full h-full object-cover grayscale contrast-125 animate-ambient-swell" />
+          <img src={heroHome} alt="" className="w-full h-full object-cover grayscale contrast-125 animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-neutral-950" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.1),transparent_60%)]" />
@@ -502,7 +502,7 @@ const ForPartners = () => {
       {/* Contact for Investment */}
       <section className="py-40 relative overflow-hidden bg-neutral-950 border-t border-neutral-900">
         <div className="absolute inset-0 opacity-10">
-          <img src={craft} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell" />
+          <img src={craft} alt="" className="w-full h-full object-cover grayscale animate-ambient-swell"  loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-neutral-950/95 to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,rgba(187,148,87,0.08),transparent_60%)]" />
