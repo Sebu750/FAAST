@@ -2,7 +2,8 @@ import { useState, useEffect, useRef, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import founder from '../assets/founder.webp'
-import advisor1 from '../assets/advisor1.webp'
+import advisor1 from '../assets/fadnoori-cheif-advisor.webp'
+import naziaOtho from '../assets/naziaotho.webp'
 import zaraAhmed from '../assets/Zara-ahmad.webp'
 import bilalHussain from '../assets/bilal-hussain.webp'
 import fatimaNoor from '../assets/Fatima-noor.webp'
@@ -81,11 +82,7 @@ const TeamGrid = ({ eyebrow, title, intro, members, columns, variant = 'dark' }:
               <img 
                 src={m.image} 
                 alt={m.name} 
-                className={`w-full h-full object-cover transition-all duration-700 ${
-                  isLightBg 
-                    ? 'grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105' 
-                    : 'grayscale contrast-125 group-hover:scale-105'
-                }`} 
+                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                loading="lazy" decoding="async" />
             ) : (
               <div className={`aspect-[4/5] w-full flex items-center justify-center font-mono text-2xl font-light border rounded-sm transition-colors ${
@@ -218,8 +215,14 @@ const About = () => {
       image: advisor1, 
       location: "Lahore, Pakistan",
       specialization: "Fashion Ecosystem Development & Creative Direction" 
+    },
+    { 
+      name: "Nazia Otho", 
+      role: "Fashion Artist & Creative Storytelling Advisor", 
+      image: naziaOtho, 
+      location: "Karachi, Pakistan",
+      specialization: "Fashion Illustration, Artistry & Creative Craftsmanship" 
     }
-    // Additional advisors to be announced
   ]
 
   return (

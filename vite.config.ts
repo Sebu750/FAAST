@@ -10,6 +10,7 @@ export default defineConfig({
     sourcemap: false,
     minify: 'esbuild',
     assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 500,
     rollupOptions: {
       output: {
         manualChunks(id: string) {
@@ -32,4 +33,6 @@ export default defineConfig({
       },
     },
   },
+  // Optimize image handling
+  assetsInclude: ['**/*.webp', '**/*.avif'],
 })

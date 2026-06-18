@@ -14,14 +14,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     
-    <!-- Preload critical woff2 font files directly (not CSS) -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" />
+    <!-- Preload hero image for LCP optimization -->
+    <link rel="preload" as="image" href="/hero-lcp.webp" fetchpriority="high" />
     
     <!-- Font stylesheet — async load, non-blocking -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" /></noscript>
     
-    <!-- Preconnect to Supabase -->
+    <!-- Preconnect to Supabase (deferred) -->
     <link rel="dns-prefetch" href="https://supabase.co" />
     
     <!-- Critical inline CSS — prevents FOUC and layout shift -->

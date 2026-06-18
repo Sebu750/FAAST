@@ -1,0 +1,39 @@
+# Adorzia
+
+> Pakistan's first fashion entrepreneurship ecosystem
+
+## About
+
+Adorzia is building the growth architecture Pakistani fashion entrepreneurs have never had. Founded in 2025, we provide:
+
+- **Coworking Studios** - Premium creative spaces in Karachi, Lahore, and Islamabad (Opening 2026)
+- **Curated Marketplace** - Connecting independent designers with international buyers
+- **Spotlight Program** - Annual talent investment event discovering Pakistan's next great fashion brands
+
+## Key Pages
+
+- [Home](https://adorzia.com/) - Main landing page
+- [About](https://adorzia.com/about) - Our story, mission, and team
+- [For Creatives](https://adorzia.com/for-creatives) - Resources for fashion designers
+- [For Partners](https://adorzia.com/for-partners) - Partnership opportunities
+- [Spotlight Event](https://adorzia.com/spotlight-event) - Annual talent investment program
+- [Marketplace](https://adorzia.com/marketplace) - Curated designer marketplace
+- [Contact](https://adorzia.com/contact) - Get in touch
+
+## Spotlight Applications
+
+Applications for Spotlight 2026 are open until July 31, 2026. Selected designers receive funding, mentorship, and a platform to launch their brand internationally.
+
+[Apply for Spotlight 2026](https://adorzia.com/spotlight/apply)
+
+## Contact
+
+- **Email**: hello@adorzia.com
+- **Instagram**: [@adorziaofficial](https://www.instagram.com/adorziaofficial/)
+- **LinkedIn**: [Adorzia](https://www.linkedin.com/company/adorzia/)
+
+## Technical
+
+- Built with React, TypeScript, and Vite
+- Hosted on Vercel
+- Designed for accessibility and performance (90+ Lighthouse score)

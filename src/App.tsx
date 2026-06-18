@@ -1,11 +1,12 @@
-import { useEffect, lazy, Suspense, useState } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
-import { SpeedInsights } from '@vercel/speed-insights/react'
-import { Analytics } from '@vercel/analytics/react'
 import Header from './components/Header'
 import Footer from './components/Footer'
-import Preloader from './components/Preloader'
+
+// Lazy load analytics and speed insights to avoid blocking main thread
+const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })))
+const Analytics = lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })))
 
 // Lazy load all page components for code splitting
 const Home = lazy(() => import('./pages/Home'))
@@ -42,13 +43,12 @@ const ScrollToTop = () => {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
-
   return (
     <HelmetProvider>
-      {isLoading && <Preloader onFinish={() => setIsLoading(false)} />}
-      <SpeedInsights />
-      <Analytics />
+      <Suspense fallback={null}>
+        <SpeedInsights />
+        <Analytics />
+      </Suspense>
       <Router>
         <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
@@ -62,7 +62,7 @@ function App() {
           <Route path="/*" element={
             <div className="min-h-screen flex flex-col overflow-x-hidden">
               <Header />
-              <main className="flex-grow overflow-x-hidden">
+              <main id="main-content" className="flex-grow overflow-x-hidden">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />

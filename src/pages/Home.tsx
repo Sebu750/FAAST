@@ -30,32 +30,24 @@ const Home = () => {
   const [subscribed, setSubscribed] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
+  const rafRef = useRef<number>(0)
 
+  // Optimized scroll handler with requestAnimationFrame
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  // Preload hero images when component mounts
-  useEffect(() => {
-    const preloadImages = [hero1, hero2]
-    preloadImages.forEach((src) => {
-      const link = document.createElement('link')
-      link.rel = 'preload'
-      link.as = 'image'
-      link.href = src
-      document.head.appendChild(link)
-    })
-    
-    return () => {
-      preloadImages.forEach((src) => {
-        const existingLink = document.querySelector(`link[href="${src}"]`)
-        if (existingLink) document.head.removeChild(existingLink)
+    const handleScroll = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      rafRef.current = requestAnimationFrame(() => {
+        setScrollY(window.scrollY)
       })
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
   }, [])
 
+  // Intersection Observer for scroll animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -65,7 +57,7 @@ const Home = () => {
           }
         })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.15, rootMargin: '0px 0px -30px 0px' }
     )
 
     Object.values(sectionRefs.current).forEach((ref) => {
@@ -109,7 +101,7 @@ const Home = () => {
   }
   const slides = [
     {
-      image: hero1,
+      image: '/hero-lcp.webp', // LCP optimized - preloaded in index.html
       eyebrow: 'Pakistan\'s First Fashion Ecosystem',
       title: 'Where Designers Become Fashionpreneurs',
       subtitle: 'Adorzia is Pakistan\'s first complete fashion entrepreneurship ecosystem. We provide premium coworking studios in Karachi, Lahore & Islamabad, a curated global marketplace for emerging designers, and the annual Spotlight event that discovers and invests in Pakistan\'s next great fashion brands. For designers, artisans, and fashion innovators ready to scale.',
@@ -166,33 +158,33 @@ const Home = () => {
         keywords="Pakistani fashion, Fashion Pakistan, Pakistan designer, Heritage craft Pakistan, Fashion marketplace Pakistan, Pakistani clothing, Pakistani textile, Fashion studio Pakistan, Fashion designer Lahore, Fashion designer Karachi, Fashion designer Islamabad, Pakistani fashion brand, Handmade Pakistan, Craft Pakistan, Pakistani embroidery, Traditional Pakistani clothing, Contemporary Pakistani fashion, Fashion event Pakistan, Emerging designer Pakistan, Fashion entrepreneurship, Adorzia, Adorzia fashion, Adorzia marketplace, Adorzia studios, Adorzia Spotlight"
       />
       
-      {/* Dynamic Injection of Luxury Custom Animations */}
+      {/* Dynamic Injection of Luxury Custom Animations - GPU Accelerated */}
       <style>{`
         @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { opacity: 0; transform: translate3d(0, 40px, 0); }
+          to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes fadeInLeft {
-          from { opacity: 0; transform: translateX(-40px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translate3d(-40px, 0, 0); }
+          to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes fadeInRight {
-          from { opacity: 0; transform: translateX(40px); }
-          to { opacity: 1; transform: translateX(0); }
+          from { opacity: 0; transform: translate3d(40px, 0, 0); }
+          to { opacity: 1; transform: translate3d(0, 0, 0); }
         }
         @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95); }
-          to { opacity: 1; transform: scale(1); }
+          from { opacity: 0; transform: scale3d(0.95, 0.95, 1); }
+          to { opacity: 1; transform: scale3d(1, 1, 1); }
         }
         @keyframes marqueeLeft {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
+          from { transform: translate3d(0, 0, 0); }
+          to { transform: translate3d(-50%, 0, 0); }
         }
-        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-        .animate-fade-in-left { animation: fadeInLeft 0.8s ease-out forwards; }
-        .animate-fade-in-right { animation: fadeInRight 0.8s ease-out forwards; }
-        .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
-        .animate-marquee { animation: marqueeLeft 30s linear infinite; }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; will-change: transform, opacity; }
+        .animate-fade-in-left { animation: fadeInLeft 0.8s ease-out forwards; will-change: transform, opacity; }
+        .animate-fade-in-right { animation: fadeInRight 0.8s ease-out forwards; will-change: transform, opacity; }
+        .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; will-change: transform, opacity; }
+        .animate-marquee { animation: marqueeLeft 30s linear infinite; will-change: transform; }
         .glass {
           background: rgba(255, 255, 255, 0.03);
           backdrop-filter: blur(20px);
@@ -213,9 +205,10 @@ const Home = () => {
         }
         .hover-lift {
           transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+          will-change: transform;
         }
         .hover-lift:hover {
-          transform: translateY(-4px);
+          transform: translate3d(0, -4px, 0);
           box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
         }
       `}</style>
@@ -236,13 +229,15 @@ const Home = () => {
               height="1080"
               fetchPriority={index === 0 ? "high" : "low"}
               loading={index === 0 ? "eager" : "lazy"}
+              decoding={index === 0 ? "sync" : "async"}
               className={`absolute inset-0 h-full w-full object-cover object-center transition-all duration-[1400ms] cubic-bezier(0.25, 1, 0.5, 1) ${
                 index === currentIndex ? 'opacity-50 sm:opacity-45 scale-110' : 'opacity-0 scale-115'
               }`}
               style={{
-                transform: `translateY(${scrollY * 0.2}px) scale(${index === currentIndex ? 1.1 : 1.15})`,
+                transform: `translate3d(0, ${scrollY * 0.2}px, 0) scale(${index === currentIndex ? 1.1 : 1.15})`,
                 aspectRatio: '16 / 9',
-                objectPosition: 'center 30%'
+                objectPosition: 'center 30%',
+                willChange: index === 0 ? 'transform' : 'auto'
               }}
             />
           ))}
@@ -639,7 +634,7 @@ const Home = () => {
             src={heroRunwayCta} 
             alt="Spotlight Background" 
             className="w-full h-full object-cover scale-110"
-            style={{ transform: `translateY(${(scrollY - 2000) * 0.15}px)` }}
+            style={{ transform: `translate3d(0, ${(scrollY - 2000) * 0.15}px, 0)` }}
            loading="lazy" decoding="async" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#6f1d1b] via-[#6f1d1b]/90 to-transparent" />
@@ -1174,7 +1169,8 @@ const Home = () => {
                 <img 
                   src={heritageCraft} 
                   alt="Pakistani Heritage Fashion Craft" 
-                  loading="lazy" 
+                  loading="lazy"
+                  decoding="async"
                   className="w-full aspect-[4/5] object-cover scale-110 filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-115 transition-all duration-[1.5s] ease-out" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -1305,7 +1301,7 @@ const Home = () => {
             src={heroRunwayCta} 
             alt="Fashion Runway CTA" 
             className="w-full h-full object-cover scale-110"
-            style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+            style={{ transform: `translate3d(0, ${scrollY * 0.1}px, 0)` }}
            loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/50" />
