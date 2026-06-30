@@ -24,6 +24,15 @@ const Legal = lazy(() => import('./pages/Legal'))
 const Terms = lazy(() => import('./pages/Terms'))
 const SpotlightTerms = lazy(() => import('./pages/SpotlightTerms'))
 
+// Blog pages
+const Blog = lazy(() => import('./pages/Blog'))
+const BlogPost = lazy(() => import('./pages/BlogPost'))
+const BlogEditor = lazy(() => import('./pages/BlogEditor'))
+
+// Designers pages
+const DesignersDirectory = lazy(() => import('./pages/DesignersDirectory'))
+const DesignerProfile = lazy(() => import('./pages/DesignerProfile'))
+
 // Loading fallback component
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-black">
@@ -56,7 +65,10 @@ function App() {
           {/* Admin routes - no header/footer */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/blog" element={<AdminDashboard />} />
           <Route path="/admin/spotlight" element={<SpotlightAdmin />} />
+          <Route path="/admin/blog/new" element={<BlogEditor />} />
+          <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
           
           {/* Website routes - with header/footer */}
           <Route path="/*" element={
@@ -75,6 +87,13 @@ function App() {
                   <Route path="/legal/privacy" element={<Legal />} />
                   <Route path="/legal/terms" element={<Terms />} />
                   <Route path="/legal/spotlight-terms" element={<SpotlightTerms />} />
+                  {/* Blog routes */}
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/category/:category" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  {/* Designers routes */}
+                  <Route path="/designers" element={<DesignersDirectory />} />
+                  <Route path="/designers/:slug" element={<DesignerProfile />} />
                 </Routes>
               </main>
               <Footer />

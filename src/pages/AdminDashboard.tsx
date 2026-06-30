@@ -2,6 +2,8 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { NewsletterSubscription, ContactInquiry, PartnershipInquiry, MarketplaceApplication, StudioWaitlist } from '../types/database'
+import BlogManagement from './BlogManagement'
+import DesignerManagement from './DesignerManagement'
 
 interface SpotlightApplication {
   id: string
@@ -44,6 +46,11 @@ interface DashboardCounts {
   partnership_total: number
   partnership_pending: number
   newsletter_total: number
+  blog_total: number
+  blog_published: number
+  blog_drafts: number
+  designers_total: number
+  designers_active: number
 }
 
 // Simple SVG Icon Component
@@ -67,7 +74,7 @@ const Icon = ({ name, className = '', color = '' }: { name: string; className?: 
 }
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'spotlight' | 'marketplace' | 'studio-waitlist' | 'partnership' | 'newsletter' | 'contact'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'spotlight' | 'marketplace' | 'studio-waitlist' | 'partnership' | 'newsletter' | 'contact' | 'blog' | 'designers'>('overview')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [newsletterSubscriptions, setNewsletterSubscriptions] = useState<NewsletterSubscription[]>([])
@@ -133,13 +140,8 @@ const AdminDashboard = () => {
           .select('*')
           .order('created_at', { ascending: false })
         if (data) setStudioWaitlist(data)
-      } else if (activeTab === 'partnership') {
-        const { data } = await supabase
-          .from('partnership_inquiries')
-          .select('*')
-          .order('created_at', { ascending: false })
-        if (data) setPartnershipInquiries(data)
       }
+      // Blog tab manages its own data via BlogManagement component
     } catch (error) {
       console.error('Error fetching data:', error)
     } finally {
@@ -155,17 +157,7 @@ const AdminDashboard = () => {
       const todayISO = today.toISOString()
 
       // Fetch all counts in parallel
-      const [
-        inquiriesToday,
-        spotlightPending,
-        spotlightTotal,
-        marketplacePending,
-        marketplaceTotal,
-        studioWaitlistTotal,
-        partnershipPending,
-        partnershipTotal,
-        newsletterTotal
-      ] = await Promise.all([
+      const results = await Promise.all([
         // Contact inquiries today
         supabase
           .from('contact_inquiries')
@@ -205,8 +197,32 @@ const AdminDashboard = () => {
         // Newsletter subscribers total
         supabase
           .from('newsletter_subscriptions')
+          .select('id', { count: 'exact', head: true }),
+        // Blog total
+        supabase
+          .from('blog_posts')
+          .select('id', { count: 'exact', head: true }),
+        // Blog published
+        supabase
+          .from('blog_posts')
           .select('id', { count: 'exact', head: true })
+          .eq('status', 'published'),
+        // Blog drafts
+        supabase
+          .from('blog_posts')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'draft'),
+        // Designers total
+        supabase
+          .from('designers')
+          .select('id', { count: 'exact', head: true }),
+        // Designers active
+        supabase
+          .from('designers')
+          .select('id', { count: 'exact', head: true })
+          .eq('is_active', true)
       ])
+      const [inquiriesToday, spotlightPending, spotlightTotal, marketplacePending, marketplaceTotal, studioWaitlistTotal, partnershipPending, partnershipTotal, newsletterTotal, blogTotal, blogPublished, blogDrafts, designersTotal, designersActive] = results
 
       setDashboardCounts({
         inquiries_today: inquiriesToday.count || 0,
@@ -217,7 +233,12 @@ const AdminDashboard = () => {
         studio_waitlist_total: studioWaitlistTotal.count || 0,
         partnership_pending: partnershipPending.count || 0,
         partnership_total: partnershipTotal.count || 0,
-        newsletter_total: newsletterTotal.count || 0
+        newsletter_total: newsletterTotal.count || 0,
+        blog_total: blogTotal.count || 0,
+        blog_published: blogPublished.count || 0,
+        blog_drafts: blogDrafts.count || 0,
+        designers_total: designersTotal.count || 0,
+        designers_active: designersActive.count || 0
       })
     } catch (error) {
       console.error('Error fetching dashboard counts:', error)
@@ -410,6 +431,48 @@ const AdminDashboard = () => {
 
           <div className={`mt-6 mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
             {!sidebarCollapsed && (
+              <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold hidden lg:block">Content</p>
+            )}
+          </div>
+          <button
+            onClick={() => {
+              setActiveTab('blog')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
+              activeTab === 'blog'
+                ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
+                : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
+            }`}
+            title={sidebarCollapsed ? 'Blog' : ''}
+          >
+            <Icon name="newspaper" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Blog</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Blog</span>}
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('designers')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
+              activeTab === 'designers'
+                ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
+                : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
+            }`}
+            title={sidebarCollapsed ? 'Designers' : ''}
+          >
+            <Icon name="palette" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Designers</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Designers</span>}
+          </button>
+
+          <div className={`mt-6 mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
+            {!sidebarCollapsed && (
               <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold hidden lg:block">Inquiries</p>
             )}
           </div>
@@ -567,6 +630,8 @@ const AdminDashboard = () => {
               {activeTab === 'partnership' && <PartnershipTable data={partnershipInquiries} onDelete={(id) => handleDelete('partnership_inquiries', id)} />}
               {activeTab === 'newsletter' && <NewsletterTable data={newsletterSubscriptions} onDelete={(id) => handleDelete('newsletter_subscriptions', id)} />}
               {activeTab === 'contact' && <ContactTable data={contactInquiries} onDelete={(id) => handleDelete('contact_inquiries', id)} />}
+              {activeTab === 'blog' && <BlogManagement />}
+              {activeTab === 'designers' && <DesignerManagement />}
             </>
           )}
         </main>
@@ -590,6 +655,8 @@ const OverviewTab = ({ counts, spotlightRecent, inquiriesRecent }: {
     { label: 'Studio Waitlist', value: counts.studio_waitlist_total || 0, icon: 'users', color: 'from-purple-600/20 to-purple-800/20', borderColor: 'border-purple-600/30', textColor: 'text-purple-400' },
     { label: 'Partnership Pending', value: counts.partnership_pending, icon: 'handshake', color: 'from-orange-600/20 to-orange-800/20', borderColor: 'border-orange-600/30', textColor: 'text-orange-400' },
     { label: 'Newsletter Subscribers', value: counts.newsletter_total, icon: 'mail', color: 'from-teal-600/20 to-teal-800/20', borderColor: 'border-teal-600/30', textColor: 'text-teal-400' },
+    { label: 'Blog Posts', value: counts.blog_total, icon: 'newspaper', color: 'from-amber-600/20 to-amber-800/20', borderColor: 'border-amber-600/30', textColor: 'text-amber-400' },
+    { label: 'Designers', value: counts.designers_total || 0, icon: 'palette', color: 'from-pink-600/20 to-pink-800/20', borderColor: 'border-pink-600/30', textColor: 'text-pink-400' },
   ]
 
   return (

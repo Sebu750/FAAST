@@ -199,3 +199,139 @@ export interface StudioWaitlist {
   created_at: string
   updated_at: string
 }
+
+// ==========================================
+// BLOG SYSTEM TYPES
+// ==========================================
+
+export interface BlogCategory {
+  id: string
+  name: string
+  slug: string
+  description: string | null
+  tags: string[] | null
+  created_at: string
+}
+
+export interface BlogPost {
+  id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  content: string
+  featured_image_url: string | null
+  banner_image_url: string | null
+  category_id: string | null
+  author_name: string
+  author_image_url: string | null
+  status: 'draft' | 'published' | 'archived'
+  published_at: string | null
+  reading_time: number
+  tags: string[] | null
+  meta_title: string | null
+  meta_description: string | null
+  views: number
+  created_at: string
+  updated_at: string
+  // Joined fields
+  category?: BlogCategory | null
+}
+
+// ==========================================
+// DESIGNER SYSTEM TYPES
+// ==========================================
+
+export interface Designer {
+  id: string
+  slug: string
+  name: string
+  brand: string
+  location: string | null
+  nationality: string | null
+  languages: string | null
+  experience: string | null
+  specialization: string | null
+  category: string | null
+  gender: string | null
+  bio: string | null
+  short_bio: string | null
+  philosophy: string | null
+  image_url: string | null
+  cover_image_url: string | null
+  availability: string | null
+  is_featured: boolean
+  is_active: boolean
+  created_at: string
+  updated_at: string
+}
+
+export interface DesignerCollection {
+  id: string
+  designer_id: string
+  title: string
+  season: string | null
+  description: string | null
+  inspiration: string | null
+  looks: number | null
+  cover_image_url: string | null
+  images: string[] | null
+  is_latest: boolean
+  created_at: string
+}
+
+export interface DesignerEducation {
+  id: string
+  designer_id: string
+  institution: string
+  degree: string | null
+  year: string | null
+  created_at: string
+}
+
+export interface DesignerAchievement {
+  id: string
+  designer_id: string
+  title: string
+  detail: string | null
+  created_at: string
+}
+
+export interface DesignerSkill {
+  id: string
+  designer_id: string
+  skill: string
+  created_at: string
+}
+
+export interface DesignerCertification {
+  id: string
+  designer_id: string
+  certification: string
+  created_at: string
+}
+
+export interface DesignerSocialLinks {
+  id: string
+  designer_id: string
+  instagram: string | null
+  facebook: string | null
+  tiktok: string | null
+  pinterest: string | null
+  linkedin: string | null
+  behance: string | null
+  email: string | null
+  website: string | null
+  shop: string | null
+  portfolio: string | null
+  created_at: string
+}
+
+// Combined designer profile with all related data
+export interface DesignerProfile extends Designer {
+  collections: DesignerCollection[]
+  education: DesignerEducation[]
+  achievements: DesignerAchievement[]
+  skills: DesignerSkill[]
+  certifications: DesignerCertification[]
+  social_links: DesignerSocialLinks | null
+}
