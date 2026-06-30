@@ -32,6 +32,7 @@ const BlogEditor = lazy(() => import('./pages/BlogEditor'))
 // Designers pages
 const DesignersDirectory = lazy(() => import('./pages/DesignersDirectory'))
 const DesignerProfile = lazy(() => import('./pages/DesignerProfile'))
+const DesignerProfilePreview = lazy(() => import('./pages/DesignerProfilePreview'))
 
 // Loading fallback component
 const PageLoader = () => (
@@ -94,6 +95,7 @@ function App() {
                   {/* Designers routes */}
                   <Route path="/designers" element={<DesignersDirectory />} />
                   <Route path="/designers/:slug" element={<DesignerProfile />} />
+                  <Route path="/designer-preview" element={<DesignerProfilePreview />} />
                 </Routes>
               </main>
               <Footer />
