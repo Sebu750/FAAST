@@ -2,7 +2,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import SEO from '../components/SEO'
 import { supabase } from '../lib/supabase'
-import type { DesignerProfile, DesignerCollection } from '../types/database'
+import type { DesignerProfile } from '../types/database'
 
 // ============================================
 // DESIGNER PROFILE
@@ -360,15 +360,5 @@ const PinterestIcon = () => (
 const LinkedinIcon = () => (
   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg>
 )
-const ContactLink = ({ icon, label, href }: { icon: React.ReactNode; label: string; href: string }) => {
-  const isExternal = href.startsWith('http') || href.startsWith('mailto:')
-  return (
-    <a href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined} className="flex items-center gap-3 p-2 bg-neutral-950 border border-neutral-800 text-neutral-400 hover:text-[#bb9457] hover:border-[#bb9457]/30 transition-all text-xs">
-      {icon}
-      <span>{label}</span>
-      <svg className="w-3 h-3 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-    </a>
-  )
-}
 
 export default DesignerProfile
