@@ -1,7 +1,9 @@
-import { useEffect, useState, useRef, useCallback, type ReactNode } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import type { BlogCategory } from '../types/database'
+import RichTextEditor from '../components/RichTextEditor'
+import '../styles/blog-content.css'
 
 interface BlogFormData {
   title: string
@@ -20,13 +22,7 @@ interface BlogFormData {
   scheduled_at: string
 }
 
-// ── Toolbar button ──
-const Tb = ({ icon, label, onClick, active = false }: { icon: ReactNode; label: string; onClick: () => void; active?: boolean }) => (
-  <button type="button" onClick={onClick} title={label}
-    className={`p-1.5 transition-colors text-xs ${active ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'}`}>
-    {icon}
-  </button>
-)
+
 
 const BlogEditor = () => {
   const { id } = useParams<{ id: string }>()
@@ -41,10 +37,8 @@ const BlogEditor = () => {
   const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [hasChanges, setHasChanges] = useState(false)
 
-  const contentRef = useRef<HTMLTextAreaElement>(null)
   const featuredInputRef = useRef<HTMLInputElement>(null)
   const bannerInputRef = useRef<HTMLInputElement>(null)
-  const contentImageRef = useRef<HTMLInputElement>(null)
   const lastSavedRef = useRef<string>('')
   const autoSaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -131,39 +125,14 @@ const BlogEditor = () => {
     setAutoSaveStatus('idle')
   }
 
-  // ── Formatting toolbar ──
-  const insertAtCursor = useCallback((before: string, after: string = '', defaultText: string = '') => {
-    const ta = contentRef.current
-    if (!ta) return
-    const start = ta.selectionStart
-    const end = ta.selectionEnd
-    const selected = ta.value.substring(start, end) || defaultText
-    const newText = ta.value.substring(0, start) + before + selected + after + ta.value.substring(end)
-    setForm(prev => ({ ...prev, content: newText }))
+  const handleContentChange = (html: string) => {
+    setForm(prev => ({ ...prev, content: html }))
     setHasChanges(true)
-    setTimeout(() => {
-      ta.focus()
-      ta.selectionStart = start + before.length
-      ta.selectionEnd = start + before.length + selected.length
-    }, 0)
-  }, [])
-
-  const insertHeading = (level: number) => {
-    const prefix = '#'.repeat(level) + ' '
-    insertAtCursor(prefix, '', `Heading ${level}`)
-  }
-  const insertBold = () => insertAtCursor('**', '**', 'bold text')
-  const insertItalic = () => insertAtCursor('*', '*', 'italic text')
-  const insertList = () => insertAtCursor('\n- ', '', 'List item')
-  const insertNumberedList = () => insertAtCursor('\n1. ', '', 'List item')
-  const insertBlockquote = () => insertAtCursor('\n> ', '', 'Quote text')
-  const insertLink = () => {
-    const url = prompt('Enter URL:')
-    if (url) insertAtCursor('[', `](${url})`, 'link text')
+    setAutoSaveStatus('idle')
   }
 
   // ── Image uploads ──
-  const handleImageUpload = async (file: File, type: 'featured' | 'banner' | 'content') => {
+  const handleImageUpload = async (file: File, type: 'featured' | 'banner') => {
     setUploading(type)
     try {
       const fileExt = file.name.split('.').pop()
@@ -173,9 +142,6 @@ const BlogEditor = () => {
       const { data: { publicUrl } } = supabase.storage.from('blog-images').getPublicUrl(data.path)
       if (type === 'featured') setForm(prev => ({ ...prev, featured_image_url: publicUrl }))
       else if (type === 'banner') setForm(prev => ({ ...prev, banner_image_url: publicUrl }))
-      else if (type === 'content') {
-        insertAtCursor(`\n![${file.name}](${publicUrl})\n`)
-      }
       setHasChanges(true)
     } catch (err) {
       console.error('Error uploading image:', err)
@@ -306,17 +272,10 @@ const BlogEditor = () => {
             {form.banner_image_url && <img src={form.banner_image_url} alt="" className="w-full h-64 object-cover mb-8" />}
             <h1 className="text-4xl font-serif mb-4">{form.title || 'Untitled Post'}</h1>
             {form.excerpt && <p className="text-xl text-neutral-400 mb-8">{form.excerpt}</p>}
-            <div className="prose prose-invert prose-lg max-w-none">
-              {form.content.split('\n\n').map((para, i) => {
-                if (para.startsWith('# ')) return <h2 key={i} className="text-2xl font-serif text-white mt-10 mb-4">{para.replace('# ', '')}</h2>
-                if (para.startsWith('## ')) return <h3 key={i} className="text-xl font-serif text-white mt-8 mb-3">{para.replace('## ', '')}</h3>
-                if (para.startsWith('![')) {
-                  const match = para.match(/!\[([^\]]*)\]\(([^)]+)\)/)
-                  if (match) return <img key={i} src={match[2]} alt={match[1]} className="w-full my-6" />
-                }
-                return <p key={i} className="mb-4 text-neutral-300">{para}</p>
-              })}
-            </div>
+            <div 
+              className="prose prose-invert prose-adlorzia max-w-none"
+              dangerouslySetInnerHTML={{ __html: form.content }}
+            />
           </article>
         ) : (
           /* Edit Mode */
@@ -344,33 +303,17 @@ const BlogEditor = () => {
                   className="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-600 focus:outline-none focus:border-[#bb9457] resize-none" />
               </div>
 
-              {/* Formatting Toolbar */}
+              {/* Content - Rich Text Editor */}
               <div>
                 <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Content</label>
-                <div className="bg-neutral-800 border border-neutral-700 border-b-0 p-1 flex items-center gap-0.5 flex-wrap">
-                  <Tb icon={<span className="font-bold text-xs">H1</span>} label="Heading 1" onClick={() => insertHeading(1)} />
-                  <Tb icon={<span className="font-bold text-xs">H2</span>} label="Heading 2" onClick={() => insertHeading(2)} />
-                  <Tb icon={<span className="font-bold text-xs">H3</span>} label="Heading 3" onClick={() => insertHeading(3)} />
-                  <div className="w-px h-5 bg-neutral-700 mx-1" />
-                  <Tb icon={<span className="font-bold text-xs">B</span>} label="Bold" onClick={insertBold} />
-                  <Tb icon={<span className="italic text-xs">I</span>} label="Italic" onClick={insertItalic} />
-                  <div className="w-px h-5 bg-neutral-700 mx-1" />
-                  <Tb icon={<svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h10M4 18h7" /></svg>} label="Bullet List" onClick={insertList} />
-                  <Tb icon={<svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" /></svg>} label="Numbered List" onClick={insertNumberedList} />
-                  <Tb icon={<svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" /></svg>} label="Blockquote" onClick={insertBlockquote} />
-                  <div className="w-px h-5 bg-neutral-700 mx-1" />
-                  <Tb icon={<svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>} label="Insert Link" onClick={insertLink} />
-                  <Tb icon={<svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>}
-                    label="Insert Image" onClick={() => contentImageRef.current?.click()} />
-                  <input ref={contentImageRef} type="file" accept="image/*" className="hidden"
-                    onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0], 'content')} />
-                </div>
-                <textarea ref={contentRef} name="content" value={form.content} onChange={handleChange} rows={22}
-                  placeholder="Write your blog post content...&#10;&#10;Use the toolbar above to format text, insert headings, lists, links, and images."
-                  className="w-full px-4 py-3 bg-neutral-900 border border-neutral-700 text-white placeholder-neutral-600 focus:outline-none focus:border-[#bb9457] resize-y font-mono text-sm leading-relaxed" />
-                <div className="flex items-center justify-between text-[10px] text-neutral-600 mt-1 px-1">
+                <RichTextEditor
+                  content={form.content}
+                  onChange={handleContentChange}
+                  placeholder="Start writing your blog post... Use the toolbar above to format text, insert headings, lists, links, and images."
+                />
+                <div className="flex items-center justify-between text-[10px] text-neutral-600 mt-2 px-1">
                   <span>{wordCount} words &middot; {charCount} characters</span>
-                  <span>{uploading === 'content' ? 'Uploading...' : ''}</span>
+                  <span>Rich Text Editor</span>
                 </div>
               </div>
 
