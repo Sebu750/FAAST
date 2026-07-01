@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import SEO from '../components/SEO'
 import { supabase } from '../lib/supabase'
 import type { DesignerProfile } from '../types/database'
-import { resolveAsset, resolveAssets } from '../lib/assetResolver'
+import { resolveAsset } from '../lib/assetResolver'
 
 // ============================================
 // DESIGNER PROFILE
