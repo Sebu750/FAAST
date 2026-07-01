@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import SEO from '../components/SEO'
 import { supabase } from '../lib/supabase'
 import type { DesignerProfile } from '../types/database'
+import { resolveAsset, resolveAssets } from '../lib/assetResolver'
 
 // ============================================
 // DESIGNER PROFILE
@@ -105,7 +106,7 @@ const DesignerProfile = () => {
 
       {/* ===== HERO BANNER ===== */}
       <section className="relative h-[50vh] lg:h-[60vh] overflow-hidden">
-        <img src={designer.cover_image_url || '/images/placeholder.webp'} alt={designer.brand} className="absolute inset-0 w-full h-full object-cover" />
+        <img src={resolveAsset(designer.cover_image_url) || '/images/placeholder.webp'} alt={designer.brand} className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/30" />
         {/* Back button */}
         <div className="absolute top-28 left-4 sm:left-6 lg:left-8 z-10">
@@ -122,7 +123,7 @@ const DesignerProfile = () => {
           {/* Brand mark + name centered */}
           <div className="text-center mb-8">
             <div className="w-20 h-20 mx-auto border border-neutral-800 rounded-full overflow-hidden bg-neutral-900 mb-4">
-              <img src={designer.image_url || '/images/placeholder.webp'} alt={designer.name} className="w-full h-full object-cover" />
+              <img src={resolveAsset(designer.image_url) || '/images/placeholder.webp'} alt={designer.name} className="w-full h-full object-cover" />
             </div>
             <p className="text-neutral-500 text-[10px] uppercase tracking-[0.25em] mb-2">{designer.brand}</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-[0.95] tracking-tight">{designer.name}</h1>
@@ -170,7 +171,7 @@ const DesignerProfile = () => {
                   {/* Hero Image - Full Width */}
                   <div className="mb-1 overflow-hidden cursor-pointer group relative h-[60vh] min-h-[400px]">
                     <img
-                      src={latestCollection.images[0]}
+                      src={resolveAsset(latestCollection.images[0])}
                       alt={`${latestCollection.title} hero`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       onClick={() => latestCollection.images && setPreviewImage(latestCollection.images[0])}
@@ -188,7 +189,7 @@ const DesignerProfile = () => {
                           onClick={() => setPreviewImage(img)}
                         >
                           <img
-                            src={img}
+                            src={resolveAsset(img)}
                             alt={`${latestCollection.title} look ${i + 2}`}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             loading="lazy"
@@ -238,7 +239,7 @@ const DesignerProfile = () => {
                         onClick={() => setPreviewImage(img)}
                       >
                         <img
-                          src={img}
+                          src={resolveAsset(img)}
                           alt={`${latestCollection.title} look ${i + 1}`}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
@@ -260,7 +261,7 @@ const DesignerProfile = () => {
                         onClick={() => setPreviewImage(img)}
                       >
                         <img
-                          src={img}
+                          src={resolveAsset(img)}
                           alt={`${latestCollection.title} look ${i + 1}`}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
@@ -279,7 +280,7 @@ const DesignerProfile = () => {
                           onClick={() => setPreviewImage(img)}
                         >
                           <img
-                            src={img}
+                            src={resolveAsset(img)}
                             alt={`${latestCollection.title} look ${i + 3}`}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             loading="lazy"
@@ -300,7 +301,7 @@ const DesignerProfile = () => {
                       onClick={() => setPreviewImage(img)}
                     >
                       <img
-                        src={img}
+                        src={resolveAsset(img)}
                         alt={`${latestCollection.title} look ${i + 1}`}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
@@ -349,7 +350,7 @@ const DesignerProfile = () => {
                 >
                   {/* Cover Banner */}
                   <div className="relative h-48 overflow-hidden">
-                    <img src={col.cover_image_url || '/images/placeholder.webp'} alt={col.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" loading="lazy" />
+                    <img src={resolveAsset(col.cover_image_url) || '/images/placeholder.webp'} alt={col.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" loading="lazy" />
                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/50 to-transparent" />
                     {/* Season badge */}
                     <div className="absolute top-4 left-4">
@@ -500,7 +501,7 @@ const DesignerProfile = () => {
             {/* Hero Cover Section */}
             <div className="relative h-[50vh] lg:h-[60vh] overflow-hidden" onClick={e => e.stopPropagation()}>
               <img 
-                src={col.cover_image_url || col.images?.[0] || '/images/placeholder.webp'} 
+                src={resolveAsset(col.cover_image_url) || resolveAsset(col.images?.[0]) || '/images/placeholder.webp'}
                 alt={col.title} 
                 className="w-full h-full object-cover opacity-80"
               />
@@ -554,7 +555,7 @@ const DesignerProfile = () => {
                           onClick={() => setPreviewImage(img)}
                         >
                           <img
-                            src={img}
+                            src={resolveAsset(img)}
                             alt={`${col.title} look ${i + 1}`}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
                             loading="lazy"
