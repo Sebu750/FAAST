@@ -470,6 +470,36 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     showToast('Designer profile published!', 'success')
   }
 
+  const handleDesignerImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'profile' | 'cover') => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    try {
+      const fileExt = file.name.split('.').pop()
+      const fileName = `designers/${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
+
+      const { data, error } = await supabase.storage
+        .from('designers')
+        .upload(fileName, file)
+
+      if (error) throw error
+
+      const { data: urlData } = supabase.storage
+        .from('designers')
+        .getPublicUrl(data.path)
+
+      if (type === 'profile') {
+        updateField('image_url', urlData.publicUrl)
+      } else {
+        updateField('cover_image_url', urlData.publicUrl)
+      }
+      showToast(`${type === 'profile' ? 'Profile' : 'Cover'} image uploaded`, 'success')
+    } catch (error) {
+      console.error('Error uploading image:', error)
+      showToast('Error uploading image', 'error')
+    }
+  }
+
   const saveRelatedData = async (designerId: string) => {
     // Delete and re-insert for collections, education, achievements, skills, certifications
     const tables = ['designer_collections', 'designer_education', 'designer_achievements', 'designer_skills', 'designer_certifications']
@@ -765,32 +795,48 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                   <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
                   <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Profile Image</h3>
                 </div>
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">Profile Image URL</label>
-                  <input
-                    value={form.image_url}
-                    onChange={(e) => updateField('image_url', e.target.value)}
-                    placeholder="https://example.com/profile.jpg"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
-                  />
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">Profile Image</label>
+                    <div className="flex gap-2">
+                      <input
+                        value={form.image_url}
+                        onChange={(e) => updateField('image_url', e.target.value)}
+                        placeholder="Paste URL or upload"
+                        className="flex-1 bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
+                      />
+                      <label className="flex items-center gap-2 px-3 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-sm cursor-pointer transition-colors">
+                        <Ic name="upload" className="w-4 h-4" />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleDesignerImageUpload(e, 'profile')}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                    <p className="text-[10px] text-neutral-600 mt-1.5">Recommended: 800x800px or larger, square aspect ratio</p>
+                  </div>
+                  {form.image_url ? (
+                    <div className="relative group w-32 h-32 flex-shrink-0">
+                      <div className="w-full h-full bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
+                        <img src={form.image_url} alt="Profile preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                      </div>
+                      <button
+                        onClick={() => updateField('image_url', '')}
+                        className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Ic name="x" className="w-3 h-3 text-white" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-32 h-32 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-sm flex flex-col items-center justify-center text-neutral-500">
+                      <Ic name="image" className="w-8 h-8 mb-1" />
+                      <span className="text-[10px]">No image</span>
+                    </div>
+                  )}
                 </div>
-                {form.image_url ? (
-                  <div className="relative group">
-                    <div className="w-40 h-40 bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
-                      <img src={form.image_url} alt="Profile preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                    </div>
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="text-white text-xs">Preview</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="w-40 h-40 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-sm flex flex-col items-center justify-center text-neutral-500">
-                    <svg className="w-8 h-8 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                    <span className="text-xs">No image</span>
-                  </div>
-                )}
               </div>
 
               <div className="space-y-4">
@@ -798,33 +844,48 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                   <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
                   <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Cover Image</h3>
                 </div>
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">Cover Image URL</label>
-                  <input
-                    value={form.cover_image_url}
-                    onChange={(e) => updateField('cover_image_url', e.target.value)}
-                    placeholder="https://example.com/cover.jpg"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
-                  />
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex-1">
+                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">Cover Image</label>
+                    <div className="flex gap-2">
+                      <input
+                        value={form.cover_image_url}
+                        onChange={(e) => updateField('cover_image_url', e.target.value)}
+                        placeholder="Paste URL or upload"
+                        className="flex-1 bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
+                      />
+                      <label className="flex items-center gap-2 px-3 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-sm cursor-pointer transition-colors">
+                        <Ic name="upload" className="w-4 h-4" />
+                        Upload
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleDesignerImageUpload(e, 'cover')}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                    <p className="text-[10px] text-neutral-600 mt-1.5">Recommended: 1920x600px or larger, wide aspect ratio</p>
+                  </div>
+                  {form.cover_image_url ? (
+                    <div className="relative group w-48 h-24 flex-shrink-0">
+                      <div className="w-full h-full bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
+                        <img src={form.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                      </div>
+                      <button
+                        onClick={() => updateField('cover_image_url', '')}
+                        className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        <Ic name="x" className="w-3 h-3 text-white" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="w-48 h-24 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-sm flex flex-col items-center justify-center text-neutral-500">
+                      <Ic name="image" className="w-8 h-8 mb-1" />
+                      <span className="text-[10px]">No cover</span>
+                    </div>
+                  )}
                 </div>
-                {form.cover_image_url ? (
-                  <div className="relative group">
-                    <div className="w-full h-48 bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
-                      <img src={form.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                    </div>
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="text-white text-xs">Preview</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="w-full h-48 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-sm flex flex-col items-center justify-center text-neutral-500">
-                    <svg className="w-10 h-10 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                    <span className="text-xs">No cover image</span>
-                  </div>
-                )}
-                <p className="text-[10px] text-neutral-600">Recommended: 1920x600px or larger for best quality</p>
               </div>
             </div>
           )}
@@ -1067,20 +1128,71 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
         </button>
       </div>
 
-      {collections.map((col, idx) => (
-        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-sm overflow-hidden">
-          {/* Collection Header */}
-          <div className="flex items-center justify-between px-4 py-3 bg-neutral-900/50 border-b border-neutral-800">
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-neutral-500">Collection #{idx + 1}</span>
-              {col.is_latest && (
-                <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/30 rounded-sm">Latest</span>
-              )}
-            </div>
-            <button onClick={() => removeCollection(idx)} className="text-red-400 hover:text-red-300 transition-colors">
-              <Ic name="trash" className="w-4 h-4" />
-            </button>
+      {/* Separate Latest and Previous Collections */}
+      {(() => {
+        const latestCol = collections.find(c => c.is_latest)
+        const previousCols = collections.filter(c => !c.is_latest)
+        
+        return (
+          <>
+            {/* Latest Collection Section */}
+            {latestCol && (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/30 rounded-sm">Latest</span>
+                  <span className="text-[10px] text-neutral-500">This appears as the main collection on the profile</span>
+                </div>
+                {renderCollectionCard(latestCol, collections.indexOf(latestCol))}
+              </div>
+            )}
+
+            {/* Previous Collections Section */}
+            {previousCols.length > 0 && (
+              <div className="space-y-3 pt-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-px flex-1 bg-neutral-800" />
+                  <span className="text-[10px] uppercase tracking-wider text-neutral-500">Previous Collections</span>
+                  <div className="h-px flex-1 bg-neutral-800" />
+                </div>
+                {previousCols.map(col => renderCollectionCard(col, collections.indexOf(col)))}
+              </div>
+            )}
+
+            {/* No Latest Collection Warning */}
+            {!latestCol && collections.length > 0 && (
+              <div className="p-4 bg-yellow-500/5 border border-yellow-500/20 rounded-sm">
+                <p className="text-yellow-400 text-xs">⚠️ No collection marked as "Latest". Toggle "Mark as Latest Collection" on one collection to display it as the main collection on the profile.</p>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {collections.length === 0 && (
+              <div className="p-8 border border-neutral-800 border-dashed text-center">
+                <p className="text-neutral-500 text-sm mb-2">No collections yet</p>
+                <button onClick={addCollection} className="text-[#bb9457] text-xs hover:underline">Add your first collection</button>
+              </div>
+            )}
+          </>
+        )
+      })()}
+    </div>
+  )
+
+  function renderCollectionCard(col: DesignerCollection, idx: number) {
+    return (
+      <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-sm overflow-hidden">
+        {/* Collection Header */}
+        <div className="flex items-center justify-between px-4 py-3 bg-neutral-900/50 border-b border-neutral-800">
+          <div className="flex items-center gap-3">
+            <span className="text-xs text-neutral-500">Collection #{idx + 1}</span>
+            {col.is_latest && (
+              <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/30 rounded-sm">Latest</span>
+            )}
           </div>
+          <button onClick={() => removeCollection(idx)} className="text-red-400 hover:text-red-300 transition-colors">
+            <Ic name="trash" className="w-4 h-4" />
+          </button>
+        </div>
 
           <div className="p-4 space-y-4">
             {/* Basic Info */}
@@ -1203,17 +1315,8 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
             </div>
           </div>
         </div>
-      ))}
-
-      {collections.length === 0 && (
-        <div className="text-center py-12 bg-neutral-950 border border-neutral-800 rounded-sm">
-          <Ic name="image" className="w-10 h-10 text-neutral-700 mx-auto mb-3" />
-          <p className="text-neutral-500 text-sm">No collections added yet</p>
-          <p className="text-neutral-600 text-xs mt-1">Click "Add Collection" to get started</p>
-        </div>
-      )}
-    </div>
-  )
+      )
+  }
 }
 
 // Education Editor

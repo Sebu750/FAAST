@@ -17,6 +17,7 @@ const DesignerProfile = () => {
   const [designer, setDesigner] = useState<DesignerProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  const [viewCollection, setViewCollection] = useState<string | null>(null)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -161,27 +162,160 @@ const DesignerProfile = () => {
               Latest Collection
             </h2>
 
-            {/* Masonry Image Grid */}
-            <div className="columns-2 sm:columns-3 lg:columns-4 gap-1 mb-12">
-              {latestCollection.images?.map((img, i) => {
-                const heights = ['h-64', 'h-80', 'h-96', 'h-72', 'h-56', 'h-88', 'h-64', 'h-72', 'h-80', 'h-56', 'h-72', 'h-64', 'h-96', 'h-72', 'h-64', 'h-80']
-                return (
-                  <div
-                    key={i}
-                    className={`break-inside-avoid mb-1 overflow-hidden cursor-pointer group relative ${heights[i % heights.length]}`}
-                    onClick={() => setPreviewImage(img)}
-                  >
+            {/* Dynamic Grid Layout based on image count */}
+            {latestCollection.images && latestCollection.images.length > 0 ? (
+              latestCollection.images.length >= 24 ? (
+                /* Large Collection (24+ images): Editorial Moodboard */
+                <div className="mb-12">
+                  {/* Hero Image - Full Width */}
+                  <div className="mb-1 overflow-hidden cursor-pointer group relative h-[60vh] min-h-[400px]">
                     <img
-                      src={img}
-                      alt={`${latestCollection.title} look ${i + 1}`}
+                      src={latestCollection.images[0]}
+                      alt={`${latestCollection.title} hero`}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
+                      onClick={() => latestCollection.images && setPreviewImage(latestCollection.images[0])}
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
                   </div>
-                )
-              })}
-            </div>
+                  {/* Masonry Grid */}
+                  <div className="columns-2 sm:columns-3 lg:columns-4 gap-1">
+                    {latestCollection.images.slice(1).map((img, i) => {
+                      const heights = ['h-64', 'h-80', 'h-96', 'h-72', 'h-56', 'h-88']
+                      return (
+                        <div
+                          key={i}
+                          className={`break-inside-avoid mb-1 overflow-hidden cursor-pointer group relative ${heights[i % heights.length]}`}
+                          onClick={() => setPreviewImage(img)}
+                        >
+                          <img
+                            src={img}
+                            alt={`${latestCollection.title} look ${i + 2}`}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : latestCollection.images.length >= 20 ? (
+                /* Medium-Large Collection (20-23 images): Asymmetric Grid */
+                <div className="grid grid-cols-6 gap-1 mb-12">
+                  {latestCollection.images.map((img, i) => {
+                    // Create asymmetric pattern: large, medium, small, repeat
+                    const patterns = [
+                      'col-span-3 row-span-2 h-[500px]',
+                      'col-span-3 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-3 row-span-1 h-[245px]',
+                      'col-span-3 row-span-2 h-[500px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-6 row-span-1 h-[300px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-3 row-span-2 h-[500px]',
+                      'col-span-3 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-3 row-span-1 h-[245px]',
+                      'col-span-6 row-span-1 h-[300px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                      'col-span-2 row-span-1 h-[245px]',
+                    ]
+                    const sizeClass = patterns[i % patterns.length]
+                    return (
+                      <div
+                        key={i}
+                        className={`overflow-hidden cursor-pointer group relative ${sizeClass}`}
+                        onClick={() => setPreviewImage(img)}
+                      >
+                        <img
+                          src={img}
+                          alt={`${latestCollection.title} look ${i + 1}`}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                      </div>
+                    )
+                  })}
+                </div>
+              ) : latestCollection.images.length >= 18 ? (
+                /* Medium Collection (18-19 images): Feature + Grid */
+                <div className="mb-12">
+                  {/* Feature Row: 2 large images */}
+                  <div className="grid grid-cols-2 gap-1 mb-1">
+                    {latestCollection.images.slice(0, 2).map((img, i) => (
+                      <div
+                        key={i}
+                        className="overflow-hidden cursor-pointer group relative h-[400px]"
+                        onClick={() => setPreviewImage(img)}
+                      >
+                        <img
+                          src={img}
+                          alt={`${latestCollection.title} look ${i + 1}`}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                      </div>
+                    ))}
+                  </div>
+                  {/* Remaining Grid */}
+                  <div className="columns-3 gap-1">
+                    {latestCollection.images.slice(2).map((img, i) => {
+                      const heights = ['h-56', 'h-64', 'h-72', 'h-64', 'h-56', 'h-72']
+                      return (
+                        <div
+                          key={i}
+                          className={`break-inside-avoid mb-1 overflow-hidden cursor-pointer group relative ${heights[i % heights.length]}`}
+                          onClick={() => setPreviewImage(img)}
+                        >
+                          <img
+                            src={img}
+                            alt={`${latestCollection.title} look ${i + 3}`}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : (
+                /* Small Collection (<18 images): Simple Grid */
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 mb-12">
+                  {latestCollection.images.map((img, i) => (
+                    <div
+                      key={i}
+                      className="overflow-hidden cursor-pointer group relative h-64 sm:h-80"
+                      onClick={() => setPreviewImage(img)}
+                    >
+                      <img
+                        src={img}
+                        alt={`${latestCollection.title} look ${i + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                    </div>
+                  ))}
+                </div>
+              )
+            ) : (
+              /* No Images Placeholder */
+              <div className="mb-12 p-12 border border-neutral-800 text-center">
+                <p className="text-neutral-500 text-sm">Collection images coming soon</p>
+              </div>
+            )}
 
             {/* Collection name + description */}
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 pt-8 border-t border-neutral-900">
@@ -208,18 +342,27 @@ const DesignerProfile = () => {
             <h2 className="text-2xl lg:text-3xl font-serif text-white mb-8">Previous Collections</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {previousCollections.map(col => (
-                <div key={col.id} className="group bg-neutral-950 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500 overflow-hidden">
-                  <div className="relative h-52 overflow-hidden">
+                <div 
+                  key={col.id} 
+                  onClick={() => setViewCollection(col.id)}
+                  className="group bg-neutral-950 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500 overflow-hidden cursor-pointer"
+                >
+                  {/* Cover Banner */}
+                  <div className="relative h-48 overflow-hidden">
                     <img src={col.cover_image_url || '/images/placeholder.webp'} alt={col.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" loading="lazy" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/50 to-transparent" />
+                    {/* Season badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-black/60 backdrop-blur-sm text-neutral-300 text-[10px] uppercase tracking-[0.15em] px-3 py-1.5">{col.season}</span>
+                    </div>
                   </div>
+                  {/* Info */}
                   <div className="p-5">
-                    <p className="text-neutral-600 text-[10px] uppercase tracking-[0.15em] mb-1">{col.season}</p>
                     <h3 className="text-white font-serif text-lg mb-2 group-hover:text-[#bb9457] transition-colors">{col.title}</h3>
-                    <p className="text-neutral-400 text-xs leading-relaxed mb-3">{col.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-neutral-600 text-[10px]">{col.looks} looks</span>
-                      <span className="text-[#bb9457] text-xs tracking-wide opacity-0 group-hover:opacity-100 transition-all">View Collection →</span>
+                    <p className="text-neutral-500 text-xs leading-relaxed mb-4 line-clamp-2">{col.description}</p>
+                    <div className="flex items-center justify-between pt-3 border-t border-neutral-800">
+                      <span className="text-neutral-600 text-[10px] uppercase tracking-wider">{col.looks} looks</span>
+                      <span className="text-[#bb9457] text-xs tracking-wide group-hover:translate-x-1 transition-transform">View Collection →</span>
                     </div>
                   </div>
                 </div>
@@ -334,6 +477,120 @@ const DesignerProfile = () => {
           <img src={previewImage} alt="Collection preview" className="max-w-[90vw] max-h-[85vh] object-contain" onClick={e => e.stopPropagation()} />
         </div>
       )}
+
+      {/* ===== COLLECTION VIEW MODAL ===== */}
+      {viewCollection && (() => {
+        const col = previousCollections.find(c => c.id === viewCollection)
+        if (!col) return null
+        return (
+          <div 
+            className="fixed inset-0 z-[60] bg-black overflow-y-auto"
+            onClick={() => setViewCollection(null)}
+          >
+            {/* Close Button - Fixed */}
+            <button 
+              onClick={() => setViewCollection(null)}
+              className="fixed top-6 right-6 z-50 bg-black/60 backdrop-blur-sm border border-neutral-700 text-neutral-300 hover:text-white hover:border-neutral-500 transition-all p-3 rounded-full"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Hero Cover Section */}
+            <div className="relative h-[50vh] lg:h-[60vh] overflow-hidden" onClick={e => e.stopPropagation()}>
+              <img 
+                src={col.cover_image_url || col.images?.[0] || '/images/placeholder.webp'} 
+                alt={col.title} 
+                className="w-full h-full object-cover opacity-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+              {/* Collection Title Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-8 lg:p-16">
+                <div className="max-w-5xl mx-auto">
+                  <p className="text-[#bb9457] text-[10px] uppercase tracking-[0.3em] mb-3">{col.season}</p>
+                  <h2 className="text-white font-serif text-4xl sm:text-5xl lg:text-6xl leading-[0.95] tracking-tight mb-4">{col.title}</h2>
+                  <div className="flex items-center gap-4 text-neutral-400 text-xs">
+                    <span>{col.looks} looks</span>
+                    <span className="w-1 h-1 bg-neutral-600 rounded-full" />
+                    <span>Collection</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Collection Content */}
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16" onClick={e => e.stopPropagation()}>
+              {/* Description Section */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-16">
+                <div className="lg:col-span-7">
+                  <p className="text-neutral-300 text-base leading-[1.8] mb-6">{col.description}</p>
+                </div>
+                <div className="lg:col-span-5">
+                  {col.inspiration && (
+                    <div className="border-l-2 border-neutral-800 pl-6">
+                      <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-600 mb-3">Inspiration</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed italic">{col.inspiration}</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Divider */}
+              <div className="h-px bg-neutral-800 mb-12" />
+
+              {/* Image Grid */}
+              {col.images && col.images.length > 0 ? (
+                <div>
+                  <p className="text-neutral-500 text-[10px] uppercase tracking-[0.3em] mb-6">The Collection</p>
+                  {/* Editorial Grid Layout */}
+                  <div className="columns-2 sm:columns-3 lg:columns-4 gap-2">
+                    {col.images.map((img, i) => {
+                      const heights = ['h-72', 'h-80', 'h-96', 'h-80', 'h-64', 'h-88', 'h-72', 'h-96']
+                      return (
+                        <div
+                          key={i}
+                          className={`break-inside-avoid mb-2 overflow-hidden cursor-pointer group relative ${heights[i % heights.length]}`}
+                          onClick={() => setPreviewImage(img)}
+                        >
+                          <img
+                            src={img}
+                            alt={`${col.title} look ${i + 1}`}
+                            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
+                          {/* Look number on hover */}
+                          <div className="absolute bottom-3 left-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span className="bg-black/70 backdrop-blur-sm text-white text-[10px] px-2 py-1">Look {i + 1}</span>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              ) : (
+                <div className="py-20 text-center border border-neutral-800">
+                  <p className="text-neutral-500 text-sm">No images available for this collection</p>
+                </div>
+              )}
+
+              {/* Back to Profile */}
+              <div className="mt-16 pt-8 border-t border-neutral-800">
+                <button 
+                  onClick={() => setViewCollection(null)}
+                  className="flex items-center gap-2 text-neutral-400 hover:text-white text-sm transition-colors group"
+                >
+                  <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                  </svg>
+                  Back to Profile
+                </button>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
     </>
   )
 }
