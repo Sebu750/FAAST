@@ -33,7 +33,7 @@ const Section = forwardRef<HTMLDivElement, SectionProps>(
     <section
       ref={ref}
       id={id}
-      className={`relative overflow-hidden py-28 md:py-36 border-b border-neutral-900 bg-black text-neutral-300 ${className}`}
+      className={`relative overflow-hidden py-28 md:py-36 bg-black text-neutral-300 ${className}`}
     >
       {children}
     </section>
@@ -296,7 +296,7 @@ const About = () => {
       `}</style>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-screen flex items-center overflow-hidden text-white border-b border-neutral-900">
+      <section className="relative min-h-screen flex items-center overflow-hidden text-white">
         <div className="absolute inset-0 z-0">
           <img
             src={imgs.craft}
@@ -424,7 +424,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 1.5: A NOTE FROM THE FOUNDER --- */}
-      <Section className="bg-neutral-950 border-t border-neutral-900 text-neutral-300" id="founder" ref={setSectionRef('founder') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-neutral-950 text-neutral-300" id="founder" ref={setSectionRef('founder') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`max-w-5xl mx-auto transition-all duration-1000 ${isVisible['founder'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
             <div className="grid md:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -503,7 +503,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 2.5: TIMELINE --- */}
-      <Section className="bg-white text-neutral-900 border-t border-neutral-200" id="timeline" ref={setSectionRef('timeline') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-white text-neutral-900" id="timeline" ref={setSectionRef('timeline') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`max-w-4xl mx-auto transition-all duration-1000 ${isVisible['timeline'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
             <div className="text-center mb-20">
@@ -596,7 +596,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 2.75: BY THE NUMBERS --- */}
-      <Section className="bg-neutral-950 border-t border-neutral-900 text-neutral-300" id="metrics" ref={setSectionRef('metrics') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-neutral-950 text-neutral-300" id="metrics" ref={setSectionRef('metrics') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`max-w-6xl mx-auto transition-all duration-1000 ${isVisible['metrics'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
             <div className="text-center mb-20">
@@ -659,7 +659,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 3: MISSION & VISION --- */}
-      <Section className="bg-neutral-950 border-t border-neutral-900 text-neutral-300" id="mission" ref={setSectionRef('mission') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-neutral-950 text-neutral-300" id="mission" ref={setSectionRef('mission') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`grid md:grid-cols-2 gap-16 mb-16 transition-all duration-1000 ${isVisible['mission'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
             <div className="space-y-6">
@@ -694,7 +694,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 4: THE THREE PILLARS EXPLAINED --- */}
-      <Section className="border-b border-neutral-900 bg-black py-32" id="pillars" ref={setSectionRef('pillars') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-black py-32" id="pillars" ref={setSectionRef('pillars') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`max-w-3xl mb-20 transition-all duration-1000 ${isVisible['pillars'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
             <div className="inline-flex items-center gap-2 glass px-5 py-2 rounded-full">
@@ -758,7 +758,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 5: FOUNDING VALUES --- */}
-      <Section className="border-b border-neutral-900 bg-neutral-950 py-32" id="values" ref={setSectionRef('values') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-neutral-950 py-32" id="values" ref={setSectionRef('values') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`text-left max-w-2xl mb-16 transition-all duration-1000 ${isVisible['values'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
             <div className="inline-flex items-center gap-2 glass px-5 py-2 rounded-full">
@@ -820,7 +820,7 @@ const About = () => {
       </section>
 
       {/* --- SECTION 6: PHYSICAL SPACES --- */}
-      <Section className="bg-neutral-950 py-32 border-t border-neutral-900" id="facilities" ref={setSectionRef('facilities') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-neutral-950 py-32" id="facilities" ref={setSectionRef('facilities') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`max-w-3xl mb-16 transition-all duration-1000 ${isVisible['facilities'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
             <div className="inline-flex items-center gap-2 glass px-5 py-2 rounded-full">
@@ -881,7 +881,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 7: GLOBAL MARKETPLACE --- */}
-      <Section className="bg-white text-neutral-900 py-32 border-t border-neutral-200" id="marketplace" ref={setSectionRef('marketplace') as React.Ref<HTMLDivElement>}>
+      <Section className="bg-white text-neutral-900 py-32" id="marketplace" ref={setSectionRef('marketplace') as React.Ref<HTMLDivElement>}>
         <Container>
           <div className={`grid md:grid-cols-12 gap-12 items-start transition-all duration-1000 ${isVisible['marketplace'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
             <div className="md:col-span-4">
@@ -913,7 +913,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 8: CORE TEAM --- */}
-      <Section className="border-b border-neutral-200 bg-white py-32">
+      <Section className="bg-white py-32">
         <Container>
           <TeamGrid
             eyebrow="06 / CORE TEAM"
@@ -927,7 +927,7 @@ const About = () => {
       </Section>
 
       {/* --- SECTION 9: ADVISORY BOARD --- */}
-      <Section className="border-b border-neutral-800 bg-neutral-950 py-32">
+      <Section className="bg-neutral-950 py-32">
         <Container>
           <TeamGrid
             eyebrow="09 / ADVISORY BOARD"
@@ -1130,7 +1130,7 @@ const About = () => {
             </div>
 
             {/* Secondary Message */}
-            <div className="pt-12 border-t border-neutral-800">
+            <div className="pt-12">
               <p className="text-neutral-500 text-sm font-light">
                 Not sure where to start? <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">Let's have a conversation</Link> about how Adorzia aligns with your vision.
               </p>

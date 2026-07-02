@@ -85,12 +85,33 @@ const DesignersDirectory = () => {
 
   return (
     <>
-      <SEO title="Designers — Adorzia" description="Browse and explore Pakistan's most visionary fashion designers." canonicalURL="https://adorzia.com/designers" />
+      <SEO 
+        title="Designers — Adorzia | Pakistan's Emerging Fashion Designers" 
+        description="Discover and connect with Pakistan's most visionary emerging fashion designers. Browse curated profiles, collections, and stories from Lahore, Karachi, and Islamabad." 
+        canonicalURL="https://adorzia.com/designers"
+        ogTitle="Designers — Adorzia | Pakistan's Emerging Fashion Designers"
+        ogDescription="Discover Pakistan's most promising emerging fashion designers. Curated profiles, collections, and stories from the heart of Pakistani fashion."
+        ogImageAlt="Adorzia Designers Directory - Pakistani Fashion Designers"
+        schemaType="CollectionPage"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Adorzia Designers Directory",
+          "description": "Discover and connect with Pakistan's most visionary emerging fashion designers.",
+          "url": "https://adorzia.com/designers",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Adorzia",
+            "url": "https://adorzia.com"
+          }
+        }}
+        keywords="Pakistani fashion designers, Emerging designers Pakistan, Fashion designers Lahore, Fashion designers Karachi, Fashion designers Islamabad, Pakistani fashion brands, Independent fashion designers, Heritage craft designers, Pakistani clothing designers, Contemporary Pakistani fashion, Adorzia designers, Pakistani fashion directory"
+      />
 
       {/* ===== HEADER ===== */}
       <section className="pt-28 pb-12 lg:pt-36 lg:pb-16 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-serif text-white leading-[0.95] tracking-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-[0.95] tracking-tight mb-6">
             Designers
           </h1>
           <p className="text-neutral-500 text-sm lg:text-base max-w-md leading-relaxed">
@@ -100,7 +121,7 @@ const DesignersDirectory = () => {
       </section>
 
       {/* ===== FILTER + SEARCH BAR ===== */}
-      <section className="border-b border-neutral-900 bg-black sticky top-[60px] z-30">
+      <section className="bg-black sticky top-[60px] z-30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between gap-4">
             {/* Filter */}
@@ -127,7 +148,7 @@ const DesignersDirectory = () => {
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search designers..."
-                className="w-full bg-transparent border-b border-neutral-800 text-white text-sm placeholder:text-neutral-600 focus:outline-none focus:border-neutral-500 pb-1 transition-colors"
+                className="w-full bg-transparent border-b border-neutral-800 text-white text-sm placeholder:text-neutral-600 focus:outline-none focus:border-[#bb9457] pb-1 transition-colors"
               />
               <svg className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
             </div>
@@ -135,7 +156,7 @@ const DesignersDirectory = () => {
 
           {/* Category filter row */}
           {showFilters && (
-            <div className="mt-4 pt-4 border-t border-neutral-900 flex flex-wrap gap-2">
+            <div className="mt-4 pt-4 flex flex-wrap gap-2">
               {categories.map(c => (
                 <button
                   key={c}

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
+import type { BlogPost } from '../types/database'
 import hero1 from '../assets/home-hero-ecosystem1.webp'
 import hero2 from '../assets/home-hero-runway.webp'
 import hero3 from '../assets/home-hero-craft.webp'
@@ -9,7 +11,6 @@ import heritageCraft from '../assets/home-heritage-craft.webp'
 import designer1 from '../assets/home-designer-portrait-1.webp'
 import designer2 from '../assets/home-designer-portrait-2.webp'
 import designer3 from '../assets/home-designer-portrait-3.webp'
-import trophy from '../assets/home-spotlight-trophy.webp'
 import fabricInnovation from '../assets/home-fabric-innovation.webp'
 import newsletterStudio from '../assets/home-newsletter-studio.webp'
 import karachiStudio from '../assets/karachi-coworking-fashion-studio.webp'
@@ -29,8 +30,76 @@ const Home = () => {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
+  const [blogLoading, setBlogLoading] = useState(true)
+  const [designers, setDesigners] = useState<any[]>([])
+  const [designersLoading, setDesignersLoading] = useState(true)
+  const [collections, setCollections] = useState<any[]>([])
+  const [collectionsLoading, setCollectionsLoading] = useState(true)
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const rafRef = useRef<number>(0)
+
+  // Fetch latest blog posts
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        const { data } = await supabase
+          .from('blog_posts')
+          .select('*, category:blog_categories(name)')
+          .eq('status', 'published')
+          .lte('published_at', new Date().toISOString())
+          .order('published_at', { ascending: false })
+          .limit(6)
+        if (data) setBlogPosts(data)
+      } catch (err) {
+        console.error('Blog fetch error:', err)
+      } finally {
+        setBlogLoading(false)
+      }
+    }
+    fetchBlogPosts()
+  }, [])
+
+  // Fetch featured designers
+  useEffect(() => {
+    const fetchDesigners = async () => {
+      try {
+        const { data } = await supabase
+          .from('designers')
+          .select('*')
+          .eq('is_active', true)
+          .eq('is_featured', true)
+          .order('created_at', { ascending: false })
+          .limit(6)
+        if (data) setDesigners(data)
+      } catch (err) {
+        console.error('Designers fetch error:', err)
+      } finally {
+        setDesignersLoading(false)
+      }
+    }
+    fetchDesigners()
+  }, [])
+
+  // Fetch latest collections
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const { data } = await supabase
+          .from('designer_collections')
+          .select('*, designers(name, slug)')
+          .eq('is_latest', true)
+          .order('created_at', { ascending: false })
+          .limit(6)
+        if (data) setCollections(data)
+      } catch (err) {
+        console.error('Collections fetch error:', err)
+      } finally {
+        setCollectionsLoading(false)
+      }
+    }
+    fetchCollections()
+  }, [])
 
   // Optimized scroll handler with requestAnimationFrame
   useEffect(() => {
@@ -57,7 +126,7 @@ const Home = () => {
           }
         })
       },
-      { threshold: 0.15, rootMargin: '0px 0px -30px 0px' }
+      { threshold: 0.05, rootMargin: '0px' }
     )
 
     Object.values(sectionRefs.current).forEach((ref) => {
@@ -141,8 +210,8 @@ const Home = () => {
         title="Adorzia - Where Visionaries Rise | Pakistani Fashion Ecosystem"
         description="Adorzia is Pakistan's first fashion entrepreneurship ecosystem - coworking studios in Lahore, Islamabad and Karachi, a curated marketplace for emerging designers and heritage craft, and the annual Spotlight event that discovers and invests in Pakistan's next great fashion brands. Applications now open until July 31 2026."
         canonicalURL="https://adorzia.com"
-        ogTitle="Adorzia - Where Visionaries Rise"
-        ogDescription="Pakistan's first complete fashion entrepreneurship ecosystem. Studios. Marketplace. Spotlight."
+        ogTitle="Adorzia - Where Visionaries Rise | Pakistani Fashion Ecosystem"
+        ogDescription="Pakistan's first complete fashion entrepreneurship ecosystem. Studios. Marketplace. Spotlight. Discover emerging designers, heritage craft, and contemporary Pakistani fashion."
         ogImageAlt="Adorzia - Pakistani fashion ecosystem hero image"
         schemaType="Organization"
         schema={{
@@ -151,11 +220,85 @@ const Home = () => {
           "name": "Adorzia",
           "description": "Fashion entrepreneurship ecosystem based in Pakistan offering coworking studios, a curated designer marketplace, and the annual Spotlight talent investment event.",
           "url": "https://adorzia.com",
+          "logo": "https://adorzia.com/logo.png",
           "foundingDate": "2025",
           "areaServed": "Pakistan",
-          "knowsAbout": ["Pakistani Fashion", "Fashion Entrepreneurship", "Heritage Craft", "Fashion Marketplace"]
+          "knowsAbout": ["Pakistani Fashion", "Fashion Entrepreneurship", "Heritage Craft", "Fashion Marketplace", "Coworking Studios", "Fashion Events"],
+          "sameAs": [
+            "https://instagram.com/adorzia",
+            "https://facebook.com/adorzia",
+            "https://linkedin.com/company/adorzia"
+          ],
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Adorzia Services",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Coworking Studios",
+                  "description": "Fashion coworking spaces in Lahore, Islamabad, and Karachi"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Designer Marketplace",
+                  "description": "Curated marketplace for emerging Pakistani fashion designers"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Event",
+                  "name": "Spotlight",
+                  "description": "Annual fashion talent investment event"
+                }
+              }
+            ]
+          }
         }}
-        keywords="Pakistani fashion, Fashion Pakistan, Pakistan designer, Heritage craft Pakistan, Fashion marketplace Pakistan, Pakistani clothing, Pakistani textile, Fashion studio Pakistan, Fashion designer Lahore, Fashion designer Karachi, Fashion designer Islamabad, Pakistani fashion brand, Handmade Pakistan, Craft Pakistan, Pakistani embroidery, Traditional Pakistani clothing, Contemporary Pakistani fashion, Fashion event Pakistan, Emerging designer Pakistan, Fashion entrepreneurship, Adorzia, Adorzia fashion, Adorzia marketplace, Adorzia studios, Adorzia Spotlight"
+        localBusinessSchema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "CoworkingSpace",
+            "name": "Adorzia Studio Lahore",
+            "description": "Fashion coworking studio in Lahore",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Lahore",
+              "addressCountry": "PK"
+            },
+            "areaServed": "Lahore"
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "CoworkingSpace",
+            "name": "Adorzia Studio Islamabad",
+            "description": "Fashion coworking studio in Islamabad",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Islamabad",
+              "addressCountry": "PK"
+            },
+            "areaServed": "Islamabad"
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "CoworkingSpace",
+            "name": "Adorzia Studio Karachi",
+            "description": "Fashion coworking studio in Karachi",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Karachi",
+              "addressCountry": "PK"
+            },
+            "areaServed": "Karachi"
+          }
+        ]}
+        keywords="Pakistani fashion, Fashion Pakistan, Pakistan designer, Heritage craft Pakistan, Fashion marketplace Pakistan, Pakistani clothing, Pakistani textile, Fashion studio Pakistan, Fashion designer Lahore, Fashion designer Karachi, Fashion designer Islamabad, Pakistani fashion brand, Handmade Pakistan, Craft Pakistan, Pakistani embroidery, Traditional Pakistani clothing, Contemporary Pakistani fashion, Fashion event Pakistan, Emerging designer Pakistan, Fashion entrepreneurship, Adorzia, Adorzia fashion, Adorzia marketplace, Adorzia studios, Adorzia Spotlight, Coworking space Lahore, Coworking space Islamabad, Coworking space Karachi, Fashion incubator Pakistan"
       />
       
       {/* Dynamic Injection of Luxury Custom Animations - GPU Accelerated */}
@@ -214,7 +357,7 @@ const Home = () => {
       `}</style>
 
       {/* Section 1: Cinematic Full-Bleed Carousel Hero */}
-      <section className="relative overflow-hidden border-b border-neutral-900 bg-black min-h-[60vh] sm:min-h-[70vh] md:min-h-screen flex items-center">
+      <section className="relative overflow-hidden bg-black min-h-[60vh] sm:min-h-[70vh] md:min-h-screen flex items-center">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10 sm:bg-gradient-to-r" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.2),transparent_50%)] sm:bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)] z-10" />
@@ -321,7 +464,7 @@ const Home = () => {
       </section>
 
       {/* Trust Strip - Above Fold Credibility */}
-      <section className="bg-neutral-950 border-b border-neutral-900 py-8 sm:py-10 relative overflow-hidden">
+      <section className="bg-neutral-950 py-8 sm:py-10 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.03),transparent_70%)] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
@@ -362,7 +505,7 @@ const Home = () => {
           </div>
 
           {/* Divider Line */}
-          <div className="mt-8 pt-6 border-t border-neutral-900 text-center">
+          <div className="mt-8 pt-6 text-center">
             <span className="text-[10px] uppercase tracking-[0.25em] text-[#bb9457] font-mono font-semibold">
               Pakistan's First Fashion Entrepreneurship Ecosystem
             </span>
@@ -371,7 +514,7 @@ const Home = () => {
       </section>
 
       {/* Section 2: Moving Text Monolith (Cinematic Marquee) */}
-      <section className="bg-neutral-950 py-10 border-b border-neutral-900 overflow-hidden relative">
+      <section className="bg-neutral-950 py-10 overflow-hidden relative">
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-neutral-950 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-neutral-950 to-transparent z-10 pointer-events-none" />
         <div className="flex whitespace-nowrap text-neutral-800 font-serif text-6xl md:text-8xl tracking-tight uppercase font-bold select-none opacity-40">
@@ -439,7 +582,7 @@ const Home = () => {
       <section 
         id="pillars" 
         ref={setSectionRef('pillars')}
-        className="bg-neutral-950 text-white py-32 border-b border-neutral-900 relative overflow-hidden"
+        className="bg-neutral-950 text-white py-32 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(187,148,87,0.06),transparent_50%)] pointer-events-none" />
         
@@ -514,7 +657,7 @@ const Home = () => {
       <section 
         id="how-it-works" 
         ref={setSectionRef('how-it-works')}
-        className="bg-white text-black py-32 border-b border-neutral-200 relative overflow-hidden"
+        className="bg-white text-black py-32 relative overflow-hidden"
       >
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#bb9457] to-transparent" />
@@ -623,104 +766,262 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Section 6: Spotlight Award */}
+      {/* Section 6: Featured Designers */}
       <section 
-        id="spotlight-banner" 
-        ref={setSectionRef('spotlight-banner')}
-        className="relative bg-[#6f1d1b] text-white py-40 overflow-hidden"
+        id="designers" 
+        ref={setSectionRef('designers')}
+        className="relative bg-black text-white py-24 sm:py-32 overflow-hidden"
       >
-        <div className="absolute inset-0 opacity-30">
-          <img 
-            src={heroRunwayCta} 
-            alt="Spotlight Background" 
-            className="w-full h-full object-cover scale-110"
-            style={{ transform: `translate3d(0, ${(scrollY - 2000) * 0.15}px, 0)` }}
-           loading="lazy" decoding="async" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#6f1d1b] via-[#6f1d1b]/90 to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.15),transparent_70%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,148,87,0.08),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent" />
         
-        <div className={`relative z-10 max-w-6xl mx-auto px-6 lg:px-8 transition-all duration-1000 ${isVisible['spotlight-banner'] ? 'animate-scale-in' : 'opacity-0 scale-95'}`}>
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Trophy Visual */}
-            <div className="text-center lg:text-left">
-              <div className="relative inline-block">
-                {/* Trophy Glow Effect */}
-                <div className="absolute inset-0 bg-[#bb9457]/20 rounded-full blur-3xl" />
-                
-                {/* Trophy Image */}
-                <div className="relative w-64 h-64 md:w-80 md:h-80 mx-auto lg:mx-0">
-                  <img 
-                    src={trophy} 
-                    alt="Adorzia Spotlight Award Trophy" 
-                    className="w-full h-full object-contain drop-shadow-2xl"
-                   loading="lazy" decoding="async" />
-                </div>
-              </div>
-            </div>
-
-            {/* Award Copy */}
-            <div className="space-y-8">
-              <div className="inline-flex items-center gap-3 glass px-6 py-3 rounded-full">
-                <span className="w-2 h-2 rounded-full bg-[#bb9457]" />
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">
-                  Spotlight Award - Fall 2026
-                </span>
-              </div>
-              
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight text-white leading-[1.15]">
-                One designer. <br />
-                One national winner. <br />
-                <span className="text-gradient italic font-light">One trophy.</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+            <div className="lg:col-span-7">
+              <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-white leading-[0.9]">
+                DESIGNERS
               </h2>
-              
-              <p className="text-white/80 text-base md:text-lg font-light leading-relaxed">
-                The Adorzia Spotlight Trophy represents creative excellence, commercial potential, and the future of Pakistani fashion. It is not just an award — it is a national recognition that launches careers.
+            </div>
+            <div className="lg:col-span-5 flex items-end">
+              <p className="text-sm text-neutral-400 leading-relaxed max-w-md">
+                Discover and connect directly with Pakistan's most promising emerging fashion designers redefining luxury, heritage craft, and contemporary fashion.
               </p>
-              
-              <div className="space-y-4 pt-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#bb9457] mt-2" />
-                  <p className="text-white/70 text-sm font-light">National platform and media coverage</p>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#bb9457] mt-2" />
-                  <p className="text-white/70 text-sm font-light">Seed funding and business mentorship</p>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#bb9457] mt-2" />
-                  <p className="text-white/70 text-sm font-light">Global buyer introductions and showcase</p>
-                </div>
-              </div>
-              
-              <div className="pt-8 flex flex-wrap gap-5">
-                <Link
-                  to="/spotlight-event"
-                  className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-0.5"
-                >
-                  Apply For Spotlight
-                </Link>
-                <Link
-                  to="/spotlight-event"
-                  className="px-8 py-4 glass text-white font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300"
-                >
-                  View Program Benefits
-                </Link>
-              </div>
-              
-              <div className="pt-4 text-[10px] text-[#bb9457] font-medium tracking-wide">
-                Applications now open — Deadline July 31, 2026
-              </div>
             </div>
           </div>
+
+          {/* Designer Grid */}
+          {designersLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[3/4] bg-neutral-800" />
+                </div>
+              ))}
+            </div>
+          ) : designers.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {designers.map((designer) => (
+                <Link
+                  key={designer.id}
+                  to={`/designers/${designer.slug}`}
+                  className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500"
+                >
+                  <img 
+                    src={designer.image_url || designer.cover_image_url} 
+                    alt={designer.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500" />
+                  
+                  {/* Name on Hover */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-xs uppercase tracking-[0.15em] font-semibold text-white">
+                      {designer.name}
+                    </p>
+                    <p className="text-[10px] text-white/70 mt-1">
+                      {designer.location}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
+
+          {/* CTAs */}
+          {!designersLoading && designers.length > 0 && (
+            <div className="mt-16 pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link
+                to="/spotlight/apply"
+                className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-[#bb9457] transition-colors duration-300 py-3 border-b border-white hover:border-[#bb9457]"
+              >
+                Join as Designer
+              </Link>
+              <Link
+                to="/designers"
+                className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-[#bb9457] transition-colors duration-300 py-3 border-b border-white hover:border-[#bb9457]"
+              >
+                Search More Designers
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* Section 7: Newsletter Signup */}
+      {/* Section 7: Collections */}
+      <section 
+        id="collections" 
+        ref={setSectionRef('collections')}
+        className="relative bg-black text-white py-24 sm:py-32 overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,148,87,0.08),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+            <div className="lg:col-span-7">
+              <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-white leading-[0.9]">
+                COLLECTIONS
+              </h2>
+            </div>
+            <div className="lg:col-span-5 flex items-end">
+              <p className="text-sm text-neutral-400 leading-relaxed max-w-md">
+                Get inspired by collections designed by the largest community in the fashion industry.
+              </p>
+            </div>
+          </div>
+
+          {/* Collections Grid */}
+          {collectionsLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[3/4] bg-neutral-800" />
+                </div>
+              ))}
+            </div>
+          ) : collections.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {collections.map((collection) => (
+                <Link
+                  key={collection.id}
+                  to={`/designers/${collection.designers?.slug}`}
+                  className="group relative aspect-[3/4] overflow-hidden bg-neutral-900 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500"
+                >
+                  <img 
+                    src={collection.cover_image_url || collection.images?.[0]} 
+                    alt={collection.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500" />
+                  
+                  {/* Collection Info on Hover */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-xs uppercase tracking-[0.15em] font-semibold text-white">
+                      {collection.title}
+                    </p>
+                    <p className="text-[10px] text-white/70 mt-1">
+                      {collection.designers?.name}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : null}
+
+          {/* CTAs */}
+          {!collectionsLoading && collections.length > 0 && (
+            <div className="mt-16 pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <Link
+                to="/spotlight/apply"
+                className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-[#bb9457] transition-colors duration-300 py-3 border-b border-white hover:border-[#bb9457]"
+              >
+                Join as Designer
+              </Link>
+              <Link
+                to="/designers"
+                className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-[#bb9457] transition-colors duration-300 py-3 border-b border-white hover:border-[#bb9457]"
+              >
+                Search More Collections
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Section 8: Features */}
+      <section 
+        id="features" 
+        ref={setSectionRef('features')}
+        className="relative bg-black text-white py-24 sm:py-32 overflow-hidden"
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,148,87,0.08),transparent_60%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/20 to-transparent" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Header Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16">
+            <div className="lg:col-span-7">
+              <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-normal tracking-tight text-white leading-[0.9]">
+                FEATURES
+              </h2>
+            </div>
+            <div className="lg:col-span-5 flex items-end">
+              <p className="text-sm text-neutral-400 leading-relaxed max-w-md">
+                Adorzia provides features derived from experienced fashion journalists and art directors with integrity, brand knowledge and big ideas.
+              </p>
+            </div>
+          </div>
+
+          {/* Blog Grid */}
+          {blogLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-[4/3] bg-neutral-800 mb-4" />
+                  <div className="h-3 bg-neutral-800 w-3/4" />
+                </div>
+              ))}
+            </div>
+          ) : blogPosts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogPosts.map((post) => (
+                <Link
+                  key={post.id}
+                  to={`/blog/${post.slug}`}
+                  className="group"
+                >
+                  {/* Image */}
+                  {post.featured_image_url && (
+                    <div className="relative aspect-[16/9] overflow-hidden mb-4 bg-neutral-900 border border-neutral-800">
+                      <img 
+                        src={post.featured_image_url} 
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
+                  )}
+
+                  {/* Title */}
+                  <h3 className="text-xs uppercase tracking-[0.15em] font-semibold text-white leading-tight group-hover:text-[#bb9457] transition-colors duration-300">
+                    {post.title}
+                  </h3>
+                </Link>
+              ))}
+            </div>
+          ) : null}
+
+          {/* View All */}
+          {!blogLoading && blogPosts.length > 0 && (
+            <div className="mt-16 pt-8">
+              <Link
+                to="/blog"
+                className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-[#bb9457] transition-colors duration-300"
+              >
+                View All Features
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Section 9: Newsletter Signup */}
       <section 
         id="newsletter" 
         ref={setSectionRef('newsletter')}
-        className="bg-neutral-950 text-white py-40 border-b border-neutral-900 relative overflow-hidden"
+        className="bg-neutral-950 text-white py-40 relative overflow-hidden"
       >
         <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
           <img 
@@ -782,7 +1083,7 @@ const Home = () => {
       <section 
         id="marketplace-preview" 
         ref={setSectionRef('marketplace-preview')}
-        className="bg-neutral-950 text-white py-32 border-b border-neutral-900 relative overflow-hidden"
+        className="bg-neutral-950 text-white py-32 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,148,87,0.05),transparent_60%)] pointer-events-none" />
         
@@ -898,7 +1199,7 @@ const Home = () => {
       <section 
         id="designers" 
         ref={setSectionRef('designers')}
-        className="bg-neutral-950 text-white py-32 border-b border-neutral-900 relative overflow-hidden"
+        className="bg-neutral-950 text-white py-32 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0.05),transparent_60%)] pointer-events-none" />
         
@@ -976,11 +1277,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Section 9: Future Studio Locations */}
+      {/* Section 10: Future Studio Locations */}
       <section 
         id="studio-locations" 
         ref={setSectionRef('studio-locations')}
-        className="bg-white text-black py-32 border-b border-neutral-200 relative overflow-hidden"
+        className="bg-white text-black py-32 relative overflow-hidden"
       >
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#bb9457] to-transparent" />
@@ -1089,11 +1390,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Section 9: Industry Partners */}
+      {/* Section 11: Industry Partners */}
       <section 
         id="partners" 
         ref={setSectionRef('partners')}
-        className="bg-white text-black py-32 border-b border-neutral-200 relative overflow-hidden"
+        className="bg-white text-black py-32 relative overflow-hidden"
       >
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#bb9457] to-transparent" />
@@ -1157,7 +1458,7 @@ const Home = () => {
       <section 
         id="global-vision" 
         ref={setSectionRef('global-vision')}
-        className="bg-white text-black py-32 border-b border-neutral-200 relative overflow-hidden"
+        className="bg-white text-black py-32 relative overflow-hidden"
       >
         {/* Decorative elements */}
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#bb9457] to-transparent" />

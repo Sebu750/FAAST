@@ -258,6 +258,7 @@ export interface Designer {
   philosophy: string | null
   image_url: string | null
   cover_image_url: string | null
+  instagram_reels: string[] | null
   availability: string | null
   is_featured: boolean
   is_active: boolean

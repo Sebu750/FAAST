@@ -426,7 +426,7 @@ const BlogPost = () => {
             />
 
             {/* Inline Share Buttons */}
-            <div className="mt-12 pt-8 border-t border-neutral-800">
+            <div className="mt-12 pt-8">
               <div className="flex items-center justify-between">
                 <span className="text-sm text-neutral-500">Share this article:</span>
                 <div className="flex items-center gap-3">
@@ -469,7 +469,7 @@ const BlogPost = () => {
 
         {/* Tags */}
         {post.tags && post.tags.length > 0 && (
-          <div className="mt-12 pt-8 border-t border-neutral-800">
+          <div className="mt-12 pt-8">
             <div className="flex flex-wrap gap-2">
               {post.tags.map(tag => (
                 <span key={tag} className="px-3 py-1 bg-neutral-900 text-neutral-400 text-xs uppercase tracking-wider">
@@ -481,7 +481,7 @@ const BlogPost = () => {
         )}
 
         {/* Author Section */}
-        <div className="mt-10 pt-8 border-t border-neutral-800">
+        <div className="mt-10 pt-8">
           <div className="flex items-center gap-4 bg-neutral-950/50 border border-neutral-800 p-6">
             <div className="w-14 h-14 bg-[#bb9457]/20 border border-[#bb9457]/30 rounded-full flex items-center justify-center shrink-0">
               {post.author_image_url ? (
@@ -526,7 +526,7 @@ const BlogPost = () => {
 
       {/* Related Posts - Editorial Style */}
       {relatedPosts.length > 0 && (
-        <section className="border-t border-neutral-900 bg-neutral-950 py-20 sm:py-28">
+        <section className="bg-neutral-950 py-20 sm:py-28">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-12">
               <div className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-4">
@@ -544,7 +544,7 @@ const BlogPost = () => {
                   className="group"
                 >
                   <article>
-                    <div className="aspect-[4/3] overflow-hidden bg-neutral-900 mb-6">
+                    <div className="aspect-[16/9] overflow-hidden bg-neutral-900 mb-6">
                       {related.featured_image_url ? (
                         <img
                           src={related.featured_image_url}
@@ -571,7 +571,7 @@ const BlogPost = () => {
       )}
 
       {/* Back to Blog CTA */}
-      <section className="border-t border-neutral-900 py-12">
+      <section className="py-12">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <Link
             to="/blog"
