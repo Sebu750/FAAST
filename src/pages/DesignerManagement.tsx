@@ -36,29 +36,67 @@ const Ic = ({ name, className = 'w-4 h-4' }: { name: string; className?: string 
     italic: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>,
     list: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" /></svg>,
     quote: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" /></svg>,
+    chevronDown: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>,
+    chevronUp: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>,
+    duplicate: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>,
+    grip: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/></svg>,
+    sparkles: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>,
+    info: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+    user: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>,
   }
   return <>{icons[name] || null}</>
 }
 
-// ── Form input components ──
-const Input = ({ label, ...props }: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) => (
+// ── Collapsible Card Component ──
+const Card = ({ icon, title, subtitle, defaultOpen = true, children, badge }: { icon: string; title: string; subtitle?: string; defaultOpen?: boolean; children: ReactNode; badge?: string }) => {
+  const [open, setOpen] = useState(defaultOpen)
+  return (
+    <div className="bg-neutral-950/50 border border-neutral-800/80 rounded-lg overflow-hidden transition-all duration-200">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between px-5 py-4 hover:bg-neutral-900/50 transition-colors group"
+      >
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-lg flex items-center justify-center flex-shrink-0">
+            <Ic name={icon} className="w-4 h-4 text-[#bb9457]" />
+          </div>
+          <div className="text-left">
+            <h3 className="text-sm font-medium text-white">{title}</h3>
+            {subtitle && <p className="text-[11px] text-neutral-500 mt-0.5">{subtitle}</p>}
+          </div>
+          {badge && (
+            <span className="ml-2 px-2 py-0.5 text-[10px] font-medium bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/20 rounded-full">{badge}</span>
+          )}
+        </div>
+        <Ic name={open ? 'chevronUp' : 'chevronDown'} className="w-4 h-4 text-neutral-500 group-hover:text-neutral-300 transition-colors" />
+      </button>
+      {open && <div className="px-5 pb-5 pt-1 border-t border-neutral-800/40">{children}</div>}
+    </div>
+  )
+}
+
+// ── Enhanced Form input components ──
+const Input = ({ label, hint, required, ...props }: { label: string; hint?: string; required?: boolean } & React.InputHTMLAttributes<HTMLInputElement>) => (
   <div>
-    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">{label}</label>
-    <input {...props} className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors" />
+    <label className="block text-[11px] font-medium text-neutral-300 mb-1.5 tracking-wide">{label}{required && <span className="text-[#bb9457] ml-0.5">*</span>}</label>
+    <input {...props} className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700" />
+    {hint && <p className="text-[10px] text-neutral-600 mt-1">{hint}</p>}
   </div>
 )
 
-const Textarea = ({ label, rows = 3, ...props }: { label: string; rows?: number } & React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
+const Textarea = ({ label, hint, rows = 3, ...props }: { label: string; hint?: string; rows?: number } & React.TextareaHTMLAttributes<HTMLTextAreaElement>) => (
   <div>
-    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">{label}</label>
-    <textarea rows={rows} {...props} className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors resize-none" />
+    <label className="block text-[11px] font-medium text-neutral-300 mb-1.5 tracking-wide">{label}</label>
+    <textarea rows={rows} {...props} className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700 resize-none leading-relaxed" />
+    {hint && <p className="text-[10px] text-neutral-600 mt-1">{hint}</p>}
   </div>
 )
 
 const Select = ({ label, options, ...props }: { label: string; options: { value: string; label: string }[] } & React.SelectHTMLAttributes<HTMLSelectElement>) => (
   <div>
-    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">{label}</label>
-    <select {...props} className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white focus:border-[#bb9457]/50 focus:outline-none transition-colors">
+    <label className="block text-[11px] font-medium text-neutral-300 mb-1.5 tracking-wide">{label}</label>
+    <select {...props} className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700 appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23666%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px] bg-[right_12px_center] bg-no-repeat pr-8">
       {options.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
   </div>
@@ -66,10 +104,20 @@ const Select = ({ label, options, ...props }: { label: string; options: { value:
 
 const Toggle = ({ label, checked, onChange }: { label: string; checked: boolean; onChange: (v: boolean) => void }) => (
   <div className="flex items-center gap-3">
-    <button type="button" onClick={() => onChange(!checked)} className={`relative w-10 h-5 rounded-full transition-colors ${checked ? 'bg-[#bb9457]' : 'bg-neutral-700'}`}>
-      <span className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform ${checked ? 'translate-x-5' : ''}`} />
+    <button type="button" onClick={() => onChange(!checked)} className={`relative w-11 h-6 rounded-full transition-colors duration-200 ${checked ? 'bg-[#bb9457]' : 'bg-neutral-700'}`}>
+      <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-200 ${checked ? 'translate-x-5' : ''}`} />
     </button>
     <span className="text-sm text-neutral-300">{label}</span>
+  </div>
+)
+
+// Section header component
+const SectionHeader = ({ icon, title }: { icon: string; title: string }) => (
+  <div className="flex items-center gap-2.5 pb-3 mb-5 border-b border-neutral-800/60">
+    <div className="w-8 h-8 bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md flex items-center justify-center">
+      <Ic name={icon} className="w-4 h-4 text-[#bb9457]" />
+    </div>
+    <h3 className="text-sm font-medium text-white tracking-wide">{title}</h3>
   </div>
 )
 
@@ -576,32 +624,42 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
   return (
     <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-start justify-center overflow-y-auto p-4 pt-8 pb-8">
-      <div className="bg-neutral-900 border border-neutral-800 rounded-sm w-full max-w-4xl">
+      <div className="bg-neutral-900 border border-neutral-800 rounded-xl w-full max-w-[1200px] shadow-2xl">
         {/* Header */}
-        <div className="sticky top-0 bg-neutral-900 border-b border-neutral-800 p-6 flex items-center justify-between z-10">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-[#bb9457]/20 to-[#bb9457]/5 border border-[#bb9457]/20 rounded-full flex items-center justify-center">
-              <span className="text-[#bb9457] font-serif text-lg">{form.name ? form.name.charAt(0).toUpperCase() : '?'}</span>
+        <div className="sticky top-0 bg-neutral-900/98 backdrop-blur-md border-b border-neutral-800/80 px-8 py-5 flex items-center justify-between z-10">
+          <div className="flex items-center gap-5">
+            <div className="w-14 h-14 bg-gradient-to-br from-[#bb9457]/20 to-[#bb9457]/5 border border-[#bb9457]/30 rounded-xl flex items-center justify-center shadow-lg">
+              <span className="text-[#bb9457] font-serif text-xl">{form.name ? form.name.charAt(0).toUpperCase() : '?'}</span>
             </div>
             <div>
-              <h2 className="text-xl font-serif text-white">{designer ? 'Edit Designer' : 'New Designer'}</h2>
-              <p className="text-xs text-neutral-500 mt-1">{form.name || 'Untitled'} {form.brand ? `— ${form.brand}` : ''}</p>
+              <div className="flex items-center gap-3">
+                <h2 className="text-lg font-semibold text-white">{designer ? 'Edit Designer' : 'New Designer'}</h2>
+                {form.status && (
+                  <span className={`px-2 py-0.5 text-[10px] uppercase tracking-wider font-medium rounded-full border ${
+                    form.status === 'published' ? 'bg-green-500/10 text-green-400 border-green-500/30' :
+                    form.status === 'draft' ? 'bg-neutral-800 text-neutral-400 border-neutral-700' :
+                    'bg-[#bb9457]/10 text-[#bb9457] border-[#bb9457]/30'
+                  }`}>{form.status}</span>
+                )}
+              </div>
+              <p className="text-xs text-neutral-500 mt-0.5">{form.name || 'Untitled'} {form.brand ? `— ${form.brand}` : ''}</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-3">
+          <div className="flex items-center gap-5">
+            <div className="hidden md:flex items-center gap-4">
               <div className="text-right">
-                <p className="text-[10px] uppercase tracking-wider text-neutral-500">Profile Completion</p>
-                <p className="text-sm font-medium text-white">{profileCompletion.percentage}%</p>
+                <p className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1">Profile</p>
+                <p className="text-sm font-semibold text-white">{profileCompletion.percentage}%</p>
               </div>
-              <div className="w-20 h-2 bg-neutral-800 rounded-full overflow-hidden">
+              <div className="w-24 h-2 bg-neutral-800 rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-[#bb9457] to-[#d4af37] transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-[#bb9457] to-[#d4af37] transition-all duration-500 rounded-full"
                   style={{ width: `${profileCompletion.percentage}%` }}
                 />
               </div>
             </div>
-            <button onClick={onClose} className="p-2 text-neutral-400 hover:text-white transition-colors">
+            <div className="h-8 w-px bg-neutral-800" />
+            <button onClick={onClose} className="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-all">
               <Ic name="x" className="w-5 h-5" />
             </button>
           </div>
@@ -609,10 +667,11 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
         {/* Stepper Navigation */}
         <div className="border-b border-neutral-800 px-6 py-4">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
               <span className="text-xs text-neutral-500">Step {currentStep + 1} of {STEPS.length}</span>
               <span className="text-xs text-[#bb9457] font-medium">{currentStepData.label}</span>
+              <span className="text-[10px] text-neutral-600">— {currentStepData.description}</span>
             </div>
             <div className="flex items-center gap-3">
               {autoSaving && (
@@ -623,47 +682,48 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
               )}
               {lastSaved && !autoSaving && (
                 <span className="text-xs text-neutral-600">
-                  Last saved {Math.round((Date.now() - lastSaved.getTime()) / 1000)}s ago
+                  Saved {Math.round((Date.now() - lastSaved.getTime()) / 1000)}s ago
                 </span>
               )}
               {hasUnsavedChanges && !autoSaving && (
                 <span className="flex items-center gap-1 text-xs text-amber-500">
-                  <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" />
+                  <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
                   Unsaved changes
                 </span>
               )}
             </div>
           </div>
-          <div className="flex gap-1">
-            {STEPS.map((step, idx) => (
-              <button
-                key={step.id}
-                onClick={() => setCurrentStep(idx)}
-                className={`flex-1 flex items-center justify-center gap-2 px-2 py-2 text-[10px] uppercase tracking-wider font-medium rounded-sm transition-all ${
-                  idx === currentStep
-                    ? 'bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/30'
-                    : idx < currentStep
-                    ? 'text-green-400 hover:bg-neutral-800'
-                    : 'text-neutral-600 hover:bg-neutral-800'
-                }`}
-                title={step.description}
-              >
-                <span className="flex-shrink-0">
-                  {idx < currentStep ? (
-                    <Ic name="check" className="w-3.5 h-3.5" />
-                  ) : (
-                    <Ic name={step.icon} className="w-3.5 h-3.5" />
-                  )}
-                </span>
-                <span className="hidden xl:inline truncate">{step.label}</span>
-              </button>
-            ))}
-          </div>
-          <div className="mt-3 h-1 bg-neutral-800 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-gradient-to-r from-[#bb9457] to-[#d4af37] transition-all duration-500"
-              style={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
-            />
+          <div className="flex items-center gap-1">
+            {STEPS.map((step, idx) => {
+              const isCompleted = idx < currentStep
+              const isActive = idx === currentStep
+              return (
+                <button
+                  key={step.id}
+                  onClick={() => setCurrentStep(idx)}
+                  className={`group relative flex-1 flex flex-col items-center gap-1.5 py-2 px-1 rounded-md transition-all ${
+                    isActive ? 'bg-[#bb9457]/5' : 'hover:bg-neutral-800/50'
+                  }`}
+                  title={step.description}
+                >
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all border ${
+                    isActive
+                      ? 'bg-[#bb9457] border-[#bb9457] text-black'
+                      : isCompleted
+                      ? 'bg-green-500/10 border-green-500/40 text-green-400'
+                      : 'bg-neutral-800 border-neutral-700 text-neutral-500'
+                  }`}>
+                    {isCompleted ? <Ic name="check" className="w-3.5 h-3.5" /> : idx + 1}
+                  </div>
+                  <span className={`text-[9px] uppercase tracking-wider font-medium leading-tight text-center truncate w-full ${
+                    isActive ? 'text-[#bb9457]' : isCompleted ? 'text-green-400/70' : 'text-neutral-600'
+                  }`}>
+                    {step.label}
+                  </span>
+                  {isActive && <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#bb9457] rounded-full" />}
+                </button>
+              )
+            })}
           </div>
         </div>
 
@@ -674,46 +734,37 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
             <div className="space-y-6">
               {/* Identity Section */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Identity</h3>
-                </div>
+                <SectionHeader icon="user" title="Identity" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input label="Name *" value={form.name} onChange={(e) => { updateField('name', e.target.value); if (!designer) updateField('slug', generateSlug(e.target.value, form.brand)) }} placeholder="Designer full name" />
-                  <Input label="Brand *" value={form.brand} onChange={(e) => { updateField('brand', e.target.value); if (!designer) updateField('slug', generateSlug(form.name, e.target.value)) }} placeholder="Brand / label name" />
+                  <Input label="Name" required value={form.name} onChange={(e) => { updateField('name', e.target.value); if (!designer) updateField('slug', generateSlug(e.target.value, form.brand)) }} placeholder="Designer full name" hint="First and last name" />
+                  <Input label="Brand" required value={form.brand} onChange={(e) => { updateField('brand', e.target.value); if (!designer) updateField('slug', generateSlug(form.name, e.target.value)) }} placeholder="Brand / label name" hint="Your fashion label or studio name" />
                 </div>
-                <Input label="Slug" value={form.slug} onChange={(e) => updateField('slug', e.target.value)} placeholder="auto-generated-from-name-brand" />
+                <Input label="Slug" value={form.slug} onChange={(e) => updateField('slug', e.target.value)} placeholder="auto-generated-from-name-brand" hint="URL-friendly identifier, auto-generated from name and brand" />
               </div>
 
               {/* Location & Background */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Location & Background</h3>
+                <SectionHeader icon="link" title="Location & Background" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="Location" value={form.location} onChange={(e) => updateField('location', e.target.value)} placeholder="City, Country" hint="City and country of residence" />
+                  <Input label="Nationality" value={form.nationality} onChange={(e) => updateField('nationality', e.target.value)} placeholder="Pakistani" hint="National origin" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input label="Location" value={form.location} onChange={(e) => updateField('location', e.target.value)} placeholder="City, Country" />
-                  <Input label="Nationality" value={form.nationality} onChange={(e) => updateField('nationality', e.target.value)} placeholder="Pakistani" />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input label="Languages" value={form.languages} onChange={(e) => updateField('languages', e.target.value)} placeholder="English, Urdu" />
-                  <Input label="Experience" value={form.experience} onChange={(e) => updateField('experience', e.target.value)} placeholder="5 years" />
+                  <Input label="Languages" value={form.languages} onChange={(e) => updateField('languages', e.target.value)} placeholder="English, Urdu" hint="Languages spoken" />
+                  <Input label="Experience" value={form.experience} onChange={(e) => updateField('experience', e.target.value)} placeholder="5 years" hint="Years in the fashion industry" />
                 </div>
               </div>
 
               {/* Specialization */}
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Specialization</h3>
-                </div>
+                <SectionHeader icon="star" title="Specialization" />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input label="Specialization" value={form.specialization} onChange={(e) => updateField('specialization', e.target.value)} placeholder="Bridal, Pret, Luxury" />
-                  <Input label="Category" value={form.category} onChange={(e) => updateField('category', e.target.value)} placeholder="Womenswear" />
+                  <Input label="Specialization" value={form.specialization} onChange={(e) => updateField('specialization', e.target.value)} placeholder="Bridal, Pret, Luxury" hint="Primary design focus areas" />
+                  <Input label="Category" value={form.category} onChange={(e) => updateField('category', e.target.value)} placeholder="Womenswear" hint="e.g. Womenswear, Menswear, Accessories" />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Select label="Gender" value={form.gender} onChange={(e) => updateField('gender', e.target.value)} options={[{ value: '', label: 'Select...' }, { value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }, { value: 'non-binary', label: 'Non-binary' }]} />
-                  <Input label="Availability" value={form.availability} onChange={(e) => updateField('availability', e.target.value)} placeholder="Available for commissions" />
+                  <Input label="Availability" value={form.availability} onChange={(e) => updateField('availability', e.target.value)} placeholder="Available for commissions" hint="Current availability status" />
                 </div>
               </div>
             </div>
@@ -721,67 +772,111 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
           {/* Biography */}
           {currentStep === 1 && (
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Short Description</h3>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-xs uppercase tracking-wider text-neutral-400">Short Bio</label>
-                    <span className="text-[10px] text-neutral-500">{form.short_bio.length}/150 characters</span>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+              {/* Form Fields - 3/5 width */}
+              <div className="lg:col-span-3 space-y-6">
+                <div className="space-y-4">
+                  <SectionHeader icon="document" title="Short Description" />
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-[11px] font-medium text-neutral-300 tracking-wide">Short Bio</label>
+                      <span className={`text-[10px] font-medium ${form.short_bio.length > 130 ? 'text-amber-500' : form.short_bio.length > 0 ? 'text-neutral-500' : 'text-neutral-600'}`}>{form.short_bio.length}/150</span>
+                    </div>
+                    <input
+                      value={form.short_bio}
+                      onChange={(e) => updateField('short_bio', e.target.value)}
+                      maxLength={150}
+                      placeholder="One-line description for cards and previews"
+                      className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700"
+                    />
+                    <p className="text-[10px] text-neutral-600 mt-1">Used on designer cards and preview sections</p>
                   </div>
-                  <input
-                    value={form.short_bio}
-                    onChange={(e) => updateField('short_bio', e.target.value)}
-                    maxLength={150}
-                    placeholder="One-line description for cards and previews"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
-                  />
-                  <p className="text-[10px] text-neutral-600 mt-1">Used on designer cards and preview sections</p>
+                </div>
+
+                <div className="space-y-4">
+                  <SectionHeader icon="document" title="Full Story" />
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-[11px] font-medium text-neutral-300 tracking-wide">Full Biography</label>
+                      <span className="text-[10px] text-neutral-500">{form.bio.length} characters</span>
+                    </div>
+                    <textarea
+                      value={form.bio}
+                      onChange={(e) => updateField('bio', e.target.value)}
+                      rows={8}
+                      placeholder="Detailed biography covering background, training, and journey..."
+                      className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700 resize-none leading-relaxed"
+                    />
+                    <p className="text-[10px] text-neutral-600 mt-1">Tells the designer's complete story on their profile page</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <SectionHeader icon="star" title="Creative Vision" />
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-[11px] font-medium text-neutral-300 tracking-wide">Design Philosophy</label>
+                      <span className="text-[10px] text-neutral-500">{form.philosophy.length} characters</span>
+                    </div>
+                    <textarea
+                      value={form.philosophy}
+                      onChange={(e) => updateField('philosophy', e.target.value)}
+                      rows={5}
+                      placeholder="Design philosophy, inspirations, creative vision, heritage craft..."
+                      className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700 resize-none leading-relaxed"
+                    />
+                    <p className="text-[10px] text-neutral-600 mt-1">Captures the designer's creative ethos and artistic approach</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Full Story</h3>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-xs uppercase tracking-wider text-neutral-400">Full Biography</label>
-                    <span className="text-[10px] text-neutral-500">{form.bio.length} characters</span>
+              {/* Live Preview Panel - 2/5 width */}
+              <div className="lg:col-span-2">
+                <div className="sticky top-32 space-y-4">
+                  <SectionHeader icon="eye" title="Live Preview" />
+                  <div className="bg-neutral-950 border border-neutral-800 rounded-md overflow-hidden">
+                    {/* Preview Card */}
+                    <div className="p-4 space-y-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center text-[#bb9457] font-serif text-sm flex-shrink-0">
+                          {form.name ? form.name.charAt(0).toUpperCase() : '?'}
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-white text-sm font-medium truncate">{form.name || 'Designer Name'}</p>
+                          <p className="text-neutral-500 text-xs truncate">{form.brand || 'Brand'}</p>
+                        </div>
+                      </div>
+                      {form.location && (
+                        <p className="text-neutral-400 text-xs">{form.location}</p>
+                      )}
+                      <div className="h-px bg-neutral-800" />
+                      <div>
+                        <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1">Short Bio</p>
+                        <p className="text-neutral-300 text-xs leading-relaxed italic">
+                          {form.short_bio || 'No short bio yet...'}
+                        </p>
+                      </div>
+                      {form.philosophy && (
+                        <div>
+                          <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1">Philosophy</p>
+                          <p className="text-neutral-400 text-xs leading-relaxed line-clamp-4">
+                            {form.philosophy}
+                          </p>
+                        </div>
+                      )}
+                      {form.bio && (
+                        <div>
+                          <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1">Biography</p>
+                          <p className="text-neutral-400 text-xs leading-relaxed line-clamp-6">
+                            {form.bio}
+                          </p>
+                        </div>
+                      )}
+                      {!form.short_bio && !form.philosophy && !form.bio && (
+                        <p className="text-neutral-600 text-xs text-center py-4">Start writing to see a preview...</p>
+                      )}
+                    </div>
                   </div>
-                  <textarea
-                    value={form.bio}
-                    onChange={(e) => updateField('bio', e.target.value)}
-                    rows={8}
-                    placeholder="Detailed biography covering background, training, and journey..."
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors resize-none leading-relaxed"
-                  />
-                  <p className="text-[10px] text-neutral-600 mt-1">Tells the designer's complete story on their profile page</p>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Creative Vision</h3>
-                </div>
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="text-xs uppercase tracking-wider text-neutral-400">Design Philosophy / Why I Design</label>
-                    <span className="text-[10px] text-neutral-500">{form.philosophy.length} characters</span>
-                  </div>
-                  <textarea
-                    value={form.philosophy}
-                    onChange={(e) => updateField('philosophy', e.target.value)}
-                    rows={5}
-                    placeholder="Design philosophy, inspirations, creative vision, heritage craft..."
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors resize-none leading-relaxed"
-                  />
-                  <p className="text-[10px] text-neutral-600 mt-1">Captures the designer's creative ethos and artistic approach</p>
                 </div>
               </div>
             </div>
@@ -791,47 +886,26 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
           {currentStep === 3 && (
             <div className="space-y-6">
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Profile Image</h3>
-                </div>
+                <SectionHeader icon="image" title="Profile Image" />
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex-1">
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">Profile Image</label>
-                    <div className="flex gap-2">
-                      <input
-                        value={form.image_url}
-                        onChange={(e) => updateField('image_url', e.target.value)}
-                        placeholder="Paste URL or upload"
-                        className="flex-1 bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
-                      />
-                      <label className="flex items-center gap-2 px-3 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-sm cursor-pointer transition-colors">
-                        <Ic name="upload" className="w-4 h-4" />
-                        Upload
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleDesignerImageUpload(e, 'profile')}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <p className="text-[10px] text-neutral-600 mt-1.5">Recommended: 800x800px or larger, square aspect ratio</p>
+                    <Input label="Profile Image URL" value={form.image_url} onChange={(e) => updateField('image_url', e.target.value)} placeholder="Paste URL or upload" hint="Recommended: 800x800px or larger, square aspect ratio" />
+                    <label className="inline-flex items-center gap-2 mt-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md cursor-pointer transition-colors">
+                      <Ic name="upload" className="w-3.5 h-3.5" /> Upload
+                      <input type="file" accept="image/*" onChange={(e) => handleDesignerImageUpload(e, 'profile')} className="hidden" />
+                    </label>
                   </div>
                   {form.image_url ? (
                     <div className="relative group w-32 h-32 flex-shrink-0">
-                      <div className="w-full h-full bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
+                      <div className="w-full h-full bg-neutral-800 rounded-md overflow-hidden border border-neutral-700">
                         <img src={form.image_url} alt="Profile preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
                       </div>
-                      <button
-                        onClick={() => updateField('image_url', '')}
-                        className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
+                      <button onClick={() => updateField('image_url', '')} className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
                         <Ic name="x" className="w-3 h-3 text-white" />
                       </button>
                     </div>
                   ) : (
-                    <div className="w-32 h-32 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-sm flex flex-col items-center justify-center text-neutral-500">
+                    <div className="w-32 h-32 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-md flex flex-col items-center justify-center text-neutral-500">
                       <Ic name="image" className="w-8 h-8 mb-1" />
                       <span className="text-[10px]">No image</span>
                     </div>
@@ -840,47 +914,26 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
               </div>
 
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Cover Image</h3>
-                </div>
+                <SectionHeader icon="image" title="Cover Image" />
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="flex-1">
-                    <label className="block text-xs uppercase tracking-wider text-neutral-400 mb-1.5">Cover Image</label>
-                    <div className="flex gap-2">
-                      <input
-                        value={form.cover_image_url}
-                        onChange={(e) => updateField('cover_image_url', e.target.value)}
-                        placeholder="Paste URL or upload"
-                        className="flex-1 bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none transition-colors"
-                      />
-                      <label className="flex items-center gap-2 px-3 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-sm cursor-pointer transition-colors">
-                        <Ic name="upload" className="w-4 h-4" />
-                        Upload
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleDesignerImageUpload(e, 'cover')}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <p className="text-[10px] text-neutral-600 mt-1.5">Recommended: 1920x600px or larger, wide aspect ratio</p>
+                    <Input label="Cover Image URL" value={form.cover_image_url} onChange={(e) => updateField('cover_image_url', e.target.value)} placeholder="Paste URL or upload" hint="Recommended: 1920x600px or larger, wide aspect ratio" />
+                    <label className="inline-flex items-center gap-2 mt-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md cursor-pointer transition-colors">
+                      <Ic name="upload" className="w-3.5 h-3.5" /> Upload
+                      <input type="file" accept="image/*" onChange={(e) => handleDesignerImageUpload(e, 'cover')} className="hidden" />
+                    </label>
                   </div>
                   {form.cover_image_url ? (
                     <div className="relative group w-48 h-24 flex-shrink-0">
-                      <div className="w-full h-full bg-neutral-800 rounded-sm overflow-hidden border border-neutral-700">
+                      <div className="w-full h-full bg-neutral-800 rounded-md overflow-hidden border border-neutral-700">
                         <img src={form.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
                       </div>
-                      <button
-                        onClick={() => updateField('cover_image_url', '')}
-                        className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
+                      <button onClick={() => updateField('cover_image_url', '')} className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
                         <Ic name="x" className="w-3 h-3 text-white" />
                       </button>
                     </div>
                   ) : (
-                    <div className="w-48 h-24 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-sm flex flex-col items-center justify-center text-neutral-500">
+                    <div className="w-48 h-24 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-md flex flex-col items-center justify-center text-neutral-500">
                       <Ic name="image" className="w-8 h-8 mb-1" />
                       <span className="text-[10px]">No cover</span>
                     </div>
@@ -917,17 +970,33 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
           {/* Social Links */}
           {currentStep === 7 && (
-            <div className="space-y-4">
-              <Input label="Instagram" value={socialLinks.instagram || ''} onChange={(e) => setSocialLinks(p => ({ ...p, instagram: e.target.value }))} placeholder="@handle" />
-              <Input label="Website" value={socialLinks.website || ''} onChange={(e) => setSocialLinks(p => ({ ...p, website: e.target.value }))} placeholder="https://..." />
-              <Input label="Portfolio" value={socialLinks.portfolio || ''} onChange={(e) => setSocialLinks(p => ({ ...p, portfolio: e.target.value }))} placeholder="https://..." />
-              <Input label="Shop" value={socialLinks.shop || ''} onChange={(e) => setSocialLinks(p => ({ ...p, shop: e.target.value }))} placeholder="https://..." />
-              <Input label="Email" value={socialLinks.email || ''} onChange={(e) => setSocialLinks(p => ({ ...p, email: e.target.value }))} placeholder="hello@..." />
-              <Input label="Facebook" value={socialLinks.facebook || ''} onChange={(e) => setSocialLinks(p => ({ ...p, facebook: e.target.value }))} placeholder="https://facebook.com/..." />
-              <Input label="TikTok" value={socialLinks.tiktok || ''} onChange={(e) => setSocialLinks(p => ({ ...p, tiktok: e.target.value }))} placeholder="@handle" />
-              <Input label="Pinterest" value={socialLinks.pinterest || ''} onChange={(e) => setSocialLinks(p => ({ ...p, pinterest: e.target.value }))} placeholder="https://pinterest.com/..." />
-              <Input label="LinkedIn" value={socialLinks.linkedin || ''} onChange={(e) => setSocialLinks(p => ({ ...p, linkedin: e.target.value }))} placeholder="https://linkedin.com/in/..." />
-              <Input label="Behance" value={socialLinks.behance || ''} onChange={(e) => setSocialLinks(p => ({ ...p, behance: e.target.value }))} placeholder="https://behance.net/..." />
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <SectionHeader icon="link" title="Social Media" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="Instagram" value={socialLinks.instagram || ''} onChange={(e) => setSocialLinks(p => ({ ...p, instagram: e.target.value }))} placeholder="@handle" hint="Your Instagram handle" />
+                  <Input label="TikTok" value={socialLinks.tiktok || ''} onChange={(e) => setSocialLinks(p => ({ ...p, tiktok: e.target.value }))} placeholder="@handle" hint="Your TikTok handle" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="Facebook" value={socialLinks.facebook || ''} onChange={(e) => setSocialLinks(p => ({ ...p, facebook: e.target.value }))} placeholder="https://facebook.com/..." hint="Facebook profile URL" />
+                  <Input label="Pinterest" value={socialLinks.pinterest || ''} onChange={(e) => setSocialLinks(p => ({ ...p, pinterest: e.target.value }))} placeholder="https://pinterest.com/..." hint="Pinterest profile URL" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="LinkedIn" value={socialLinks.linkedin || ''} onChange={(e) => setSocialLinks(p => ({ ...p, linkedin: e.target.value }))} placeholder="https://linkedin.com/in/..." hint="LinkedIn profile URL" />
+                  <Input label="Behance" value={socialLinks.behance || ''} onChange={(e) => setSocialLinks(p => ({ ...p, behance: e.target.value }))} placeholder="https://behance.net/..." hint="Behance portfolio URL" />
+                </div>
+              </div>
+              <div className="space-y-4">
+                <SectionHeader icon="document" title="Web Presence" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="Website" value={socialLinks.website || ''} onChange={(e) => setSocialLinks(p => ({ ...p, website: e.target.value }))} placeholder="https://..." hint="Personal or brand website" />
+                  <Input label="Portfolio" value={socialLinks.portfolio || ''} onChange={(e) => setSocialLinks(p => ({ ...p, portfolio: e.target.value }))} placeholder="https://..." hint="Online portfolio URL" />
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Input label="Shop" value={socialLinks.shop || ''} onChange={(e) => setSocialLinks(p => ({ ...p, shop: e.target.value }))} placeholder="https://..." hint="Online shop URL" />
+                  <Input label="Email" value={socialLinks.email || ''} onChange={(e) => setSocialLinks(p => ({ ...p, email: e.target.value }))} placeholder="hello@..." hint="Contact email address" />
+                </div>
+              </div>
             </div>
           )}
 
@@ -935,11 +1004,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
           {currentStep === 8 && (
             <div className="space-y-6">
               <div className="space-y-4">
-                <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                  <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                  <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Visibility Settings</h3>
-                </div>
-                <div className="bg-neutral-950 border border-neutral-800 rounded-sm p-5 space-y-5">
+                <SectionHeader icon="eye" title="Visibility Settings" />
+                <div className="bg-neutral-950 border border-neutral-800 rounded-md p-5 space-y-5">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <p className="text-white text-sm font-medium mb-1">Active Status</p>
@@ -960,17 +1026,14 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
               {designer && (
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                    <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-                    <h3 className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Preview</h3>
-                  </div>
-                  <div className="bg-neutral-950 border border-neutral-800 rounded-sm p-5">
+                  <SectionHeader icon="link" title="Preview" />
+                  <div className="bg-neutral-950 border border-neutral-800 rounded-md p-5">
                     <p className="text-xs text-neutral-500 mb-3">View this designer's public profile</p>
                     <a
                       href={`/designers/${designer.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-sm transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -985,29 +1048,29 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
         </div>
 
         {/* Sticky Footer Action Bar */}
-        <div className="sticky bottom-0 bg-neutral-900 border-t border-neutral-800 p-4 flex items-center justify-between">
+        <div className="sticky bottom-0 bg-neutral-900/95 backdrop-blur-sm border-t border-neutral-800 px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={onClose} className="px-4 py-2.5 text-sm text-neutral-400 hover:text-white transition-colors">
+            <button onClick={onClose} className="px-4 py-2 text-sm text-neutral-400 hover:text-white transition-colors rounded-md hover:bg-neutral-800">
               Cancel
             </button>
             {!isFirstStep && (
               <button
                 onClick={() => setCurrentStep(s => s - 1)}
-                className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded-sm transition-colors"
+                className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded-md transition-colors"
               >
                 <Ic name="chevronLeft" className="w-4 h-4" /> Previous
               </button>
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-2 text-xs text-neutral-500">
               <Ic name="check" className="w-3.5 h-3.5 text-green-400" />
-              <span>{profileCompletion.completed}/{profileCompletion.total} sections complete</span>
+              <span>{profileCompletion.completed}/{profileCompletion.total} sections</span>
             </div>
             {!isLastStep ? (
               <button
                 onClick={() => setCurrentStep(s => s + 1)}
-                className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-colors rounded-sm"
+                className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-colors rounded-md"
               >
                 Next <Ic name="chevronRight" className="w-4 h-4" />
               </button>
@@ -1016,14 +1079,14 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-colors rounded-sm disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-colors rounded-md disabled:opacity-50"
                 >
                   <Ic name="save" className="w-4 h-4" /> Save Draft
                 </button>
                 <button
                   onClick={handlePublish}
                   disabled={saving}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-colors rounded-sm disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-colors rounded-md disabled:opacity-50"
                 >
                   {saving ? (
                     <><span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" /> Publishing...</>
@@ -1119,11 +1182,8 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-1 h-4 bg-[#bb9457] rounded-full" />
-          <p className="text-xs uppercase tracking-wider text-neutral-400 font-medium">Collections ({collections.length})</p>
-        </div>
-        <button onClick={addCollection} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 rounded-sm transition-colors">
+        <SectionHeader icon="collection" title={`Collections (${collections.length})`} />
+        <button onClick={addCollection} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
           <Ic name="plus" className="w-3.5 h-3.5" /> Add Collection
         </button>
       </div>
@@ -1214,9 +1274,11 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
 
             {/* Cover Image Upload */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                <div className="w-1 h-3 bg-[#bb9457]/50 rounded-full" />
-                <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium">Cover Image</p>
+              <div className="flex items-center gap-2 pb-2 border-b border-neutral-800/60">
+                <div className="w-6 h-6 bg-[#bb9457]/10 border border-[#bb9457]/20 rounded flex items-center justify-center">
+                  <Ic name="image" className="w-3 h-3 text-[#bb9457]" />
+                </div>
+                <p className="text-xs font-medium text-neutral-300">Cover Image</p>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -1271,9 +1333,11 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
 
             {/* Gallery Images Upload */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2 pb-2 border-b border-neutral-800">
-                <div className="w-1 h-3 bg-[#bb9457]/50 rounded-full" />
-                <p className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium">Gallery Images</p>
+              <div className="flex items-center gap-2 pb-2 border-b border-neutral-800/60">
+                <div className="w-6 h-6 bg-[#bb9457]/10 border border-[#bb9457]/20 rounded flex items-center justify-center">
+                  <Ic name="image" className="w-3 h-3 text-[#bb9457]" />
+                </div>
+                <p className="text-xs font-medium text-neutral-300">Gallery Images</p>
               </div>
 
               <div className="space-y-3">
@@ -1332,13 +1396,13 @@ const EducationEditor = ({ education, setEducation }: { education: DesignerEduca
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-neutral-500">Education ({education.length})</p>
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 rounded-sm transition-colors">
+        <SectionHeader icon="academic" title={`Education (${education.length})`} />
+        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
           <Ic name="plus" className="w-3.5 h-3.5" /> Add
         </button>
       </div>
       {education.map((edu, idx) => (
-        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-sm p-4 space-y-3">
+        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-md p-4 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs text-neutral-500">Education #{idx + 1}</span>
             <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
@@ -1367,13 +1431,13 @@ const AchievementsEditor = ({ achievements, setAchievements }: { achievements: D
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-neutral-500">Achievements ({achievements.length})</p>
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 rounded-sm transition-colors">
+        <SectionHeader icon="trophy" title={`Achievements (${achievements.length})`} />
+        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
           <Ic name="plus" className="w-3.5 h-3.5" /> Add
         </button>
       </div>
       {achievements.map((ach, idx) => (
-        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-sm p-4 space-y-3">
+        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-md p-4 space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-xs text-neutral-500">Achievement #{idx + 1}</span>
             <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
@@ -1399,21 +1463,21 @@ const SkillsEditor = ({ skills, setSkills }: { skills: DesignerSkill[]; setSkill
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-neutral-500">Skills ({skills.length})</p>
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 rounded-sm transition-colors">
+        <SectionHeader icon="star" title={`Skills (${skills.length})`} />
+        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
           <Ic name="plus" className="w-3.5 h-3.5" /> Add
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {skills.map((sk, idx) => (
-          <div key={idx} className="flex items-center gap-2">
+          <div key={idx} className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 rounded-md px-3 py-2">
             <input
               value={sk.skill}
               onChange={(e) => update(idx, e.target.value)}
               placeholder="Skill name"
-              className="flex-1 bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none"
+              className="flex-1 bg-transparent text-sm text-white placeholder-neutral-600 focus:outline-none"
             />
-            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300 p-1"><Ic name="x" className="w-4 h-4" /></button>
+            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300 p-0.5"><Ic name="x" className="w-3.5 h-3.5" /></button>
           </div>
         ))}
       </div>
@@ -1434,21 +1498,21 @@ const CertificationsEditor = ({ certifications, setCertifications }: { certifica
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs uppercase tracking-wider text-neutral-500">Certifications ({certifications.length})</p>
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 rounded-sm transition-colors">
+        <SectionHeader icon="document" title={`Certifications (${certifications.length})`} />
+        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
           <Ic name="plus" className="w-3.5 h-3.5" /> Add
         </button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {certifications.map((cert, idx) => (
-          <div key={idx} className="flex items-center gap-2">
+          <div key={idx} className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 rounded-md px-3 py-2">
             <input
               value={cert.certification}
               onChange={(e) => update(idx, e.target.value)}
               placeholder="Certification name"
-              className="flex-1 bg-neutral-950 border border-neutral-800 rounded-sm px-3 py-2 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/50 focus:outline-none"
+              className="flex-1 bg-transparent text-sm text-white placeholder-neutral-600 focus:outline-none"
             />
-            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300 p-1"><Ic name="x" className="w-4 h-4" /></button>
+            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300 p-0.5"><Ic name="x" className="w-3.5 h-3.5" /></button>
           </div>
         ))}
       </div>
