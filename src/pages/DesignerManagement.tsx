@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo, useRef, type ReactNode } from 'react'
 import { supabase } from '../lib/supabase'
 import type { Designer, DesignerCollection, DesignerEducation, DesignerAchievement, DesignerSkill, DesignerCertification, DesignerSocialLinks } from '../types/database'
+import RichTextEditor from '../components/RichTextEditor'
 
 // ── Icon helper ──
 const Ic = ({ name, className = 'w-4 h-4' }: { name: string; className?: string }) => {
@@ -108,6 +109,104 @@ const Toggle = ({ label, checked, onChange }: { label: string; checked: boolean;
       <span className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-200 ${checked ? 'translate-x-5' : ''}`} />
     </button>
     <span className="text-sm text-neutral-300">{label}</span>
+  </div>
+)
+
+// Tag/Chip Input Component
+const TagInput = ({ label, tags, onChange, placeholder, hint }: { label: string; tags: string[]; onChange: (tags: string[]) => void; placeholder?: string; hint?: string }) => {
+  const [input, setInput] = useState('')
+  const addTag = () => {
+    const trimmed = input.trim()
+    if (trimmed && !tags.includes(trimmed)) {
+      onChange([...tags, trimmed])
+      setInput('')
+    }
+  }
+  const removeTag = (idx: number) => onChange(tags.filter((_, i) => i !== idx))
+  return (
+    <div>
+      <label className="block text-[11px] font-medium text-neutral-300 mb-1.5 tracking-wide">{label}</label>
+      <div className="flex flex-wrap gap-2 mb-2">
+        {tags.map((tag, idx) => (
+          <span key={idx} className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[#bb9457]/10 border border-[#bb9457]/20 text-[#bb9457] text-xs rounded-full">
+            {tag}
+            <button type="button" onClick={() => removeTag(idx)} className="hover:text-red-400 transition-colors">
+              <Ic name="x" className="w-3 h-3" />
+            </button>
+          </span>
+        ))}
+      </div>
+      <div className="flex gap-2">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTag() } }}
+          placeholder={placeholder || 'Type and press Enter...'}
+          className="flex-1 bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700"
+        />
+        <button type="button" onClick={addTag} className="px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md transition-colors">
+          Add
+        </button>
+      </div>
+      {hint && <p className="text-[10px] text-neutral-600 mt-1">{hint}</p>}
+    </div>
+  )
+}
+
+// Collection Preview Modal
+const CollectionPreview = ({ collection, onClose }: { collection: DesignerCollection; onClose: () => void }) => (
+  <div className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[70] flex items-center justify-center p-4" onClick={onClose}>
+    <div className="bg-neutral-900 border border-neutral-800 rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+      <div className="sticky top-0 bg-neutral-900/98 backdrop-blur-md border-b border-neutral-800/80 px-6 py-4 flex items-center justify-between">
+        <div>
+          <h3 className="text-white font-semibold">{collection.title || 'Untitled Collection'}</h3>
+          {collection.season && <p className="text-xs text-neutral-500 mt-0.5">{collection.season}</p>}
+        </div>
+        <button onClick={onClose} className="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-all">
+          <Ic name="x" className="w-5 h-5" />
+        </button>
+      </div>
+      <div className="p-6 space-y-5">
+        {collection.cover_image_url && (
+          <div className="rounded-lg overflow-hidden border border-neutral-800">
+            <img src={collection.cover_image_url} alt={collection.title} className="w-full h-48 object-cover" />
+          </div>
+        )}
+        {collection.description && (
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-neutral-500 mb-2">Description</p>
+            <p className="text-sm text-neutral-300 leading-relaxed">{collection.description}</p>
+          </div>
+        )}
+        {collection.inspiration && (
+          <div className="border-l-2 border-[#bb9457]/30 pl-4">
+            <p className="text-[10px] uppercase tracking-wider text-[#bb9457]/60 mb-1">Inspiration</p>
+            <p className="text-sm text-neutral-400 italic leading-relaxed">{collection.inspiration}</p>
+          </div>
+        )}
+        {collection.looks && (
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] uppercase tracking-wider text-neutral-500">Looks:</span>
+            <span className="text-sm text-white font-medium">{collection.looks}</span>
+          </div>
+        )}
+        {collection.images && collection.images.length > 0 && (
+          <div>
+            <p className="text-[10px] uppercase tracking-wider text-neutral-500 mb-2">Gallery</p>
+            <div className="grid grid-cols-3 gap-2">
+              {collection.images.map((img, i) => (
+                <div key={i} className="aspect-square rounded-lg overflow-hidden border border-neutral-800">
+                  <img src={img} alt={`Look ${i + 1}`} className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {collection.is_latest && (
+          <span className="inline-flex px-2.5 py-1 text-[10px] uppercase tracking-wider bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/30 rounded-full">Latest Collection</span>
+        )}
+      </div>
+    </div>
   </div>
 )
 
@@ -396,6 +495,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null)
+  const [uploadingImage, setUploadingImage] = useState<'profile' | 'cover' | null>(null)
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const designerIdRef = useRef<string | null>(designer?.id || null)
 
@@ -522,13 +622,28 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     const file = e.target.files?.[0]
     if (!file) return
 
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select an image file', 'error')
+      return
+    }
+
+    // Validate file size (10MB max)
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('Image must be under 10MB', 'error')
+      return
+    }
+
+    setUploadingImage(type)
+    showToast(`Uploading ${type} image...`, 'info')
+
     try {
       const fileExt = file.name.split('.').pop()
-      const fileName = `designers/${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
+      const fileName = `designers/${designerIdRef.current || 'new'}/${type}-${Date.now()}.${fileExt}`
 
       const { data, error } = await supabase.storage
         .from('designers')
-        .upload(fileName, file)
+        .upload(fileName, file, { cacheControl: '31536000', upsert: false })
 
       if (error) throw error
 
@@ -541,10 +656,12 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       } else {
         updateField('cover_image_url', urlData.publicUrl)
       }
-      showToast(`${type === 'profile' ? 'Profile' : 'Cover'} image uploaded`, 'success')
+      showToast(`${type === 'profile' ? 'Profile' : 'Cover'} image uploaded successfully`, 'success')
     } catch (error) {
       console.error('Error uploading image:', error)
-      showToast('Error uploading image', 'error')
+      showToast('Error uploading image. Please try again.', 'error')
+    } finally {
+      setUploadingImage(null)
     }
   }
 
@@ -666,14 +783,19 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
         </div>
 
         {/* Stepper Navigation */}
-        <div className="border-b border-neutral-800 px-6 py-4">
+        <div className="border-b border-neutral-800/80 px-8 py-4">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <span className="text-xs text-neutral-500">Step {currentStep + 1} of {STEPS.length}</span>
-              <span className="text-xs text-[#bb9457] font-medium">{currentStepData.label}</span>
-              <span className="text-[10px] text-neutral-600">— {currentStepData.description}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-medium text-neutral-400">{currentStep + 1}</span>
+                <span className="text-neutral-600">/</span>
+                <span className="text-xs text-neutral-500">{STEPS.length}</span>
+              </div>
+              <div className="h-3 w-px bg-neutral-800" />
+              <span className="text-sm font-medium text-white">{currentStepData.label}</span>
+              <span className="text-xs text-neutral-500">— {currentStepData.description}</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               {autoSaving && (
                 <span className="flex items-center gap-1.5 text-xs text-neutral-500">
                   <span className="w-3 h-3 border-2 border-neutral-600 border-t-[#bb9457] rounded-full animate-spin" />
@@ -681,19 +803,20 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                 </span>
               )}
               {lastSaved && !autoSaving && (
-                <span className="text-xs text-neutral-600">
-                  Saved {Math.round((Date.now() - lastSaved.getTime()) / 1000)}s ago
+                <span className="flex items-center gap-1.5 text-xs text-green-500/70">
+                  <Ic name="check" className="w-3 h-3" />
+                  Saved just now
                 </span>
               )}
               {hasUnsavedChanges && !autoSaving && (
-                <span className="flex items-center gap-1 text-xs text-amber-500">
+                <span className="flex items-center gap-1.5 text-xs text-amber-500">
                   <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse" />
-                  Unsaved changes
+                  Unsaved
                 </span>
               )}
             </div>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
             {STEPS.map((step, idx) => {
               const isCompleted = idx < currentStep
               const isActive = idx === currentStep
@@ -701,26 +824,29 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                 <button
                   key={step.id}
                   onClick={() => setCurrentStep(idx)}
-                  className={`group relative flex-1 flex flex-col items-center gap-1.5 py-2 px-1 rounded-md transition-all ${
-                    isActive ? 'bg-[#bb9457]/5' : 'hover:bg-neutral-800/50'
-                  }`}
-                  title={step.description}
-                >
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-[10px] font-semibold transition-all border ${
+                  className={`group relative flex items-center gap-2 px-3 py-2 rounded-lg transition-all flex-shrink-0 ${
                     isActive
-                      ? 'bg-[#bb9457] border-[#bb9457] text-black'
+                      ? 'bg-[#bb9457]/10 border border-[#bb9457]/30'
                       : isCompleted
-                      ? 'bg-green-500/10 border-green-500/40 text-green-400'
-                      : 'bg-neutral-800 border-neutral-700 text-neutral-500'
+                      ? 'hover:bg-neutral-800/60 border border-transparent'
+                      : 'hover:bg-neutral-800/40 border border-transparent'
+                  }`}
+                  title={`${step.label} — ${step.description}`}
+                >
+                  <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold transition-all flex-shrink-0 ${
+                    isActive
+                      ? 'bg-[#bb9457] text-black'
+                      : isCompleted
+                      ? 'bg-green-500/15 text-green-400'
+                      : 'bg-neutral-800 text-neutral-500'
                   }`}>
-                    {isCompleted ? <Ic name="check" className="w-3.5 h-3.5" /> : idx + 1}
+                    {isCompleted ? <Ic name="check" className="w-3 h-3" /> : idx + 1}
                   </div>
-                  <span className={`text-[9px] uppercase tracking-wider font-medium leading-tight text-center truncate w-full ${
-                    isActive ? 'text-[#bb9457]' : isCompleted ? 'text-green-400/70' : 'text-neutral-600'
+                  <span className={`text-[10px] font-medium leading-tight whitespace-nowrap ${
+                    isActive ? 'text-[#bb9457]' : isCompleted ? 'text-green-400/80' : 'text-neutral-500'
                   }`}>
                     {step.label}
                   </span>
-                  {isActive && <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-[#bb9457] rounded-full" />}
                 </button>
               )
             })}
@@ -728,45 +854,41 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="px-8 py-6 space-y-5">
           {/* Basic Info */}
           {currentStep === 0 && (
-            <div className="space-y-6">
-              {/* Identity Section */}
-              <div className="space-y-4">
-                <SectionHeader icon="user" title="Identity" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <Card icon="user" title="Identity" subtitle="Name, brand & URL">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Name" required value={form.name} onChange={(e) => { updateField('name', e.target.value); if (!designer) updateField('slug', generateSlug(e.target.value, form.brand)) }} placeholder="Designer full name" hint="First and last name" />
                   <Input label="Brand" required value={form.brand} onChange={(e) => { updateField('brand', e.target.value); if (!designer) updateField('slug', generateSlug(form.name, e.target.value)) }} placeholder="Brand / label name" hint="Your fashion label or studio name" />
                 </div>
-                <Input label="Slug" value={form.slug} onChange={(e) => updateField('slug', e.target.value)} placeholder="auto-generated-from-name-brand" hint="URL-friendly identifier, auto-generated from name and brand" />
-              </div>
+                <div className="pt-4">
+                  <Input label="Slug" value={form.slug} onChange={(e) => updateField('slug', e.target.value)} placeholder="auto-generated-from-name-brand" hint="URL-friendly identifier, auto-generated from name and brand" />
+                </div>
+              </Card>
 
-              {/* Location & Background */}
-              <div className="space-y-4">
-                <SectionHeader icon="link" title="Location & Background" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card icon="link" title="Location & Background" subtitle="Where they're based">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Location" value={form.location} onChange={(e) => updateField('location', e.target.value)} placeholder="City, Country" hint="City and country of residence" />
                   <Input label="Nationality" value={form.nationality} onChange={(e) => updateField('nationality', e.target.value)} placeholder="Pakistani" hint="National origin" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Languages" value={form.languages} onChange={(e) => updateField('languages', e.target.value)} placeholder="English, Urdu" hint="Languages spoken" />
                   <Input label="Experience" value={form.experience} onChange={(e) => updateField('experience', e.target.value)} placeholder="5 years" hint="Years in the fashion industry" />
                 </div>
-              </div>
+              </Card>
 
-              {/* Specialization */}
-              <div className="space-y-4">
-                <SectionHeader icon="star" title="Specialization" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card icon="star" title="Specialization" subtitle="Design focus & category">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Specialization" value={form.specialization} onChange={(e) => updateField('specialization', e.target.value)} placeholder="Bridal, Pret, Luxury" hint="Primary design focus areas" />
                   <Input label="Category" value={form.category} onChange={(e) => updateField('category', e.target.value)} placeholder="Womenswear" hint="e.g. Womenswear, Menswear, Accessories" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Select label="Gender" value={form.gender} onChange={(e) => updateField('gender', e.target.value)} options={[{ value: '', label: 'Select...' }, { value: 'male', label: 'Male' }, { value: 'female', label: 'Female' }, { value: 'non-binary', label: 'Non-binary' }]} />
                   <Input label="Availability" value={form.availability} onChange={(e) => updateField('availability', e.target.value)} placeholder="Available for commissions" hint="Current availability status" />
                 </div>
-              </div>
+              </Card>
             </div>
           )}
 
@@ -774,10 +896,9 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
           {currentStep === 1 && (
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
               {/* Form Fields - 3/5 width */}
-              <div className="lg:col-span-3 space-y-6">
-                <div className="space-y-4">
-                  <SectionHeader icon="document" title="Short Description" />
-                  <div>
+              <div className="lg:col-span-3 space-y-4">
+                <Card icon="document" title="Short Description" subtitle="One-liner for cards and previews">
+                  <div className="pt-4">
                     <div className="flex items-center justify-between mb-1.5">
                       <label className="text-[11px] font-medium text-neutral-300 tracking-wide">Short Bio</label>
                       <span className={`text-[10px] font-medium ${form.short_bio.length > 130 ? 'text-amber-500' : form.short_bio.length > 0 ? 'text-neutral-500' : 'text-neutral-600'}`}>{form.short_bio.length}/150</span>
@@ -791,32 +912,26 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                     />
                     <p className="text-[10px] text-neutral-600 mt-1">Used on designer cards and preview sections</p>
                   </div>
-                </div>
+                </Card>
 
-                <div className="space-y-4">
-                  <SectionHeader icon="document" title="Full Story" />
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
+                <Card icon="document" title="Full Story" subtitle="The designer's complete narrative">
+                  <div className="pt-4">
+                    <div className="flex items-center justify-between mb-2">
                       <label className="text-[11px] font-medium text-neutral-300 tracking-wide">Full Biography</label>
-                      <span className="text-[10px] text-neutral-500">{form.bio.length} characters</span>
+                      <span className="text-[10px] text-neutral-500">{form.bio.length} chars</span>
                     </div>
-                    <textarea
-                      value={form.bio}
-                      onChange={(e) => updateField('bio', e.target.value)}
-                      rows={8}
-                      placeholder="Detailed biography covering background, training, and journey..."
-                      className="w-full bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white placeholder-neutral-600 focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all hover:border-neutral-700 resize-none leading-relaxed"
-                    />
-                    <p className="text-[10px] text-neutral-600 mt-1">Tells the designer's complete story on their profile page</p>
+                    <div className="border border-neutral-800 rounded-lg overflow-hidden">
+                      <RichTextEditor content={form.bio} onChange={(html) => updateField('bio', html)} placeholder="Detailed biography covering background, training, and journey..." />
+                    </div>
+                    <p className="text-[10px] text-neutral-600 mt-1">Tells the designer's complete story on their profile page. Use headings, lists, and formatting for rich content.</p>
                   </div>
-                </div>
+                </Card>
 
-                <div className="space-y-4">
-                  <SectionHeader icon="star" title="Creative Vision" />
-                  <div>
+                <Card icon="sparkles" title="Creative Vision" subtitle="Why they design">
+                  <div className="pt-4">
                     <div className="flex items-center justify-between mb-1.5">
                       <label className="text-[11px] font-medium text-neutral-300 tracking-wide">Design Philosophy</label>
-                      <span className="text-[10px] text-neutral-500">{form.philosophy.length} characters</span>
+                      <span className="text-[10px] text-neutral-500">{form.philosophy.length} chars</span>
                     </div>
                     <textarea
                       value={form.philosophy}
@@ -827,49 +942,53 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                     />
                     <p className="text-[10px] text-neutral-600 mt-1">Captures the designer's creative ethos and artistic approach</p>
                   </div>
-                </div>
+                </Card>
               </div>
 
               {/* Live Preview Panel - 2/5 width */}
               <div className="lg:col-span-2">
                 <div className="sticky top-32 space-y-4">
-                  <SectionHeader icon="eye" title="Live Preview" />
-                  <div className="bg-neutral-950 border border-neutral-800 rounded-md overflow-hidden">
-                    {/* Preview Card */}
-                    <div className="p-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md flex items-center justify-center">
+                      <Ic name="eye" className="w-3.5 h-3.5 text-[#bb9457]" />
+                    </div>
+                    <h3 className="text-sm font-medium text-white">Live Preview</h3>
+                  </div>
+                  <div className="bg-neutral-950 border border-neutral-800/80 rounded-lg overflow-hidden">
+                    {/* Cover Preview */}
+                    {form.cover_image_url && (
+                      <div className="h-20 bg-neutral-800 overflow-hidden">
+                        <img src={form.cover_image_url} alt="Cover" className="w-full h-full object-cover opacity-60" />
+                      </div>
+                    )}
+                    <div className="p-5 space-y-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-neutral-800 rounded-full flex items-center justify-center text-[#bb9457] font-serif text-sm flex-shrink-0">
+                        <div className="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center text-[#bb9457] font-serif text-lg flex-shrink-0 border border-neutral-700">
                           {form.name ? form.name.charAt(0).toUpperCase() : '?'}
                         </div>
                         <div className="min-w-0">
-                          <p className="text-white text-sm font-medium truncate">{form.name || 'Designer Name'}</p>
+                          <p className="text-white text-sm font-semibold truncate">{form.name || 'Designer Name'}</p>
                           <p className="text-neutral-500 text-xs truncate">{form.brand || 'Brand'}</p>
+                          {form.location && <p className="text-neutral-500 text-[11px] mt-0.5">{form.location}</p>}
                         </div>
                       </div>
-                      {form.location && (
-                        <p className="text-neutral-400 text-xs">{form.location}</p>
-                      )}
-                      <div className="h-px bg-neutral-800" />
+                      <div className="h-px bg-neutral-800/80" />
                       <div>
-                        <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1">Short Bio</p>
+                        <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1.5">About</p>
                         <p className="text-neutral-300 text-xs leading-relaxed italic">
                           {form.short_bio || 'No short bio yet...'}
                         </p>
                       </div>
                       {form.philosophy && (
-                        <div>
-                          <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1">Philosophy</p>
-                          <p className="text-neutral-400 text-xs leading-relaxed line-clamp-4">
-                            {form.philosophy}
-                          </p>
+                        <div className="border-l-2 border-[#bb9457]/30 pl-3">
+                          <p className="text-[10px] uppercase tracking-wider text-[#bb9457]/60 mb-1">Philosophy</p>
+                          <p className="text-neutral-400 text-xs leading-relaxed line-clamp-3">{form.philosophy}</p>
                         </div>
                       )}
                       {form.bio && (
                         <div>
-                          <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1">Biography</p>
-                          <p className="text-neutral-400 text-xs leading-relaxed line-clamp-6">
-                            {form.bio}
-                          </p>
+                          <p className="text-[10px] uppercase tracking-wider text-neutral-600 mb-1.5">Biography</p>
+                          <p className="text-neutral-400 text-xs leading-relaxed line-clamp-4">{form.bio}</p>
                         </div>
                       )}
                       {!form.short_bio && !form.philosophy && !form.bio && (
@@ -884,68 +1003,78 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
           {/* Images */}
           {currentStep === 3 && (
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <SectionHeader icon="image" title="Profile Image" />
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex-1">
-                    <Input label="Profile Image URL" value={form.image_url} onChange={(e) => updateField('image_url', e.target.value)} placeholder="Paste URL or upload" hint="Recommended: 800x800px or larger, square aspect ratio" />
-                    <label className="inline-flex items-center gap-2 mt-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md cursor-pointer transition-colors">
-                      <Ic name="upload" className="w-3.5 h-3.5" /> Upload
-                      <input type="file" accept="image/*" onChange={(e) => handleDesignerImageUpload(e, 'profile')} className="hidden" />
+            <div className="space-y-4">
+              <Card icon="image" title="Profile Image" subtitle="Square photo, min 800x800px">
+                <div className="pt-4 flex flex-col sm:flex-row gap-5">
+                  <div className="flex-1 space-y-3">
+                    <Input label="Image URL" value={form.image_url} onChange={(e) => updateField('image_url', e.target.value)} placeholder="Paste image URL..." />
+                    <label className={`relative flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer transition-all group hover:bg-[#bb9457]/5 ${uploadingImage === 'profile' ? 'border-[#bb9457] bg-[#bb9457]/10 pointer-events-none' : 'border-neutral-700 hover:border-[#bb9457]/50'}`}>
+                      {uploadingImage === 'profile' ? (
+                        <>
+                          <span className="w-8 h-8 border-2 border-[#bb9457]/30 border-t-[#bb9457] rounded-full animate-spin mb-2" />
+                          <span className="text-xs text-[#bb9457] font-medium">Uploading profile image...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Ic name="upload" className="w-6 h-6 text-neutral-500 group-hover:text-[#bb9457] mb-2 transition-colors" />
+                          <span className="text-xs text-neutral-400 group-hover:text-neutral-300">Click to upload profile image</span>
+                          <span className="text-[10px] text-neutral-600 mt-1">PNG, JPG, WebP up to 10MB</span>
+                        </>
+                      )}
+                      <input type="file" accept="image/*" onChange={(e) => handleDesignerImageUpload(e, 'profile')} className="hidden" disabled={uploadingImage === 'profile'} />
                     </label>
                   </div>
                   {form.image_url ? (
                     <div className="relative group w-32 h-32 flex-shrink-0">
-                      <div className="w-full h-full bg-neutral-800 rounded-md overflow-hidden border border-neutral-700">
+                      <div className="w-full h-full bg-neutral-800 rounded-lg overflow-hidden border border-neutral-700 shadow-lg">
                         <img src={form.image_url} alt="Profile preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
                       </div>
-                      <button onClick={() => updateField('image_url', '')} className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => updateField('image_url', '')} className="absolute top-2 right-2 p-1.5 bg-black/70 rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/80">
                         <Ic name="x" className="w-3 h-3 text-white" />
                       </button>
                     </div>
                   ) : (
-                    <div className="w-32 h-32 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-md flex flex-col items-center justify-center text-neutral-500">
-                      <Ic name="image" className="w-8 h-8 mb-1" />
-                      <span className="text-[10px]">No image</span>
+                    <div className="w-32 h-32 flex-shrink-0 bg-neutral-800/30 border border-neutral-800 rounded-lg flex flex-col items-center justify-center text-neutral-600">
+                      <Ic name="user" className="w-10 h-10 mb-1" />
                     </div>
                   )}
                 </div>
-              </div>
+              </Card>
 
-              <div className="space-y-4">
-                <SectionHeader icon="image" title="Cover Image" />
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="flex-1">
-                    <Input label="Cover Image URL" value={form.cover_image_url} onChange={(e) => updateField('cover_image_url', e.target.value)} placeholder="Paste URL or upload" hint="Recommended: 1920x600px or larger, wide aspect ratio" />
-                    <label className="inline-flex items-center gap-2 mt-2 px-3 py-2 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md cursor-pointer transition-colors">
-                      <Ic name="upload" className="w-3.5 h-3.5" /> Upload
-                      <input type="file" accept="image/*" onChange={(e) => handleDesignerImageUpload(e, 'cover')} className="hidden" />
-                    </label>
-                  </div>
-                  {form.cover_image_url ? (
-                    <div className="relative group w-48 h-24 flex-shrink-0">
-                      <div className="w-full h-full bg-neutral-800 rounded-md overflow-hidden border border-neutral-700">
-                        <img src={form.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
-                      </div>
-                      <button onClick={() => updateField('cover_image_url', '')} className="absolute top-1 right-1 p-1 bg-black/60 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity">
+              <Card icon="image" title="Cover Image" subtitle="Wide banner, min 1920x600px">
+                <div className="pt-4 space-y-3">
+                  <Input label="Cover URL" value={form.cover_image_url} onChange={(e) => updateField('cover_image_url', e.target.value)} placeholder="Paste image URL..." />
+                  <label className={`relative flex flex-col items-center justify-center w-full h-28 border-2 border-dashed rounded-lg cursor-pointer transition-all group hover:bg-[#bb9457]/5 ${uploadingImage === 'cover' ? 'border-[#bb9457] bg-[#bb9457]/10 pointer-events-none' : 'border-neutral-700 hover:border-[#bb9457]/50'}`}>
+                    {uploadingImage === 'cover' ? (
+                      <>
+                        <span className="w-8 h-8 border-2 border-[#bb9457]/30 border-t-[#bb9457] rounded-full animate-spin mb-2" />
+                        <span className="text-xs text-[#bb9457] font-medium">Uploading cover image...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Ic name="upload" className="w-6 h-6 text-neutral-500 group-hover:text-[#bb9457] mb-2 transition-colors" />
+                        <span className="text-xs text-neutral-400 group-hover:text-neutral-300">Click to upload cover image</span>
+                        <span className="text-[10px] text-neutral-600 mt-1">Wide aspect ratio recommended</span>
+                      </>
+                    )}
+                    <input type="file" accept="image/*" onChange={(e) => handleDesignerImageUpload(e, 'cover')} className="hidden" disabled={uploadingImage === 'cover'} />
+                  </label>
+                  {form.cover_image_url && (
+                    <div className="relative group h-32 w-full rounded-lg overflow-hidden border border-neutral-700">
+                      <img src={form.cover_image_url} alt="Cover preview" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                      <button onClick={() => updateField('cover_image_url', '')} className="absolute top-2 right-2 p-1.5 bg-black/70 rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500/80">
                         <Ic name="x" className="w-3 h-3 text-white" />
                       </button>
                     </div>
-                  ) : (
-                    <div className="w-48 h-24 flex-shrink-0 bg-neutral-800/50 border-2 border-dashed border-neutral-700 rounded-md flex flex-col items-center justify-center text-neutral-500">
-                      <Ic name="image" className="w-8 h-8 mb-1" />
-                      <span className="text-[10px]">No cover</span>
-                    </div>
                   )}
                 </div>
-              </div>
+              </Card>
             </div>
           )}
 
           {/* Collections */}
           {currentStep === 2 && (
-            <CollectionsEditor collections={collections} setCollections={setCollections} />
+            <CollectionsEditor collections={collections} setCollections={setCollections} showToast={showToast} />
           )}
 
           {/* Education */}
@@ -970,51 +1099,88 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
           {/* Social Links */}
           {currentStep === 7 && (
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <SectionHeader icon="link" title="Social Media" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <Card icon="link" title="Social Media" subtitle="Instagram, TikTok, Facebook & more">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Instagram" value={socialLinks.instagram || ''} onChange={(e) => setSocialLinks(p => ({ ...p, instagram: e.target.value }))} placeholder="@handle" hint="Your Instagram handle" />
                   <Input label="TikTok" value={socialLinks.tiktok || ''} onChange={(e) => setSocialLinks(p => ({ ...p, tiktok: e.target.value }))} placeholder="@handle" hint="Your TikTok handle" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Facebook" value={socialLinks.facebook || ''} onChange={(e) => setSocialLinks(p => ({ ...p, facebook: e.target.value }))} placeholder="https://facebook.com/..." hint="Facebook profile URL" />
                   <Input label="Pinterest" value={socialLinks.pinterest || ''} onChange={(e) => setSocialLinks(p => ({ ...p, pinterest: e.target.value }))} placeholder="https://pinterest.com/..." hint="Pinterest profile URL" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="LinkedIn" value={socialLinks.linkedin || ''} onChange={(e) => setSocialLinks(p => ({ ...p, linkedin: e.target.value }))} placeholder="https://linkedin.com/in/..." hint="LinkedIn profile URL" />
                   <Input label="Behance" value={socialLinks.behance || ''} onChange={(e) => setSocialLinks(p => ({ ...p, behance: e.target.value }))} placeholder="https://behance.net/..." hint="Behance portfolio URL" />
                 </div>
-              </div>
-              <div className="space-y-4">
-                <SectionHeader icon="document" title="Web Presence" />
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              </Card>
+              <Card icon="document" title="Web Presence" subtitle="Website, portfolio, shop & email">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Website" value={socialLinks.website || ''} onChange={(e) => setSocialLinks(p => ({ ...p, website: e.target.value }))} placeholder="https://..." hint="Personal or brand website" />
                   <Input label="Portfolio" value={socialLinks.portfolio || ''} onChange={(e) => setSocialLinks(p => ({ ...p, portfolio: e.target.value }))} placeholder="https://..." hint="Online portfolio URL" />
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                   <Input label="Shop" value={socialLinks.shop || ''} onChange={(e) => setSocialLinks(p => ({ ...p, shop: e.target.value }))} placeholder="https://..." hint="Online shop URL" />
                   <Input label="Email" value={socialLinks.email || ''} onChange={(e) => setSocialLinks(p => ({ ...p, email: e.target.value }))} placeholder="hello@..." hint="Contact email address" />
                 </div>
-              </div>
+              </Card>
             </div>
           )}
 
-          {/* Status */}
+          {/* Review & Publish */}
           {currentStep === 8 && (
-            <div className="space-y-6">
-              <div className="space-y-4">
-                <SectionHeader icon="eye" title="Visibility Settings" />
-                <div className="bg-neutral-950 border border-neutral-800 rounded-md p-5 space-y-5">
-                  <div className="flex items-start justify-between gap-4">
+            <div className="space-y-4">
+              {/* Profile Completion Checklist */}
+              <Card icon="check" title="Profile Completion Checklist" subtitle={`${profileCompletion.completed} of ${profileCompletion.total} sections complete`} badge={`${profileCompletion.percentage}%`}>
+                <div className="pt-4 space-y-2">
+                  {[
+                    { key: 'basic', label: 'Basic Information', desc: 'Name, brand, location', step: 0 },
+                    { key: 'biography', label: 'Biography', desc: 'Short bio, full story, philosophy', step: 1 },
+                    { key: 'collections', label: 'Collections', desc: 'At least one collection', step: 2 },
+                    { key: 'gallery', label: 'Gallery', desc: 'Profile or cover image', step: 3 },
+                    { key: 'education', label: 'Education', desc: 'Training & qualifications', step: 4 },
+                    { key: 'achievements', label: 'Achievements', desc: 'Awards & recognition', step: 5 },
+                    { key: 'skills', label: 'Skills', desc: 'Craft expertise', step: 6 },
+                    { key: 'social', label: 'Social Links', desc: 'Instagram or website', step: 7 },
+                  ].map(item => {
+                    const done = profileCompletion.checks[item.key as keyof typeof profileCompletion.checks]
+                    return (
+                      <button
+                        key={item.key}
+                        onClick={() => setCurrentStep(item.step)}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left ${
+                          done ? 'bg-green-500/5 hover:bg-green-500/10' : 'bg-amber-500/5 hover:bg-amber-500/10'
+                        }`}
+                      >
+                        <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                          done ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'
+                        }`}>
+                          {done ? <Ic name="check" className="w-3.5 h-3.5" /> : <Ic name="warning" className="w-3.5 h-3.5" />}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className={`text-sm font-medium ${done ? 'text-green-300' : 'text-amber-300'}`}>{item.label}</p>
+                          <p className="text-[11px] text-neutral-500">{item.desc}</p>
+                        </div>
+                        <span className={`text-[10px] uppercase tracking-wider font-medium px-2 py-0.5 rounded-full ${
+                          done ? 'text-green-400 bg-green-500/10' : 'text-amber-400 bg-amber-500/10'
+                        }`}>{done ? 'Done' : 'Missing'}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </Card>
+
+              {/* Visibility Settings */}
+              <Card icon="eye" title="Visibility Settings" subtitle="Control how this profile appears">
+                <div className="pt-4 space-y-4">
+                  <div className="flex items-start justify-between gap-4 p-4 bg-neutral-900/50 rounded-lg border border-neutral-800/50">
                     <div className="flex-1">
                       <p className="text-white text-sm font-medium mb-1">Active Status</p>
                       <p className="text-xs text-neutral-500">Designer is visible on the site and can be discovered by visitors</p>
                     </div>
                     <Toggle label="" checked={form.is_active} onChange={(v) => updateField('is_active', v)} />
                   </div>
-                  <div className="border-t border-neutral-800" />
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-4 p-4 bg-neutral-900/50 rounded-lg border border-neutral-800/50">
                     <div className="flex-1">
                       <p className="text-white text-sm font-medium mb-1">Featured Designer</p>
                       <p className="text-xs text-neutral-500">Showcase in featured sections and homepage highlights</p>
@@ -1022,18 +1188,17 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                     <Toggle label="" checked={form.is_featured} onChange={(v) => updateField('is_featured', v)} />
                   </div>
                 </div>
-              </div>
+              </Card>
 
+              {/* Preview Link */}
               {designer && (
-                <div className="space-y-4">
-                  <SectionHeader icon="link" title="Preview" />
-                  <div className="bg-neutral-950 border border-neutral-800 rounded-md p-5">
-                    <p className="text-xs text-neutral-500 mb-3">View this designer's public profile</p>
+                <Card icon="link" title="Preview Public Profile" subtitle="See what visitors will see">
+                  <div className="pt-4">
                     <a
                       href={`/designers/${designer.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-md transition-colors"
+                      className="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-white text-xs uppercase tracking-wider font-medium rounded-lg transition-colors"
                     >
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -1041,60 +1206,83 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                       Open Profile
                     </a>
                   </div>
-                </div>
+                </Card>
               )}
             </div>
           )}
         </div>
 
         {/* Sticky Footer Action Bar */}
-        <div className="sticky bottom-0 bg-neutral-900/95 backdrop-blur-sm border-t border-neutral-800 px-6 py-3.5 flex items-center justify-between">
+        <div className="sticky bottom-0 bg-neutral-900/98 backdrop-blur-md border-t border-neutral-800/80 px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <button onClick={onClose} className="px-4 py-2 text-sm text-neutral-400 hover:text-white transition-colors rounded-md hover:bg-neutral-800">
+            <button onClick={onClose} className="px-4 py-2.5 text-sm text-neutral-400 hover:text-white transition-all rounded-lg hover:bg-neutral-800 font-medium">
               Cancel
             </button>
             {!isFirstStep && (
               <button
                 onClick={() => setCurrentStep(s => s - 1)}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded-md transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 text-sm text-neutral-300 hover:text-white bg-neutral-800/80 hover:bg-neutral-700 rounded-lg transition-all font-medium"
               >
                 <Ic name="chevronLeft" className="w-4 h-4" /> Previous
               </button>
             )}
           </div>
           <div className="flex items-center gap-4">
-            <div className="hidden sm:flex items-center gap-2 text-xs text-neutral-500">
-              <Ic name="check" className="w-3.5 h-3.5 text-green-400" />
-              <span>{profileCompletion.completed}/{profileCompletion.total} sections</span>
+            <div className="hidden md:flex items-center gap-3">
+              <div className="flex items-center gap-2 text-xs text-neutral-500">
+                <Ic name="check" className="w-3.5 h-3.5 text-green-400" />
+                <span>{profileCompletion.completed}/{profileCompletion.total} complete</span>
+              </div>
+              <div className="h-4 w-px bg-neutral-800" />
+              <span className="text-[11px] text-neutral-600">⌘S to save</span>
             </div>
             {!isLastStep ? (
-              <button
-                onClick={() => setCurrentStep(s => s + 1)}
-                className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-colors rounded-md"
-              >
-                Next <Ic name="chevronRight" className="w-4 h-4" />
-              </button>
-            ) : (
-              <>
+              <div className="flex items-center gap-2">
                 <button
                   onClick={handleSave}
                   disabled={saving}
-                  className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-colors rounded-md disabled:opacity-50"
+                  className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-all rounded-lg disabled:opacity-50"
                 >
-                  <Ic name="save" className="w-4 h-4" /> Save Draft
+                  <Ic name="save" className="w-3.5 h-3.5" /> Save Draft
+                </button>
+                <button
+                  onClick={() => setCurrentStep(s => s + 1)}
+                  className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-all rounded-lg"
+                >
+                  Next <Ic name="chevronRight" className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                {designer && (
+                  <a
+                    href={`/designers/${designer.slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2.5 text-neutral-400 hover:text-white border border-neutral-700 hover:border-neutral-600 text-xs uppercase tracking-wider font-medium rounded-lg transition-all"
+                  >
+                    <Ic name="eye" className="w-3.5 h-3.5" /> Preview
+                  </a>
+                )}
+                <button
+                  onClick={handleSave}
+                  disabled={saving}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-all rounded-lg disabled:opacity-50"
+                >
+                  <Ic name="save" className="w-4 h-4" /> Save
                 </button>
                 <button
                   onClick={handlePublish}
                   disabled={saving}
-                  className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-colors rounded-md disabled:opacity-50"
+                  className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-all rounded-lg disabled:opacity-50"
                 >
                   {saving ? (
                     <><span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" /> Publishing...</>
                   ) : (
-                    <><Ic name="check" className="w-4 h-4" /> Publish Profile</>
+                    <><Ic name="sparkles" className="w-4 h-4" /> Publish</>
                   )}
                 </button>
-              </>
+              </div>
             )}
           </div>
         </div>
@@ -1102,14 +1290,19 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
       {/* Toast Notification */}
       {toast && (
-        <div className={`fixed bottom-24 right-6 z-[60] flex items-center gap-3 px-4 py-3 rounded-sm shadow-lg border transition-all ${
-          toast.type === 'success' ? 'bg-green-900/90 border-green-700 text-green-100' :
-          toast.type === 'error' ? 'bg-red-900/90 border-red-700 text-red-100' :
-          'bg-neutral-800 border-neutral-700 text-white'
+        <div className={`fixed bottom-8 right-8 z-[60] flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-2xl border transition-all animate-in slide-in-from-bottom-4 ${
+          toast.type === 'success' ? 'bg-green-950/95 border-green-800/50 text-green-100' :
+          toast.type === 'error' ? 'bg-red-950/95 border-red-800/50 text-red-100' :
+          'bg-neutral-900/95 border-neutral-700/50 text-white'
         }`}>
-          {toast.type === 'success' && <Ic name="check" className="w-4 h-4 text-green-400" />}
-          {toast.type === 'error' && <Ic name="warning" className="w-4 h-4 text-red-400" />}
-          <span className="text-sm">{toast.message}</span>
+          <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 ${
+            toast.type === 'success' ? 'bg-green-500/20' : toast.type === 'error' ? 'bg-red-500/20' : 'bg-neutral-700'
+          }`}>
+            {toast.type === 'success' && <Ic name="check" className="w-3.5 h-3.5 text-green-400" />}
+            {toast.type === 'error' && <Ic name="warning" className="w-3.5 h-3.5 text-red-400" />}
+            {toast.type === 'info' && <Ic name="info" className="w-3.5 h-3.5 text-neutral-300" />}
+          </div>
+          <span className="text-sm font-medium">{toast.message}</span>
         </div>
       )}
     </div>
@@ -1121,8 +1314,9 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 // ══════════════════════════════════════════
 
 // Collections Editor with Image Upload
-const CollectionsEditor = ({ collections, setCollections }: { collections: DesignerCollection[]; setCollections: (v: DesignerCollection[]) => void }) => {
+const CollectionsEditor = ({ collections, setCollections, showToast }: { collections: DesignerCollection[]; setCollections: (v: DesignerCollection[]) => void; showToast: (message: string, type: 'success' | 'error' | 'info') => void }) => {
   const [uploading, setUploading] = useState<string | null>(null)
+  const [previewCol, setPreviewCol] = useState<DesignerCollection | null>(null)
 
   const addCollection = () => {
     setCollections([...collections, { id: '', designer_id: '', title: '', season: '', description: '', inspiration: '', looks: null, cover_image_url: '', images: null, is_latest: false, created_at: '' }])
@@ -1138,12 +1332,30 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
     setCollections(collections.filter((_, i) => i !== idx))
   }
 
+  const duplicateCollection = (idx: number) => {
+    const copy = { ...collections[idx], id: '', is_latest: false, title: `${collections[idx].title} (Copy)` }
+    const updated = [...collections]
+    updated.splice(idx + 1, 0, copy)
+    setCollections(updated)
+  }
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, idx: number, type: 'cover' | 'gallery') => {
     const file = e.target.files?.[0]
     if (!file) return
 
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select an image file', 'error')
+      return
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('Image must be under 10MB', 'error')
+      return
+    }
+
     const uploadKey = `${idx}-${type}`
     setUploading(uploadKey)
+    showToast(`Uploading ${type} image...`, 'info')
 
     try {
       const fileExt = file.name.split('.').pop()
@@ -1151,7 +1363,7 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
 
       const { data, error } = await supabase.storage
         .from('designers')
-        .upload(fileName, file)
+        .upload(fileName, file, { cacheControl: '31536000', upsert: false })
 
       if (error) throw error
 
@@ -1165,9 +1377,10 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
         const currentImages = collections[idx].images || []
         updateCollection(idx, 'images', [...currentImages, urlData.publicUrl])
       }
+      showToast(`${type === 'cover' ? 'Cover' : 'Gallery'} image uploaded`, 'success')
     } catch (error) {
       console.error('Error uploading image:', error)
-      alert('Error uploading image. Please try again.')
+      showToast('Error uploading image. Please try again.', 'error')
     } finally {
       setUploading(null)
     }
@@ -1235,6 +1448,8 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
           </>
         )
       })()}
+      {/* Collection Preview Modal */}
+      {previewCol && <CollectionPreview collection={previewCol} onClose={() => setPreviewCol(null)} />}
     </div>
   )
 
@@ -1249,9 +1464,17 @@ const CollectionsEditor = ({ collections, setCollections }: { collections: Desig
               <span className="px-2 py-0.5 text-[10px] uppercase tracking-wider bg-[#bb9457]/10 text-[#bb9457] border border-[#bb9457]/30 rounded-sm">Latest</span>
             )}
           </div>
-          <button onClick={() => removeCollection(idx)} className="text-red-400 hover:text-red-300 transition-colors">
-            <Ic name="trash" className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-1">
+            <button onClick={() => setPreviewCol(col)} className="p-1.5 text-neutral-500 hover:text-white hover:bg-neutral-800 rounded-md transition-all" title="Preview">
+              <Ic name="eye" className="w-3.5 h-3.5" />
+            </button>
+            <button onClick={() => duplicateCollection(idx)} className="p-1.5 text-neutral-500 hover:text-[#bb9457] hover:bg-[#bb9457]/10 rounded-md transition-all" title="Duplicate">
+              <Ic name="duplicate" className="w-3.5 h-3.5" />
+            </button>
+            <button onClick={() => removeCollection(idx)} className="p-1.5 text-neutral-500 hover:text-red-400 hover:bg-red-500/10 rounded-md transition-all" title="Delete">
+              <Ic name="trash" className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
 
           <div className="p-4 space-y-4">
@@ -1395,25 +1618,26 @@ const EducationEditor = ({ education, setEducation }: { education: DesignerEduca
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <SectionHeader icon="academic" title={`Education (${education.length})`} />
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
-          <Ic name="plus" className="w-3.5 h-3.5" /> Add
-        </button>
-      </div>
-      {education.map((edu, idx) => (
-        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-md p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-neutral-500">Education #{idx + 1}</span>
-            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
-          </div>
-          <Input label="Institution" value={edu.institution} onChange={(e) => update(idx, 'institution', e.target.value)} placeholder="University / School name" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <Input label="Degree" value={edu.degree || ''} onChange={(e) => update(idx, 'degree', e.target.value)} placeholder="BFA, MFA, Diploma" />
-            <Input label="Year" value={edu.year || ''} onChange={(e) => update(idx, 'year', e.target.value)} placeholder="2020 - 2024" />
-          </div>
+      <Card icon="academic" title="Education & Training" subtitle="Academic background and qualifications" badge={`${education.length} entries`}>
+        <div className="pt-4 space-y-3">
+          {education.map((edu, idx) => (
+            <div key={idx} className="bg-neutral-900/50 border border-neutral-800/60 rounded-lg p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-neutral-500">Education #{idx + 1}</span>
+                <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
+              </div>
+              <Input label="Institution" value={edu.institution} onChange={(e) => update(idx, 'institution', e.target.value)} placeholder="University / School name" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <Input label="Degree" value={edu.degree || ''} onChange={(e) => update(idx, 'degree', e.target.value)} placeholder="BFA, MFA, Diploma" />
+                <Input label="Year" value={edu.year || ''} onChange={(e) => update(idx, 'year', e.target.value)} placeholder="2020 - 2024" />
+              </div>
+            </div>
+          ))}
+          <button onClick={add} className="flex items-center gap-1.5 px-3 py-2 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-lg transition-colors w-full justify-center">
+            <Ic name="plus" className="w-3.5 h-3.5" /> Add Education
+          </button>
         </div>
-      ))}
+      </Card>
     </div>
   )
 }
@@ -1430,92 +1654,69 @@ const AchievementsEditor = ({ achievements, setAchievements }: { achievements: D
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <SectionHeader icon="trophy" title={`Achievements (${achievements.length})`} />
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
-          <Ic name="plus" className="w-3.5 h-3.5" /> Add
-        </button>
-      </div>
-      {achievements.map((ach, idx) => (
-        <div key={idx} className="bg-neutral-950 border border-neutral-800 rounded-md p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-neutral-500">Achievement #{idx + 1}</span>
-            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
-          </div>
-          <Input label="Title" value={ach.title} onChange={(e) => update(idx, 'title', e.target.value)} placeholder="Award / recognition name" />
-          <Textarea label="Details" value={ach.detail || ''} onChange={(e) => update(idx, 'detail', e.target.value)} rows={2} placeholder="Brief description" />
+      <Card icon="trophy" title="Awards & Recognition" subtitle="Achievements and honors" badge={`${achievements.length} awards`}>
+        <div className="pt-4 space-y-3">
+          {achievements.map((ach, idx) => (
+            <div key={idx} className="bg-neutral-900/50 border border-neutral-800/60 rounded-lg p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-neutral-500">Achievement #{idx + 1}</span>
+                <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
+              </div>
+              <Input label="Title" value={ach.title} onChange={(e) => update(idx, 'title', e.target.value)} placeholder="Award / recognition name" />
+              <Textarea label="Details" value={ach.detail || ''} onChange={(e) => update(idx, 'detail', e.target.value)} rows={2} placeholder="Brief description" />
+            </div>
+          ))}
+          <button onClick={add} className="flex items-center gap-1.5 px-3 py-2 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-lg transition-colors w-full justify-center">
+            <Ic name="plus" className="w-3.5 h-3.5" /> Add Achievement
+          </button>
         </div>
-      ))}
+      </Card>
     </div>
   )
 }
 
 // Skills Editor
 const SkillsEditor = ({ skills, setSkills }: { skills: DesignerSkill[]; setSkills: (v: DesignerSkill[]) => void }) => {
-  const add = () => setSkills([...skills, { id: '', designer_id: '', skill: '', created_at: '' }])
-  const update = (idx: number, value: string) => {
-    const updated = [...skills]
-    updated[idx] = { ...updated[idx], skill: value }
-    setSkills(updated)
+  const skillNames = skills.map(s => s.skill)
+  const updateSkills = (names: string[]) => {
+    setSkills(names.map(name => ({ id: '', designer_id: '', skill: name, created_at: '' })))
   }
-  const remove = (idx: number) => setSkills(skills.filter((_, i) => i !== idx))
-
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <SectionHeader icon="star" title={`Skills (${skills.length})`} />
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
-          <Ic name="plus" className="w-3.5 h-3.5" /> Add
-        </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {skills.map((sk, idx) => (
-          <div key={idx} className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 rounded-md px-3 py-2">
-            <input
-              value={sk.skill}
-              onChange={(e) => update(idx, e.target.value)}
-              placeholder="Skill name"
-              className="flex-1 bg-transparent text-sm text-white placeholder-neutral-600 focus:outline-none"
-            />
-            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300 p-0.5"><Ic name="x" className="w-3.5 h-3.5" /></button>
-          </div>
-        ))}
-      </div>
+      <Card icon="star" title="Skills & Expertise" subtitle="Craft techniques and specializations" badge={`${skills.length} skills`}>
+        <div className="pt-4">
+          <TagInput
+            label="Design Skills"
+            tags={skillNames}
+            onChange={updateSkills}
+            placeholder="e.g. Bridal Couture, Embroidery, Draping..."
+            hint="Press Enter to add each skill. These appear as tags on the designer profile."
+          />
+        </div>
+      </Card>
     </div>
   )
 }
 
 // Certifications Editor
 const CertificationsEditor = ({ certifications, setCertifications }: { certifications: DesignerCertification[]; setCertifications: (v: DesignerCertification[]) => void }) => {
-  const add = () => setCertifications([...certifications, { id: '', designer_id: '', certification: '', created_at: '' }])
-  const update = (idx: number, value: string) => {
-    const updated = [...certifications]
-    updated[idx] = { ...updated[idx], certification: value }
-    setCertifications(updated)
+  const certNames = certifications.map(c => c.certification)
+  const updateCerts = (names: string[]) => {
+    setCertifications(names.map(name => ({ id: '', designer_id: '', certification: name, created_at: '' })))
   }
-  const remove = (idx: number) => setCertifications(certifications.filter((_, i) => i !== idx))
-
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <SectionHeader icon="document" title={`Certifications (${certifications.length})`} />
-        <button onClick={add} className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-md transition-colors">
-          <Ic name="plus" className="w-3.5 h-3.5" /> Add
-        </button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {certifications.map((cert, idx) => (
-          <div key={idx} className="flex items-center gap-2 bg-neutral-950 border border-neutral-800 rounded-md px-3 py-2">
-            <input
-              value={cert.certification}
-              onChange={(e) => update(idx, e.target.value)}
-              placeholder="Certification name"
-              className="flex-1 bg-transparent text-sm text-white placeholder-neutral-600 focus:outline-none"
-            />
-            <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300 p-0.5"><Ic name="x" className="w-3.5 h-3.5" /></button>
-          </div>
-        ))}
-      </div>
+      <Card icon="document" title="Certifications" subtitle="Professional qualifications & training" badge={`${certifications.length} certs`}>
+        <div className="pt-4">
+          <TagInput
+            label="Professional Certifications"
+            tags={certNames}
+            onChange={updateCerts}
+            placeholder="e.g. Certified Pattern Maker, Textile Design Certificate..."
+            hint="Press Enter to add each certification."
+          />
+        </div>
+      </Card>
     </div>
   )
 }
