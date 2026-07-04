@@ -4,6 +4,21 @@ import SEO from '../components/SEO'
 import { supabase } from '../lib/supabase'
 import type { Designer } from '../types/database'
 
+// Helper to get optimized thumbnail URL from Supabase storage
+const getThumbnailUrl = (url: string | null | undefined, width = 400, height = 533): string => {
+  if (!url) return '/images/placeholder.webp'
+  // If it's a Supabase storage URL, add transformation params
+  if (url.includes('supabase.co/storage')) {
+    // Extract bucket and path from URL
+    const match = url.match(/\/storage\/v1\/object\/(?:public\/)?([^/]+)\/(.+)/)
+    if (match) {
+      const [, bucket, path] = match
+      return `${supabase.storage.from(bucket).getPublicUrl(path.split('?')[0]).data.publicUrl}?width=${width}&height=${height}&resize=cover`
+    }
+  }
+  return url
+}
+
 // ============================================
 // DESIGNERS DIRECTORY — Minimal Editorial Grid
 // ============================================
@@ -13,7 +28,7 @@ import type { Designer } from '../types/database'
 
 const categories = ['All', 'Womenswear', 'Menswear', 'Bridal', 'Sustainable', 'Textile', 'Streetwear']
 
-const DESIGNERS_PER_PAGE = 6
+const DESIGNERS_PER_PAGE = 15
 
 const DesignersDirectory = () => {
   const [designers, setDesigners] = useState<Designer[]>([])
@@ -23,13 +38,13 @@ const DesignersDirectory = () => {
   const [showFilters, setShowFilters] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
 
-  // Fetch designers from Supabase
+  // Fetch designers from Supabase - only needed columns
   useEffect(() => {
     const fetchDesigners = async () => {
       try {
         const { data, error } = await supabase
           .from('designers')
-          .select('*')
+          .select('id, name, brand, slug, image_url, specialization, category, location')
           .eq('is_active', true)
           .order('created_at', { ascending: false })
 
@@ -203,10 +218,11 @@ const DesignersDirectory = () => {
                   className="group relative block overflow-hidden bg-neutral-950 aspect-[3/4]"
                 >
                   <img
-                    src={d.image_url || '/images/placeholder.webp'}
+                    src={getThumbnailUrl(d.image_url)}
                     alt={d.name}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
                   {/* Name overlay — only on hover */}
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-end">

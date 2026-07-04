@@ -498,14 +498,23 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
   const [uploadingImage, setUploadingImage] = useState<'profile' | 'cover' | null>(null)
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const designerIdRef = useRef<string | null>(designer?.id || null)
+  const relatedDataLoadedRef = useRef(false)
+  const [relatedDataLoaded, setRelatedDataLoaded] = useState(!designer) // true if new designer (no data to load)
 
   useEffect(() => {
-    if (designer) fetchRelatedData(designer.id)
+    if (designer) {
+      relatedDataLoadedRef.current = false
+      setRelatedDataLoaded(false)
+      fetchRelatedData(designer.id)
+    } else {
+      relatedDataLoadedRef.current = true
+      setRelatedDataLoaded(true)
+    }
   }, [designer])
 
-  // Auto-save effect
+  // Auto-save effect - only after related data is loaded
   useEffect(() => {
-    if (hasUnsavedChanges && designerIdRef.current) {
+    if (hasUnsavedChanges && designerIdRef.current && relatedDataLoadedRef.current) {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current)
       saveTimeoutRef.current = setTimeout(() => {
         handleAutoSave()
@@ -543,6 +552,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     setSkills(skiRes.data || [])
     setCertifications(cerRes.data || [])
     setSocialLinks(socRes.data || {})
+    relatedDataLoadedRef.current = true
+    setRelatedDataLoaded(true)
   }
 
   const updateField = (field: keyof DesignerFormData, value: string | boolean) => {
@@ -561,6 +572,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
   const handleAutoSave = async () => {
     if (!form.name || !form.brand) return
+    if (!relatedDataLoadedRef.current) return // Don't auto-save until data is loaded
     setAutoSaving(true)
     try {
       const slug = form.slug || generateSlug(form.name, form.brand)
@@ -586,6 +598,10 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       showToast('Name and Brand are required', 'error')
       return
     }
+    if (!relatedDataLoadedRef.current) {
+      showToast('Loading designer data, please try again in a moment...', 'info')
+      return
+    }
     setSaving(true)
     try {
       const slug = form.slug || generateSlug(form.name, form.brand)
@@ -599,6 +615,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
         designerIdRef.current = data.id
       }
       await saveRelatedData(designerIdRef.current!)
+      // Refresh related data after save to reflect any ID changes
+      await fetchRelatedData(designerIdRef.current!)
       setLastSaved(new Date())
       setHasUnsavedChanges(false)
       showToast('Designer profile saved successfully', 'success')
@@ -672,10 +690,24 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       await supabase.from(table).delete().eq('designer_id', designerId)
     }
 
-    // Insert collections
+    // Insert collections - ensure only ONE is marked as latest
     if (collections.length > 0) {
+      // Find the last collection marked as latest (most recently toggled)
+      const latestIdx = collections.map((c, i) => c.is_latest ? i : -1).filter(i => i >= 0)
+      const keepLatestIdx = latestIdx.length > 0 ? latestIdx[latestIdx.length - 1] : -1
+      
       await supabase.from('designer_collections').insert(
-        collections.map(c => ({ designer_id: designerId, title: c.title, season: c.season, description: c.description, inspiration: c.inspiration, looks: c.looks, cover_image_url: c.cover_image_url, images: c.images, is_latest: c.is_latest }))
+        collections.map((c, i) => ({ 
+          designer_id: designerId, 
+          title: c.title, 
+          season: c.season, 
+          description: c.description, 
+          inspiration: c.inspiration, 
+          looks: c.looks, 
+          cover_image_url: c.cover_image_url, 
+          images: c.images, 
+          is_latest: i === keepLatestIdx // Only one collection can be latest
+        }))
       )
     }
 
@@ -855,6 +887,14 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
         {/* Content */}
         <div className="px-8 py-6 space-y-5">
+          {/* Loading indicator for related data */}
+          {designer && !relatedDataLoaded && (
+            <div className="flex items-center gap-3 px-4 py-3 bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-lg">
+              <span className="w-4 h-4 border-2 border-[#bb9457]/30 border-t-[#bb9457] rounded-full animate-spin" />
+              <span className="text-xs text-[#bb9457] font-medium">Loading designer data...</span>
+            </div>
+          )}
+
           {/* Basic Info */}
           {currentStep === 0 && (
             <div className="space-y-4">
@@ -1325,6 +1365,12 @@ const CollectionsEditor = ({ collections, setCollections, showToast }: { collect
   const updateCollection = (idx: number, field: string, value: string | number | boolean | string[] | null) => {
     const updated = [...collections]
     updated[idx] = { ...updated[idx], [field]: value }
+    // If marking as latest, unmark all others
+    if (field === 'is_latest' && value === true) {
+      updated.forEach((c, i) => {
+        if (i !== idx) c.is_latest = false
+      })
+    }
     setCollections(updated)
   }
 
@@ -1340,49 +1386,60 @@ const CollectionsEditor = ({ collections, setCollections, showToast }: { collect
   }
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, idx: number, type: 'cover' | 'gallery') => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const files = e.target.files
+    if (!files || files.length === 0) return
 
-    if (!file.type.startsWith('image/')) {
-      showToast('Please select an image file', 'error')
-      return
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      showToast('Image must be under 10MB', 'error')
-      return
+    // Validate all files
+    for (let i = 0; i < files.length; i++) {
+      if (!files[i].type.startsWith('image/')) {
+        showToast('Please select only image files', 'error')
+        return
+      }
+      if (files[i].size > 10 * 1024 * 1024) {
+        showToast(`File ${files[i].name} is too large (max 10MB)`, 'error')
+        return
+      }
     }
 
     const uploadKey = `${idx}-${type}`
     setUploading(uploadKey)
-    showToast(`Uploading ${type} image...`, 'info')
+    showToast(`Uploading ${files.length} image${files.length > 1 ? 's' : ''}...`, 'info')
 
     try {
-      const fileExt = file.name.split('.').pop()
-      const fileName = `collections/${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`
+      const uploadedUrls: string[] = []
+      
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const fileExt = file.name.split('.').pop()
+        const fileName = `collections/${Date.now()}-${Math.random().toString(36).substring(2)}-${i}.${fileExt}`
 
-      const { data, error } = await supabase.storage
-        .from('designers')
-        .upload(fileName, file, { cacheControl: '31536000', upsert: false })
+        const { data, error } = await supabase.storage
+          .from('designers')
+          .upload(fileName, file, { cacheControl: '31536000', upsert: false })
 
-      if (error) throw error
+        if (error) throw error
 
-      const { data: urlData } = supabase.storage
-        .from('designers')
-        .getPublicUrl(data.path)
+        const { data: urlData } = supabase.storage
+          .from('designers')
+          .getPublicUrl(data.path)
+        
+        uploadedUrls.push(urlData.publicUrl)
+      }
 
       if (type === 'cover') {
-        updateCollection(idx, 'cover_image_url', urlData.publicUrl)
+        updateCollection(idx, 'cover_image_url', uploadedUrls[0])
       } else {
         const currentImages = collections[idx].images || []
-        updateCollection(idx, 'images', [...currentImages, urlData.publicUrl])
+        updateCollection(idx, 'images', [...currentImages, ...uploadedUrls])
       }
-      showToast(`${type === 'cover' ? 'Cover' : 'Gallery'} image uploaded`, 'success')
+      showToast(`${files.length} image${files.length > 1 ? 's' : ''} uploaded successfully`, 'success')
     } catch (error) {
-      console.error('Error uploading image:', error)
-      showToast('Error uploading image. Please try again.', 'error')
+      console.error('Error uploading images:', error)
+      showToast('Error uploading images. Please try again.', 'error')
     } finally {
       setUploading(null)
+      // Reset the input value so the same files can be selected again
+      e.target.value = ''
     }
   }
 
@@ -1594,6 +1651,7 @@ const CollectionsEditor = ({ collections, setCollections, showToast }: { collect
                   <input
                     type="file"
                     accept="image/*"
+                    multiple
                     onChange={(e) => handleImageUpload(e, idx, 'gallery')}
                     className="hidden"
                   />

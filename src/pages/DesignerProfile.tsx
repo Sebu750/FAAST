@@ -5,6 +5,20 @@ import { supabase } from '../lib/supabase'
 import type { DesignerProfile } from '../types/database'
 import { resolveAsset } from '../lib/assetResolver'
 
+// Optimized image URL with Supabase transformation
+const getOptimizedUrl = (url: string | null | undefined, width = 800, height = 1000): string => {
+  if (!url) return '/images/placeholder.webp'
+  const resolved = resolveAsset(url)
+  if (resolved.includes('supabase.co/storage')) {
+    const match = resolved.match(/\/storage\/v1\/object\/(?:public\/)?([^/]+)\/(.+)/)
+    if (match) {
+      const [, bucket, path] = match
+      return `${supabase.storage.from(bucket).getPublicUrl(path.split('?')[0]).data.publicUrl}?width=${width}&height=${height}&resize=cover`
+    }
+  }
+  return resolved
+}
+
 // ============================================
 // DESIGNER PROFILE
 // ============================================
@@ -31,10 +45,10 @@ const DesignerProfile = () => {
       try {
         setLoading(true)
         
-        // Fetch main designer data
+        // Fetch main designer data - only needed columns
         const { data: designerData, error: designerError } = await supabase
           .from('designers')
-          .select('*')
+          .select('id, name, brand, slug, location, nationality, languages, experience, specialization, category, gender, bio, short_bio, philosophy, image_url, cover_image_url, availability, instagram_reels, is_featured, is_active, created_at, updated_at')
           .eq('slug', slug)
           .eq('is_active', true)
           .single()
@@ -46,14 +60,14 @@ const DesignerProfile = () => {
           return
         }
 
-        // Fetch related data in parallel
+        // Fetch related data in parallel - only needed columns
         const [collectionsRes, educationRes, achievementsRes, skillsRes, certificationsRes, socialRes] = await Promise.all([
-          supabase.from('designer_collections').select('*').eq('designer_id', designerData.id).order('created_at', { ascending: false }),
-          supabase.from('designer_education').select('*').eq('designer_id', designerData.id).order('year', { ascending: false }),
-          supabase.from('designer_achievements').select('*').eq('designer_id', designerData.id).order('created_at', { ascending: false }),
-          supabase.from('designer_skills').select('*').eq('designer_id', designerData.id),
-          supabase.from('designer_certifications').select('*').eq('designer_id', designerData.id),
-          supabase.from('designer_social_links').select('*').eq('designer_id', designerData.id).single()
+          supabase.from('designer_collections').select('id, designer_id, title, season, description, inspiration, looks, cover_image_url, images, is_latest, created_at').eq('designer_id', designerData.id).order('created_at', { ascending: false }),
+          supabase.from('designer_education').select('id, designer_id, institution, degree, year, created_at').eq('designer_id', designerData.id).order('year', { ascending: false }),
+          supabase.from('designer_achievements').select('id, designer_id, title, detail, created_at').eq('designer_id', designerData.id).order('created_at', { ascending: false }),
+          supabase.from('designer_skills').select('id, designer_id, skill, created_at').eq('designer_id', designerData.id),
+          supabase.from('designer_certifications').select('id, designer_id, certification, created_at').eq('designer_id', designerData.id),
+          supabase.from('designer_social_links').select('id, designer_id, instagram, facebook, tiktok, pinterest, linkedin, behance, website, email, shop, portfolio, created_at').eq('designer_id', designerData.id).single()
         ])
 
         const fullDesigner: DesignerProfile = {
@@ -135,7 +149,7 @@ const DesignerProfile = () => {
 
       {/* ===== HERO BANNER ===== */}
       <section className="relative h-[50vh] lg:h-[60vh] overflow-hidden">
-        <img src={resolveAsset(designer.cover_image_url) || '/images/placeholder.webp'} alt={designer.brand} className="absolute inset-0 w-full h-full object-cover" />
+        <img src={getOptimizedUrl(designer.cover_image_url, 1600, 900)} alt={designer.brand} className="absolute inset-0 w-full h-full object-cover" decoding="async" fetchPriority="high" />
         <div className="absolute inset-0 bg-black/30" />
         {/* Back button */}
         <div className="absolute top-28 left-4 sm:left-6 lg:left-8 z-10">
@@ -152,7 +166,7 @@ const DesignerProfile = () => {
           {/* Brand mark + name centered */}
           <div className="text-center mb-8">
             <div className="w-20 h-20 mx-auto border border-neutral-800 rounded-full overflow-hidden bg-neutral-900 mb-4">
-              <img src={resolveAsset(designer.image_url) || '/images/placeholder.webp'} alt={designer.name} className="w-full h-full object-cover" />
+              <img src={getOptimizedUrl(designer.image_url, 200, 200)} alt={designer.name} className="w-full h-full object-cover" decoding="async" />
             </div>
             <p className="text-neutral-500 text-[10px] uppercase tracking-[0.25em] mb-2">{designer.brand}</p>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-[0.95] tracking-tight">{designer.name}</h1>
@@ -192,211 +206,191 @@ const DesignerProfile = () => {
               Latest Collection
             </h2>
 
-            {/* Dynamic Grid Layout based on image count */}
+            {/* MOODBOARD COLLAGE - Premium fashion editorial layout */}
             {latestCollection.images && latestCollection.images.length > 0 ? (
-              latestCollection.images.length >= 24 ? (
-                /* Large Collection (24+ images): Editorial Moodboard */
-                <div className="mb-12">
-                  {/* Hero Image - Full Width */}
-                  <div className="mb-1 overflow-hidden cursor-pointer group relative h-[60vh] min-h-[400px]">
-                    <img
-                      src={resolveAsset(latestCollection.images[0])}
-                      alt={`${latestCollection.title} hero`}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      onClick={() => latestCollection.images && setPreviewImage(latestCollection.images[0])}
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+              <div className="mb-12">
+                {/* Hero Image - Full Width Cinematic */}
+                <div className="mb-2 overflow-hidden cursor-pointer group relative h-[70vh] min-h-[500px] max-h-[800px]">
+                  <img
+                    src={getOptimizedUrl(latestCollection.images[0], 1200, 1500)}
+                    alt={`${latestCollection.title} hero`}
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.02]"
+                    onClick={() => latestCollection.images && setPreviewImage(latestCollection.images[0])}
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <span className="text-white/90 text-xs uppercase tracking-[0.2em]">Look 01</span>
+                    <span className="text-white/60 text-xs">Click to expand</span>
                   </div>
-                  {/* Masonry Grid */}
-                  <div className="columns-2 sm:columns-3 lg:columns-4 gap-1">
+                </div>
+                            
+                {/* Asymmetric Supporting Grid */}
+                {latestCollection.images.length > 1 && (
+                  <div className="grid grid-cols-12 gap-1.5">
                     {latestCollection.images.slice(1).map((img, i) => {
-                      const heights = ['h-64', 'h-80', 'h-96', 'h-72', 'h-56', 'h-88']
+                      // Moodboard pattern: varied sizes creating visual rhythm
+                      const patterns = [
+                        // Row 1: Large feature + 2 medium
+                        'col-span-5 row-span-2 h-[420px]',
+                        'col-span-4 row-span-1 h-[205px]',
+                        'col-span-3 row-span-1 h-[205px]',
+                        // Row 2 continuation
+                        'col-span-4 row-span-1 h-[205px]',
+                        'col-span-3 row-span-2 h-[420px]',
+                        // Row 3: Wide panoramic + squares
+                        'col-span-6 row-span-1 h-[280px]',
+                        'col-span-3 row-span-1 h-[280px]',
+                        'col-span-3 row-span-1 h-[280px]',
+                        // Row 4: Mixed editorial
+                        'col-span-4 row-span-1 h-[320px]',
+                        'col-span-4 row-span-2 h-[650px]',
+                        'col-span-4 row-span-1 h-[320px]',
+                        // Row 5
+                        'col-span-4 row-span-1 h-[320px]',
+                        'col-span-4 row-span-1 h-[320px]',
+                        // Additional images
+                        'col-span-3 row-span-1 h-[260px]',
+                        'col-span-6 row-span-1 h-[260px]',
+                        'col-span-3 row-span-1 h-[260px]',
+                        'col-span-4 row-span-1 h-[300px]',
+                        'col-span-4 row-span-1 h-[300px]',
+                        'col-span-4 row-span-1 h-[300px]',
+                        'col-span-6 row-span-1 h-[350px]',
+                        'col-span-3 row-span-1 h-[350px]',
+                        'col-span-3 row-span-1 h-[350px]',
+                        'col-span-4 row-span-1 h-[280px]',
+                        'col-span-4 row-span-1 h-[280px]',
+                        'col-span-4 row-span-1 h-[280px]',
+                        'col-span-3 row-span-1 h-[320px]',
+                        'col-span-6 row-span-1 h-[320px]',
+                        'col-span-3 row-span-1 h-[320px]',
+                      ]
+                      const sizeClass = patterns[i % patterns.length]
                       return (
                         <div
                           key={i}
-                          className={`break-inside-avoid mb-1 overflow-hidden cursor-pointer group relative ${heights[i % heights.length]}`}
+                          className={`overflow-hidden cursor-pointer group relative ${sizeClass}`}
                           onClick={() => setPreviewImage(img)}
                         >
                           <img
-                            src={resolveAsset(img)}
+                            src={getOptimizedUrl(img, 600, 800)}
                             alt={`${latestCollection.title} look ${i + 2}`}
                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             loading="lazy"
+                            decoding="async"
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                          <div className="absolute bottom-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <span className="text-white/80 text-[10px] uppercase tracking-wider bg-black/40 backdrop-blur-sm px-2 py-1">Look {String(i + 2).padStart(2, '0')}</span>
+                          </div>
                         </div>
                       )
                     })}
                   </div>
-                </div>
-              ) : latestCollection.images.length >= 20 ? (
-                /* Medium-Large Collection (20-23 images): Asymmetric Grid */
-                <div className="grid grid-cols-6 gap-1 mb-12">
-                  {latestCollection.images.map((img, i) => {
-                    // Create asymmetric pattern: large, medium, small, repeat
-                    const patterns = [
-                      'col-span-3 row-span-2 h-[500px]',
-                      'col-span-3 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-3 row-span-1 h-[245px]',
-                      'col-span-3 row-span-2 h-[500px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-6 row-span-1 h-[300px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-3 row-span-2 h-[500px]',
-                      'col-span-3 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-3 row-span-1 h-[245px]',
-                      'col-span-6 row-span-1 h-[300px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                      'col-span-2 row-span-1 h-[245px]',
-                    ]
-                    const sizeClass = patterns[i % patterns.length]
-                    return (
-                      <div
-                        key={i}
-                        className={`overflow-hidden cursor-pointer group relative ${sizeClass}`}
-                        onClick={() => setPreviewImage(img)}
-                      >
-                        <img
-                          src={resolveAsset(img)}
-                          alt={`${latestCollection.title} look ${i + 1}`}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-                      </div>
-                    )
-                  })}
-                </div>
-              ) : latestCollection.images.length >= 18 ? (
-                /* Medium Collection (18-19 images): Feature + Grid */
-                <div className="mb-12">
-                  {/* Feature Row: 2 large images */}
-                  <div className="grid grid-cols-2 gap-1 mb-1">
-                    {latestCollection.images.slice(0, 2).map((img, i) => (
-                      <div
-                        key={i}
-                        className="overflow-hidden cursor-pointer group relative h-[400px]"
-                        onClick={() => setPreviewImage(img)}
-                      >
-                        <img
-                          src={resolveAsset(img)}
-                          alt={`${latestCollection.title} look ${i + 1}`}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-                      </div>
-                    ))}
-                  </div>
-                  {/* Remaining Grid */}
-                  <div className="columns-3 gap-1">
-                    {latestCollection.images.slice(2).map((img, i) => {
-                      const heights = ['h-56', 'h-64', 'h-72', 'h-64', 'h-56', 'h-72']
-                      return (
-                        <div
-                          key={i}
-                          className={`break-inside-avoid mb-1 overflow-hidden cursor-pointer group relative ${heights[i % heights.length]}`}
-                          onClick={() => setPreviewImage(img)}
-                        >
-                          <img
-                            src={resolveAsset(img)}
-                            alt={`${latestCollection.title} look ${i + 3}`}
-                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-                        </div>
-                      )
-                    })}
-                  </div>
-                </div>
-              ) : (
-                /* Small Collection (<18 images): Simple Grid */
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 mb-12">
-                  {latestCollection.images.map((img, i) => (
-                    <div
-                      key={i}
-                      className="overflow-hidden cursor-pointer group relative h-64 sm:h-80"
-                      onClick={() => setPreviewImage(img)}
-                    >
-                      <img
-                        src={resolveAsset(img)}
-                        alt={`${latestCollection.title} look ${i + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-                    </div>
-                  ))}
-                </div>
-              )
+                )}
+              </div>
             ) : (
-              /* No Images Placeholder */
-              <div className="mb-12 p-12 border border-neutral-800 text-center">
-                <p className="text-neutral-500 text-sm">Collection images coming soon</p>
+              /* No Images - Show Collection Info Card */
+              <div className="mb-8 p-8 sm:p-12 border border-neutral-800 bg-neutral-950/50">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="w-2 h-2 bg-[#bb9457] rounded-full animate-pulse" />
+                  <p className="text-neutral-500 text-xs uppercase tracking-wider">Collection images coming soon</p>
+                </div>
+                <p className="text-neutral-600 text-sm">Check back for the full lookbook</p>
               </div>
             )}
 
-            {/* Collection name + description */}
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 pt-8">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white leading-[0.95] tracking-tight shrink-0">
-                {latestCollection.title}
-              </h3>
+            {/* Collection name + description - Always shown */}
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-12 pt-4 sm:pt-8">
+              <div className="shrink-0">
+                <p className="text-[#bb9457] text-[10px] uppercase tracking-[0.3em] mb-2">{latestCollection.season}</p>
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white leading-[0.95] tracking-tight">
+                  {latestCollection.title}
+                </h3>
+                {latestCollection.looks && (
+                  <p className="text-neutral-600 text-xs mt-2">{latestCollection.looks} looks</p>
+                )}
+              </div>
               <div className="max-w-md">
-                <p className="text-neutral-400 text-sm leading-relaxed mb-3">{latestCollection.description}</p>
-                <p className="text-neutral-600 text-xs">
-                  <span className="text-neutral-500">Inspiration:</span> {latestCollection.inspiration}
-                </p>
-                <p className="text-neutral-600 text-xs mt-1">{latestCollection.season} · {latestCollection.looks} looks</p>
+                <p className="text-neutral-400 text-sm leading-relaxed mb-4">{latestCollection.description}</p>
+                {latestCollection.inspiration && (
+                  <div className="border-l border-neutral-800 pl-4">
+                    <p className="text-neutral-500 text-xs">
+                      <span className="text-neutral-600 uppercase tracking-wider text-[10px]">Inspiration: </span>
+                      {latestCollection.inspiration}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* ===== PREVIOUS COLLECTIONS ===== */}
+      {/* ===== PREVIOUS COLLECTIONS - Editorial Masonry Grid ===== */}
       {previousCollections.length > 0 && (
-        <section className="py-16 lg:py-20 bg-black">
+        <section className="py-16 lg:py-24 bg-black">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <p className="text-[#bb9457] text-[10px] uppercase tracking-[0.3em] mb-2">Archive</p>
-            <h2 className="text-2xl lg:text-3xl font-serif text-white mb-8">Previous Collections</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {previousCollections.map(col => (
-                <div 
-                  key={col.id} 
-                  onClick={() => setViewCollection(col.id)}
-                  className="group bg-neutral-950 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500 overflow-hidden cursor-pointer"
-                >
-                  {/* Cover Banner */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img src={resolveAsset(col.cover_image_url) || '/images/placeholder.webp'} alt={col.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700" loading="lazy" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/50 to-transparent" />
-                    {/* Season badge */}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-black/60 backdrop-blur-sm text-neutral-300 text-[10px] uppercase tracking-[0.15em] px-3 py-1.5">{col.season}</span>
+            <h2 className="text-2xl lg:text-3xl font-serif text-white mb-10">Previous Collections</h2>
+            
+            {/* Masonry Grid - Pinterest/NJAL style with mixed heights */}
+            <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
+              {previousCollections.map((col, idx) => {
+                // Vary card heights for editorial masonry effect
+                const heights = ['h-72', 'h-80', 'h-96', 'h-[28rem]', 'h-64', 'h-[22rem]']
+                const cardHeight = heights[idx % heights.length]
+                
+                return (
+                  <div 
+                    key={col.id} 
+                    onClick={() => setViewCollection(col.id)}
+                    className="group relative overflow-hidden cursor-pointer break-inside-avoid bg-neutral-950 border border-neutral-800/50 hover:border-[#bb9457]/40 transition-all duration-500"
+                  >
+                    {/* Cover Image with Variable Height */}
+                    <div className={`relative ${cardHeight} overflow-hidden`}>
+                      <img 
+                        src={getOptimizedUrl(col.cover_image_url, 600, 800)}
+                        alt={col.title} 
+                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" 
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                      
+                      {/* Season Badge */}
+                      <div className="absolute top-4 left-4">
+                        <span className="bg-black/70 backdrop-blur-sm text-neutral-200 text-[10px] uppercase tracking-[0.2em] px-3 py-1.5 border border-white/10">
+                          {col.season}
+                        </span>
+                      </div>
+                      
+                      {/* Looks Count Badge */}
+                      <div className="absolute top-4 right-4">
+                        <span className="bg-[#bb9457]/90 backdrop-blur-sm text-black text-[10px] uppercase tracking-wider font-semibold px-2.5 py-1">
+                          {col.looks} looks
+                        </span>
+                      </div>
+                      
+                      {/* Bottom Content Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-5">
+                        <h3 className="text-white font-serif text-xl mb-1.5 group-hover:text-[#bb9457] transition-colors duration-300 leading-tight">
+                          {col.title}
+                        </h3>
+                        <p className="text-neutral-400 text-xs leading-relaxed line-clamp-2 mb-3">
+                          {col.description}
+                        </p>
+                        <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                          <span className="text-neutral-500 text-[10px] uppercase tracking-wider">View Collection</span>
+                          <span className="text-[#bb9457] text-sm group-hover:translate-x-1 transition-transform duration-300">→</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  {/* Info */}
-                  <div className="p-5">
-                    <h3 className="text-white font-serif text-lg mb-2 group-hover:text-[#bb9457] transition-colors">{col.title}</h3>
-                    <p className="text-neutral-500 text-xs leading-relaxed mb-4 line-clamp-2">{col.description}</p>
-                    <div className="flex items-center justify-between pt-3">
-                      <span className="text-neutral-600 text-[10px] uppercase tracking-wider">{col.looks} looks</span>
-                      <span className="text-[#bb9457] text-xs tracking-wide group-hover:translate-x-1 transition-transform">View Collection →</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </section>
@@ -442,9 +436,10 @@ const DesignerProfile = () => {
               {/* Profile Image */}
               <div className="w-32 h-32 rounded-full overflow-hidden bg-neutral-900 mb-12 border border-neutral-800">
                 <img 
-                  src={resolveAsset(designer.image_url) || '/images/placeholder.webp'} 
+                  src={getOptimizedUrl(designer.image_url, 300, 300)}
                   alt={designer.name}
                   className="w-full h-full object-cover"
+                  decoding="async"
                 />
               </div>
 
@@ -481,6 +476,59 @@ const DesignerProfile = () => {
                         <p className="text-neutral-600 text-xs mt-0.5">{a.detail}</p>
                       </div>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Skills */}
+              {designer.skills.length > 0 && (
+                <div className="mt-12 pt-8">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-600 mb-4">Skills & Expertise</p>
+                  <div className="flex flex-wrap gap-2">
+                    {designer.skills.map((s, i) => (
+                      <span key={i} className="px-3 py-1.5 bg-neutral-900 border border-neutral-800 text-neutral-300 text-xs rounded-full">
+                        {s.skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Certifications */}
+              {designer.certifications.length > 0 && (
+                <div className="mt-12 pt-8">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-600 mb-4">Certifications</p>
+                  <div className="space-y-2">
+                    {designer.certifications.map((c, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className="w-1 h-1 bg-[#bb9457] rounded-full" />
+                        <p className="text-neutral-300 text-sm">{c.certification}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Social Links */}
+              {designer.social_links && (
+                <div className="mt-12 pt-8">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-neutral-600 mb-4">Connect</p>
+                  <div className="space-y-2">
+                    {designer.social_links.instagram && (
+                      <a href={`https://instagram.com/${designer.social_links.instagram}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-400 hover:text-[#bb9457] text-sm transition-colors">
+                        <InstagramIcon /> Instagram
+                      </a>
+                    )}
+                    {designer.social_links.website && (
+                      <a href={designer.social_links.website.startsWith('http') ? designer.social_links.website : `https://${designer.social_links.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-400 hover:text-[#bb9457] text-sm transition-colors">
+                        <WebsiteIcon /> Website
+                      </a>
+                    )}
+                    {designer.social_links.email && (
+                      <a href={`mailto:${designer.social_links.email}`} className="flex items-center gap-3 text-neutral-400 hover:text-[#bb9457] text-sm transition-colors">
+                        <EmailIcon /> {designer.social_links.email}
+                      </a>
+                    )}
                   </div>
                 </div>
               )}
@@ -592,9 +640,10 @@ const DesignerProfile = () => {
             {/* Hero Cover Section */}
             <div className="relative h-[50vh] lg:h-[60vh] overflow-hidden" onClick={e => e.stopPropagation()}>
               <img 
-                src={resolveAsset(col.cover_image_url) || resolveAsset(col.images?.[0]) || '/images/placeholder.webp'}
+                src={getOptimizedUrl(col.cover_image_url, 1200, 1500)}
                 alt={col.title} 
                 className="w-full h-full object-cover opacity-80"
+                decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
               {/* Collection Title Overlay */}
@@ -646,10 +695,11 @@ const DesignerProfile = () => {
                           onClick={() => setPreviewImage(img)}
                         >
                           <img
-                            src={resolveAsset(img)}
+                            src={getOptimizedUrl(img, 600, 800)}
                             alt={`${col.title} look ${i + 1}`}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:brightness-110"
                             loading="lazy"
+                            decoding="async"
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300" />
                           {/* Look number on hover */}
