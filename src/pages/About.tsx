@@ -293,6 +293,17 @@ const About = () => {
           transform: translateY(-4px);
           box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
         }
+        @keyframes marqueeLeft {
+          from { transform: translateX(0); }
+          to { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          animation: marqueeLeft 40s linear infinite;
+          will-change: transform;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
       `}</style>
 
       {/* --- HERO SECTION --- */}
@@ -819,67 +830,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* --- SECTION 6: PHYSICAL SPACES --- */}
-      <Section className="bg-neutral-950 py-32" id="facilities" ref={setSectionRef('facilities') as React.Ref<HTMLDivElement>}>
-        <Container>
-          <div className={`max-w-3xl mb-16 transition-all duration-1000 ${isVisible['facilities'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
-            <div className="inline-flex items-center gap-2 glass px-5 py-2 rounded-full">
-              <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
-              <span className="text-[#bb9457] uppercase tracking-[0.3em] text-[10px] font-mono font-semibold">06 / PHYSICAL SPACES</span>
-            </div>
-            <h2 className="mt-4 font-serif text-3xl md:text-5xl text-white font-normal tracking-tight">
-              Where concepts materialize into <span className="text-gradient italic font-light">garments.</span>
-            </h2>
-            <p className="mt-4 text-neutral-400 font-light text-sm md:text-base leading-relaxed">
-              Premium, fully equipped coworking environments engineered specifically for fashion professionals. Planned launch across three metropolitan hubs.
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              { city: "Karachi Studio", date: "Launching Q3 2026", image: coworking },
-              { city: "Lahore Atelier", date: "Launching Q4 2026", image: studio },
-              { city: "Islamabad Hub", date: "Launching Q1 2027", image: heroHome }
-            ].map((facility, idx) => (
-              <div 
-                key={idx} 
-                className={`aspect-[4/5] overflow-hidden rounded-sm bg-neutral-900 border border-neutral-800 group hover:border-[#bb9457]/50 transition-all duration-1000 hover-lift ${isVisible['facilities'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}
-                style={{ transitionDelay: `${idx * 200}ms` }}
-              >
-                <div className="relative w-full h-full">
-                  <img 
-                    src={facility.image}
-                    alt={facility.city} 
-                    loading="lazy" 
-                    className="w-full h-full object-cover scale-110 filter grayscale contrast-125 group-hover:grayscale-0 group-hover:scale-120 transition-all duration-[1.5s] ease-out" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500" />
-                  <div className="absolute inset-0 glass opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  
-                  {/* Coming Soon Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <div className="text-center">
-                      <div className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-3">
-                        <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
-                        <span className="text-[#bb9457] uppercase tracking-[0.3em] text-[10px] font-mono font-semibold">Coming Soon</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute bottom-0 left-0 right-0 p-6 z-10 transform group-hover:-translate-y-2 transition-transform duration-500">
-                    <h4 className="font-serif text-2xl text-white font-normal mb-1">{facility.city}</h4>
-                    <p className="text-[10px] font-mono text-[#bb9457] uppercase tracking-widest">{facility.date}</p>
-                    <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                      <span className="text-white/80 text-xs font-light">Reserve Your Spot →</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Container>
-      </Section>
-
       {/* --- SECTION 7: GLOBAL MARKETPLACE --- */}
       <Section className="bg-white text-neutral-900 py-32" id="marketplace" ref={setSectionRef('marketplace') as React.Ref<HTMLDivElement>}>
         <Container>
@@ -942,33 +892,91 @@ const About = () => {
 
       {/* --- SECTION 10: PARTNERS & SUPPORTERS --- */}
       <Section className="bg-white text-neutral-900 py-32 relative overflow-hidden" id="partners" ref={setSectionRef('partners') as React.Ref<HTMLDivElement>}>
-        <div className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
-          <img src={imgs.workspace} alt="" className="w-full h-full object-cover"  loading="lazy" decoding="async" />
-        </div>
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#bb9457] to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(187,148,87,0.04),transparent_60%)] pointer-events-none" />
         
         <Container>
-          <div className={`grid md:grid-cols-12 gap-12 items-start transition-all duration-1000 ${isVisible['partners'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
-            <div className="md:col-span-4">
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-bold block">
-                10 / ALLIANCES
-              </span>
+          <div className={`text-center max-w-3xl mx-auto mb-20 transition-all duration-1000 ${isVisible['partners'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-neutral-200 bg-neutral-50 mb-6">
+              <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
+              <span className="text-[#bb9457] uppercase tracking-[0.3em] text-[10px] font-mono font-semibold">INDUSTRIAL ALLIANCES</span>
             </div>
-            <div className="md:col-span-8 space-y-6 text-neutral-500 font-light leading-relaxed text-base md:text-lg">
-              <p className="font-serif text-2xl md:text-3xl text-neutral-950 leading-[1.3] font-normal tracking-tight">
-                A shared institutional vision.
-              </p>
-              <p>
-                Adorzia is actively expanding its network of strategic partners across the global investment, fashion, and cultural sectors. We are forging alliances with premium fabric mills, design institutions, and venture funds who recognize the untapped fiscal potential of Pakistan's fashion IP.
-              </p>
-              <p className="text-neutral-900 font-medium">
-                If your organization aligns with the industrialization of contemporary Pakistani design, <Link to="/contact" className="text-[#bb9457] hover:text-black transition-colors underline underline-offset-4">let us begin a conversation</Link>.
-              </p>
-              <div className="pt-4">
-                <Link to="/contact" className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300 hover-lift inline-block">
-                  Request Partnership Details
-                </Link>
+            <h2 className="font-serif text-3xl md:text-5xl text-neutral-900 font-normal tracking-tight">
+              Strategic <span className="text-gradient italic font-light">partnerships.</span>
+            </h2>
+            <p className="mt-6 text-neutral-500 font-light text-base md:text-lg leading-relaxed">
+              Forging alliances with premium fabric mills, design institutions, and venture funds who recognize the untapped potential of Pakistan's fashion IP.
+            </p>
+          </div>
+
+          {/* Partner Logos Slider */}
+          <div className={`relative mb-20 transition-all duration-1000 delay-300 ${isVisible['partners'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
+            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            <div className="overflow-hidden">
+              <div className="flex animate-marquee gap-12 py-6" style={{ width: 'max-content' }}>
+                {[
+                  { name: "Nishat Textiles", category: "Fabric Mills" },
+                  { name: "Gul Ahmed", category: "Manufacturing" },
+                  { name: "Sapphire Textiles", category: "Fabric Mills" },
+                  { name: "Khaadi", category: "Fashion Brand" },
+                  { name: "Fashion Institute", category: "Education" },
+                  { name: "Design Academy", category: "Education" },
+                  { name: "Venture Capital", category: "Investment" },
+                  { name: "Retail Group", category: "Distribution" },
+                  { name: "Design Council", category: "Advisory" },
+                  { name: "Export Ltd", category: "Trade" },
+                  { name: "Luxury Brand", category: "Retail" },
+                  { name: "Craft Foundation", category: "Heritage" },
+                  { name: "Textile Corp", category: "Production" },
+                  { name: "Fashion House", category: "Design" },
+                  { name: "Studio Photography", category: "Creative" },
+                  { name: "Pattern Studio", category: "Technical" },
+                  { name: "Craft Council", category: "Heritage" },
+                ].concat([
+                  { name: "Nishat Textiles", category: "Fabric Mills" },
+                  { name: "Gul Ahmed", category: "Manufacturing" },
+                  { name: "Sapphire Textiles", category: "Fabric Mills" },
+                  { name: "Khaadi", category: "Fashion Brand" },
+                  { name: "Fashion Institute", category: "Education" },
+                  { name: "Design Academy", category: "Education" },
+                  { name: "Venture Capital", category: "Investment" },
+                  { name: "Retail Group", category: "Distribution" },
+                  { name: "Design Council", category: "Advisory" },
+                  { name: "Export Ltd", category: "Trade" },
+                  { name: "Luxury Brand", category: "Retail" },
+                  { name: "Craft Foundation", category: "Heritage" },
+                  { name: "Textile Corp", category: "Production" },
+                  { name: "Fashion House", category: "Design" },
+                  { name: "Studio Photography", category: "Creative" },
+                  { name: "Pattern Studio", category: "Technical" },
+                  { name: "Craft Council", category: "Heritage" },
+                ]).map((partner, idx) => (
+                  <div key={idx} className="flex-shrink-0 group">
+                    <div className="flex items-center gap-4 px-6 py-4">
+                      <div className="w-14 h-14 rounded-full bg-neutral-100 flex items-center justify-center group-hover:bg-[#bb9457]/10 transition-colors duration-500">
+                        <span className="text-xl font-serif text-[#bb9457]">{partner.name.charAt(0)}</span>
+                      </div>
+                      <div>
+                        <p className="text-neutral-900 text-sm font-medium">{partner.name}</p>
+                        <p className="text-neutral-400 text-[10px] uppercase tracking-wider">{partner.category}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
+          </div>
+
+          {/* CTA */}
+          <div className={`text-center transition-all duration-1000 delay-500 ${isVisible['partners'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
+            <p className="text-neutral-500 font-light text-sm mb-6">
+              If your organization aligns with the industrialization of contemporary Pakistani design
+            </p>
+            <Link to="/contact" className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-neutral-900 hover:text-white transition-all duration-300 inline-block hover-lift">
+              Request Partnership Details
+            </Link>
           </div>
         </Container>
       </Section>
