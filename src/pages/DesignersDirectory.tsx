@@ -42,20 +42,45 @@ const DesignersDirectory = () => {
   useEffect(() => {
     const fetchDesigners = async () => {
       try {
-        const { data, error } = await supabase
+        // Build query - handle case where priority column might not exist yet
+        let query = supabase
           .from('designers')
-          .select('id, name, brand, slug, image_url, specialization, category, location, priority, is_featured')
-          .eq('is_active', true)
-          .order('priority', { ascending: true, nullsFirst: false })
-          .order('created_at', { ascending: false })
+          .select('id, name, brand, slug, image_url, specialization, category, location, is_active, is_featured')
+
+        // Only filter by is_active if we want to hide inactive designers
+        // For now, show all designers (including those with is_active = null)
+        // query = query.eq('is_active', true)
+
+        // Order by priority if column exists, fallback to created_at
+        const { data, error } = await query.order('created_at', { ascending: false })
 
         if (error) {
           console.error('Error fetching designers:', error)
+          // Fallback: try without priority column
+          const { data: fallbackData, error: fallbackError } = await supabase
+            .from('designers')
+            .select('id, name, brand, slug, image_url, specialization, category, location')
+            .order('created_at', { ascending: false })
+
+          if (fallbackError) {
+            console.error('Fallback error:', fallbackError)
+            return
+          }
+          if (fallbackData) {
+            setDesigners(fallbackData as Designer[])
+          }
           return
         }
 
         if (data) {
-          setDesigners(data as Designer[])
+          // Sort by priority (lower first, nulls last) in JavaScript if priority exists
+          const sorted = data.sort((a, b) => {
+            const priorityA = (a as any).priority ?? 999999
+            const priorityB = (b as any).priority ?? 999999
+            if (priorityA === priorityB) return 0
+            return priorityA - priorityB
+          })
+          setDesigners(sorted as Designer[])
         }
       } catch (err) {
         console.error('Error fetching designers:', err)

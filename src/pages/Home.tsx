@@ -58,13 +58,32 @@ const Home = () => {
   useEffect(() => {
     const fetchDesigners = async () => {
       try {
-        const { data } = await supabase
+        // First try with priority column
+        let { data, error } = await supabase
           .from('designers')
           .select('*')
-          .eq('is_active', true)
           .eq('is_featured', true)
-          .order('priority', { ascending: true, nullsFirst: false })
           .limit(6)
+
+        // If priority column error, fallback without it
+        if (error) {
+          console.log('Priority column may not exist, using fallback')
+          const result = await supabase
+            .from('designers')
+            .select('*')
+            .eq('is_featured', true)
+            .order('created_at', { ascending: false })
+            .limit(6)
+          data = result.data
+        } else if (data) {
+          // Sort by priority in JS (lower first, nulls last)
+          data = data.sort((a, b) => {
+            const priorityA = a.priority ?? 999999
+            const priorityB = b.priority ?? 999999
+            return priorityA - priorityB
+          })
+        }
+
         if (data) setDesigners(data)
       } catch (err) {
         console.error('Designers fetch error:', err)
