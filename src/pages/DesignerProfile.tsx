@@ -48,7 +48,7 @@ const DesignerProfile = () => {
         // Fetch main designer data - only needed columns
         const { data: designerData, error: designerError } = await supabase
           .from('designers')
-          .select('id, name, brand, slug, location, nationality, languages, experience, specialization, category, gender, bio, short_bio, philosophy, image_url, cover_image_url, availability, instagram_reels, is_featured, is_active, created_at, updated_at')
+          .select('id, name, brand, slug, location, nationality, languages, experience, specialization, category, gender, bio, short_bio, philosophy, image_url, cover_image_url, availability, instagram_reels, is_featured, is_active, auth_user_id, status, created_at, updated_at')
           .eq('slug', slug)
           .eq('is_active', true)
           .single()
@@ -71,7 +71,7 @@ const DesignerProfile = () => {
         ])
 
         const fullDesigner: DesignerProfile = {
-          ...designerData,
+          ...(designerData as any),
           collections: collectionsRes.data || [],
           education: educationRes.data || [],
           achievements: achievementsRes.data || [],

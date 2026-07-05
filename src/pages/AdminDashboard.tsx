@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import type { NewsletterSubscription, ContactInquiry, PartnershipInquiry, MarketplaceApplication, StudioWaitlist } from '../types/database'
 import BlogManagement from './BlogManagement'
 import DesignerManagement from './DesignerManagement'
+import AdminOpportunities from './AdminOpportunities'
 
 interface SpotlightApplication {
   id: string
@@ -64,6 +65,7 @@ const Icon = ({ name, className = '', color = '' }: { name: string; className?: 
     'file-text': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>,
     'shopping-bag': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>,
     'palette': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>,
+    'calendar': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>,
     'award': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" /></svg>,
     'trending-up': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>,
     'newspaper': <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg>,
@@ -74,7 +76,7 @@ const Icon = ({ name, className = '', color = '' }: { name: string; className?: 
 }
 
 const AdminDashboard = () => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'spotlight' | 'marketplace' | 'studio-waitlist' | 'partnership' | 'newsletter' | 'contact' | 'blog' | 'designers'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'spotlight' | 'marketplace' | 'studio-waitlist' | 'partnership' | 'newsletter' | 'contact' | 'blog' | 'designers' | 'events'>('overview')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [newsletterSubscriptions, setNewsletterSubscriptions] = useState<NewsletterSubscription[]>([])
@@ -470,6 +472,24 @@ const AdminDashboard = () => {
             {!sidebarCollapsed && <span className="hidden lg:inline">Designers</span>}
             {sidebarCollapsed && <span className="lg:hidden">Designers</span>}
           </button>
+          <button
+            onClick={() => {
+              setActiveTab('events')
+              setMobileMenuOpen(false)
+            }}
+            className={`w-full flex items-center transition-all ${
+              sidebarCollapsed ? 'lg:justify-center lg:px-3' : ''
+            } px-4 py-3 gap-3 text-sm ${
+              activeTab === 'events'
+                ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
+                : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
+            }`}
+            title={sidebarCollapsed ? 'Events' : ''}
+          >
+            <Icon name="calendar" className="w-5 h-5 flex-shrink-0" />
+            {!sidebarCollapsed && <span className="hidden lg:inline">Events</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Events</span>}
+          </button>
 
           <div className={`mt-6 mb-2 ${sidebarCollapsed ? 'lg:px-3' : 'px-4'} px-4`}>
             {!sidebarCollapsed && (
@@ -632,6 +652,7 @@ const AdminDashboard = () => {
               {activeTab === 'contact' && <ContactTable data={contactInquiries} onDelete={(id) => handleDelete('contact_inquiries', id)} />}
               {activeTab === 'blog' && <BlogManagement />}
               {activeTab === 'designers' && <DesignerManagement />}
+              {activeTab === 'events' && <AdminOpportunities />}
             </>
           )}
         </main>

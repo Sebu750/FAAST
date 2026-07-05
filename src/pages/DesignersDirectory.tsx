@@ -45,7 +45,6 @@ const DesignersDirectory = () => {
         const { data, error } = await supabase
           .from('designers')
           .select('id, name, brand, slug, image_url, specialization, category, location')
-          .eq('is_active', true)
           .order('created_at', { ascending: false })
 
         if (error) {
@@ -101,10 +100,10 @@ const DesignersDirectory = () => {
   return (
     <>
       <SEO 
-        title="Designers — Adorzia | Pakistan's Emerging Fashion Designers" 
-        description="Discover and connect with Pakistan's most visionary emerging fashion designers. Browse curated profiles, collections, and stories from Lahore, Karachi, and Islamabad." 
+        title="Designers Directory — Adorzia | Pakistan's Emerging Fashion Designers" 
+        description="Discover and connect with Pakistan's most visionary emerging fashion designers. Browse curated profiles, collections, and stories from Lahore, Karachi, and Islamabad. Find independent designers specializing in pret, bridal, textiles, and heritage crafts." 
         canonicalURL="https://adorzia.com/designers"
-        ogTitle="Designers — Adorzia | Pakistan's Emerging Fashion Designers"
+        ogTitle="Designers Directory — Adorzia | Pakistani Fashion Talent"
         ogDescription="Discover Pakistan's most promising emerging fashion designers. Curated profiles, collections, and stories from the heart of Pakistani fashion."
         ogImageAlt="Adorzia Designers Directory - Pakistani Fashion Designers"
         schemaType="CollectionPage"
@@ -112,15 +111,20 @@ const DesignersDirectory = () => {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
           "name": "Adorzia Designers Directory",
-          "description": "Discover and connect with Pakistan's most visionary emerging fashion designers.",
+          "description": "Discover and connect with Pakistan's most visionary emerging fashion designers. Browse curated profiles, collections, and stories.",
           "url": "https://adorzia.com/designers",
           "isPartOf": {
             "@type": "WebSite",
             "name": "Adorzia",
             "url": "https://adorzia.com"
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "name": "Pakistani Fashion Designers",
+            "description": "A curated directory of Pakistan's emerging and established fashion designers"
           }
         }}
-        keywords="Pakistani fashion designers, Emerging designers Pakistan, Fashion designers Lahore, Fashion designers Karachi, Fashion designers Islamabad, Pakistani fashion brands, Independent fashion designers, Heritage craft designers, Pakistani clothing designers, Contemporary Pakistani fashion, Adorzia designers, Pakistani fashion directory"
+        keywords="Pakistani fashion designers, Emerging designers Pakistan, Fashion designers Lahore, Fashion designers Karachi, Fashion designers Islamabad, Pakistani fashion brands, Independent fashion designers, Heritage craft designers, Pakistani clothing designers, Contemporary Pakistani fashion, Adorzia designers, Pakistani fashion directory, pret designers, bridal designers Pakistan, textile designers"
       />
 
       {/* ===== HEADER ===== */}

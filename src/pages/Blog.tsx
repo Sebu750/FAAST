@@ -108,11 +108,31 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 font-sans antialiased">
       <SEO
-        title="Features - Adorzia | Pakistani Fashion Journalism & Insights"
-        description="Explore features derived from experienced fashion journalists and art directors. Stories on Pakistani fashion entrepreneurship, heritage craft, and emerging designers."
+        title="Features — Adorzia | Pakistani Fashion Journalism & Industry Insights"
+        description="Explore in-depth features on Pakistani fashion entrepreneurship, heritage craft preservation, emerging designer spotlights, and industry insights from PIFD/AIFD graduates to established fashionpreneurs. Stories that matter, told with integrity."
         canonicalURL="https://adorzia.com/features"
-        ogTitle="Features - Adorzia | Pakistani Fashion Journalism"
-        ogDescription="Features derived from experienced fashion journalists and art directors with integrity, brand knowledge and big ideas."
+        ogTitle="Features — Adorzia | Pakistani Fashion Journalism"
+        ogDescription="In-depth features on Pakistani fashion entrepreneurship, heritage craft, and emerging designers. Stories from PIFD/AIFD graduates to established fashionpreneurs."
+        ogImageAlt="Adorzia Features - Pakistani Fashion Journalism"
+        schemaType="CollectionPage"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "Adorzia Features",
+          "description": "Pakistani fashion journalism, industry insights, and designer stories",
+          "url": "https://adorzia.com/features",
+          "isPartOf": {
+            "@type": "WebSite",
+            "name": "Adorzia",
+            "url": "https://adorzia.com"
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "name": "Fashion Features & Articles",
+            "description": "Curated journalism and insights on Pakistani fashion industry"
+          }
+        }}
+        keywords="Pakistani fashion journalism, Fashion entrepreneurship Pakistan, PIFD graduates, AIFD graduates, Pakistani fashion startups, Heritage craft Pakistan, Emerging designers Pakistan, Fashion industry insights, Pakistani fashion stories, Adorzia features, Fashion business Pakistan, Pret fashion Pakistan, Bridal couture Pakistan"
       />
 
       {/* Hero Section - Editorial Banner */}

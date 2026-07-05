@@ -33,6 +33,8 @@ const BlogEditor = lazy(() => import('./pages/BlogEditor'))
 const DesignersDirectory = lazy(() => import('./pages/DesignersDirectory'))
 const DesignerProfile = lazy(() => import('./pages/DesignerProfile'))
 const DesignerProfilePreview = lazy(() => import('./pages/DesignerProfilePreview'))
+const DesignerAuth = lazy(() => import('./pages/DesignerAuth'))
+const DesignerDashboard = lazy(() => import('./pages/DesignerDashboard'))
 
 // Loading fallback component
 const PageLoader = () => (
@@ -70,6 +72,10 @@ function App() {
           <Route path="/admin/spotlight" element={<SpotlightAdmin />} />
           <Route path="/admin/blog/new" element={<BlogEditor />} />
           <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
+          
+          {/* Designer portal routes - no header/footer */}
+          <Route path="/designer/auth" element={<DesignerAuth />} />
+          <Route path="/designer/dashboard" element={<DesignerDashboard />} />
           
           {/* Website routes - with header/footer */}
           <Route path="/*" element={

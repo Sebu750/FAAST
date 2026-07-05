@@ -99,10 +99,13 @@ const Header = () => {
               ))}
             </div>
 
-            {/* CTA */}
-            <div className="hidden lg:block">
-              <Link to="/spotlight/apply" className="relative px-5 py-2 border border-[#bb9457]/50 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] font-medium hover:bg-[#bb9457] hover:text-black transition-all duration-400">
-                Apply
+            {/* Login Button */}
+            <div className="hidden lg:flex items-center gap-2">
+              <Link to="/designer/auth" className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors group">
+                <svg className="w-5 h-5 group-hover:text-[#bb9457] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="text-[11px] uppercase tracking-[0.18em] font-medium">Log In</span>
               </Link>
             </div>
 
@@ -190,17 +193,17 @@ const Header = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
+            {/* Login Button */}
             <div className="pt-6 border-t border-neutral-900">
               <Link 
-                to="/spotlight/apply" 
-                className="flex items-center justify-center gap-3 w-full px-6 py-4 bg-[#bb9457] text-black text-xs uppercase tracking-[0.2em] font-semibold hover:bg-white transition-all duration-300 rounded-sm group"
+                to="/designer/auth" 
+                className="flex items-center justify-center gap-3 w-full px-6 py-4 bg-white text-black text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[#bb9457] transition-all duration-300 rounded-sm group"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Apply Now
-                <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
+                Log In
               </Link>
             </div>
 

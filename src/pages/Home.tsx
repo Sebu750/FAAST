@@ -753,7 +753,7 @@ const Home = () => {
 
           {/* Bottom CTA */}
           <div className={`mt-16 text-center transition-all duration-1000 delay-900 ${isVisible['how-it-works'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
-            <Link to="/for-creatives" className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-black hover:text-white transition-all duration-300 inline-block hover-lift">
+            <Link to="/designer/auth" className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-black hover:text-white transition-all duration-300 inline-block hover-lift">
               Begin Your Journey
             </Link>
           </div>
@@ -1495,13 +1495,13 @@ const Home = () => {
               
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
-                  to="/for-creatives"
+                  to="/designer/auth"
                   className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-black hover:text-white transition-all duration-300 inline-block hover-lift"
                 >
                   Create Your Account
                 </Link>
                 <Link
-                  to="/spotlight-event"
+                  to="/designer/auth"
                   className="px-8 py-4 border border-[#bb9457] text-[#bb9457] font-semibold uppercase tracking-[0.20em] text-[11px] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300 inline-block"
                 >
                   Submit Your Thesis Collection

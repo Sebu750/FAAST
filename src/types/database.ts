@@ -262,6 +262,8 @@ export interface Designer {
   availability: string | null
   is_featured: boolean
   is_active: boolean
+  auth_user_id: string | null
+  status: 'pending' | 'approved' | 'rejected' | null
   created_at: string
   updated_at: string
 }
@@ -325,6 +327,122 @@ export interface DesignerSocialLinks {
   shop: string | null
   portfolio: string | null
   created_at: string
+}
+
+// ==========================================
+// OPPORTUNITIES SYSTEM TYPES
+// ==========================================
+
+export type OpportunityType = 'job' | 'internship' | 'competition' | 'grant' | 'open_call' | 'fashion_event'
+export type OpportunityStatus = 'draft' | 'published' | 'archived' | 'expired'
+export type ApplicationStatus = 'submitted' | 'under_review' | 'shortlisted' | 'rejected' | 'withdrawn'
+
+export interface Opportunity {
+  id: string
+  title: string
+  slug: string
+  description: string | null
+  opportunity_type: OpportunityType
+  start_date: string | null
+  end_date: string | null
+  application_deadline: string | null
+  location: string | null
+  city: string | null
+  is_remote: boolean
+  cover_image_url: string | null
+  banner_image_url: string | null
+  status: OpportunityStatus
+  is_open_for_applications: boolean
+  application_method: 'internal' | 'external'
+  external_application_url: string | null
+  max_applications: number | null
+  salary_range: string | null
+  employment_type: string | null
+  experience_level: string | null
+  prize_amount: string | null
+  eligibility: string | null
+  requirements: string | null
+  benefits: string | null
+  event_format: string | null
+  max_participants: number | null
+  tags: string[] | null
+  category: string | null
+  is_featured: boolean
+  views_count: number
+  applications_count: number
+  created_at: string
+  updated_at: string
+  published_at: string | null
+}
+
+export interface OpportunityApplication {
+  id: string
+  opportunity_id: string
+  designer_id: string
+  cover_letter: string | null
+  portfolio_url: string | null
+  application_data: Record<string, any> | null
+  status: ApplicationStatus
+  admin_notes: string | null
+  reviewed_by: string | null
+  reviewed_at: string | null
+  created_at: string
+  updated_at: string
+  opportunity?: Opportunity
+  designer?: Designer
+}
+
+export interface SavedOpportunity {
+  id: string
+  opportunity_id: string
+  designer_id: string
+  created_at: string
+  opportunity?: Opportunity
+}
+
+export interface OpportunityCategory {
+  id: string
+  name: string
+  slug: string
+  description: string | null
+  icon: string | null
+  display_order: number
+  is_active: boolean
+  created_at: string
+}
+
+// Legacy types (kept for backward compatibility)
+export interface DesignerEvent {
+  id: string
+  title: string
+  slug: string
+  description: string | null
+  event_type: string
+  location: string | null
+  city: string | null
+  start_date: string
+  end_date: string
+  application_deadline: string | null
+  cover_image_url: string | null
+  banner_image_url: string | null
+  status: 'upcoming' | 'ongoing' | 'past'
+  is_open_for_applications: boolean
+  max_participants: number | null
+  requirements: string | null
+  benefits: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface DesignerEventRegistration {
+  id: string
+  event_id: string
+  designer_id: string
+  status: 'registered' | 'confirmed' | 'waitlisted' | 'cancelled'
+  application_note: string | null
+  registered_at: string
+  updated_at: string
+  event?: DesignerEvent
 }
 
 // Combined designer profile with all related data
