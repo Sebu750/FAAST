@@ -44,7 +44,9 @@ const DesignersDirectory = () => {
       try {
         const { data, error } = await supabase
           .from('designers')
-          .select('id, name, brand, slug, image_url, specialization, category, location')
+          .select('id, name, brand, slug, image_url, specialization, category, location, priority, is_featured')
+          .eq('is_active', true)
+          .order('priority', { ascending: true, nullsFirst: false })
           .order('created_at', { ascending: false })
 
         if (error) {

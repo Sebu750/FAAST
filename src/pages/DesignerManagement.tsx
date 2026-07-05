@@ -251,6 +251,14 @@ const DesignerManagement = () => {
   }
 
   const handleToggleFeatured = async (id: string, current: boolean) => {
+    // If trying to feature a designer, check the limit
+    if (!current) {
+      const featuredCount = designers.filter(d => d.is_featured).length
+      if (featuredCount >= 6) {
+        alert('Featured slots are full. Please unfeature an existing designer before adding a new one.')
+        return
+      }
+    }
     await supabase.from('designers').update({ is_featured: !current }).eq('id', id)
     fetchData()
   }
@@ -435,6 +443,7 @@ interface DesignerFormData {
   image_url: string
   cover_image_url: string
   availability: string
+  priority: number
   is_featured: boolean
   is_active: boolean
   status: 'draft' | 'pending' | 'published' | 'featured' | 'archived'
@@ -444,7 +453,7 @@ const emptyForm: DesignerFormData = {
   slug: '', name: '', brand: '', location: '', nationality: '', languages: '',
   experience: '', specialization: '', category: '', gender: '', bio: '', short_bio: '',
   philosophy: '', image_url: '', cover_image_url: '', availability: '',
-  is_featured: false, is_active: true, status: 'draft'
+  priority: 0, is_featured: false, is_active: true, status: 'draft'
 }
 
 // Stepper steps configuration
@@ -475,7 +484,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
         gender: designer.gender || '', bio: designer.bio || '', short_bio: designer.short_bio || '',
         philosophy: designer.philosophy || '', image_url: designer.image_url || '',
         cover_image_url: designer.cover_image_url || '', availability: designer.availability || '',
-        is_featured: designer.is_featured, is_active: designer.is_active,
+        priority: designer.priority || 0, is_featured: designer.is_featured, is_active: designer.is_active,
         status: ((designer as any).status as DesignerFormData['status']) || 'draft'
       }
     }
@@ -556,7 +565,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     setRelatedDataLoaded(true)
   }
 
-  const updateField = (field: keyof DesignerFormData, value: string | boolean) => {
+  const updateField = (field: keyof DesignerFormData, value: string | boolean | number) => {
     setForm(prev => ({ ...prev, [field]: value }))
     setHasUnsavedChanges(true)
   }
@@ -1223,9 +1232,20 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                   <div className="flex items-start justify-between gap-4 p-4 bg-neutral-900/50 rounded-lg border border-neutral-800/50">
                     <div className="flex-1">
                       <p className="text-white text-sm font-medium mb-1">Featured Designer</p>
-                      <p className="text-xs text-neutral-500">Showcase in featured sections and homepage highlights</p>
+                      <p className="text-xs text-neutral-500">Showcase in featured sections and homepage highlights (max 6 featured designers)</p>
                     </div>
                     <Toggle label="" checked={form.is_featured} onChange={(v) => updateField('is_featured', v)} />
+                  </div>
+                  <div className="p-4 bg-neutral-900/50 rounded-lg border border-neutral-800/50">
+                    <p className="text-white text-sm font-medium mb-1">Priority</p>
+                    <p className="text-xs text-neutral-500 mb-3">Lower numbers appear first in the directory (1, 2, 3...)</p>
+                    <input
+                      type="number"
+                      min="0"
+                      value={form.priority}
+                      onChange={(e) => updateField('priority', parseInt(e.target.value) || 0)}
+                      className="w-32 bg-neutral-950/80 border border-neutral-800 rounded-md px-3.5 py-2.5 text-sm text-white focus:border-[#bb9457]/60 focus:ring-1 focus:ring-[#bb9457]/20 focus:outline-none transition-all"
+                    />
                   </div>
                 </div>
               </Card>

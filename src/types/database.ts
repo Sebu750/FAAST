@@ -260,6 +260,7 @@ export interface Designer {
   cover_image_url: string | null
   instagram_reels: string[] | null
   availability: string | null
+  priority: number
   is_featured: boolean
   is_active: boolean
   auth_user_id: string | null

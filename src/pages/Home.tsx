@@ -63,7 +63,7 @@ const Home = () => {
           .select('*')
           .eq('is_active', true)
           .eq('is_featured', true)
-          .order('created_at', { ascending: false })
+          .order('priority', { ascending: true, nullsFirst: false })
           .limit(6)
         if (data) setDesigners(data)
       } catch (err) {
