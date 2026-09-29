@@ -13,9 +13,9 @@ import designer2 from '../assets/home-designer-portrait-2.webp'
 import designer3 from '../assets/home-designer-portrait-3.webp'
 import fabricInnovation from '../assets/home-fabric-innovation.webp'
 import newsletterStudio from '../assets/home-newsletter-studio.webp'
-import karachiStudio from '../assets/coworking-studio-1.png'
-import lahoreStudio from '../assets/coworking-studio-2.png'
-import islamabadStudio from '../assets/coworking-studio-3.png'
+import karachiStudio from '../assets/coworking-studio-1.webp'
+import lahoreStudio from '../assets/coworking-studio-2.webp'
+import islamabadStudio from '../assets/coworking-studio-3.webp'
 
 
 const Home = () => {
