@@ -2,12 +2,12 @@
 
 ## Overview
 The Adorzia platform now sends email notifications to `haseeb.49251@gmail.com` for all types of submissions:
-- ✅ **Spotlight Applications** - New talent applications
-- ✅ **Marketplace Applications** - Designer/seller applications
-- ✅ **Studio Waitlist** - Creative membership signups
-- ✅ **Partnership Inquiries** - Business partnership requests
-- ✅ **Contact Inquiries** - General contact form submissions
-- ✅ **Newsletter Subscriptions** - New newsletter subscribers
+- **Spotlight Applications** - New talent applications
+- **Marketplace Applications** - Designer/seller applications
+- **Studio Waitlist** - Creative membership signups
+- **Partnership Inquiries** - Business partnership requests
+- **Contact Inquiries** - General contact form submissions
+- **Newsletter Subscriptions** - New newsletter subscribers
 
 ## What's Been Created
 
@@ -39,25 +39,24 @@ All forms now trigger email notifications:
 
 ## Setup Instructions
 
-### Step 1: Resend API Key (Already Configured ✅)
+### Step 1: Resend API Key (Already Configured)
 
 Your Resend API key is already set in `.env`:
 ```env
-RESEND_API_KEY=re_2tisSzuU_GAXYdiia57Pnc17DYZxbjL64
-VITE_RESEND_API_KEY=re_2tisSzuU_GAXYdiia57Pnc17DYZxbjL64
+RESEND_API_KEY=re_your_resend_api_key_here
+VITE_RESEND_API_KEY=re_your_resend_api_key_here
 ```
 
-### Step 2: Configure Verified Domain (Recommended for Production)
+### Step 2: Configure Verified Domain
 
-For production use with custom domain:
+The verified sending domain is `mail.adorzia.com`. The `from` address is set to:
+```typescript
+from: 'Adorzia <hello@mail.adorzia.com>'
+```
 
-1. In Resend dashboard, go to **Domains**
-2. Add your domain (e.g., `adorzia.com`)
-3. Update DNS records as instructed
-4. Change the `from` email in `api/send-notification.ts`:
-   ```typescript
-   from: 'Adorzia Admin <noreply@adorzia.com>'
-   ```
+This is configured in both:
+- `server.cjs` (Express server for local development)
+- `supabase/functions/send-email/index.ts` (Supabase Edge Function for production)
 
 ### Step 3: Deploy to Vercel
 
@@ -80,7 +79,7 @@ git push
 2. Test each form:
    - **Spotlight**: `/spotlight/apply`
    - **Marketplace**: `/marketplace` (Seller application)
-   - **Studio Waitlist**: `/for-creatives` (Waitlist form)
+   - **Studio Waitlist**: `/fashionpreneurship` (Waitlist form)
    - **Partnership**: `/for-partners` (Contact form)
    - **Contact**: `/contact`
    - **Newsletter**: `/contact` or homepage footer
@@ -191,12 +190,12 @@ Resend Free Tier:
 
 ## Current Status
 
-✅ Resend API key configured
-✅ Email templates created for all 6 types
-✅ All forms integrated with notifications
-✅ Admin dashboard functional
-✅ Error handling implemented
-✅ Professional email design
+Resend API key configured
+Email templates created for all 6 types
+All forms integrated with notifications
+Admin dashboard functional
+Error handling implemented
+Professional email design
 
 ## Next Steps
 

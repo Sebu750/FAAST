@@ -106,9 +106,9 @@ const Home = () => {
   }
 
   const slides = [
-    { image: '/hero-lcp.webp', eyebrow: 'Pakistan\'s First Fashion Ecosystem', title: 'Where Designers Become Fashionpreneurs', subtitle: 'Adorzia is Pakistan\'s first complete fashion entrepreneurship ecosystem. Premium coworking studios in Karachi, Lahore & Islamabad, a curated global marketplace, and the annual Spotlight event that discovers and invests in Pakistan\'s next great fashion brands.', ctaPrimary: { label: 'Reserve Your Studio Spot', to: '/for-creatives' }, ctaSecondary: { label: 'Explore Locations', to: '/contact' } },
+    { image: '/hero-lcp.webp', eyebrow: 'Pakistan\'s First Fashion Ecosystem', title: 'Where Designers Become Fashionpreneurs', subtitle: 'Adorzia is Pakistan\'s first complete fashion entrepreneurship ecosystem. Premium coworking studios in Karachi, Lahore & Islamabad, a curated global marketplace, and the annual Spotlight event that discovers and invests in Pakistan\'s next great fashion brands.', ctaPrimary: { label: 'Reserve Your Studio Spot', to: '/fashionpreneurship' }, ctaSecondary: { label: 'Explore Locations', to: '/contact' } },
     { image: hero2, eyebrow: 'Spotlight — Fall 2026', title: 'Pakistan\'s Premier Talent Investment Program', subtitle: 'Once a year, Adorzia scours every province to identify the visionary ready to redefine Pakistani fashion on a global scale. Selected designers receive funding, mentorship, and a platform to launch internationally.', ctaPrimary: { label: 'Apply for Spotlight 2026', to: '/contact' }, ctaSecondary: { label: 'Discover the Event', to: '/contact' } },
-    { image: hero3, eyebrow: 'The Marketplace', title: 'From heritage craft to global curation.', subtitle: 'A curated digital platform connecting independent designers and master craftspeople with international buyers. We bridge Pakistani heritage craftsmanship with global demand.', ctaPrimary: { label: 'List Your Collection', to: '/for-partners' }, ctaSecondary: { label: 'Enter the Marketplace', to: '/for-creatives' } }
+    { image: hero3, eyebrow: 'The Marketplace', title: 'From heritage craft to global curation.', subtitle: 'A curated digital platform connecting independent designers and master craftspeople with international buyers. We bridge Pakistani heritage craftsmanship with global demand.', ctaPrimary: { label: 'List Your Collection', to: '/for-partners' }, ctaSecondary: { label: 'Enter the Marketplace', to: '/fashionpreneurship' } }
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -131,10 +131,18 @@ const Home = () => {
           "@context": "https://schema.org", "@type": "Organization", "name": "Adorzia",
           "description": "Fashion entrepreneurship ecosystem in Pakistan offering coworking studios, a curated marketplace, and the annual Spotlight talent investment event.",
           "url": "https://adorzia.com", "logo": "https://adorzia.com/logo.png", "foundingDate": "2025", "areaServed": "Pakistan",
-          "knowsAbout": ["Pakistani Fashion", "Fashion Entrepreneurship", "Heritage Craft", "Fashion Marketplace", "Coworking Studios"],
-          "sameAs": ["https://instagram.com/adorzia", "https://facebook.com/adorzia", "https://linkedin.com/company/adorzia"]
+          "knowsAbout": ["Pakistani Fashion", "Fashion Entrepreneurship", "Heritage Craft", "Fashion Marketplace", "Coworking Studios", "Fashion Incubation", "Emerging Designers"],
+          "sameAs": ["https://www.instagram.com/adorziaofficial/", "https://www.linkedin.com/company/adorzia/"],
+          "contactPoint": { "@type": "ContactPoint", "email": "hello@adorzia.com", "contactType": "customer service" },
+          "founder": { "@type": "Person", "name": "Haseeb Malik" },
+          "address": { "@type": "PostalAddress", "addressCountry": "PK", "addressLocality": "Karachi" }
         }}
         keywords="Pakistani fashion, Fashion Pakistan, Pakistan designer, Heritage craft, Fashion marketplace, Fashion entrepreneurship, Adorzia"
+        localBusinessSchema={[
+          { "@context": "https://schema.org", "@type": "Place", "name": "Adorzia Coworking Studio Karachi", "address": { "@type": "PostalAddress", "addressLocality": "Karachi", "addressCountry": "PK" }, "description": "Fashion coworking studio in Karachi for designers, entrepreneurs, and creative professionals." },
+          { "@context": "https://schema.org", "@type": "Place", "name": "Adorzia Coworking Studio Lahore", "address": { "@type": "PostalAddress", "addressLocality": "Lahore", "addressCountry": "PK" }, "description": "Fashion coworking studio in Lahore for designers, entrepreneurs, and creative professionals." },
+          { "@context": "https://schema.org", "@type": "Place", "name": "Adorzia Coworking Studio Islamabad", "address": { "@type": "PostalAddress", "addressLocality": "Islamabad", "addressCountry": "PK" }, "description": "Fashion coworking studio in Islamabad for designers, entrepreneurs, and creative professionals." }
+        ]}
       />
 
       <style>{`
@@ -263,7 +271,7 @@ const Home = () => {
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              { title: "Coworking Fashion Studios", image: islamabadStudio, body: "Premium environments engineered for fashion professionals. Industrial-grade machinery, pattern-cutting tables, and a high-caliber network across three cities.", link: "/for-creatives", linkText: "Explore Studios" },
+              { title: "Coworking Fashion Studios", image: islamabadStudio, body: "Premium environments engineered for fashion professionals. Industrial-grade machinery, pattern-cutting tables, and a high-caliber network across three cities.", link: "/fashionpreneurship", linkText: "Explore Studios" },
               { title: "The Marketplace", image: heritageCraft, body: "A curated digital platform connecting independent designers and master artisans directly with international collectors. We archive provenance.", link: "/marketplace", linkText: "Enter Marketplace" },
               { title: "Spotlight — Annual Event", image: hero2, body: "Our signature talent discovery event. We identify fashion entrepreneurs with distinct creative direction and commercial viability — then invest in their vision.", link: "/contact", linkText: "Learn More" }
             ].map((pillar, idx) => (
@@ -355,7 +363,7 @@ const Home = () => {
                   <div className="space-y-2.5 mb-6">
                     {studio.features.map((f, i) => (<div key={i} className="flex items-center gap-3"><svg className="w-4 h-4 text-[#bb9457] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg><span className="text-neutral-600 text-sm font-light">{f}</span></div>))}
                   </div>
-                  <Link to="/for-creatives" className="w-full px-6 py-3 border border-[#bb9457] text-[#bb9457] font-semibold uppercase tracking-[0.15em] text-[10px] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300 block text-center">Reserve Your Spot</Link>
+                  <Link to="/fashionpreneurship" className="w-full px-6 py-3 border border-[#bb9457] text-[#bb9457] font-semibold uppercase tracking-[0.15em] text-[10px] rounded-sm hover:bg-[#bb9457] hover:text-black transition-all duration-300 block text-center">Reserve Your Spot</Link>
                 </div>
               </div>
             ))}
@@ -560,7 +568,7 @@ const Home = () => {
       <section id="newsletter" ref={setSectionRef('newsletter')} className="relative py-40 overflow-hidden">
         {/* Cinematic background */}
         <div className="absolute inset-0">
-          <img src={heroRunwayCta} alt="" className="w-full h-full object-cover scale-110" style={{ transform: `translate3d(0, ${scrollY * 0.1}px, 0)` }} loading="lazy" decoding="async" />
+          <img src={heroRunwayCta} alt="" aria-hidden="true" className="w-full h-full object-cover scale-110" style={{ transform: `translate3d(0, ${scrollY * 0.1}px, 0)` }} loading="lazy" decoding="async" />
           <div className="absolute inset-0 bg-black/85" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/60" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
@@ -615,7 +623,7 @@ const Home = () => {
 
           {/* CTA Buttons - Enhanced */}
           <div className="flex flex-wrap justify-center gap-6 pt-8">
-            <Link to="/for-creatives" className="group px-10 py-5 bg-gradient-to-r from-[#bb9457] to-[#d4af37] text-black font-bold uppercase tracking-[0.25em] text-xs rounded-xl hover:shadow-2xl hover:shadow-[#bb9457]/30 transition-all duration-300 transform hover:-translate-y-1">
+            <Link to="/fashionpreneurship" className="group px-10 py-5 bg-gradient-to-r from-[#bb9457] to-[#d4af37] text-black font-bold uppercase tracking-[0.25em] text-xs rounded-xl hover:shadow-2xl hover:shadow-[#bb9457]/30 transition-all duration-300 transform hover:-translate-y-1">
               <span className="flex items-center gap-3">
                 Start Your Journey
                 <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>

@@ -10,6 +10,7 @@ const Legal = () => {
         ogTitle="Privacy Policy - Adorzia"
         ogDescription="Adorzia Privacy Policy - Your privacy rights and our data protection practices."
         schemaType="WebPage"
+        noindex
       />
 
       {/* Hero Section */}

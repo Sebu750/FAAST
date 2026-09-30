@@ -56,7 +56,7 @@ const SpotlightEvent = () => {
       <SEO
         title="Adorzia Spotlight Fall 2026 - Pakistan's First National Fashion Talent Event | Apply Now"
         description="Adorzia Spotlight Fall 2026 is Pakistan's first national fashion talent discovery and investment event. Applications are now open until July 31, 2026. We are searching the entire country for extraordinary fashion designers, heritage craft innovators and fashion entrepreneurs - and investing in the ones who are ready to become brands."
-        canonicalURL="https://adorzia.com/spotlight"
+        canonicalURL="https://adorzia.com/spotlight-event"
         ogTitle="Adorzia Spotlight Fall 2026 - Apply Now"
         ogDescription="Pakistan's first national fashion talent investment event. We find the visionaries. We invest in the brands. Applications open now until July 31, 2026."
         ogImageAlt="Adorzia Spotlight Fall 2026 - Pakistani fashion talent event"

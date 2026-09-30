@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { HelmetProvider } from 'react-helmet-async'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import { ToastProvider } from './components/admin/Toast'
 
 // Lazy load analytics and speed insights to avoid blocking main thread
 const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })))
@@ -31,6 +32,7 @@ const BlogEditor = lazy(() => import('./pages/BlogEditor'))
 const DesignersDirectory = lazy(() => import('./pages/DesignersDirectory'))
 const DesignerProfile = lazy(() => import('./pages/DesignerProfile'))
 const DesignerProfilePreview = lazy(() => import('./pages/DesignerProfilePreview'))
+const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Loading fallback component
 const PageLoader = () => (
@@ -63,8 +65,8 @@ function App() {
           <Routes>
           {/* Admin routes - no header/footer */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/blog" element={<AdminDashboard />} />
+          <Route path="/admin/dashboard" element={<ToastProvider><AdminDashboard /></ToastProvider>} />
+          <Route path="/admin/blog" element={<ToastProvider><AdminDashboard /></ToastProvider>} />
           <Route path="/admin/spotlight" element={<SpotlightAdmin />} />
           <Route path="/admin/blog/new" element={<BlogEditor />} />
           <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
@@ -77,7 +79,7 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
-                  <Route path="/for-creatives" element={<ForCreatives />} />
+                  <Route path="/fashionpreneurship" element={<ForCreatives />} />
                   <Route path="/for-partners" element={<ForPartners />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/contact" element={<Contact />} />
@@ -92,6 +94,7 @@ function App() {
                   <Route path="/designers" element={<DesignersDirectory />} />
                   <Route path="/designers/:slug" element={<DesignerProfile />} />
                   <Route path="/designer-preview" element={<DesignerProfilePreview />} />
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
               <Footer />

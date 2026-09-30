@@ -169,7 +169,7 @@ const DesignerProfilePreview = () => {
         title={`${designer.name} | ${designer.brand_name} - Designer Profile`}
         description={designer.bio.substring(0, 160)}
         keywords={`${designer.name}, ${designer.brand_name}, Pakistani fashion designer, contemporary Pakistani fashion, heritage craft, Ajrak, indigo dyeing, Lahore fashion designer`}
-        canonicalURL={`/designer-preview`}
+        canonicalURL="https://adorzia.com/designer-preview"
       />
 
       <style>{`

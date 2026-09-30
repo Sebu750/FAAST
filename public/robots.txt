@@ -4,7 +4,16 @@ Allow: /
 # Sitemap
 Sitemap: https://adorzia.com/sitemap.xml
 
+# RSS Feed
+Sitemap: https://adorzia.com/rss.xml
+
+# Allow OG image endpoint
+Allow: /api/og-image
+
 # Disallow admin and private routes
 Disallow: /admin
 Disallow: /admin-login
 Disallow: /api/
+
+# Crawl delay for polite crawling
+Crawl-delay: 10

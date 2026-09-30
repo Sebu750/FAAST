@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
+import Breadcrumb from '../components/Breadcrumb'
 import { supabase } from '../lib/supabase'
 import type { Designer } from '../types/database'
 
@@ -156,6 +157,7 @@ const DesignersDirectory = () => {
         }}
         keywords="Pakistani fashion designers, Emerging designers Pakistan, Fashion designers Lahore, Fashion designers Karachi, Fashion designers Islamabad, Pakistani fashion brands, Independent fashion designers, Heritage craft designers, Pakistani clothing designers, Contemporary Pakistani fashion, Adorzia designers, Pakistani fashion directory, pret designers, bridal designers Pakistan, textile designers"
       />
+      <Breadcrumb currentPage="Designers" />
 
       {/* ===== HEADER ===== */}
       <section className="relative pt-28 pb-16 lg:pt-36 lg:pb-20 bg-gradient-to-b from-neutral-950 via-black to-neutral-950 overflow-hidden">

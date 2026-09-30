@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
+import Breadcrumb from '../components/Breadcrumb'
 import heroHome from '../assets/hero-home.webp'
 import heroBanner from '../assets/hero1.webp'
 import studio from '../assets/studio.webp'
@@ -271,6 +272,7 @@ const Marketplace = () => {
         }}
         keywords="Pakistani fashion marketplace online, buy Pakistani designer fashion online, sell Pakistani craft online, heritage craft marketplace, emerging Pakistani designer clothing, authentic Pakistani handmade fashion, Pakistani clothing, Pakistani textile, Heritage craft Pakistan, Traditional Pakistani craft for sale, Where to buy authentic Pakistani designer clothing online, Best online marketplace for Pakistani fashion brands, Artisan fashion Pakistan, Handcrafted Pakistani clothing, South Asian fashion marketplace, Pakistani textile heritage, Adorzia marketplace, Adorzia fashion"
       />
+      <Breadcrumb currentPage="Marketplace" />
 
       {/* ============================================
           SECTION 2: ANIMATION STYLES

@@ -12,6 +12,7 @@ interface SEOProps {
   schema?: Record<string, any>
   localBusinessSchema?: Record<string, any>[]
   keywords?: string
+  noindex?: boolean
 }
 
 const SEO = ({
@@ -25,7 +26,8 @@ const SEO = ({
   schemaType = 'WebPage',
   schema = {},
   localBusinessSchema = [],
-  keywords = ''
+  keywords = '',
+  noindex = false
 }: SEOProps) => {
   const baseSchema = {
     "@context": "https://schema.org",
@@ -42,9 +44,10 @@ const SEO = ({
       <title>{title}</title>
       <meta name="description" content={description} />
       {keywords && <meta name="keywords" content={keywords} />}
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
       <meta name="language" content="English" />
       <link rel="canonical" href={canonicalURL} />
+      <link rel="alternate" type="application/rss+xml" title="Adorzia Journal" href="https://adorzia.com/rss.xml" />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />
@@ -52,6 +55,8 @@ const SEO = ({
       <meta property="og:title" content={ogTitle || title} />
       <meta property="og:description" content={ogDescription} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1536" />
+      <meta property="og:image:height" content="1024" />
       <meta property="og:image:alt" content={ogImageAlt} />
       <meta property="og:locale" content="en_US" />
       <meta property="og:site_name" content="Adorzia" />

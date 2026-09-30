@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
+import Breadcrumb from '../components/Breadcrumb'
 import founder from '../assets/founder.webp'
 import advisor1 from '../assets/fadnoori-cheif-advisor.webp'
 import naziaOtho from '../assets/naziaotho.webp'
@@ -252,11 +253,21 @@ const About = () => {
             },
             "areaServed": "Pakistan",
             "description": "Pakistan's first fashion entrepreneurship ecosystem providing coworking studios, curated marketplace, and national spotlight event for emerging designers.",
-            "sameAs": []
+            "sameAs": ["https://www.instagram.com/adorziaofficial/", "https://www.linkedin.com/company/adorzia/"]
           }
         }}
         keywords="Adorzia, Pakistani fashion entrepreneurship, fashion ecosystem Pakistan, fashion brand building, Adorzia team, Adorzia story"
       />
+      <script type="application/ld+json">{JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "What is Adorzia?", "acceptedAnswer": { "@type": "Answer", "text": "Adorzia is Pakistan's first fashion entrepreneurship ecosystem. It discovers emerging designers, helps build fashion brands, invests in selected brands, and connects them with the market through coworking studios, a curated marketplace, and talent events." } },
+          { "@type": "Question", "name": "Who founded Adorzia?", "acceptedAnswer": { "@type": "Answer", "text": "Adorzia was founded by Haseeb Malik in 2025, with the mission of building the growth architecture Pakistani fashion entrepreneurs have never had." } },
+          { "@type": "Question", "name": "Where is Adorzia located?", "acceptedAnswer": { "@type": "Answer", "text": "Adorzia is based in Pakistan with coworking studios planned for Karachi, Lahore, and Islamabad, opening in 2026." } }
+        ]
+      })}</script>
+      <Breadcrumb currentPage="About" />
 
       {/* Luxury Animation Injections */}
       <style>{`
@@ -346,7 +357,7 @@ const About = () => {
 
             <div className="mt-12 flex flex-wrap gap-5">
               <Link
-                to="/for-creatives"
+                to="/fashionpreneurship"
                 className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300 transform hover:-translate-y-0.5"
               >
                 Enter the Ecosystem
@@ -843,10 +854,10 @@ const About = () => {
                 Get in Touch
               </Link>
               <Link
-                to="/for-creatives"
+                to="/fashionpreneurship"
                 className="px-10 py-4 glass text-white font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:border-[#bb9457] hover:text-[#bb9457] transition-all duration-300"
               >
-                For Creatives
+                Fashionpreneurship
               </Link>
             </div>
           </div>

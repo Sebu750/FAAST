@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { sendEmailNotification } from '../lib/email'
 import SEO from '../components/SEO'
+import Breadcrumb from '../components/Breadcrumb'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -71,6 +72,7 @@ const Contact = () => {
           "email": "hello@adorzia.com"
         }}
       />
+      <Breadcrumb currentPage="Contact" />
 
       <style>{`
         @keyframes contactFadeUp {

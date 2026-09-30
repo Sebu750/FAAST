@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import SEO from '../components/SEO'
+import Breadcrumb from '../components/Breadcrumb'
 import { supabase } from '../lib/supabase'
 import type { DesignerProfile, DesignerFilm } from '../types/database'
 import { resolveAsset } from '../lib/assetResolver'
@@ -144,9 +145,19 @@ const DesignerProfile = () => {
           "description": designer.short_bio,
           "url": `https://adorzia.com/designers/${designer.slug}`,
           "image": designer.image_url,
+          ...(designer.brand ? { "worksFor": { "@type": "Organization", "name": designer.brand } } : {}),
+          ...(designer.location ? { "address": { "@type": "PostalAddress", "addressLocality": designer.location, "addressCountry": designer.nationality || "PK" } } : {}),
+          ...(designer.education && designer.education.length > 0 ? { "alumniOf": { "@type": "EducationalOrganization", "name": designer.education[0].institution || designer.education[0].degree } } : {}),
+          "sameAs": [
+            ...(designer.social_links?.instagram ? [`https://instagram.com/${designer.social_links.instagram.replace('@', '')}`] : []),
+            ...(designer.social_links?.linkedin ? [`https://linkedin.com/in/${designer.social_links.linkedin}`] : []),
+            ...(designer.social_links?.website ? [designer.social_links.website.startsWith('http') ? designer.social_links.website : `https://${designer.social_links.website}`] : []),
+          ].filter(Boolean),
+          "memberOf": { "@type": "Organization", "name": "Adorzia", "url": "https://adorzia.com" }
         }}
         keywords={`${designer.name}, Pakistani fashion designer, ${designer.location || 'Pakistan'}, Adorzia designer`}
       />
+      <Breadcrumb currentPage={designer.name} />
 
       {/* ===== 1. PROFILE HEADER ===== */}
       <section className="relative">
@@ -510,7 +521,7 @@ const DesignerProfile = () => {
           <button className="absolute top-6 right-6 text-neutral-400 hover:text-white transition-colors" onClick={() => setPreviewImage(null)} aria-label="Close preview">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" /></svg>
           </button>
-          <img src={previewImage} alt="Collection preview" className="max-w-[90vw] max-h-[85vh] object-contain" onClick={e => e.stopPropagation()} />
+          <img src={previewImage} alt={`${designer.name} collection preview`} className="max-w-[90vw] max-h-[85vh] object-contain" onClick={e => e.stopPropagation()} />
         </div>
       )}
 

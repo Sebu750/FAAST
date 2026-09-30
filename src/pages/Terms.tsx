@@ -10,6 +10,7 @@ const Terms = () => {
         ogTitle="Terms and Conditions - Adorzia"
         ogDescription="Adorzia Terms and Conditions - Terms governing use of our website, studios, marketplace, and Spotlight event."
         schemaType="WebPage"
+        noindex
       />
 
       {/* Hero Section */}

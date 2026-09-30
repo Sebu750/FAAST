@@ -97,7 +97,7 @@ FAAST/
 
 1. **Home** - Landing page with hero section and features
 2. **About** - Company vision and offerings
-3. **For Creatives** - Information for fashionpreneurs
+3. **Fashionpreneurship** - Opportunities for fashion designers and emerging entrepreneurs
 4. **For Partners** - Partnership opportunities
 5. **Spotlight Event** - Application form for events
 6. **Contact** - Contact form and newsletter subscription

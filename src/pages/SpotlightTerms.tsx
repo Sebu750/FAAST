@@ -10,6 +10,7 @@ const SpotlightTerms = () => {
         ogTitle="Spotlight Event Terms and Conditions - Adorzia"
         ogDescription="Terms and Conditions for Adorzia Spotlight Fall 2026 - Pakistan's premier fashion talent discovery and investment event."
         schemaType="WebPage"
+        noindex
       />
 
       {/* Hero Section */}

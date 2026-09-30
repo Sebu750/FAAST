@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Adorzia Journal</title>
+    <link>https://adorzia.com/blog</link>
+    <description>Pakistani fashion journalism, industry insights, and emerging designer stories from Adorzia — Pakistan's first fashion entrepreneurship ecosystem.</description>
+    <language>en-us</language>
+    <atom:link href="https://adorzia.com/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 Sep 2026 10:28:34 GMT</lastBuildDate>
+    <image>
+      <url>https://adorzia.com/og-image.jpeg</url>
+      <title>Adorzia Journal</title>
+      <link>https://adorzia.com/blog</link>
+    </image>
+    <item>
+      <title>The Rise of Fashion Entrepreneurship in Pakistan</title>
+      <link>https://adorzia.com/blog/rise-of-fashion-entrepreneurship-pakistan</link>
+      <description><![CDATA[How a new generation of Pakistani designers is building fashion brands from the ground up, blending heritage craft with contemporary vision.]]></description>
+      <enclosure url="/blog/fashion-entrepreneurship.webp" type="image/webp" />
+      <category>fashion</category>
+      <category>entrepreneurship</category>
+      <category>pakistan</category>
+      <category>startups</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/rise-of-fashion-entrepreneurship-pakistan</guid>
+      <pubDate>Wed, 08 Jul 2026 14:59:54 GMT</pubDate>
+    </item>
+    <item>
+      <title>PIFD: Shaping Pakistan&apos;s Fashion Future</title>
+      <link>https://adorzia.com/blog/pifd-shaping-pakistan-fashion-future</link>
+      <description><![CDATA[Inside the Pakistan Institute of Fashion and Design — where the next generation of fashion talent is being trained and transformed.]]></description>
+      <enclosure url="/blog/pifd-fashion.webp" type="image/webp" />
+      <category>pifd</category>
+      <category>education</category>
+      <category>lahore</category>
+      <category>fashion-design</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/pifd-shaping-pakistan-fashion-future</guid>
+      <pubDate>Wed, 01 Jul 2026 19:25:52 GMT</pubDate>
+    </item>
+    <item>
+      <title>Spotlight 2026: Investing in Pakistan&apos;s Next Fashion Visionary</title>
+      <link>https://adorzia.com/blog/spotlight-2026-investing-pakistan-fashion</link>
+      <description><![CDATA[Adorzia&apos;s Spotlight program isn&apos;t just a competition — it&apos;s an investment in the designer who will define Pakistani fashion&apos;s next chapter.]]></description>
+      <enclosure url="/blog/spotlight-stage.webp" type="image/webp" />
+      <category>spotlight</category>
+      <category>investment</category>
+      <category>fashion</category>
+      <category>pakistan</category>
+      <category>2026</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/spotlight-2026-investing-pakistan-fashion</guid>
+      <pubDate>Wed, 01 Jul 2026 19:25:44 GMT</pubDate>
+    </item>
+    <item>
+      <title>Behind the Brand: The Journey of Emerging Fashion Designers Building Their First Label</title>
+      <link>https://adorzia.com/blog/behind-the-brand-emerging-fashion-designers-journey</link>
+      <description><![CDATA[Every successful fashion brand has a beginning. Long before the runway shows, flagship stores, or international recognition, there was a designer sketching ideas in a notebook, wondering whether those ideas could one day become a business. Building a fashion label is a journey of discovering your identity, solving problems, and earning customer trust.]]></description>
+      <enclosure url="/blog/fashion-entrepreneurship.webp" type="image/webp" />
+      <category>Designer Stories</category>
+      <category>Brand Story</category>
+      <category>Emerging Designer</category>
+      <category>Brand Building</category>
+      <category>Startup Guide</category>
+      <category>Growth</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/behind-the-brand-emerging-fashion-designers-journey</guid>
+      <pubDate>Wed, 01 Jul 2026 19:25:39 GMT</pubDate>
+    </item>
+    <item>
+      <title>Why Pakistan Needs More Fashion Entrepreneurs, Not Just More Fashion Graduates</title>
+      <link>https://adorzia.com/blog/why-pakistan-needs-fashion-entrepreneurs-not-just-graduates</link>
+      <description><![CDATA[Every year, fashion universities across Pakistan celebrate a new generation of graduates. Their final-year exhibitions showcase remarkable creativity. Yet very few go on to build fashion brands of their own. This raises an important question: Is Pakistan producing fashion graduates, or is it producing future fashion entrepreneurs?]]></description>
+      <enclosure url="/blog/pifd-fashion.webp" type="image/webp" />
+      <category>Startup Guide</category>
+      <category>Brand Building</category>
+      <category>Growth</category>
+      <category>Manufacturing</category>
+      <category>Funding</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/why-pakistan-needs-fashion-entrepreneurs-not-just-graduates</guid>
+      <pubDate>Wed, 01 Jul 2026 10:39:18 GMT</pubDate>
+    </item>
+    <item>
+      <title>From Fashion Student to Fashion Founder: A Practical Roadmap for Launching Your Brand in Pakistan</title>
+      <link>https://adorzia.com/blog/fashion-student-to-founder-roadmap-pakistan</link>
+      <description><![CDATA[Every year, thousands of students graduate from fashion universities across Pakistan with creativity, technical skills, and ambitious ideas. Yet only a small number successfully transform their academic projects into independent fashion brands. This guide outlines the practical steps to help fashion students become fashion entrepreneurs.]]></description>
+      <enclosure url="/blog/fashion-entrepreneurship.webp" type="image/webp" />
+      <category>Startup Guide</category>
+      <category>Brand Building</category>
+      <category>Growth</category>
+      <category>Manufacturing</category>
+      <category>Marketing</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/fashion-student-to-founder-roadmap-pakistan</guid>
+      <pubDate>Wed, 01 Jul 2026 10:34:13 GMT</pubDate>
+    </item>
+    <item>
+      <title>Student Spotlight: How a Final-Year Thesis Can Become the Foundation of a Fashion Brand</title>
+      <link>https://adorzia.com/blog/student-spotlight-thesis-to-fashion-brand</link>
+      <description><![CDATA[For every fashion student, the final-year thesis is more than just a graduation requirement. It represents years of learning, experimentation, research, and countless hours spent refining ideas into a finished collection. A thoughtfully developed thesis collection has the potential to become the foundation of a fashion brand.]]></description>
+      <enclosure url="/blog/spotlight-stage.webp" type="image/webp" />
+      <category>Student Spotlight</category>
+      <category>Graduate Stories</category>
+      <category>Emerging Designer</category>
+      <category>Brand Story</category>
+      <category>Brand Building</category>
+      <author>hello@adorzia.com (Adorzia Team)</author>
+      <guid isPermaLink="true">https://adorzia.com/blog/student-spotlight-thesis-to-fashion-brand</guid>
+      <pubDate>Wed, 01 Jul 2026 10:30:06 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

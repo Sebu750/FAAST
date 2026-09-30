@@ -23,14 +23,20 @@ const Footer = () => {
             © {new Date().getFullYear()} Adorzia. All rights reserved.
           </div>
           <div className="flex gap-x-4 sm:gap-x-6 items-center text-neutral-500">
+            <a href="https://www.instagram.com/adorziaofficial/" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on Instagram" className="hover:text-[#bb9457] transition-colors duration-300">
+              Instagram
+            </a>
+            <a href="https://www.linkedin.com/company/adorzia/" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on LinkedIn" className="hover:text-[#bb9457] transition-colors duration-300">
+              LinkedIn
+            </a>
+            <Link to="/sitemap.xml" className="hover:text-[#bb9457] transition-colors duration-300">
+              Sitemap
+            </Link>
             <Link to="/legal/privacy" className="hover:text-[#bb9457] transition-colors duration-300">
               Privacy Policy
             </Link>
             <Link to="/legal/terms" className="hover:text-[#bb9457] transition-colors duration-300">
               Terms & Conditions
-            </Link>
-            <Link to="/legal/spotlight-terms" className="hover:text-[#bb9457] transition-colors duration-300">
-              Spotlight Terms
             </Link>
             <Link to="/admin/login" className="hover:text-[#bb9457] transition-colors duration-300">
               ___

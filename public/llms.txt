@@ -1,39 +1,263 @@
 # Adorzia
 
-> Pakistan's first fashion entrepreneurship ecosystem
+> Pakistan's first fashion entrepreneurship ecosystem — Where Visionaries Rise.
 
-## About
+## One-Line Definition
 
-Adorzia is building the growth architecture Pakistani fashion entrepreneurs have never had. Founded in 2025, we provide:
+Adorzia is a fashion entrepreneurship ecosystem that discovers emerging designers, helps build new fashion brands, invests in selected brands, and connects emerging fashion businesses with the market.
 
-- **Coworking Studios** - Premium creative spaces in Karachi, Lahore, and Islamabad (Opening 2026)
-- **Curated Marketplace** - Connecting independent designers with international buyers
-- **Spotlight Program** - Annual talent investment event discovering Pakistan's next great fashion brands
+## Core Identity
 
-## Key Pages
+Adorzia is building the growth architecture Pakistani fashion entrepreneurs have never had. Founded in 2025, the core flow is:
 
-- [Home](https://adorzia.com/) - Main landing page
-- [About](https://adorzia.com/about) - Our story, mission, and team
-- [For Creatives](https://adorzia.com/for-creatives) - Resources for fashion designers
-- [For Partners](https://adorzia.com/for-partners) - Partnership opportunities
-- [Spotlight Event](https://adorzia.com/spotlight-event) - Annual talent investment program
-- [Marketplace](https://adorzia.com/marketplace) - Curated designer marketplace
-- [Contact](https://adorzia.com/contact) - Get in touch
+**Discover talent → Develop designers → Build brands → Invest in selected brands → Bring them to market → Create sustainable opportunities.**
 
-## Spotlight Applications
+Adorzia is **not** a conventional fashion-services company and **not** simply a mentorship or incubator program. It is a fashion company + fashion entrepreneurship ecosystem + brand incubation/investment platform + emerging-brand marketplace.
 
-Applications for Spotlight 2026 are open until July 31, 2026. Selected designers receive funding, mentorship, and a platform to launch their brand internationally.
+The focus is specifically on **new and emerging fashion talent and brands**, rather than established brands that already have strong market recognition.
 
-[Apply for Spotlight 2026](https://adorzia.com/spotlight/apply)
+## Who Adorzia Is For
+
+The central stakeholder is the **fashion designer**. This includes:
+
+- Final-year fashion students
+- Recent fashion graduates
+- Emerging designers
+- Early-career designers
+- Designers already working for fashion brands
+- Experienced designers who want to create their own brand
+- Fashion creatives who want to become fashion entrepreneurs
+
+The philosophy: a designer can build their own brand, work with another emerging brand, or participate in the wider fashion ecosystem. Adorzia creates **more opportunities for designers to become fashion entrepreneurs**, rather than limiting them to employment within existing fashion companies.
+
+## Two Brand Categories
+
+### 1. Independent Emerging Brands
+
+Young fashion brands created independently by designers or entrepreneurs from Pakistan, South Asia, and eventually anywhere globally. These brands are still building their identity, customer base, and market position.
+
+### 2. Adorzia-Incubated Brands
+
+Selected designers and ideas that Adorzia chooses to invest in and develop. This goes beyond mentorship:
+
+- Select the designer/brand
+- Invest capital
+- Develop products
+- Support production
+- Help with branding and positioning
+- Bring products to market
+- Sell through the marketplace and other channels
+
+Revenue model: **Revenue → expenses deducted → remaining profit → shared between Adorzia and the brand according to pre-agreed terms.** Both parties have a financial interest in making the brand successful.
+
+## Marketplace
+
+The Adorzia Marketplace focuses on **emerging fashion brands**, not established mainstream brands. It is currently in its curation phase and coming soon.
+
+### Marketplace brands
+
+- **Independent Emerging Brands** — young brands building their market position
+- **Adorzia-Incubated Brands** — brands created/developed through Adorzia's investment and incubation model
+
+### Marketplace vision
+
+For brands: market access, international exposure, customer access, brand visibility, sales opportunities, a professional digital presence.
+
+For customers: discoverability of emerging designers, unique designer-led products, new fashion brands, limited and emerging collections.
+
+### Product types
+
+Couture, Bespoke, Bridal, Red carpet, Suits, Couture RTW, Limited edition, Accessories, Jewelry, Watches, Custom made-to-order, Capsules, One-off pieces, Collaborations, Sustainable artisan products.
+
+The marketplace is primarily **made-to-order / limited-edition**, not fast fashion.
+
+## Current Website Pages
+
+The existing website at `https://adorzia.com` is the **digital front door** — its purpose is business identity, credibility, discovery, and lead generation. It is not the marketplace itself.
+
+- **[Home](https://adorzia.com/)** — Introduction to Adorzia's vision, ecosystem, designers, brands, opportunities, and call to action.
+- **[About](https://adorzia.com/about)** — Our story, mission, vision, team, philosophy, and the full ecosystem connecting designers, brands, manufacturers, and partners.
+- **[Fashionpreneurship](https://adorzia.com/fashionpreneurship)** — The main page for designers and emerging fashion entrepreneurs. Designer community, opportunities, brand building, incubation, investment, directory, and how to join.
+- **[For Partners](https://adorzia.com/for-partners)** — Partnership opportunities for manufacturers, artisans, suppliers, institutions, investors, brands, and media to collaborate and build the future of fashion together.
+- **[Designers Directory](https://adorzia.com/designers)** — Curated public directory of Pakistan's emerging fashion designers with browsable profiles and collections.
+- **[Journal](https://adorzia.com/blog)** — Pakistani fashion journalism, designer stories, industry insights, and opportunities. A fashion publication and knowledge hub.
+- **[Contact](https://adorzia.com/contact)** — General inquiries, designer applications, and partnership opportunities.
+
+Website conversion goal: **Discover Adorzia → Understand the ecosystem → Trust Adorzia → Apply / Contact → Build relationships.**
+
+## Fashionpreneurship
+
+The Fashionpreneurship page communicates the pathway: **Designer → Entrepreneur → Brand → Market.**
+
+It covers: fashionpreneurship introduction, designer community, who can join, opportunities, resources and support, building your own brand, Adorzia incubation, investment opportunities, designer directory, profiles and portfolios, how it works, and how to apply.
+
+Adorzia is not simply offering mentorship — it is creating a complete pathway from talent to market.
+
+## Designers Directory
+
+The Designers Directory is a curated discovery platform for Pakistani fashion designers.
+
+### Profile fields
+
+Profile image, banner, name, location, specialization, skills, education, experience, awards, portfolio, about, philosophy, social links, website, projects, and collections.
+
+### Benefits
+
+- Designers gain visibility
+- Brands discover talent
+- Institutions discover designers
+- Customers discover emerging talent
+- Adorzia builds a structured database of the fashion ecosystem
+
+## For Partners
+
+The For Partners page is designed for organizations and people who can participate in the ecosystem.
+
+### Partner types and benefits
+
+- **Manufacturers / Artisans** — more production orders, new clients, long-term relationships
+- **Suppliers** — new business opportunities, consistent demand
+- **Fashion Institutions / Universities** — student opportunities, industry collaboration, competitions, research, programs
+- **Investors** — opportunities to participate in selected fashion businesses and products
+- **Brands / Industry Partners** — access to emerging talent, collaboration opportunities, new projects
+- **Media** — coverage of emerging fashion stories and ecosystem developments
+
+## Coworking Studios
+
+Adorzia's physical ecosystem includes dedicated **fashion coworking studios** — different from generic coworking spaces, designed specifically for fashion designers, fashion entrepreneurs, fashion startups, and creative professionals.
+
+Locations: **Karachi, Lahore, and Islamabad** — opening 2026.
+
+Purpose: a physical environment where designers can work, meet, collaborate, develop collections, meet industry professionals, build brands, and access the broader Adorzia ecosystem. This is the physical layer alongside the digital platform.
+
+## Journal
+
+The Adorzia Journal is a **fashion publication and knowledge hub**, not simply a company blog. Its long-term purpose is to build authority around Pakistan's fashion entrepreneurship ecosystem.
+
+### Categories
+
+- **Fashion Startups** — Building fashion brands from the ground up
+- **Designers** — Spotlight on emerging and established designers
+- **Collections** — Fashion collections, lookbooks, and reviews
+- **Universities** — Fashion education and university news
+- **Fashion Business** — The business side of fashion
+- **Branding & Marketing** — Building and promoting fashion brands
+- **Industry Insights** — Market analysis and industry trends
+- **Resources** — Tools and resources for fashion entrepreneurs
+- **Opportunities** — Career and growth opportunities
+- **Adorzia Journal** — Platform updates and community news
+
+### Content types
+
+Designer stories, emerging brand stories, interviews, collections, lookbooks, fashion education, industry analysis, fashion entrepreneurship, business advice, opportunities, community news, and Adorzia updates.
+
+## Stylebox
+
+Stylebox is a digital product for designers — a structured **fashion design brief and challenge system**.
+
+### What a Stylebox provides
+
+A downloadable fashion design brief with tech pack / technical requirements, creative direction, constraints, and deliverables.
+
+### Stylebox content
+
+Trend insight, archetype, mutation, restrictions, manifestation, and deliverables.
+
+### Categories
+
+Open, Competition, Branded, Exclusive.
+
+### Difficulty levels
+
+Easy → Medium → Hard → Insane. More difficult challenges provide greater rewards.
+
+### Designer progression
+
+Stylebox participation connects to the broader designer progression system: XP, Stylebox Credits (SC), designer ranks, portfolio development, opportunities, and access to higher-level opportunities. The flow is: **Stylebox → Design Project → Portfolio → Recognition → Opportunity → Brand/Product.**
+
+## Competitions & Programs
+
+### Styleathon
+
+A fashion competition designed around fashion designers and creativity. Pakistan-focused, with high-ticket bridal wear categories and a PKR 200,000 prize. Purpose: discover talent, give designers exposure, create competition, identify promising designers, build community, and create pathways toward greater opportunities.
+
+### Adorzia Fall 2026 Fashion Competition
+
+Top prize: PKR 300,000. Top 100 receive a paid opportunity after the initial free application. Top 10 receive additional support. Strategic purpose: **Discover → Identify → Support → Develop emerging fashion talent.**
+
+### Founding Designers Program
+
+A program to identify a limited number of early designers (15-20) who become part of Adorzia's initial ecosystem. Free participation, high-quality articles and vision statement, lifetime founding status and perks, potential profit-sharing arrangements.
+
+## Revenue Model
+
+The long-term model is built around brands, products, investment, and marketplace activity — not selling generic services.
+
+Revenue streams:
+
+1. Profit share from Adorzia-incubated brands
+2. Marketplace commissions
+3. Product margins
+4. Premium programs
+5. Coworking memberships
+6. Competitions and programs
+7. Partnerships and sponsorships
+8. Brand and industry opportunities
+9. Potential investment returns
+
+## Brand Philosophy
+
+### Heritage × Innovation
+
+Adorzia feels like **a private design studio meeting a global fashion house.**
+
+- **Archetypes:** Sage + Creator
+- **Tone:** Intelligent, Premium, Minimal, Sophisticated, Fashion-forward, Strategic. Not overly corporate, not childish or overly "startup tech."
+
+### Visual Identity
+
+- **Dark Wine:** #6F1D1B
+- **Camel:** #BB9457
+- **Dark Coffee:** #432818
+- **Chocolate Brown:** #99582A
+- **Light Apricot:** #FFE6A7
+
+Design direction: Premium, minimal luxury, editorial, sophisticated, strong typography. No cartoon or bright visual style.
+
+**Tagline:** Adorzia — Where Visionaries Rise.
+
+## SEO Positioning
+
+### Primary themes
+
+Fashion entrepreneurship in Pakistan, fashion incubator in Pakistan, emerging fashion designers in Pakistan, fashion brand incubation, fashion startup ecosystem, fashion designers directory Pakistan, emerging fashion brands Pakistan, fashion entrepreneurs Pakistan.
+
+### Supporting themes
+
+Fashion design students, fashion graduates, fashion opportunities, fashion startups, fashion competitions, fashion education, fashion business, fashion industry insights, fashion designers by city, emerging Pakistani designers.
+
+Adorzia should become a **discovery hub for Pakistan's emerging fashion ecosystem.**
+
+## Stakeholder Ecosystem
+
+- **Fashion Designers** — opportunity to build brands, visibility, resources, production access, industry connections, market access, investment opportunities
+- **Manufacturers / Artisans** — more clients, production orders, long-term partnerships
+- **Suppliers** — new business, consistent demand
+- **Customers** — discover unique emerging fashion brands, designer-led products
+- **Investors** — opportunities to invest in selected fashion businesses and products
+- **Fashion Institutions** — student opportunities, industry collaboration, competitions, research
+- **Emerging Brands** — visibility, market access, customers, growth opportunities
+- **Adorzia** — brand and product profits, marketplace revenue, investment returns, ecosystem growth, programs and partnerships
 
 ## Contact
 
-- **Email**: hello@adorzia.com
-- **Instagram**: [@adorziaofficial](https://www.instagram.com/adorziaofficial/)
-- **LinkedIn**: [Adorzia](https://www.linkedin.com/company/adorzia/)
+- **Email:** hello@adorzia.com
+- **Instagram:** [@adorziaofficial](https://www.instagram.com/adorziaofficial/)
+- **LinkedIn:** [Adorzia](https://www.linkedin.com/company/adorzia/)
 
 ## Technical
 
 - Built with React, TypeScript, and Vite
+- Database: Supabase (PostgreSQL)
 - Hosted on Vercel
-- Designed for accessibility and performance (90+ Lighthouse score)
+- Designed for accessibility and performance
