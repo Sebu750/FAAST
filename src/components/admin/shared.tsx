@@ -252,7 +252,7 @@ export const Pagination = ({ page, pageSize, total, onPageChange, onPageSizeChan
 export function useTableSearch<T>(items: T[], searchFields: (keyof T)[]) {
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
 
   useEffect(() => {
     timerRef.current = setTimeout(() => setDebouncedQuery(searchQuery), 300)
