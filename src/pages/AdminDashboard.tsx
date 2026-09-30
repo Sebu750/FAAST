@@ -258,13 +258,20 @@ const AdminDashboard = () => {
     }
 
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from(table)
         .delete()
         .eq('id', id)
+        .select('id')
 
       if (error) {
         alert('Error deleting entry: ' + error.message)
+        return
+      }
+
+      // RLS can silently filter deletes to 0 rows - treat that as a failure
+      if (!data || data.length === 0) {
+        alert('Delete failed: no rows were removed. A database DELETE policy may be missing for this table.')
         return
       }
 
@@ -448,11 +455,11 @@ const AdminDashboard = () => {
                 ? 'bg-[#bb9457]/10 text-[#bb9457] border-r-2 border-[#bb9457]'
                 : 'text-neutral-400 hover:bg-neutral-800 hover:text-white'
             }`}
-            title={sidebarCollapsed ? 'Blog' : ''}
+            title={sidebarCollapsed ? 'Journal' : ''}
           >
             <Icon name="newspaper" className="w-5 h-5 flex-shrink-0" />
-            {!sidebarCollapsed && <span className="hidden lg:inline">Blog</span>}
-            {sidebarCollapsed && <span className="lg:hidden">Blog</span>}
+            {!sidebarCollapsed && <span className="hidden lg:inline">Journal</span>}
+            {sidebarCollapsed && <span className="lg:hidden">Journal</span>}
           </button>
           <button
             onClick={() => {
@@ -676,7 +683,7 @@ const OverviewTab = ({ counts, spotlightRecent, inquiriesRecent }: {
     { label: 'Studio Waitlist', value: counts.studio_waitlist_total || 0, icon: 'users', color: 'from-purple-600/20 to-purple-800/20', borderColor: 'border-purple-600/30', textColor: 'text-purple-400' },
     { label: 'Partnership Pending', value: counts.partnership_pending, icon: 'handshake', color: 'from-orange-600/20 to-orange-800/20', borderColor: 'border-orange-600/30', textColor: 'text-orange-400' },
     { label: 'Newsletter Subscribers', value: counts.newsletter_total, icon: 'mail', color: 'from-teal-600/20 to-teal-800/20', borderColor: 'border-teal-600/30', textColor: 'text-teal-400' },
-    { label: 'Blog Posts', value: counts.blog_total, icon: 'newspaper', color: 'from-amber-600/20 to-amber-800/20', borderColor: 'border-amber-600/30', textColor: 'text-amber-400' },
+    { label: 'Journal Articles', value: counts.blog_total, icon: 'newspaper', color: 'from-amber-600/20 to-amber-800/20', borderColor: 'border-amber-600/30', textColor: 'text-amber-400' },
     { label: 'Designers', value: counts.designers_total || 0, icon: 'palette', color: 'from-pink-600/20 to-pink-800/20', borderColor: 'border-pink-600/30', textColor: 'text-pink-400' },
   ]
 
@@ -839,6 +846,20 @@ const NewsletterTable = ({ data, onDelete }: { data: NewsletterSubscription[]; o
   )
 }
 
+// Helper to parse structured contact message
+const parseContactMessage = (message: string) => {
+  const phoneMatch = message.match(/^Phone:\s*(.+)$/m)
+  const roleMatch = message.match(/^Role:\s*(.+)$/m)
+  const subjectMatch = message.match(/^Subject:\s*(.+)$/m)
+  const bodyMatch = message.match(/^Subject:.+\n*\n*([\s\S]*)$/m)
+  return {
+    phone: phoneMatch?.[1]?.trim() || '',
+    role: roleMatch?.[1]?.trim() || '',
+    subject: subjectMatch?.[1]?.trim() || '',
+    body: bodyMatch?.[1]?.trim() || message
+  }
+}
+
 const ContactTable = ({ data, onDelete }: { data: ContactInquiry[]; onDelete: (id: string) => void }) => {
   const [selectedItem, setSelectedItem] = useState<ContactInquiry | null>(null)
 
@@ -849,7 +870,7 @@ const ContactTable = ({ data, onDelete }: { data: ContactInquiry[]; onDelete: (i
   return (
     <div className="bg-neutral-900 border border-neutral-800 rounded-sm overflow-hidden">
       <div className="p-6 border-b border-neutral-800">
-        <h3 className="text-lg font-semibold font-serif text-white">All Inquiries ({data.length})</h3>
+        <h3 className="text-lg font-semibold font-serif text-white">Contact Inquiries ({data.length})</h3>
       </div>
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-neutral-800">
@@ -857,71 +878,105 @@ const ContactTable = ({ data, onDelete }: { data: ContactInquiry[]; onDelete: (i
             <tr>
               <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Name</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Email</th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Message</th>
+              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Role</th>
+              <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Subject</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Date</th>
               <th className="px-6 py-4 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-neutral-900 divide-y divide-neutral-800">
-            {data.map((item) => (
-              <tr key={item.id} className="hover:bg-neutral-800/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{item.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.email}</td>
-                <td className="px-6 py-4 text-sm text-neutral-300 max-w-md line-clamp-2">{item.message}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
-                  {new Date(item.created_at).toLocaleDateString()}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <button
-                    onClick={() => setSelectedItem(item)}
-                    className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
-                  >
-                    View Details
-                  </button>
-                  <button
-                    onClick={() => onDelete(item.id)}
-                    className="text-red-400 hover:text-red-300 font-medium transition-colors"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {data.map((item) => {
+              const parsed = parseContactMessage(item.message)
+              return (
+                <tr key={item.id} className="hover:bg-neutral-800/50 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-white font-medium">{item.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-300">{item.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    {parsed.role ? (
+                      <span className="px-2 py-1 rounded-full bg-[#bb9457]/10 border border-[#bb9457]/20 text-[#bb9457] text-xs">{parsed.role}</span>
+                    ) : (
+                      <span className="text-neutral-500">—</span>
+                    )}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-neutral-300 max-w-xs truncate">{parsed.subject || '—'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-neutral-400">
+                    {new Date(item.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <button
+                      onClick={() => setSelectedItem(item)}
+                      className="text-[#bb9457] hover:text-white font-medium transition-colors mr-4"
+                    >
+                      View
+                    </button>
+                    <button
+                      onClick={() => onDelete(item.id)}
+                      className="text-red-400 hover:text-red-300 font-medium transition-colors"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>
 
       {/* Detail Modal */}
-      {selectedItem && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
-          <div className="bg-neutral-900 border border-neutral-800 rounded-sm max-w-2xl w-full" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-neutral-800 flex justify-between items-center">
-              <h3 className="text-xl font-semibold text-white">Contact Inquiry Details</h3>
-              <button onClick={() => setSelectedItem(null)} className="text-neutral-400 hover:text-white text-2xl">×</button>
-            </div>
-            <div className="p-6 space-y-6">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-xs text-neutral-500 uppercase tracking-wider">Name</label>
-                  <p className="text-white mt-1">{selectedItem.name}</p>
+      {selectedItem && (() => {
+        const parsed = parseContactMessage(selectedItem.message)
+        return (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={() => setSelectedItem(null)}>
+            <div className="bg-neutral-900 border border-neutral-800 rounded-sm max-w-2xl w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="p-6 border-b border-neutral-800 flex justify-between items-center sticky top-0 bg-neutral-900 z-10">
+                <h3 className="text-xl font-semibold text-white">Contact Inquiry</h3>
+                <button onClick={() => setSelectedItem(null)} className="text-neutral-400 hover:text-white text-2xl">×</button>
+              </div>
+              <div className="p-6 space-y-6">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-neutral-500 uppercase tracking-wider">Name</label>
+                    <p className="text-white mt-1">{selectedItem.name}</p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-neutral-500 uppercase tracking-wider">Email</label>
+                    <p className="text-white mt-1"><a href={`mailto:${selectedItem.email}`} className="text-[#bb9457] hover:text-white transition-colors">{selectedItem.email}</a></p>
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-xs text-neutral-500 uppercase tracking-wider">Role</label>
+                    <p className="mt-1">
+                      {parsed.role ? (
+                        <span className="px-2.5 py-1 rounded-full bg-[#bb9457]/10 border border-[#bb9457]/20 text-[#bb9457] text-sm">{parsed.role}</span>
+                      ) : (
+                        <span className="text-neutral-500">Not provided</span>
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <label className="text-xs text-neutral-500 uppercase tracking-wider">Phone</label>
+                    <p className="text-white mt-1">{parsed.phone || <span className="text-neutral-500">Not provided</span>}</p>
+                  </div>
                 </div>
                 <div>
-                  <label className="text-xs text-neutral-500 uppercase tracking-wider">Email</label>
-                  <p className="text-white mt-1">{selectedItem.email}</p>
+                  <label className="text-xs text-neutral-500 uppercase tracking-wider">Subject</label>
+                  <p className="text-white mt-1">{parsed.subject || <span className="text-neutral-500">No subject</span>}</p>
                 </div>
-              </div>
-              <div>
-                <label className="text-xs text-neutral-500 uppercase tracking-wider">Message</label>
-                <p className="text-neutral-300 mt-2 whitespace-pre-wrap leading-relaxed">{selectedItem.message}</p>
-              </div>
-              <div className="pt-4 border-t border-neutral-800">
-                <label className="text-xs text-neutral-500 uppercase tracking-wider">Received</label>
-                <p className="text-white mt-1">{new Date(selectedItem.created_at).toLocaleString()}</p>
+                <div className="pt-4 border-t border-neutral-800">
+                  <label className="text-xs text-neutral-500 uppercase tracking-wider">Message</label>
+                  <p className="text-neutral-300 mt-2 whitespace-pre-wrap leading-relaxed">{parsed.body}</p>
+                </div>
+                <div className="pt-4 border-t border-neutral-800">
+                  <label className="text-xs text-neutral-500 uppercase tracking-wider">Received</label>
+                  <p className="text-white mt-1">{new Date(selectedItem.created_at).toLocaleString()}</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      })()}
     </div>
   )
 }

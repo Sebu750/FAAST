@@ -13,8 +13,6 @@ const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
 const ForCreatives = lazy(() => import('./pages/ForCreatives'))
 const ForPartners = lazy(() => import('./pages/ForPartners'))
-const SpotlightEvent = lazy(() => import('./pages/SpotlightEvent'))
-const SpotlightApplication = lazy(() => import('./pages/SpotlightApplication'))
 const SpotlightAdmin = lazy(() => import('./pages/SpotlightAdmin'))
 const Contact = lazy(() => import('./pages/Contact'))
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'))
@@ -33,8 +31,6 @@ const BlogEditor = lazy(() => import('./pages/BlogEditor'))
 const DesignersDirectory = lazy(() => import('./pages/DesignersDirectory'))
 const DesignerProfile = lazy(() => import('./pages/DesignerProfile'))
 const DesignerProfilePreview = lazy(() => import('./pages/DesignerProfilePreview'))
-const DesignerAuth = lazy(() => import('./pages/DesignerAuth'))
-const DesignerDashboard = lazy(() => import('./pages/DesignerDashboard'))
 
 // Loading fallback component
 const PageLoader = () => (
@@ -73,10 +69,6 @@ function App() {
           <Route path="/admin/blog/new" element={<BlogEditor />} />
           <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
           
-          {/* Designer portal routes - no header/footer */}
-          <Route path="/designer/auth" element={<DesignerAuth />} />
-          <Route path="/designer/dashboard" element={<DesignerDashboard />} />
-          
           {/* Website routes - with header/footer */}
           <Route path="/*" element={
             <div className="min-h-screen flex flex-col overflow-x-hidden">
@@ -87,8 +79,6 @@ function App() {
                   <Route path="/about" element={<About />} />
                   <Route path="/for-creatives" element={<ForCreatives />} />
                   <Route path="/for-partners" element={<ForPartners />} />
-                  <Route path="/spotlight-event" element={<SpotlightEvent />} />
-                  <Route path="/spotlight/apply" element={<SpotlightApplication />} />
                   <Route path="/marketplace" element={<Marketplace />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/legal/privacy" element={<Legal />} />

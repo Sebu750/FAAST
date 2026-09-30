@@ -117,7 +117,7 @@ const BlogAdmin = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </Link>
-            <h1 className="text-xl font-serif tracking-wide">Blog Management</h1>
+            <h1 className="text-xl font-serif tracking-wide">Journal Management</h1>
           </div>
           <Link
             to="/admin/blog/new"

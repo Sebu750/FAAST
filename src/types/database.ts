@@ -330,6 +330,17 @@ export interface DesignerSocialLinks {
   created_at: string
 }
 
+export interface DesignerFilm {
+  id: string
+  designer_id: string
+  title: string
+  description: string | null
+  youtube_url: string
+  thumbnail_url: string | null
+  display_order: number
+  created_at: string
+}
+
 // ==========================================
 // OPPORTUNITIES SYSTEM TYPES
 // ==========================================
@@ -454,4 +465,5 @@ export interface DesignerProfile extends Designer {
   skills: DesignerSkill[]
   certifications: DesignerCertification[]
   social_links: DesignerSocialLinks | null
+  films: DesignerFilm[]
 }

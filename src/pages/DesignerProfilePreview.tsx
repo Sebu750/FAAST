@@ -197,13 +197,21 @@ const DesignerProfilePreview = () => {
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent" />
+          {/* Animated background orbs */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[#bb9457]/5 rounded-full blur-3xl animate-pulse" />
+          </div>
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/30 to-transparent" />
           
           <div className="relative z-10 h-full flex items-end">
             <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-20 w-full">
               <div className="max-w-3xl">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Designer Profile</span>
-                <h1 className="mt-6 font-serif text-5xl md:text-7xl lg:text-8xl text-white font-normal tracking-tight">
-                  {designer.name}
+                <div className="inline-flex items-center gap-3 mb-8 px-5 py-2 rounded-full glass">
+                  <span className="w-2 h-2 bg-[#bb9457] rounded-full animate-pulse" />
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Designer Profile</span>
+                </div>
+                <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl text-white font-normal tracking-tight leading-[0.9]">
+                  {designer.name.split(' ').slice(0, -1).join(' ')} <span className="text-gradient italic font-light">{designer.name.split(' ').slice(-1)}</span>
                 </h1>
                 <div className="mt-6 text-2xl md:text-3xl text-neutral-300 font-light">
                   {designer.brand_name}
@@ -219,39 +227,43 @@ const DesignerProfilePreview = () => {
         </section>
 
         {/* Stats Bar */}
-        <section className="py-12 border-t border-b border-neutral-900 bg-neutral-950">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-16 border-t border-b border-neutral-800/50 bg-neutral-950">
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-0 left-1/3 w-64 h-64 bg-[#bb9457]/3 rounded-full blur-3xl" />
+          </div>
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-              <div className="text-center">
-                <div className="font-serif text-4xl text-[#bb9457] font-normal">{designer.stats.pieces_launched}</div>
-                <div className="mt-2 text-neutral-400 font-light text-sm uppercase tracking-[0.15em]">Pieces Launched</div>
-              </div>
-              <div className="text-center">
-                <div className="font-serif text-4xl text-[#bb9457] font-normal">{designer.stats.craft_traditions}</div>
-                <div className="mt-2 text-neutral-400 font-light text-sm uppercase tracking-[0.15em]">Craft Traditions</div>
-              </div>
-              <div className="text-center">
-                <div className="font-serif text-4xl text-[#bb9457] font-normal">{designer.stats.collections_on_adorzia}</div>
-                <div className="mt-2 text-neutral-400 font-light text-sm uppercase tracking-[0.15em]">Collections on Adorzia</div>
-              </div>
-              <div className="text-center">
-                <div className="font-serif text-4xl text-[#bb9457] font-normal">{designer.stats.debut_year}</div>
-                <div className="mt-2 text-neutral-400 font-light text-sm uppercase tracking-[0.15em]">Debut Year</div>
-              </div>
+              {[
+                { value: designer.stats.pieces_launched, label: "Pieces Launched" },
+                { value: designer.stats.craft_traditions, label: "Craft Traditions" },
+                { value: designer.stats.collections_on_adorzia, label: "Collections on Adorzia" },
+                { value: designer.stats.debut_year, label: "Debut Year" }
+              ].map((stat, i) => (
+                <div key={i} className="text-center group">
+                  <div className="font-serif text-4xl md:text-5xl text-gradient font-normal tracking-tight">{stat.value}</div>
+                  <div className="mt-3 text-neutral-500 font-light text-xs uppercase tracking-[0.2em]">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* About the Designer */}
-        <section className="py-32 border-t border-neutral-900">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-32 border-t border-neutral-800/50 overflow-hidden">
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#bb9457]/3 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-16">
               <div className="lg:col-span-4">
                 <div className="sticky top-32">
-                  <img src={designerPortrait} alt={designer.name} className="w-full aspect-[3/4] object-cover grayscale contrast-125" />
+                  <div className="overflow-hidden rounded-lg border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-700">
+                    <img src={designerPortrait} alt={designer.name} className="w-full aspect-[3/4] object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                  </div>
                   <div className="mt-6">
-                    <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">About the Designer</span>
-                    <h2 className="mt-4 font-serif text-3xl text-white font-normal">{designer.name}</h2>
+                    <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full glass">
+                      <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
+                      <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">About the Designer</span>
+                    </div>
+                    <h2 className="font-serif text-3xl text-white font-normal">{designer.name}</h2>
                   </div>
                 </div>
               </div>
@@ -264,19 +276,23 @@ const DesignerProfilePreview = () => {
                 </div>
 
                 {/* Why I Design Pull Quote */}
-                <div className="my-16 border-l-2 border-[#bb9457] pl-8">
-                  <p className="font-serif text-3xl md:text-4xl text-white font-normal italic leading-tight">
+                <div className="my-16 relative p-8 rounded-2xl bg-gradient-to-br from-neutral-900/80 to-neutral-950 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500">
+                  <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-[#bb9457] to-transparent rounded-l-2xl" />
+                  <p className="font-serif text-3xl md:text-4xl text-white font-normal italic leading-tight pl-4">
                     "I design to preserve what is being lost - to give heritage craft a future, not just a past."
                   </p>
-                  <div className="mt-6 text-neutral-400 font-light">— {designer.name}</div>
+                  <div className="mt-6 text-neutral-400 font-light pl-4">— {designer.name}</div>
                 </div>
 
                 {/* Education */}
                 <div className="mt-16">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Education</span>
-                  <div className="mt-6 space-y-4">
+                  <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full glass">
+                    <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Education</span>
+                  </div>
+                  <div className="space-y-4">
                     {designer.education.map((edu, i) => (
-                      <div key={i} className="border-l border-neutral-800 pl-6">
+                      <div key={i} className="p-6 rounded-xl bg-neutral-900/50 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500">
                         <div className="text-white font-normal text-lg">{edu.institution}</div>
                         <div className="mt-1 text-neutral-400 font-light">{edu.degree}, {edu.year}</div>
                         <div className="mt-2 text-neutral-500 font-light text-sm italic">Thesis: {edu.thesis}</div>
@@ -290,19 +306,18 @@ const DesignerProfilePreview = () => {
         </section>
 
         {/* Latest Collection - 26 Images */}
-        <section className="py-32 border-t border-neutral-900 bg-neutral-900">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-32 border-t border-neutral-800/50 bg-gradient-to-b from-neutral-900 to-neutral-950 overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#bb9457]/3 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             <div className="max-w-4xl mb-20">
-              <div className="flex items-start gap-6 mb-6">
-                <div className="flex-shrink-0 w-12 h-px bg-[#bb9457] mt-3" />
-                <div className="flex-1">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Latest Collection</span>
-                  <div className="mt-2 text-neutral-500 font-light text-sm">Fall / Winter 2024</div>
-                </div>
+              <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                <span className="w-2 h-2 bg-[#bb9457] rounded-full animate-pulse" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Latest Collection</span>
               </div>
+              <div className="mt-2 text-neutral-500 font-light text-sm">Fall / Winter 2024</div>
               
-              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white font-normal tracking-tight leading-tight">
-                {latestCollection.name}
+              <h2 className="font-serif text-4xl md:text-6xl lg:text-7xl text-white font-normal tracking-tight leading-[0.9] mt-4">
+                {latestCollection.name.split(' ').slice(0, -1).join(' ')} <span className="text-gradient italic font-light">{latestCollection.name.split(' ').slice(-1)}</span>
               </h2>
               
               <div className="mt-8 flex items-center gap-6">
@@ -317,10 +332,10 @@ const DesignerProfilePreview = () => {
               
               {/* Collection Meta Tags */}
               <div className="mt-8 flex flex-wrap gap-3">
-                <span className="px-4 py-2 border border-neutral-800 text-neutral-500 font-light text-xs uppercase tracking-[0.15em]">Contemporary</span>
-                <span className="px-4 py-2 border border-neutral-800 text-neutral-500 font-light text-xs uppercase tracking-[0.15em]">Heritage Craft</span>
-                <span className="px-4 py-2 border border-neutral-800 text-neutral-500 font-light text-xs uppercase tracking-[0.15em]">Limited Edition</span>
-                <span className="px-4 py-2 border border-[#bb9457]/30 text-[#bb9457] font-medium text-xs uppercase tracking-[0.15em]">New Arrival</span>
+                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-400 font-light text-xs uppercase tracking-[0.15em] hover:border-[#bb9457]/30 transition-colors">Contemporary</span>
+                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-400 font-light text-xs uppercase tracking-[0.15em] hover:border-[#bb9457]/30 transition-colors">Heritage Craft</span>
+                <span className="px-4 py-2 rounded-full border border-neutral-700 text-neutral-400 font-light text-xs uppercase tracking-[0.15em] hover:border-[#bb9457]/30 transition-colors">Limited Edition</span>
+                <span className="px-4 py-2 rounded-full bg-gradient-to-r from-[#bb9457]/10 to-[#bb9457]/5 border border-[#bb9457]/30 text-[#bb9457] font-medium text-xs uppercase tracking-[0.15em]">New Arrival</span>
               </div>
             </div>
 
@@ -353,7 +368,7 @@ const DesignerProfilePreview = () => {
                   return (
                     <div 
                       key={i} 
-                      className={`group relative overflow-hidden bg-neutral-950 mb-3 md:mb-4 break-inside-avoid ${
+                      className={`group relative overflow-hidden rounded-lg bg-neutral-950 mb-3 md:mb-4 break-inside-avoid border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift ${
                         isHero ? 'ring-2 ring-[#bb9457]/30 shadow-2xl shadow-black/50' :
                         isFeatured ? 'ring-1 ring-[#bb9457]/20 shadow-xl shadow-black/30' : ''
                       }`}
@@ -373,6 +388,8 @@ const DesignerProfilePreview = () => {
                       
                       {/* Enhanced Hover Overlay with Gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out" />
+                      {/* Radial gold glow */}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0),rgba(187,148,87,0.15))] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                       
                       {/* Piece Info Panel */}
                       <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out transform translate-y-4 group-hover:translate-y-0">
@@ -395,8 +412,8 @@ const DesignerProfilePreview = () => {
                         </div>
                         
                         {/* View Details Link */}
-                        <div className="mt-3 text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-light">
-                          View Details →
+                        <div className="mt-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-light">
+                          View Details <span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span>
                         </div>
                       </div>
                       
@@ -412,7 +429,7 @@ const DesignerProfilePreview = () => {
                       )}
                       
                       {/* Piece Counter Badge (Mobile) */}
-                      <div className="absolute top-3 right-3 md:hidden w-8 h-8 bg-black/80 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute top-3 right-3 md:hidden w-8 h-8 glass rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span className="text-[#bb9457] text-xs font-mono">{String(i + 1).padStart(2, '0')}</span>
                       </div>
                     </div>
@@ -421,7 +438,7 @@ const DesignerProfilePreview = () => {
               </div>
               
               {/* Collection Footer with Enhanced Design */}
-              <div className="mt-20 pt-12 border-t border-neutral-800">
+              <div className="mt-20 pt-12 border-t border-neutral-800/50">
                 <div className="grid md:grid-cols-3 gap-8 items-center">
                   <div className="md:col-span-1">
                     <div className="text-neutral-500 font-light text-sm">
@@ -430,16 +447,16 @@ const DesignerProfilePreview = () => {
                   </div>
                   
                   <div className="md:col-span-1 text-center">
-                    <div className="inline-flex items-center gap-3">
-                      <div className="w-12 h-px bg-neutral-700" />
-                      <div className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">The Collection</div>
-                      <div className="w-12 h-px bg-neutral-700" />
+                    <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full glass">
+                      <div className="w-8 h-px bg-neutral-700" />
+                      <div className="text-[9px] uppercase tracking-[0.3em] text-neutral-400 font-mono">The Collection</div>
+                      <div className="w-8 h-px bg-neutral-700" />
                     </div>
                   </div>
                   
                   <div className="md:col-span-1 text-right">
-                    <a href="#" className="inline-flex items-center gap-3 text-[#bb9457] hover:text-white transition-colors group">
-                      <span className="text-sm font-medium">View Full Collection</span>
+                    <a href="#" className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 hover:border-[#bb9457]/50 text-[#bb9457] hover:shadow-lg hover:shadow-[#bb9457]/10 transition-all duration-300">
+                      <span className="text-sm font-semibold">View Full Collection</span>
                       <span className="text-lg transform group-hover:translate-x-1 transition-transform duration-300">→</span>
                     </a>
                   </div>
@@ -450,11 +467,15 @@ const DesignerProfilePreview = () => {
         </section>
 
         {/* Selected Works */}
-        <section className="py-32 border-t border-neutral-900">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-32 border-t border-neutral-800/50 overflow-hidden">
+          <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-[#bb9457]/3 rounded-full blur-3xl" />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             <div className="max-w-4xl mb-20">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Selected Works</span>
-              <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
+              <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                <span className="w-2 h-2 bg-[#bb9457] rounded-full" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Selected Works</span>
+              </div>
+              <h2 className="font-serif text-4xl md:text-5xl text-white font-normal tracking-tight mt-4">
                 Signature pieces from the collection
               </h2>
             </div>
@@ -462,19 +483,21 @@ const DesignerProfilePreview = () => {
             <div className="grid md:grid-cols-2 gap-8">
               {designer.selected_works.map((work, i) => (
                 <div key={i} className="group">
-                  <div className="aspect-[4/5] overflow-hidden bg-neutral-950 mb-6">
+                  <div className="aspect-[4/5] overflow-hidden rounded-lg bg-neutral-950 mb-6 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift">
                     <img 
                       src={work.image} 
                       alt={work.name}
-                      className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
+                      className="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 group-hover:grayscale-0 transition-all duration-700"
                     />
+                    {/* Radial gold glow on hover */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(187,148,87,0),rgba(187,148,87,0.15))] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   </div>
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <h3 className="text-white font-normal text-xl">{work.name}</h3>
+                      <h3 className="text-white font-normal text-xl group-hover:text-[#bb9457] transition-colors duration-300">{work.name}</h3>
                       <p className="mt-2 text-neutral-400 font-light text-sm">{work.description}</p>
                     </div>
-                    <div className="text-[#bb9457] font-normal text-lg whitespace-nowrap">{work.price}</div>
+                    <div className="text-gradient font-normal text-lg whitespace-nowrap font-semibold">{work.price}</div>
                   </div>
                 </div>
               ))}
@@ -484,11 +507,15 @@ const DesignerProfilePreview = () => {
 
         {/* Previous Collections */}
         {previousCollections.length > 0 && (
-          <section className="py-32 border-t border-neutral-900 bg-neutral-900">
-            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <section className="relative py-32 border-t border-neutral-800/50 bg-gradient-to-b from-neutral-900 to-neutral-950 overflow-hidden">
+            <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[#bb9457]/3 rounded-full blur-3xl" />
+            <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
               <div className="max-w-4xl mb-20">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Previous Collections</span>
-                <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
+                <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                  <span className="w-2 h-2 bg-[#bb9457] rounded-full" />
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Previous Collections</span>
+                </div>
+                <h2 className="font-serif text-4xl md:text-5xl text-white font-normal tracking-tight mt-4">
                   Archive
                 </h2>
               </div>
@@ -497,16 +524,19 @@ const DesignerProfilePreview = () => {
                 {previousCollections.map((collection, i) => (
                   <div key={i} className="grid lg:grid-cols-12 gap-8">
                     <div className="lg:col-span-4">
-                      <img src={collection.images[0]} alt={collection.name} className="w-full aspect-[4/5] object-cover grayscale contrast-125" />
+                      <div className="overflow-hidden rounded-lg border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift">
+                        <img src={collection.images[0]} alt={collection.name} className="w-full aspect-[4/5] object-cover grayscale contrast-125 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700" />
+                      </div>
                     </div>
                     <div className="lg:col-span-8">
-                      <h3 className="font-serif text-3xl text-white font-normal">{collection.name}</h3>
+                      <h3 className="font-serif text-3xl text-white font-normal group-hover:text-[#bb9457] transition-colors">{collection.name}</h3>
                       <div className="mt-2 text-xl text-neutral-400 font-light">{collection.season}</div>
                       <p className="mt-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
                         {collection.description}
                       </p>
-                      <div className="mt-4 text-neutral-500 font-light text-sm">
-                        {collection.pieces_count} pieces
+                      <div className="mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass">
+                        <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
+                        <span className="text-neutral-400 font-light text-sm">{collection.pieces_count} pieces</span>
                       </div>
                     </div>
                   </div>
@@ -517,20 +547,31 @@ const DesignerProfilePreview = () => {
         )}
 
         {/* Achievements */}
-        <section className="py-32 border-t border-neutral-900">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-32 border-t border-neutral-800/50 overflow-hidden">
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#bb9457]/3 rounded-full blur-3xl" />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             <div className="max-w-4xl mb-20">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Recognition</span>
-              <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
+              <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                <span className="w-2 h-2 bg-[#bb9457] rounded-full" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Recognition</span>
+              </div>
+              <h2 className="font-serif text-4xl md:text-5xl text-white font-normal tracking-tight mt-4">
                 Achievements & Press
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 gap-6">
               {designer.achievements.map((achievement, i) => (
-                <div key={i} className="border-l border-[#bb9457]/30 pl-6">
-                  <div className="text-white font-normal text-lg">{achievement.title}</div>
-                  <div className="mt-1 text-neutral-400 font-light">{achievement.organization}, {achievement.year}</div>
+                <div key={i} className="group relative p-8 rounded-2xl bg-gradient-to-br from-neutral-900/80 to-neutral-950 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-8 h-0.5 bg-[#bb9457]" />
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">{achievement.year}</span>
+                    </div>
+                    <div className="text-white font-normal text-lg group-hover:text-[#bb9457] transition-colors duration-300">{achievement.title}</div>
+                    <div className="mt-1 text-neutral-400 font-light">{achievement.organization}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -538,16 +579,22 @@ const DesignerProfilePreview = () => {
         </section>
 
         {/* Creative Process */}
-        <section className="py-32 border-t border-neutral-900 bg-neutral-900">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-32 border-t border-neutral-800/50 bg-gradient-to-b from-neutral-900 to-neutral-950 overflow-hidden">
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#bb9457]/3 rounded-full blur-3xl" />
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid lg:grid-cols-12 gap-16">
               <div className="lg:col-span-5">
-                <img src={studioImg} alt="Designer workspace" className="w-full aspect-[4/5] object-cover grayscale contrast-125" />
+                <div className="overflow-hidden rounded-lg border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-700">
+                  <img src={studioImg} alt="Designer workspace" className="w-full aspect-[4/5] object-cover grayscale contrast-125 hover:scale-105 transition-transform duration-700" />
+                </div>
               </div>
               <div className="lg:col-span-7">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Creative Process</span>
-                <h2 className="mt-6 font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">
-                  From research to reality
+                <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                  <span className="w-2 h-2 bg-[#bb9457] rounded-full" />
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Creative Process</span>
+                </div>
+                <h2 className="font-serif text-4xl md:text-5xl text-white font-normal tracking-tight mt-4">
+                  From research to <span className="text-gradient italic font-light">reality</span>
                 </h2>
                 <div className="mt-8 space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
                   <p>
@@ -563,10 +610,13 @@ const DesignerProfilePreview = () => {
 
                 {/* Skills */}
                 <div className="mt-12">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Expertise</span>
+                  <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                    <span className="w-2 h-2 bg-[#bb9457] rounded-full" />
+                    <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Expertise</span>
+                  </div>
                   <div className="mt-6 flex flex-wrap gap-3">
                     {designer.skills.map((skill, i) => (
-                      <span key={i} className="px-4 py-2 border border-neutral-800 text-neutral-400 font-light text-sm">
+                      <span key={i} className="px-5 py-2.5 rounded-full border border-neutral-700 text-neutral-400 font-light text-sm hover:border-[#bb9457]/50 hover:text-[#bb9457] transition-all duration-300">
                         {skill}
                       </span>
                     ))}
@@ -578,20 +628,22 @@ const DesignerProfilePreview = () => {
         </section>
 
         {/* Contact & Social - Enhanced Editorial Layout */}
-        <section className="py-32 border-t border-neutral-900 bg-neutral-950">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <section className="relative py-32 border-t border-neutral-800/50 bg-gradient-to-b from-neutral-950 to-black overflow-hidden">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#bb9457]/5 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#bb9457]/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#bb9457]/30 to-transparent" />
+          
+          <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
             {/* Header Section */}
             <div className="max-w-4xl mb-20">
-              <div className="flex items-start gap-6 mb-6">
-                <div className="flex-shrink-0 w-12 h-px bg-[#bb9457] mt-3" />
-                <div className="flex-1">
-                  <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Connect</span>
-                  <div className="mt-2 text-neutral-500 font-light text-sm">Let's collaborate</div>
-                </div>
+              <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
+                <span className="w-2 h-2 bg-[#bb9457] rounded-full animate-pulse" />
+                <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">Connect</span>
               </div>
+              <div className="mt-2 text-neutral-500 font-light text-sm">Let's collaborate</div>
               
-              <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-white font-normal tracking-tight leading-tight">
-                Get in touch
+              <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-white font-normal tracking-tight leading-[0.9] mt-4">
+                Get in <span className="text-gradient italic font-light">touch.</span>
               </h2>
               
               <p className="mt-8 text-neutral-400 font-light text-base md:text-lg leading-relaxed max-w-2xl">
@@ -607,7 +659,7 @@ const DesignerProfilePreview = () => {
                   {/* Email */}
                   <div className="group">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-8 h-px bg-[#bb9457]" />
+                      <div className="w-8 h-0.5 bg-[#bb9457]" />
                       <span className="text-[9px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Email</span>
                     </div>
                     <a 
@@ -623,7 +675,7 @@ const DesignerProfilePreview = () => {
                   {designer.website && (
                     <div className="group">
                       <div className="flex items-center gap-3 mb-3">
-                        <div className="w-8 h-px bg-[#bb9457]" />
+                        <div className="w-8 h-0.5 bg-[#bb9457]" />
                         <span className="text-[9px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Website</span>
                       </div>
                       <a 
@@ -647,10 +699,13 @@ const DesignerProfilePreview = () => {
 
               {/* Studio Info - Right */}
               <div className="lg:col-span-5">
-                <div className="bg-neutral-900 border border-neutral-800 p-8 md:p-10">
-                  <div className="text-[9px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold mb-6">
-                    Studio Location
-                  </div>
+                <div className="relative p-8 md:p-10 rounded-2xl bg-gradient-to-br from-neutral-900/80 to-neutral-950 border border-neutral-800 hover:border-[#bb9457]/30 transition-all duration-500 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full glass">
+                      <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
+                      <span className="text-[9px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Studio Location</span>
+                    </div>
                   
                   <h3 className="font-serif text-3xl text-white font-normal mb-4">
                     {designer.location}
@@ -674,6 +729,7 @@ const DesignerProfilePreview = () => {
                       <span>Based in Pakistan</span>
                     </div>
                   </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -692,16 +748,19 @@ const DesignerProfilePreview = () => {
                     href={`https://instagram.com/${designer.instagram.replace('@', '')}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="group p-6 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-300"
+                    className="group relative p-6 rounded-2xl border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift overflow-hidden"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">Instagram</span>
-                      <svg className="w-4 h-4 text-neutral-600 group-hover:text-[#bb9457] transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                      </svg>
-                    </div>
-                    <div className="text-white font-light text-lg group-hover:text-[#bb9457] transition-colors">
-                      {designer.instagram}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">Instagram</span>
+                        <svg className="w-4 h-4 text-neutral-600 group-hover:text-[#bb9457] transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                      </div>
+                      <div className="text-white font-light text-lg group-hover:text-[#bb9457] transition-colors">
+                        {designer.instagram}
+                      </div>
                     </div>
                   </a>
                 )}
@@ -711,16 +770,19 @@ const DesignerProfilePreview = () => {
                     href={`https://facebook.com/${designer.facebook}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="group p-6 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-300"
+                    className="group relative p-6 rounded-2xl border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift overflow-hidden"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">Facebook</span>
-                      <svg className="w-4 h-4 text-neutral-600 group-hover:text-[#bb9457] transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                      </svg>
-                    </div>
-                    <div className="text-white font-light text-lg group-hover:text-[#bb9457] transition-colors">
-                      {designer.facebook}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">Facebook</span>
+                        <svg className="w-4 h-4 text-neutral-600 group-hover:text-[#bb9457] transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                      </div>
+                      <div className="text-white font-light text-lg group-hover:text-[#bb9457] transition-colors">
+                        {designer.facebook}
+                      </div>
                     </div>
                   </a>
                 )}
@@ -730,16 +792,19 @@ const DesignerProfilePreview = () => {
                     href={`https://linkedin.com/in/${designer.linkedin}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="group p-6 border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-300"
+                    className="group relative p-6 rounded-2xl border border-neutral-800 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift overflow-hidden"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">LinkedIn</span>
-                      <svg className="w-4 h-4 text-neutral-600 group-hover:text-[#bb9457] transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                      </svg>
-                    </div>
-                    <div className="text-white font-light text-lg group-hover:text-[#bb9457] transition-colors">
-                      Connect on LinkedIn
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#bb9457]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                    <div className="relative z-10">
+                      <div className="flex items-center justify-between mb-4">
+                        <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono">LinkedIn</span>
+                        <svg className="w-4 h-4 text-neutral-600 group-hover:text-[#bb9457] transition-colors" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                      </div>
+                      <div className="text-white font-light text-lg group-hover:text-[#bb9457] transition-colors">
+                        Connect on LinkedIn
+                      </div>
                     </div>
                   </a>
                 )}
@@ -747,14 +812,14 @@ const DesignerProfilePreview = () => {
             </div>
 
             {/* Footer Navigation */}
-            <div className="pt-12 border-t border-neutral-900">
+            <div className="pt-12 border-t border-neutral-800/50">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <Link 
                   to="/designers" 
-                  className="group inline-flex items-center gap-3 text-neutral-400 hover:text-white transition-colors"
+                  className="group inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/20 hover:border-[#bb9457]/50 text-neutral-400 hover:text-white hover:shadow-lg hover:shadow-[#bb9457]/10 transition-all duration-300"
                 >
                   <span className="text-lg transform group-hover:-translate-x-1 transition-transform duration-300">←</span>
-                  <span className="text-sm">Back to Designer Directory</span>
+                  <span className="text-sm font-semibold">Back to Designer Directory</span>
                 </Link>
                 
                 <div className="flex items-center gap-6 text-neutral-600 font-light text-sm">

@@ -108,17 +108,17 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 font-sans antialiased">
       <SEO
-        title="Features — Adorzia | Pakistani Fashion Journalism & Industry Insights"
-        description="Explore in-depth features on Pakistani fashion entrepreneurship, heritage craft preservation, emerging designer spotlights, and industry insights from PIFD/AIFD graduates to established fashionpreneurs. Stories that matter, told with integrity."
-        canonicalURL="https://adorzia.com/features"
-        ogTitle="Features — Adorzia | Pakistani Fashion Journalism"
-        ogDescription="In-depth features on Pakistani fashion entrepreneurship, heritage craft, and emerging designers. Stories from PIFD/AIFD graduates to established fashionpreneurs."
-        ogImageAlt="Adorzia Features - Pakistani Fashion Journalism"
+        title="Journal — Adorzia | Pakistani Fashion Journalism & Industry Insights"
+        description="Explore in-depth stories on Pakistani fashion entrepreneurship, heritage craft preservation, emerging designer spotlights, and industry insights. Designer Stories, Brand Stories, Fashion Industry, Opportunities, and Adorzia Updates."
+        canonicalURL="https://adorzia.com/journal"
+        ogTitle="Journal — Adorzia | Pakistani Fashion Journalism"
+        ogDescription="Designer Stories, Brand Stories, Fashion Industry, Opportunities, and Adorzia Updates."
+        ogImageAlt="Adorzia Journal - Pakistani Fashion Journalism"
         schemaType="CollectionPage"
         schema={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          "name": "Adorzia Features",
+          "name": "Adorzia Journal",
           "description": "Pakistani fashion journalism, industry insights, and designer stories",
           "url": "https://adorzia.com/features",
           "isPartOf": {
@@ -128,11 +128,11 @@ const Blog = () => {
           },
           "mainEntity": {
             "@type": "ItemList",
-            "name": "Fashion Features & Articles",
+            "name": "Fashion Journal & Articles",
             "description": "Curated journalism and insights on Pakistani fashion industry"
           }
         }}
-        keywords="Pakistani fashion journalism, Fashion entrepreneurship Pakistan, PIFD graduates, AIFD graduates, Pakistani fashion startups, Heritage craft Pakistan, Emerging designers Pakistan, Fashion industry insights, Pakistani fashion stories, Adorzia features, Fashion business Pakistan, Pret fashion Pakistan, Bridal couture Pakistan"
+        keywords="Pakistani fashion journal, designer stories Pakistan, brand stories fashion, fashion industry insights, fashion opportunities Pakistan, Adorzia updates, Fashion entrepreneurship Pakistan, PIFD graduates, AIFD graduates, Pakistani fashion startups, Heritage craft Pakistan, Emerging designers Pakistan, Fashion industry insights, Pakistani fashion stories, Fashion business Pakistan"
       />
 
       {/* Hero Section - Editorial Banner */}
@@ -156,12 +156,12 @@ const Blog = () => {
                 The Journal
               </p>
               <h1 className="font-serif text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-normal tracking-tight text-white leading-[0.9]">
-                FEATURES
+                JOURNAL
               </h1>
             </div>
             <div className="lg:col-span-5">
               <p className="text-sm text-neutral-300 leading-relaxed max-w-md">
-                Adorzia provides features derived from experienced fashion journalists and art directors with integrity, brand knowledge and big ideas.
+                Stories, insights, and perspectives from the Pakistani fashion industry — told with integrity.
               </p>
             </div>
           </div>
@@ -187,7 +187,7 @@ const Blog = () => {
             <div className="relative flex-1 max-w-xs">
               <input 
                 type="text" 
-                placeholder="Search features..." 
+                placeholder="Search articles..." 
                 value={searchQuery} 
                 onChange={e => handleSearch(e.target.value)}
                 className="w-full pl-0 pr-4 py-2 bg-transparent border-b border-white text-white text-sm placeholder-neutral-500 focus:outline-none focus:border-[#bb9457] transition-colors"
@@ -291,7 +291,7 @@ const Blog = () => {
                     onClick={() => setVisibleCount(prev => prev + POSTS_PER_PAGE)}
                     className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-semibold text-white hover:text-[#bb9457] transition-colors"
                   >
-                    View More Features
+                    View More Articles
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

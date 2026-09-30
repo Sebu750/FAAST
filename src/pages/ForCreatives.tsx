@@ -174,7 +174,7 @@ const ForCreatives = () => {
 
             <div className="mt-12 flex flex-wrap gap-5">
               <a
-                href="/spotlight-event"
+                href="/contact"
                 className="px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-white hover:text-black transition-all duration-300"
               >
                 Apply for Spotlight 2026
@@ -803,7 +803,7 @@ const ForCreatives = () => {
                 First stories publishing after Spotlight Fall 2026.
               </p>
               <div className="pt-4">
-                <a href="/spotlight-event" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-neutral-900 hover:text-white transition-all duration-300">
+                <a href="/contact" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-[11px] rounded-sm hover:bg-neutral-900 hover:text-white transition-all duration-300">
                   Be one of the first
                 </a>
               </div>
@@ -902,7 +902,7 @@ const ForCreatives = () => {
                     </div>
                   </div>
                   <div className="md:text-right">
-                    <a href="/spotlight-event" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-xs rounded-sm hover:bg-white transition-all duration-300">
+                    <a href="/contact" className="inline-block px-8 py-4 bg-[#bb9457] text-black font-semibold uppercase tracking-[0.2em] text-xs rounded-sm hover:bg-white transition-all duration-300">
                       Submit for Spotlight
                     </a>
                   </div>

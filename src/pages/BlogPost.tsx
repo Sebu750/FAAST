@@ -257,7 +257,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 font-sans antialiased">
       <Helmet>
-        <title>{post.meta_title || `${post.title} — Adorzia Features`}</title>
+        <title>{post.meta_title || `${post.title} — Adorzia Journal`}</title>
         <meta name="description" content={post.meta_description || post.excerpt || ''} />
         <link rel="canonical" href={`https://adorzia.com/blog/${post.slug}`} />
         

@@ -40,6 +40,22 @@ import phulkariRebornBlazer from '../assets/phulkari-reborn-blazer-adorzia.webp'
 import rilliSculptTote from '../assets/rilli-sculpt-tote-adorzia.webp'
 import khaddarModernSuit from '../assets/khaddar-modern-suit-adorzia.webp'
 
+// Aleena Talha — Designer Profile
+import aleenaTalha from '../assets/aleena-talha.webp'
+import aleenaTalhaCover from '../assets/aleena-talha-cover.webp'
+import precognitiveLook01 from '../assets/preognitive-look-01.webp'
+import precognitiveLook02 from '../assets/preognitive-look-02.webp'
+import precognitiveLook03 from '../assets/preognitive-look-03.webp'
+import precognitiveLook04 from '../assets/preognitive-look-04.webp'
+import precognitiveLook05 from '../assets/preognitive-look-05.webp'
+import precognitiveLook06 from '../assets/preognitive-look-06.webp'
+import precognitiveLook07 from '../assets/preognitive-look-07.webp'
+import precognitiveLook08 from '../assets/preognitive-look-08.webp'
+import lucidRemnants01 from '../assets/lucid-remnants-look-01.webp'
+import lucidRemnants02 from '../assets/lucid-remnants-look-02.webp'
+import lucidRemnants03 from '../assets/lucid-remnants-look-03.webp'
+import lucidRemnants04 from '../assets/lucid-remnants-look-04.webp'
+
 // Map of database paths to imported assets
 const assetMap: Record<string, string> = {
   '/src/assets/hero-runway.webp': heroRunway,
@@ -79,6 +95,21 @@ const assetMap: Record<string, string> = {
   '/src/assets/phulkari-reborn-blazer-adorzia.webp': phulkariRebornBlazer,
   '/src/assets/rilli-sculpt-tote-adorzia.webp': rilliSculptTote,
   '/src/assets/khaddar-modern-suit-adorzia.webp': khaddarModernSuit,
+  // Aleena Talha
+  '/src/assets/aleena-talha.webp': aleenaTalha,
+  '/src/assets/aleena-talha-cover.webp': aleenaTalhaCover,
+  '/src/assets/preognitive-look-01.webp': precognitiveLook01,
+  '/src/assets/preognitive-look-02.webp': precognitiveLook02,
+  '/src/assets/preognitive-look-03.webp': precognitiveLook03,
+  '/src/assets/preognitive-look-04.webp': precognitiveLook04,
+  '/src/assets/preognitive-look-05.webp': precognitiveLook05,
+  '/src/assets/preognitive-look-06.webp': precognitiveLook06,
+  '/src/assets/preognitive-look-07.webp': precognitiveLook07,
+  '/src/assets/preognitive-look-08.webp': precognitiveLook08,
+  '/src/assets/lucid-remnants-look-01.webp': lucidRemnants01,
+  '/src/assets/lucid-remnants-look-02.webp': lucidRemnants02,
+  '/src/assets/lucid-remnants-look-03.webp': lucidRemnants03,
+  '/src/assets/lucid-remnants-look-04.webp': lucidRemnants04,
 }
 
 /**

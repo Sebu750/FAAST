@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo, useRef, type ReactNode } from 'react'
 import { supabase } from '../lib/supabase'
-import type { Designer, DesignerCollection, DesignerEducation, DesignerAchievement, DesignerSkill, DesignerCertification, DesignerSocialLinks } from '../types/database'
+import type { Designer, DesignerCollection, DesignerEducation, DesignerAchievement, DesignerSkill, DesignerCertification, DesignerSocialLinks, DesignerFilm } from '../types/database'
 import RichTextEditor from '../components/RichTextEditor'
 
 // ── Icon helper ──
@@ -44,6 +44,7 @@ const Ic = ({ name, className = 'w-4 h-4' }: { name: string; className?: string 
     sparkles: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>,
     info: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
     user: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>,
+    film: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" /></svg>,
   }
   return <>{icons[name] || null}</>
 }
@@ -466,6 +467,7 @@ const STEPS = [
   { id: 'achievements', label: 'Achievements', icon: 'trophy', description: 'Awards & recognition' },
   { id: 'skills', label: 'Skills', icon: 'star', description: 'Craft expertise & techniques' },
   { id: 'social', label: 'Social Links', icon: 'link', description: 'Online presence & contact' },
+  { id: 'films', label: 'Films', icon: 'film', description: 'YouTube collection films & lookbooks' },
   { id: 'review', label: 'Review & Publish', icon: 'check', description: 'Finalize and publish profile' },
 ]
 
@@ -498,6 +500,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
   const [skills, setSkills] = useState<DesignerSkill[]>([])
   const [certifications, setCertifications] = useState<DesignerCertification[]>([])
   const [socialLinks, setSocialLinks] = useState<Partial<DesignerSocialLinks>>({})
+  const [films, setFilms] = useState<DesignerFilm[]>([])
   const [saving, setSaving] = useState(false)
   const [autoSaving, setAutoSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
@@ -532,7 +535,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     return () => {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current)
     }
-  }, [form, collections, education, achievements, skills, certifications, socialLinks])
+  }, [form, collections, education, achievements, skills, certifications, socialLinks, films])
 
   // Keyboard shortcut for save (Ctrl/Cmd + S)
   useEffect(() => {
@@ -544,16 +547,17 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [form, collections, education, achievements, skills, certifications, socialLinks])
+  }, [form, collections, education, achievements, skills, certifications, socialLinks, films])
 
   const fetchRelatedData = async (designerId: string) => {
-    const [colRes, eduRes, achRes, skiRes, cerRes, socRes] = await Promise.all([
+    const [colRes, eduRes, achRes, skiRes, cerRes, socRes, filmsRes] = await Promise.all([
       supabase.from('designer_collections').select('*').eq('designer_id', designerId).order('created_at'),
       supabase.from('designer_education').select('*').eq('designer_id', designerId).order('created_at'),
       supabase.from('designer_achievements').select('*').eq('designer_id', designerId).order('created_at'),
       supabase.from('designer_skills').select('*').eq('designer_id', designerId).order('created_at'),
       supabase.from('designer_certifications').select('*').eq('designer_id', designerId).order('created_at'),
       supabase.from('designer_social_links').select('*').eq('designer_id', designerId).single(),
+      supabase.from('designer_films').select('*').eq('designer_id', designerId).order('display_order'),
     ])
     setCollections(colRes.data || [])
     setEducation(eduRes.data || [])
@@ -561,6 +565,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     setSkills(skiRes.data || [])
     setCertifications(cerRes.data || [])
     setSocialLinks(socRes.data || {})
+    setFilms(filmsRes.data || [])
     relatedDataLoadedRef.current = true
     setRelatedDataLoaded(true)
   }
@@ -570,8 +575,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     setHasUnsavedChanges(true)
   }
 
-  const generateSlug = (name: string, brand: string) => {
-    return `${name}-${brand}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  const generateSlug = (name: string) => {
+    return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
   }
 
   const showToast = (message: string, type: 'success' | 'error' | 'info' = 'success') => {
@@ -584,7 +589,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     if (!relatedDataLoadedRef.current) return // Don't auto-save until data is loaded
     setAutoSaving(true)
     try {
-      const slug = form.slug || generateSlug(form.name, form.brand)
+      const slug = form.slug || generateSlug(form.name)
       const designerData = { ...form, slug }
       if (designerIdRef.current) {
         await supabase.from('designers').update(designerData).eq('id', designerIdRef.current)
@@ -613,7 +618,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
     }
     setSaving(true)
     try {
-      const slug = form.slug || generateSlug(form.name, form.brand)
+      const slug = form.slug || generateSlug(form.name)
       const designerData = { ...form, slug }
       if (designerIdRef.current) {
         const { error } = await supabase.from('designers').update(designerData).eq('id', designerIdRef.current)
@@ -694,7 +699,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
   const saveRelatedData = async (designerId: string) => {
     // Delete and re-insert for collections, education, achievements, skills, certifications
-    const tables = ['designer_collections', 'designer_education', 'designer_achievements', 'designer_skills', 'designer_certifications']
+    const tables = ['designer_collections', 'designer_education', 'designer_achievements', 'designer_skills', 'designer_certifications', 'designer_films']
     for (const table of tables) {
       await supabase.from(table).delete().eq('designer_id', designerId)
     }
@@ -757,6 +762,13 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
         await supabase.from('designer_social_links').insert({ ...socialLinks, designer_id: designerId })
       }
     }
+
+    // Insert films
+    if (films.length > 0) {
+      await supabase.from('designer_films').insert(
+        films.map((f, i) => ({ designer_id: designerId, title: f.title, description: f.description, youtube_url: f.youtube_url, thumbnail_url: f.thumbnail_url, display_order: i }))
+      )
+    }
   }
 
   // Profile completion calculation
@@ -770,11 +782,12 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       achievements: achievements.length > 0,
       skills: skills.length > 0,
       social: !!(socialLinks.instagram || socialLinks.website),
+      films: films.length > 0,
     }
     const completed = Object.values(checks).filter(Boolean).length
     const total = Object.keys(checks).length
     return { percentage: Math.round((completed / total) * 100), checks, completed, total }
-  }, [form, collections, education, achievements, skills, socialLinks])
+  }, [form, collections, education, achievements, skills, socialLinks, films])
 
   const currentStepData = STEPS[currentStep]
   const isLastStep = currentStep === STEPS.length - 1
@@ -909,8 +922,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
             <div className="space-y-4">
               <Card icon="user" title="Identity" subtitle="Name, brand & URL">
                 <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Input label="Name" required value={form.name} onChange={(e) => { updateField('name', e.target.value); if (!designer) updateField('slug', generateSlug(e.target.value, form.brand)) }} placeholder="Designer full name" hint="First and last name" />
-                  <Input label="Brand" required value={form.brand} onChange={(e) => { updateField('brand', e.target.value); if (!designer) updateField('slug', generateSlug(form.name, e.target.value)) }} placeholder="Brand / label name" hint="Your fashion label or studio name" />
+                  <Input label="Name" required value={form.name} onChange={(e) => { updateField('name', e.target.value); if (!designer) updateField('slug', generateSlug(e.target.value)) }} placeholder="Designer full name" hint="First and last name" />
+                  <Input label="Brand" required value={form.brand} onChange={(e) => { updateField('brand', e.target.value) }} placeholder="Brand / label name" hint="Your fashion label or studio name" />
                 </div>
                 <div className="pt-4">
                   <Input label="Slug" value={form.slug} onChange={(e) => updateField('slug', e.target.value)} placeholder="auto-generated-from-name-brand" hint="URL-friendly identifier, auto-generated from name and brand" />
@@ -1176,8 +1189,13 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
             </div>
           )}
 
-          {/* Review & Publish */}
+          {/* Films */}
           {currentStep === 8 && (
+            <FilmsEditor films={films} setFilms={setFilms} />
+          )}
+
+          {/* Review & Publish */}
+          {currentStep === 9 && (
             <div className="space-y-4">
               {/* Profile Completion Checklist */}
               <Card icon="check" title="Profile Completion Checklist" subtitle={`${profileCompletion.completed} of ${profileCompletion.total} sections complete`} badge={`${profileCompletion.percentage}%`}>
@@ -1191,6 +1209,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                     { key: 'achievements', label: 'Achievements', desc: 'Awards & recognition', step: 5 },
                     { key: 'skills', label: 'Skills', desc: 'Craft expertise', step: 6 },
                     { key: 'social', label: 'Social Links', desc: 'Instagram or website', step: 7 },
+                    { key: 'films', label: 'Films', desc: 'YouTube collection films', step: 8 },
                   ].map(item => {
                     const done = profileCompletion.checks[item.key as keyof typeof profileCompletion.checks]
                     return (
@@ -1793,6 +1812,56 @@ const CertificationsEditor = ({ certifications, setCertifications }: { certifica
             placeholder="e.g. Certified Pattern Maker, Textile Design Certificate..."
             hint="Press Enter to add each certification."
           />
+        </div>
+      </Card>
+    </div>
+  )
+}
+
+// Films Editor
+const FilmsEditor = ({ films, setFilms }: { films: DesignerFilm[]; setFilms: (v: DesignerFilm[]) => void }) => {
+  const add = () => setFilms([...films, { id: '', designer_id: '', title: '', description: '', youtube_url: '', thumbnail_url: null, display_order: films.length, created_at: '' }])
+  const update = (idx: number, field: string, value: string) => {
+    const updated = [...films]
+    updated[idx] = { ...updated[idx], [field]: value }
+    setFilms(updated)
+  }
+  const remove = (idx: number) => setFilms(films.filter((_, i) => i !== idx))
+
+  return (
+    <div className="space-y-4">
+      <Card icon="film" title="Collection Films" subtitle="YouTube videos for lookbooks, behind-the-scenes & collection films" badge={`${films.length} films`}>
+        <div className="pt-4 space-y-3">
+          {films.map((film, idx) => (
+            <div key={idx} className="bg-neutral-900/50 border border-neutral-800/60 rounded-lg p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-neutral-500">Film #{idx + 1}</span>
+                <button onClick={() => remove(idx)} className="text-red-400 hover:text-red-300"><Ic name="trash" className="w-4 h-4" /></button>
+              </div>
+              <Input label="Title" value={film.title} onChange={(e) => update(idx, 'title', e.target.value)} placeholder="Collection film title" />
+              <Input label="YouTube URL" value={film.youtube_url} onChange={(e) => update(idx, 'youtube_url', e.target.value)} placeholder="https://www.youtube.com/watch?v=..." hint="Full YouTube URL or embed link" />
+              <Textarea label="Description" value={film.description || ''} onChange={(e) => update(idx, 'description', e.target.value)} rows={2} placeholder="Brief description of the film" />
+              {/* Preview */}
+              {film.youtube_url && (
+                <div className="mt-2">
+                  <p className="text-[10px] uppercase tracking-wider text-neutral-500 mb-1.5">Preview</p>
+                  <div className="aspect-video rounded-lg overflow-hidden bg-neutral-950 border border-neutral-800 max-w-sm">
+                    <iframe
+                      src={film.youtube_url.includes('/embed/') ? film.youtube_url : `https://www.youtube.com/embed/${film.youtube_url.match(/(?:youtu\.be\/|[?&]v=)([^&]+)/)?.[1] || ''}`}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title={film.title || `Film ${idx + 1}`}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+          <button onClick={add} className="flex items-center gap-1.5 px-3 py-2 text-xs text-[#bb9457] hover:bg-[#bb9457]/10 border border-[#bb9457]/20 rounded-lg transition-colors w-full justify-center">
+            <Ic name="plus" className="w-3.5 h-3.5" /> Add Film
+          </button>
         </div>
       </Card>
     </div>
