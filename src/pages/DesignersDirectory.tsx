@@ -248,9 +248,9 @@ const DesignersDirectory = () => {
       {/* ===== DESIGNERS GRID ===== */}
       <section className="relative bg-gradient-to-b from-neutral-950 via-black to-neutral-950 min-h-screen overflow-hidden">
         {/* Background accents */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
-          <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" style={{ transform: 'translateZ(0)' }} />
-          <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" style={{ transform: 'translateZ(0)' }} />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true" style={{ contain: 'layout paint' }}>
+          <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -23,8 +23,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" /></noscript>
     
-    <!-- Preconnect to Supabase for faster API + storage requests -->
-    <link rel="preconnect" href="https://qchqwxoaqzdfalkeitpj.supabase.co" crossorigin />
+    <!-- Preconnect to Supabase for faster storage image requests (no crossorigin so image loads reuse the connection) -->
+    <link rel="preconnect" href="https://qchqwxoaqzdfalkeitpj.supabase.co" />
     <link rel="dns-prefetch" href="https://qchqwxoaqzdfalkeitpj.supabase.co" />
     
     <!-- Critical inline CSS — prevents FOUC and layout shift -->
