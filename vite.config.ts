@@ -20,12 +20,7 @@ export default defineConfig({
           if (id.includes('react-router')) {
             return 'vendor-router'
           }
-          if (id.includes('@supabase')) {
-            return 'vendor-supabase'
-          }
-          if (id.includes('@vercel')) {
-            return 'vendor-vercel'
-          }
+          // Supabase and Vercel chunks are deferred via dynamic imports — no manual chunk needed
         },
         assetFileNames: 'assets/[name]-[hash][extname]',
         chunkFileNames: 'chunks/[name]-[hash].js',

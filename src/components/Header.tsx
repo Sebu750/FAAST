@@ -87,7 +87,7 @@ const Header = () => {
                   className={`relative px-3 py-2 text-[11px] uppercase tracking-[0.18em] font-medium transition-all duration-400 group ${
                     location.pathname === path 
                       ? 'text-white' 
-                      : 'text-neutral-500 hover:text-neutral-200'
+                      : 'text-neutral-400 hover:text-neutral-200'
                   }`}
                 >
                   {label}
