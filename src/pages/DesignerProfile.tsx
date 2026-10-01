@@ -114,7 +114,7 @@ const DesignerProfile = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black pt-20">
         <div className="text-center">
-          <p className="text-neutral-500 text-lg mb-4">Designer not found</p>
+          <p className="text-neutral-400 text-lg mb-4">Designer not found</p>
           <Link to="/designers" className="text-[#bb9457] text-sm hover:text-white transition-colors">&larr; Back to Directory</Link>
         </div>
       </div>
@@ -191,7 +191,7 @@ const DesignerProfile = () => {
               {/* Profile Picture */}
               <div className="shrink-0 -mt-16 sm:-mt-20">
                 <div className="w-28 h-28 sm:w-36 sm:h-36 border-4 border-black rounded-full overflow-hidden bg-neutral-900 shadow-2xl">
-                  <img src={getOptimizedUrl(designer.image_url, 300, 300)} alt={designer.name} className="w-full h-full object-cover" decoding="async" />
+                  <img src={getOptimizedUrl(designer.image_url, 200, 200)} alt={designer.name} className="w-full h-full object-cover" decoding="async" />
                 </div>
               </div>
               {/* Name + Bio + Socials */}
@@ -333,7 +333,7 @@ const DesignerProfile = () => {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white leading-[0.9] tracking-tight">
                 Previous <span className="text-gradient italic font-light">Collections</span>
               </h2>
-              <p className="mt-4 text-neutral-500 text-sm font-light max-w-lg mx-auto">
+              <p className="mt-4 text-neutral-400 text-sm font-light max-w-lg mx-auto">
                 A curated journey through past seasons and creative explorations
               </p>
             </div>
@@ -376,14 +376,14 @@ const DesignerProfile = () => {
                   {/* Content */}
                   <div className="p-5 pt-4">
                     {/* Description */}
-                    <p className="text-neutral-500 text-xs leading-relaxed line-clamp-2 group-hover:text-neutral-400 transition-colors duration-500">
+                    <p className="text-neutral-400 text-xs leading-relaxed line-clamp-2 group-hover:text-neutral-300 transition-colors duration-500">
                       {col.description}
                     </p>
                     {/* Animated gold underline + CTA */}
                     <div className="relative mt-4 pt-3 border-t border-neutral-800/50 group-hover:border-transparent transition-all duration-500">
                       <div className="absolute top-0 left-0 h-px w-0 bg-gradient-to-r from-[#bb9457] to-[#d4af37] group-hover:w-full transition-all duration-700 ease-out" />
                       <div className="flex items-center justify-between">
-                        <span className="text-neutral-600 text-[10px] uppercase tracking-wider font-semibold group-hover:text-[#bb9457] transition-colors duration-500">View Collection</span>
+                        <span className="text-neutral-500 text-[10px] uppercase tracking-wider font-semibold group-hover:text-[#bb9457] transition-colors duration-500">View Collection</span>
                         <span className="text-[#bb9457] text-sm group-hover:translate-x-1.5 transition-transform duration-500">&rarr;</span>
                       </div>
                     </div>
@@ -512,7 +512,7 @@ const DesignerProfile = () => {
             <span className="text-lg transform group-hover:-translate-x-1 transition-transform duration-300">&larr;</span>
             <span className="text-xs font-semibold">Back to Designers</span>
           </Link>
-          <div className="flex items-center gap-3 text-neutral-600 font-light text-xs">
+          <div className="flex items-center gap-3 text-neutral-400 font-light text-xs">
             <span>{designer.location}</span>
           </div>
         </div>
