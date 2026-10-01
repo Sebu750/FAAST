@@ -1,19 +1,17 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://adorzia.com/sitemap.xml
-
-# RSS Feed
-Sitemap: https://adorzia.com/rss.xml
-
-# Allow OG image endpoint
-Allow: /api/og-image
-
 # Disallow admin and private routes
 Disallow: /admin
 Disallow: /admin-login
 Disallow: /api/
+
+# Allow OG image endpoint (more specific than /api/ disallow)
+Allow: /api/og-image
+
+# Sitemap
+Sitemap: https://adorzia.com/sitemap.xml
+Sitemap: https://adorzia.com/rss.xml
 
 # Crawl delay for polite crawling
 Crawl-delay: 10
