@@ -321,7 +321,7 @@ const About = () => {
             src={imgs.craft}
             alt="Tactile Atelier Manufacturing"
             className="w-full h-full object-cover scale-110 opacity-45 grayscale contrast-115"
-            style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+            style={{ transform: `translateY(${scrollY * 0.3}px)`, willChange: 'transform' }}
             fetchPriority="high" decoding="sync" />
           <div className="absolute inset-0 bg-black/60 z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10" />
@@ -441,7 +441,7 @@ const About = () => {
                    loading="lazy" decoding="async" />
                 </div>
                 <div className="mt-6 text-center md:text-left">
-                  <h3 className="font-serif text-xl text-white font-normal">Haseeb Malik</h3>
+                  <h2 className="font-serif text-xl text-white font-normal">Haseeb Malik</h2>
                   <p className="text-[#bb9457] text-xs uppercase tracking-[0.2em] font-mono mt-1">Founder & Creative Director</p>
                 </div>
               </div>
