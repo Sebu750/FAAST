@@ -270,7 +270,7 @@ const BlogPost = () => {
       {/* ====== HERO HEADER ====== */}
       <header className="max-w-3xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-8">
         {/* Back */}
-        <Link to="/blog" className="inline-flex items-center gap-2 text-neutral-500 hover:text-[#bb9457] transition-colors mb-8 text-xs uppercase tracking-[0.15em] font-semibold group">
+        <Link to="/blog" className="inline-flex items-center gap-2 text-neutral-400 hover:text-[#bb9457] transition-colors mb-8 text-xs uppercase tracking-[0.15em] font-semibold group">
           <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -310,13 +310,13 @@ const BlogPost = () => {
             </div>
             <div>
               <div className="text-white font-medium text-sm">{post.author_name}</div>
-              <div className="text-[10px] text-neutral-500 uppercase tracking-wider">Author</div>
+              <div className="text-[10px] text-neutral-400 uppercase tracking-wider">Author</div>
             </div>
           </div>
           <div className="h-7 w-px bg-neutral-800 hidden sm:block" />
           <div className="hidden sm:block">
             <div className="text-white font-medium text-sm">{publishDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</div>
-            <div className="text-[10px] text-neutral-500 uppercase tracking-wider">Published</div>
+            <div className="text-[10px] text-neutral-400 uppercase tracking-wider">Published</div>
           </div>
           <div className="h-7 w-px bg-neutral-800 hidden sm:block" />
           <div className="flex items-center gap-2">
@@ -325,7 +325,7 @@ const BlogPost = () => {
             </svg>
             <div>
               <div className="text-white font-medium text-sm">{post.reading_time} min</div>
-              <div className="text-[10px] text-neutral-500 uppercase tracking-wider">Read</div>
+              <div className="text-[10px] text-neutral-400 uppercase tracking-wider">Read</div>
             </div>
           </div>
         </div>
@@ -335,7 +335,7 @@ const BlogPost = () => {
       {heroImage && (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 mb-12">
           <div className="relative aspect-[16/9] overflow-hidden rounded-sm border border-neutral-800">
-            <img src={heroImage} alt={post.title} className="w-full h-full object-cover" />
+            <img src={heroImage} alt={post.title} className="w-full h-full object-cover" fetchPriority="high" decoding="sync" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           </div>
         </div>
@@ -405,7 +405,7 @@ const BlogPost = () => {
             {/* ====== TAGS ====== */}
             {post.tags && post.tags.length > 0 && (
               <div className="mt-14 pt-6 border-t border-neutral-900">
-                <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-600 font-mono font-semibold block mb-3">Tags</span>
+                <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono font-semibold block mb-3">Tags</span>
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map(tag => (
                     <span key={tag} className="px-3 py-1.5 bg-neutral-900/50 border border-neutral-800 text-neutral-400 text-[10px] uppercase tracking-wider rounded-sm hover:border-[#bb9457]/30 hover:text-[#bb9457] transition-colors cursor-default">
@@ -419,7 +419,7 @@ const BlogPost = () => {
             {/* ====== SHARE ====== */}
             <div className="mt-8 pt-6 border-t border-neutral-900">
               <div className="flex items-center justify-between">
-                <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-600 font-mono font-semibold">Share</span>
+                <span className="text-[9px] uppercase tracking-[0.3em] text-neutral-500 font-mono font-semibold">Share</span>
                 <div className="flex items-center gap-2">
                   <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://adorzia.com/blog/${post.slug}`)}`}
                     target="_blank" rel="noopener noreferrer" aria-label="Share on X"
@@ -462,7 +462,7 @@ const BlogPost = () => {
                   )}
                 </div>
                 <div>
-                  <p className="text-[9px] text-neutral-500 uppercase tracking-[0.3em] font-mono font-semibold mb-1.5">About the Author</p>
+                  <p className="text-[9px] text-neutral-400 uppercase tracking-[0.3em] font-mono font-semibold mb-1.5">About the Author</p>
                   <p className="text-white font-serif text-lg mb-2">{post.author_name}</p>
                   <p className="text-sm text-neutral-400 leading-relaxed mb-3">Covering Pakistani fashion entrepreneurship, design education, heritage craft preservation, and the emerging creative economy.</p>
                   <Link to="/blog" className="text-[10px] uppercase tracking-[0.15em] text-[#bb9457] font-semibold hover:underline">View all articles &rarr;</Link>
