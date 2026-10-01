@@ -460,7 +460,7 @@ const ForCreatives = () => {
                   { title: "Create", body: "Generate new opportunities together" }
                 ].map((item, i) => (
                   <div key={i} className="p-4 bg-neutral-950/50 border border-neutral-800 rounded-sm hover:border-[#bb9457]/30 transition-all duration-300">
-                    <h4 className="font-serif text-base text-[#bb9457] mb-1">{item.title}</h4>
+                    <h3 className="font-serif text-base text-[#bb9457] mb-1">{item.title}</h3>
                     <p className="text-xs text-neutral-500 font-light">{item.body}</p>
                   </div>
                 ))}
@@ -618,8 +618,10 @@ const ForCreatives = () => {
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Primary discipline *</label>
+                  <label htmlFor="discipline" className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Primary discipline *</label>
                   <select
+                    id="discipline"
+                    aria-label="Primary discipline"
                     required
                     value={regForm.discipline}
                     onChange={(e) => setRegForm({ ...regForm, discipline: e.target.value })}
@@ -635,8 +637,10 @@ const ForCreatives = () => {
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">What are you looking for? *</label>
+                  <label htmlFor="interest" className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">What are you looking for? *</label>
                   <select
+                    id="interest"
+                    aria-label="What are you looking for?"
                     required
                     value={regForm.interest}
                     onChange={(e) => setRegForm({ ...regForm, interest: e.target.value })}
