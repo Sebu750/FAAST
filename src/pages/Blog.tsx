@@ -227,7 +227,7 @@ const Blog = () => {
                 onChange={e => handleSearch(e.target.value)}
                 className="w-full pl-0 pr-8 py-2 bg-transparent border-b border-neutral-700 text-white text-sm placeholder-neutral-600 focus:outline-none focus:border-[#bb9457] transition-colors"
               />
-              <svg className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 text-neutral-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 absolute right-0 top-1/2 -translate-y-1/2 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -238,7 +238,7 @@ const Blog = () => {
               <button
                 onClick={() => { setActiveCategory(''); setVisibleCount(POSTS_PER_PAGE); setShowFilters(false) }}
                 className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] font-semibold rounded-sm transition-all duration-300 ${
-                  !activeCategory ? 'bg-[#bb9457] text-black' : 'text-neutral-500 hover:text-white border border-neutral-800 hover:border-neutral-600'
+                  !activeCategory ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white border border-neutral-800 hover:border-neutral-600'
                 }`}
               >
                 All
@@ -248,7 +248,7 @@ const Blog = () => {
                   key={cat.id}
                   onClick={() => { setActiveCategory(cat.slug); setVisibleCount(POSTS_PER_PAGE); setShowFilters(false) }}
                   className={`px-4 py-2 text-[10px] uppercase tracking-[0.15em] font-semibold rounded-sm transition-all duration-300 ${
-                    activeCategory === cat.slug ? 'bg-[#bb9457] text-black' : 'text-neutral-500 hover:text-white border border-neutral-800 hover:border-neutral-600'
+                    activeCategory === cat.slug ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white border border-neutral-800 hover:border-neutral-600'
                   }`}
                 >
                   {cat.name}
@@ -268,7 +268,7 @@ const Blog = () => {
             </div>
           ) : posts.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-neutral-500 font-light">No articles found.</p>
+              <p className="text-neutral-400 font-light">No articles found.</p>
             </div>
           ) : (
             <>
@@ -304,7 +304,7 @@ const Blog = () => {
                         </p>
                       )}
                       {featuredPost.published_at && (
-                        <p className="text-neutral-600 text-xs font-light">{formatDate(featuredPost.published_at)}</p>
+                        <p className="text-neutral-400 text-xs font-light">{formatDate(featuredPost.published_at)}</p>
                       )}
                       <span className="inline-flex items-center gap-2 text-[#bb9457] text-[10px] uppercase tracking-[0.2em] font-semibold group-hover:gap-3 transition-all duration-300">
                         Read Article
@@ -356,12 +356,12 @@ const Blog = () => {
                         {post.title}
                       </h3>
                       {post.excerpt && (
-                        <p className="mt-2 text-xs text-neutral-500 font-light leading-relaxed line-clamp-2">
+                        <p className="mt-2 text-xs text-neutral-400 font-light leading-relaxed line-clamp-2">
                           {post.excerpt}
                         </p>
                       )}
                       {post.published_at && (
-                        <p className="mt-2 text-neutral-700 text-[10px] font-light">{formatDate(post.published_at)}</p>
+                        <p className="mt-2 text-neutral-500 text-[10px] font-light">{formatDate(post.published_at)}</p>
                       )}
                     </article>
                   </Link>
@@ -385,7 +385,7 @@ const Blog = () => {
 
               {/* Post count */}
               {!loading && filteredPosts.length > 0 && (
-                <p className="text-center text-[10px] text-neutral-600 mt-8 font-light uppercase tracking-[0.2em]">
+                <p className="text-center text-[10px] text-neutral-400 mt-8 font-light uppercase tracking-[0.2em]">
                   {searchQuery ? `${filteredPosts.length} results` : `${totalPosts} articles`}
                 </p>
               )}
@@ -423,7 +423,7 @@ const Blog = () => {
                 </svg>
               </div>
               <p className="text-white font-light text-sm mb-1">You are subscribed.</p>
-              <p className="text-neutral-500 text-xs">Check your email to confirm.</p>
+              <p className="text-neutral-400 text-xs">Check your email to confirm.</p>
             </div>
           ) : (
             <form onSubmit={handleSubscribe} className="flex gap-3 max-w-md mx-auto">
