@@ -26,6 +26,15 @@ const Footer = () => {
             <a href="https://www.instagram.com/adorziaofficial/" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on Instagram" className="hover:text-[#bb9457] transition-colors duration-300">
               Instagram
             </a>
+            <a href="https://www.facebook.com/adorziaofficial" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on Facebook" className="hover:text-[#bb9457] transition-colors duration-300">
+              Facebook
+            </a>
+            <a href="https://x.com/adorziaofficial" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on X" className="hover:text-[#bb9457] transition-colors duration-300">
+              X
+            </a>
+            <a href="https://www.youtube.com/@adorziaofficial" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on YouTube" className="hover:text-[#bb9457] transition-colors duration-300">
+              YouTube
+            </a>
             <a href="https://www.linkedin.com/company/adorzia/" target="_blank" rel="noopener noreferrer" aria-label="Adorzia on LinkedIn" className="hover:text-[#bb9457] transition-colors duration-300">
               LinkedIn
             </a>

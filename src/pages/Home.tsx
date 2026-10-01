@@ -121,10 +121,10 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 selection:bg-[#bb9457] selection:text-black font-sans antialiased overflow-x-hidden">
       <SEO
-        title="Adorzia - Where Visionaries Rise | Pakistani Fashion Ecosystem"
-        description="Adorzia is Pakistan's first fashion entrepreneurship ecosystem — coworking studios, a curated marketplace for emerging designers, and the annual Spotlight event."
+        title="Adorzia - Where Visionaries Rise | Pakistan Fashion"
+        description="Adorzia is Pakistan's first fashion entrepreneurship ecosystem — studios, marketplace, and Spotlight talent investment."
         canonicalURL="https://adorzia.com"
-        ogTitle="Adorzia - Where Visionaries Rise | Pakistani Fashion Ecosystem"
+        ogTitle="Adorzia - Where Visionaries Rise | Pakistan Fashion"
         ogDescription="Pakistan's first complete fashion entrepreneurship ecosystem. Studios. Marketplace. Spotlight."
         ogImageAlt="Adorzia - Pakistani fashion ecosystem"
         schemaType="Organization"
@@ -133,7 +133,7 @@ const Home = () => {
           "description": "Fashion entrepreneurship ecosystem in Pakistan offering coworking studios, a curated marketplace, and the annual Spotlight talent investment event.",
           "url": "https://adorzia.com", "logo": "https://adorzia.com/logo.png", "foundingDate": "2025", "areaServed": "Pakistan",
           "knowsAbout": ["Pakistani Fashion", "Fashion Entrepreneurship", "Heritage Craft", "Fashion Marketplace", "Coworking Studios", "Fashion Incubation", "Emerging Designers"],
-          "sameAs": ["https://www.instagram.com/adorziaofficial/", "https://www.linkedin.com/company/adorzia/"],
+          "sameAs": ["https://www.instagram.com/adorziaofficial/", "https://www.linkedin.com/company/adorzia/", "https://www.facebook.com/adorziaofficial", "https://x.com/adorziaofficial", "https://www.youtube.com/@adorziaofficial"],
           "contactPoint": { "@type": "ContactPoint", "email": "hello@adorzia.com", "contactType": "customer service" },
           "founder": { "@type": "Person", "name": "Haseeb Malik" },
           "address": { "@type": "PostalAddress", "addressCountry": "PK", "addressLocality": "Karachi" }

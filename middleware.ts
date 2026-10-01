@@ -34,7 +34,7 @@ async function querySupabase(table: string, select: string, filter: string): Pro
 // ── Static page metadata ───────────────────────────────────────────
 const DEFAULT_OG = 'https://adorzia.com/og-image.jpeg'
 
-interface PageMeta { title: string; description: string; image: string; ogType: string }
+interface PageMeta { title: string; description: string; image: string; ogType: string; seoContent?: string }
 
 const CATEGORY_NAMES: Record<string, string> = {
   'fashion-startups': 'Fashion Startups', designers: 'Designers', collections: 'Collections',
@@ -44,7 +44,13 @@ const CATEGORY_NAMES: Record<string, string> = {
 }
 
 const STATIC_PAGES: Record<string, PageMeta> = {
-  '/': { title: 'Adorzia - Where Visionaries Rise | Pakistani Fashion Ecosystem', description: "Pakistan's first complete fashion entrepreneurship ecosystem. Studios. Marketplace. Spotlight.", image: DEFAULT_OG, ogType: 'website' },
+  '/': {
+    title: 'Adorzia - Where Visionaries Rise | Pakistan Fashion',
+    description: "Adorzia is Pakistan's first fashion entrepreneurship ecosystem \u2014 studios, marketplace, and Spotlight talent investment.",
+    image: DEFAULT_OG,
+    ogType: 'website',
+    seoContent: `<div style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0"><h1>Adorzia \u2014 Pakistan\u2019s First Fashion Entrepreneurship Ecosystem</h1><h2>Three Synchronized Modules</h2><p>Adorzia unites coworking studios, a curated designer marketplace, and the annual Spotlight talent investment event into one synchronized ecosystem for emerging fashion talent in Pakistan.</p><h3>Coworking Studios</h3><p>Fashion production studios in Karachi, Lahore, and Islamabad providing emerging designers with manufacturing infrastructure, mentorship, and industry access.</p><h3>Designer Marketplace</h3><p>A curated online marketplace for Pakistani fashion designers to sell contemporary fashion, heritage craft, and limited collections to a global audience.</p><h3>Spotlight Talent Investment</h3><p>The annual Spotlight event identifies and invests in Pakistan\u2019s most promising emerging fashion designers, providing funding, mentorship, and international scale opportunities.</p><h2>About Adorzia</h2><p>Founded by Haseeb Malik, Adorzia is building Pakistan\u2019s first complete fashion entrepreneurship ecosystem. From application to international scale, Adorzia supports emerging designers at every stage through studios in Karachi, Lahore, and Islamabad, a curated marketplace, and the annual Spotlight talent investment event.</p></div>`
+  },
   '/about': { title: 'About Adorzia - Building Pakistan\'s Fashion Entrepreneurship Ecosystem', description: 'Building Pakistan\'s first fashion entrepreneurship ecosystem. Discover our story, team, and the ecosystem for emerging fashion designers.', image: DEFAULT_OG, ogType: 'website' },
   '/fashionpreneurship': { title: 'Fashionpreneurship in Pakistan - Build Your Fashion Brand with Adorzia', description: 'Build your brand. Connect with the industry. Access resources. Grow your fashion career with Adorzia.', image: DEFAULT_OG, ogType: 'website' },
   '/for-partners': { title: 'Partnerships - Collaborate with Adorzia to Shape Pakistan\'s Fashion Future', description: 'Manufacturers, artisans, institutions, investors, brands, and media — Adorzia is the ecosystem where fashion partnerships create lasting value.', image: DEFAULT_OG, ogType: 'website' },
@@ -115,6 +121,11 @@ function injectMetaTags(html: string, meta: PageMeta, canonicalUrl: string): str
   return html
 }
 
+// ── Inject SEO body content for crawlers ──────────────────────────
+function injectSeoContent(html: string, content: string): string {
+  return html.replace('</body>', `${content}</body>`)
+}
+
 // ── Middleware handler ──────────────────────────────────────────────
 export default async function middleware(request: Request): Promise<Response> {
   const ua = request.headers.get('user-agent') || ''
@@ -141,6 +152,11 @@ export default async function middleware(request: Request): Promise<Response> {
   // Inject page-specific meta tags
   const fullUrl = `https://adorzia.com${pathname}`
   html = injectMetaTags(html, meta, fullUrl)
+
+  // Inject SEO body content for crawlers (H1, headings, descriptive text)
+  if (meta.seoContent) {
+    html = injectSeoContent(html, meta.seoContent)
+  }
 
   return new Response(html, {
     status: 200,
