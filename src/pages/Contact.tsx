@@ -94,8 +94,9 @@ const Contact = () => {
       {/* Hero */}
       <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
         {/* Subtle radial glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(187,148,87,0.06)_0%,transparent_70%)]" />
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#bb9457]/[0.03] rounded-full blur-3xl" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true" style={{ contain: 'layout paint' }}>
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#bb9457]/[0.03] rounded-full blur-3xl" />
+        </div>
 
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <div className="contact-animate">
@@ -127,7 +128,7 @@ const Contact = () => {
               <h2 className="font-serif text-2xl md:text-3xl text-white font-normal tracking-tight text-center mb-2">
                 Get in Touch
               </h2>
-              <p className="text-neutral-500 font-light text-sm text-center mb-10">
+              <p className="text-neutral-400 font-light text-sm text-center mb-10">
                 We respond to every message personally.
               </p>
 
@@ -167,8 +168,8 @@ const Contact = () => {
                       <input type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className={inputClasses} placeholder="+92 XXX XXXXXXX" />
                     </div>
                     <div>
-                      <label className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-2">I am a *</label>
-                      <select required value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className={`${inputClasses} cursor-pointer`}>
+                      <label htmlFor="role" className="text-[10px] uppercase tracking-[0.25em] text-neutral-400 font-semibold block mb-2">I am a *</label>
+                      <select id="role" aria-label="I am a" required value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} className={`${inputClasses} cursor-pointer`}>
                         <option value="" className="bg-neutral-900">Select an option</option>
                         <option value="Designer" className="bg-neutral-900">Designer</option>
                         <option value="Brand" className="bg-neutral-900">Brand</option>
@@ -246,7 +247,7 @@ const Contact = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.934l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.917a2.25 2.25 0 01-1.07-1.934V6.75" />
                 </svg>
               </div>
-              <p className="text-neutral-500 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Email</p>
+              <p className="text-neutral-400 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Email</p>
               <a href="mailto:hello@adorzia.com" className="text-[#bb9457] hover:text-white transition-colors duration-300 text-sm font-light">hello@adorzia.com</a>
             </div>
 
@@ -257,7 +258,7 @@ const Contact = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                 </svg>
               </div>
-              <p className="text-neutral-500 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Social</p>
+              <p className="text-neutral-400 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Social</p>
               <div className="flex items-center justify-center gap-3">
                 <a href="https://instagram.com/adorzia" target="_blank" rel="noopener noreferrer" className="text-[#bb9457] hover:text-white transition-colors duration-300 text-sm font-light">Instagram</a>
                 <span className="text-neutral-700 text-xs">·</span>
@@ -273,7 +274,7 @@ const Contact = () => {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
               </div>
-              <p className="text-neutral-500 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Location</p>
+              <p className="text-neutral-400 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Location</p>
               <p className="text-white text-sm font-light">Pakistan — <span className="text-neutral-400">Working globally</span></p>
             </div>
           </div>
