@@ -2,19 +2,21 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import SEO from '../components/SEO'
 import Breadcrumb from '../components/Breadcrumb'
-import { supabase } from '../lib/supabase'
 import type { DesignerProfile, DesignerFilm } from '../types/database'
 import { resolveAsset } from '../lib/assetResolver'
 
 // Optimized image URL with Supabase transformation
+// Uses pure URL manipulation — no Supabase client needed at render time
 const getOptimizedUrl = (url: string | null | undefined, width = 800, height = 1000): string => {
   if (!url) return '/images/placeholder.webp'
   const resolved = resolveAsset(url)
   if (resolved.includes('supabase.co/storage')) {
-    const match = resolved.match(/\/storage\/v1\/object\/(?:public\/)?([^/]+)\/(.+)/)
+    const match = resolved.match(/\/storage\/v1\/object\/(?:public\/)?([^/?]+)\/(.+)/)
     if (match) {
       const [, bucket, path] = match
-      return `${supabase.storage.from(bucket).getPublicUrl(path.split('?')[0]).data.publicUrl}?width=${width}&height=${height}&resize=cover`
+      const cleanPath = path.split('?')[0]
+      const origin = resolved.match(/(https:\/\/[^/]+\/)/)?.[1] || ''
+      return `${origin}storage/v1/render/image/public/${bucket}/${cleanPath}?width=${width}&height=${height}&resize=cover&quality=80&format=webp`
     }
   }
   return resolved
@@ -58,6 +60,7 @@ const DesignerProfile = () => {
     const fetchDesigner = async () => {
       if (!slug) return
       try {
+        const { supabase } = await import('../lib/supabase')
         setLoading(true)
         const { data: designerData, error: designerError } = await supabase
           .from('designers')

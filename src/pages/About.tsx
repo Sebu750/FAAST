@@ -96,9 +96,9 @@ const TeamGrid = ({ eyebrow, title, intro, members, columns, variant = 'dark' }:
           </div>
 
           {/* Name */}
-          <h4 className={`font-serif text-xl font-normal transition-colors ${
+          <h3 className={`font-serif text-xl font-normal transition-colors ${
             isLightBg ? 'text-neutral-900 group-hover:text-[#bb9457]' : 'text-white group-hover:text-[#bb9457]'
-          }`}>{m.name}</h4>
+          }`}>{m.name}</h3>
 
           {/* Role */}
           <div className={`text-[11px] font-medium mt-1 mb-4 ${
@@ -322,7 +322,7 @@ const About = () => {
             alt="Tactile Atelier Manufacturing"
             className="w-full h-full object-cover scale-110 opacity-45 grayscale contrast-115"
             style={{ transform: `translateY(${scrollY * 0.3}px)` }}
-           loading="lazy" decoding="async" />
+            fetchPriority="high" decoding="sync" />
           <div className="absolute inset-0 bg-black/60 z-10" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/50 z-10" />
@@ -620,7 +620,7 @@ const About = () => {
                       className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" 
                      loading="lazy" decoding="async" />
                   </div>
-                  <h4 className="font-serif text-xl font-normal text-white group-hover:text-[#bb9457] transition-colors">{m.name}</h4>
+                  <h3 className="font-serif text-xl font-normal text-white group-hover:text-[#bb9457] transition-colors">{m.name}</h3>
                   <div className="text-[11px] font-medium mt-1 mb-4 text-neutral-300">{m.role}</div>
                   <div className="w-8 h-px mb-4 bg-neutral-700" />
                   {m.location && <div className="text-[10px] uppercase tracking-[0.2em] font-mono text-neutral-400">{m.location}</div>}
@@ -688,7 +688,7 @@ const About = () => {
                 <div className="relative z-10 glass min-h-[400px] p-8 flex flex-col justify-between group-hover:border-[#bb9457]/30 transition-all duration-500">
                   <div>
                     <div className="w-12 h-0.5 bg-[#bb9457] mb-6 group-hover:w-20 transition-all duration-500" />
-                    <h4 className="font-serif text-xl text-white font-normal group-hover:text-[#bb9457] transition-colors mb-4">{pillar.title}</h4>
+                    <h3 className="font-serif text-xl text-white font-normal group-hover:text-[#bb9457] transition-colors mb-4">{pillar.title}</h3>
                     <p className="text-sm text-neutral-300 font-light leading-relaxed mb-6">{pillar.body}</p>
                   </div>
                   <p className="text-xs text-[#bb9457] font-light leading-relaxed border-t border-white/10 pt-4">{pillar.note}</p>

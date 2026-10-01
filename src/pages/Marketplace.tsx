@@ -359,7 +359,7 @@ const Marketplace = () => {
       <section className="relative min-h-[70vh] sm:min-h-[80vh] md:min-h-screen flex items-center overflow-hidden">
         {/* Background Image - Enhanced Visibility */}
         <div className="absolute inset-0 z-0">
-          <img src={heroBanner} alt="Pakistani fashion designer presenting contemporary collection in studio" className="w-full h-full object-cover object-center grayscale opacity-70" style={{ objectPosition: 'center 35%' }}  loading="lazy" decoding="async" />
+          <img src={heroBanner} alt="Pakistani fashion designer presenting contemporary collection in studio" className="w-full h-full object-cover object-center grayscale opacity-70" style={{ objectPosition: 'center 35%' }}  fetchPriority="high" decoding="sync" />
         </div>
         
         {/* Gradient Overlays - More transparent for better image visibility */}

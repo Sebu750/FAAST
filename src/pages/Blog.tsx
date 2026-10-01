@@ -163,7 +163,7 @@ const Blog = () => {
       {/* ====== HERO ====== */}
       <section className="relative min-h-[50vh] sm:min-h-[60vh] flex items-end overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src={craft} alt="Pakistani fashion craftsmanship and heritage textile art" className="w-full h-full object-cover opacity-30 grayscale contrast-125" loading="eager" decoding="async" />
+          <img src={craft} alt="Pakistani fashion craftsmanship and heritage textile art" className="w-full h-full object-cover opacity-30 grayscale contrast-125" loading="eager" fetchPriority="high" decoding="sync" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/50" />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
         </div>

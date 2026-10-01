@@ -155,7 +155,7 @@ const SpotlightEvent = () => {
             fetchPriority="high"
             className="w-full h-full object-cover object-center scale-110 grayscale opacity-60 md:opacity-60" 
             style={{ transform: `translateY(${scrollY * 0.3}px)`, aspectRatio: '16 / 9', objectPosition: 'center 40%' }} 
-           loading="lazy" decoding="async" />
+            decoding="sync" />
         </div>
         
         {/* Cinematic overlays */}

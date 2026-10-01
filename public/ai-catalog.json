@@ -1,0 +1,52 @@
+{
+  "name": "Adorzia",
+  "url": "https://adorzia.com",
+  "description": "Pakistan's first fashion entrepreneurship ecosystem — coworking studios, curated marketplace for emerging designers, and the annual Spotlight talent event.",
+  "version": "1.0.0",
+  "spec": "ard",
+  "resources": [
+    {
+      "type": "website",
+      "url": "https://adorzia.com",
+      "name": "Adorzia — Where Visionaries Rise"
+    },
+    {
+      "type": "sitemap",
+      "url": "https://adorzia.com/sitemap.xml"
+    },
+    {
+      "type": "rss",
+      "url": "https://adorzia.com/rss.xml",
+      "title": "Adorzia Journal"
+    },
+    {
+      "type": "llms",
+      "url": "https://adorzia.com/llms.txt"
+    },
+    {
+      "type": "robots",
+      "url": "https://adorzia.com/robots.txt"
+    }
+  ],
+  "pages": [
+    { "path": "/", "title": "Home" },
+    { "path": "/about", "title": "About Adorzia" },
+    { "path": "/fashionpreneurship", "title": "Fashionpreneurship" },
+    { "path": "/for-partners", "title": "For Partners" },
+    { "path": "/marketplace", "title": "Marketplace" },
+    { "path": "/designers", "title": "Designers Directory" },
+    { "path": "/blog", "title": "Journal" },
+    { "path": "/contact", "title": "Contact" }
+  ],
+  "contact": {
+    "email": "hello@adorzia.com",
+    "instagram": "https://www.instagram.com/adorziaofficial/",
+    "linkedin": "https://www.linkedin.com/company/adorzia/"
+  },
+  "tech": {
+    "framework": "React + TypeScript",
+    "build": "Vite",
+    "database": "Supabase (PostgreSQL)",
+    "hosting": "Vercel"
+  }
+}

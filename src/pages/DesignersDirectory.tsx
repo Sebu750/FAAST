@@ -2,19 +2,21 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import Breadcrumb from '../components/Breadcrumb'
-import { supabase } from '../lib/supabase'
 import type { Designer } from '../types/database'
 
 // Helper to get optimized thumbnail URL from Supabase storage
+// Uses pure URL manipulation — no Supabase client needed at render time
 const getThumbnailUrl = (url: string | null | undefined, width = 400, height = 533): string => {
   if (!url) return '/images/placeholder.webp'
-  // If it's a Supabase storage URL, add transformation params
+  // If it's a Supabase storage URL, use image transformation endpoint
   if (url.includes('supabase.co/storage')) {
-    // Extract bucket and path from URL
-    const match = url.match(/\/storage\/v1\/object\/(?:public\/)?([^/]+)\/(.+)/)
+    const match = url.match(/\/storage\/v1\/object\/(?:public\/)?([^/?]+)\/(.+)/)
     if (match) {
       const [, bucket, path] = match
-      return `${supabase.storage.from(bucket).getPublicUrl(path.split('?')[0]).data.publicUrl}?width=${width}&height=${height}&resize=cover`
+      const cleanPath = path.split('?')[0]
+      // Extract origin from URL to build the render/image endpoint
+      const origin = url.match(/(https:\/\/[^/]+\/)/)?.[1] || ''
+      return `${origin}storage/v1/render/image/public/${bucket}/${cleanPath}?width=${width}&height=${height}&resize=cover&quality=80&format=webp`
     }
   }
   return url
@@ -43,6 +45,7 @@ const DesignersDirectory = () => {
   useEffect(() => {
     const fetchDesigners = async () => {
       try {
+        const { supabase } = await import('../lib/supabase')
         // Build query - handle case where priority column might not exist yet
         let query = supabase
           .from('designers')
@@ -245,9 +248,9 @@ const DesignersDirectory = () => {
       {/* ===== DESIGNERS GRID ===== */}
       <section className="relative bg-gradient-to-b from-neutral-950 via-black to-neutral-950 min-h-screen overflow-hidden">
         {/* Background accents */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+          <div className="absolute top-1/3 right-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" style={{ transform: 'translateZ(0)' }} />
+          <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-[#bb9457]/3 rounded-full blur-3xl" style={{ transform: 'translateZ(0)' }} />
         </div>
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -275,8 +278,7 @@ const DesignersDirectory = () => {
                     src={getThumbnailUrl(d.image_url)}
                     alt={d.name}
                     className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
-                    loading="lazy"
-                    decoding="async"
+                    {...(idx === 0 ? { fetchPriority: 'high', decoding: 'sync' } : { loading: 'lazy', decoding: 'async' } as React.ImgHTMLAttributes<HTMLImageElement>)}
                   />
                   {/* Gradient overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-90 transition-all duration-500" />

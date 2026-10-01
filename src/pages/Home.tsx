@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 import hero1 from '../assets/home-hero-ecosystem1.webp'
 import hero2 from '../assets/home-hero-runway.webp'
@@ -29,10 +28,11 @@ const Home = () => {
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({})
   const rafRef = useRef<number>(0)
 
-  // Fetch featured designers
+  // Fetch featured designers (dynamic import defers @supabase chunk)
   useEffect(() => {
     const fetchDesigners = async () => {
       try {
+        const { supabase } = await import('../lib/supabase')
         let { data, error } = await supabase
           .from('designers')
           .select('*')
@@ -56,10 +56,11 @@ const Home = () => {
     fetchDesigners()
   }, [])
 
-  // Fetch latest collections
+  // Fetch latest collections (dynamic import defers @supabase chunk)
   useEffect(() => {
     const fetchCollections = async () => {
       try {
+        const { supabase } = await import('../lib/supabase')
         const { data } = await supabase
           .from('designer_collections')
           .select('*, designers(name, slug)')
@@ -161,7 +162,7 @@ const Home = () => {
       {/* ====== SECTION 1: HERO / VISION ====== */}
       <section className="relative overflow-hidden bg-black min-h-[60vh] sm:min-h-[70vh] md:min-h-screen flex items-center">
         <div className="absolute inset-0 z-0">
-          <img src={slides[currentIndex].image} alt={slides[currentIndex].eyebrow} className="w-full h-full object-cover scale-110 opacity-50 transition-opacity duration-1000" style={{ transform: `translate3d(0, ${scrollY * 0.3}px, 0)` }} loading="lazy" decoding="async" />
+          <img src={slides[currentIndex].image} alt={slides[currentIndex].eyebrow} className="w-full h-full object-cover scale-110 opacity-50 transition-opacity duration-1000" style={{ transform: `translate3d(0, ${scrollY * 0.3}px, 0)` }} {...(currentIndex === 0 ? { fetchPriority: 'high', decoding: 'sync' } : { loading: 'lazy', decoding: 'async' } as React.ImgHTMLAttributes<HTMLImageElement>)} />
           <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50 z-10" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(187,148,87,0.15),transparent_60%)] z-10" />
@@ -241,7 +242,7 @@ const Home = () => {
       <section className="bg-neutral-950 py-12 border-y border-neutral-800">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 font-bold">02</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400 font-bold">02</span>
             <span className="w-8 h-px bg-neutral-700" />
             <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">By the Numbers</span>
           </div>
@@ -249,7 +250,7 @@ const Home = () => {
             {[{ number: "3", label: "Cities" }, { number: "100+", label: "Designers Targeted" }, { number: "1", label: "National Platform" }, { number: "500+", label: "Years of Craft Heritage" }].map((s, i) => (
               <div key={i} className="text-center">
                 <div className="font-serif text-3xl md:text-4xl text-[#bb9457] font-normal tracking-tight">{s.number}</div>
-                <div className="text-neutral-500 text-[10px] uppercase tracking-[0.2em] font-mono mt-2">{s.label}</div>
+                <div className="text-neutral-400 text-[10px] uppercase tracking-[0.2em] font-mono mt-2">{s.label}</div>
               </div>
             ))}
           </div>
@@ -283,7 +284,7 @@ const Home = () => {
                 <div className="relative z-10 glass min-h-[400px] p-8 flex flex-col justify-between border border-transparent group-hover:border-[#bb9457]/30 transition-all duration-500">
                   <div>
                     <div className="w-12 h-0.5 bg-[#bb9457] mb-6 group-hover:w-20 transition-all duration-500" />
-                    <h4 className="font-serif text-xl text-white font-normal group-hover:text-[#bb9457] transition-colors mb-4">{pillar.title}</h4>
+                    <h3 className="font-serif text-xl text-white font-normal group-hover:text-[#bb9457] transition-colors mb-4">{pillar.title}</h3>
                     <p className="text-sm text-neutral-300 font-light leading-relaxed mb-6">{pillar.body}</p>
                   </div>
                   <Link to={pillar.link} className="inline-flex items-center gap-2 text-[#bb9457] text-xs uppercase tracking-[0.2em] font-semibold group-hover:gap-3 transition-all duration-300">{pillar.linkText}<span className="transform group-hover:translate-x-1 transition-transform duration-300">→</span></Link>

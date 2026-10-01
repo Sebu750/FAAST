@@ -153,5 +153,5 @@ export default async function middleware(request: Request): Promise<Response> {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon|icons\\.svg|api/).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon|icons\\.svg|api/|.*\\.json$).*)'],
 }
