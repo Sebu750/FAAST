@@ -19,7 +19,8 @@
     <!-- Preload hero image for LCP optimization -->
     <link rel="preload" as="image" href="/hero-lcp.webp" fetchpriority="high" />
     
-    <!-- Font stylesheet — async load, non-blocking -->
+    <!-- Font preload + stylesheet — display=swap prevents FOIT -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" /></noscript>
     
@@ -36,7 +37,7 @@
     
     <!-- Default SEO tags -->
     <title>Adorzia - Where Visionaries Rise | Pakistan Fashion</title>
-    <meta name="description" content="Adorzia is Pakistan's first fashion entrepreneurship ecosystem — studios, marketplace, and Spotlight talent investment." />
+    <meta name="description" content="Adorzia is Pakistan's first fashion entrepreneurship ecosystem — studios, marketplace, and Spotlight talent investment for emerging designers." />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
     <link rel="canonical" href="https://adorzia.com" />

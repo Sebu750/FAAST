@@ -75,7 +75,7 @@ function App() {
           <Route path="/*" element={
             <div className="min-h-screen flex flex-col overflow-x-hidden">
               <Header />
-              <main id="main-content" className="flex-grow overflow-x-hidden">
+              <div className="flex-grow overflow-x-hidden">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/about" element={<About />} />
@@ -96,7 +96,7 @@ function App() {
                   <Route path="/designer-preview" element={<DesignerProfilePreview />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-              </main>
+              </div>
               <Footer />
             </div>
           } />
