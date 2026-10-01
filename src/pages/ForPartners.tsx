@@ -634,8 +634,10 @@ const ForPartners = () => {
               </div>
 
               <div>
-                <label className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Partnership type *</label>
+                <label htmlFor="partnership_type" className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-semibold block mb-2">Partnership type *</label>
                 <select
+                  id="partnership_type"
+                  aria-label="Partnership type"
                   required
                   value={form.partnership_type}
                   onChange={(e) => setForm({ ...form, partnership_type: e.target.value })}
