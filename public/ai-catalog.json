@@ -1,14 +1,14 @@
 {
   "name": "Adorzia",
   "url": "https://adorzia.com",
-  "description": "Pakistan's first fashion entrepreneurship ecosystem — coworking studios, curated marketplace for emerging designers, and the annual Spotlight talent event.",
+  "description": "Pakistan's first fashion entrepreneurship ecosystem - coworking studios, curated marketplace for emerging designers, and the annual Spotlight talent event.",
   "version": "1.0.0",
   "spec": "ard",
   "resources": [
     {
       "type": "website",
       "url": "https://adorzia.com",
-      "name": "Adorzia — Where Visionaries Rise"
+      "name": "Adorzia - Where Visionaries Rise"
     },
     {
       "type": "sitemap",

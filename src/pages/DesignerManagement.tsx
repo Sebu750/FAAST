@@ -362,8 +362,8 @@ const DesignerManagement = () => {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-neutral-400">{d.location || '—'}</td>
-                    <td className="px-6 py-4 text-sm text-neutral-400">{d.category || '—'}</td>
+                    <td className="px-6 py-4 text-sm text-neutral-400">{d.location || '-'}</td>
+                    <td className="px-6 py-4 text-sm text-neutral-400">{d.category || '-'}</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         <button
@@ -813,7 +813,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                   }`}>{form.status}</span>
                 )}
               </div>
-              <p className="text-xs text-neutral-500 mt-0.5">{form.name || 'Untitled'} {form.brand ? `— ${form.brand}` : ''}</p>
+              <p className="text-xs text-neutral-500 mt-0.5">{form.name || 'Untitled'} {form.brand ? `- ${form.brand}` : ''}</p>
             </div>
           </div>
           <div className="flex items-center gap-5">
@@ -847,7 +847,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
               </div>
               <div className="h-3 w-px bg-neutral-800" />
               <span className="text-sm font-medium text-white">{currentStepData.label}</span>
-              <span className="text-xs text-neutral-500">— {currentStepData.description}</span>
+              <span className="text-xs text-neutral-500">- {currentStepData.description}</span>
             </div>
             <div className="flex items-center gap-4">
               {autoSaving && (
@@ -885,7 +885,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                       ? 'hover:bg-neutral-800/60 border border-transparent'
                       : 'hover:bg-neutral-800/40 border border-transparent'
                   }`}
-                  title={`${step.label} — ${step.description}`}
+                  title={`${step.label} - ${step.description}`}
                 >
                   <div className={`w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold transition-all flex-shrink-0 ${
                     isActive

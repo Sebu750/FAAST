@@ -1,4 +1,4 @@
-// Vercel Edge Middleware — injects page-specific meta tags for social crawlers
+// Vercel Edge Middleware - injects page-specific meta tags for social crawlers
 // For non-crawler requests, passes through with zero overhead.
 
 // ── Crawler detection ──────────────────────────────────────────────
@@ -127,7 +127,7 @@ async function getPageMeta(pathname: string): Promise<PageMeta | null> {
         `<p>${esc(post.excerpt || post.title)}</p>` +
         `<p>Read this article on the Adorzia Journal for more Pakistani fashion entrepreneurship stories, heritage craft features, and emerging designer spotlights.</p>`
       ) + `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"${esc(post.title)}","author":{"@type":"Person","name":"${esc(author)}"}${date ? `,"datePublished":"${date.split('T')[0]}"` : ''},"publisher":{"@type":"Organization","name":"Adorzia Journal"},"url":"https://adorzia.com${pathname}"}</script>`
-      return { title: `${post.title} — Adorzia Journal`, description: post.excerpt || post.title, image: post.banner_image_url || post.featured_image_url || DEFAULT_OG, ogType: 'article', seoContent }
+      return { title: `${post.title} - Adorzia Journal`, description: post.excerpt || post.title, image: post.banner_image_url || post.featured_image_url || DEFAULT_OG, ogType: 'article', seoContent }
     }
   }
 
@@ -136,11 +136,11 @@ async function getPageMeta(pathname: string): Promise<PageMeta | null> {
   if (catMatch) {
     const catName = CATEGORY_NAMES[catMatch[1]] || catMatch[1].split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
     const seoContent = buildSeoDiv(
-      `<h1>${esc(catName)} — Adorzia Journal</h1>` +
+      `<h1>${esc(catName)} - Adorzia Journal</h1>` +
       `<p>Read ${esc(catName)} articles on Adorzia Journal covering Pakistani fashion entrepreneurship, heritage craft, and emerging designers.</p>` +
       `<p>Browse all journal categories to discover stories about the people, brands, and trends shaping Pakistan's fashion ecosystem.</p>`
-    ) + `<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"${esc(catName)} — Adorzia Journal","url":"https://adorzia.com${pathname}"}</script>`
-    return { title: `${catName} — Adorzia Journal`, description: `Read ${catName} articles on Adorzia Journal — Pakistani fashion entrepreneurship, heritage craft, and emerging designers.`, image: DEFAULT_OG, ogType: 'website', seoContent }
+    ) + `<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"${esc(catName)} - Adorzia Journal","url":"https://adorzia.com${pathname}"}</script>`
+    return { title: `${catName} - Adorzia Journal`, description: `Read ${catName} articles on Adorzia Journal - Pakistani fashion entrepreneurship, heritage craft, and emerging designers.`, image: DEFAULT_OG, ogType: 'website', seoContent }
   }
 
   // Designer profile: /designers/:slug
@@ -149,13 +149,13 @@ async function getPageMeta(pathname: string): Promise<PageMeta | null> {
     const d = await querySupabase('designers', 'name,short_bio,bio,image_url,cover_image_url,location,specialization,brand', `slug=eq.${encodeURIComponent(designerMatch[1])}`)
     if (d) {
       const seoContent = buildSeoDiv(
-        `<h1>${esc(d.name)}${d.brand ? ` — ${esc(d.brand)}` : ''}</h1>` +
+        `<h1>${esc(d.name)}${d.brand ? ` - ${esc(d.brand)}` : ''}</h1>` +
         `<p>${esc(d.short_bio || d.bio || `Discover ${d.name}, a Pakistani fashion designer on Adorzia.`)}</p>` +
         (d.location ? `<p>Based in ${esc(d.location)}</p>` : '') +
         (d.specialization ? `<p>Specialization: ${esc(d.specialization)}</p>` : '') +
         `<p>View the full profile of ${esc(d.name)} on the Adorzia designers directory to see collections, skills, achievements, and social media links.</p>`
       ) + `<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"${esc(d.name)}"${d.brand ? `,"worksFor":{"@type":"Organization","name":"${esc(d.brand)}"}` : ''}${d.location ? `,"address":{"@type":"PostalAddress","addressLocality":"${esc(d.location)}"}` : ''},"url":"https://adorzia.com${pathname}"}</script>`
-      return { title: `${d.name} — Adorzia`, description: d.short_bio || `Discover ${d.name}, a Pakistani fashion designer on Adorzia.`, image: d.cover_image_url || d.image_url || DEFAULT_OG, ogType: 'profile', seoContent }
+      return { title: `${d.name} - Adorzia`, description: d.short_bio || `Discover ${d.name}, a Pakistani fashion designer on Adorzia.`, image: d.cover_image_url || d.image_url || DEFAULT_OG, ogType: 'profile', seoContent }
     }
   }
 
@@ -200,7 +200,7 @@ function injectSeoContent(html: string, content: string): string {
 export default async function middleware(request: Request): Promise<Response> {
   const ua = request.headers.get('user-agent') || ''
 
-  // Let non-crawlers through immediately — zero overhead for real users
+  // Let non-crawlers through immediately - zero overhead for real users
   if (!isCrawler(ua)) {
     return fetch(new URL(request.url))
   }

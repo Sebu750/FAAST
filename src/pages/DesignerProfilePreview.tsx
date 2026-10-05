@@ -281,7 +281,7 @@ const DesignerProfilePreview = () => {
                   <p className="font-serif text-3xl md:text-4xl text-white font-normal italic leading-tight pl-4">
                     "I design to preserve what is being lost - to give heritage craft a future, not just a past."
                   </p>
-                  <div className="mt-6 text-neutral-400 font-light pl-4">— {designer.name}</div>
+                  <div className="mt-6 text-neutral-400 font-light pl-4">- {designer.name}</div>
                 </div>
 
                 {/* Education */}

@@ -108,7 +108,7 @@ const Home = () => {
 
   const slides = [
     { image: '/hero-lcp.webp', eyebrow: 'Pakistan\'s First Fashion Ecosystem', title: 'Where Designers Become Fashionpreneurs', subtitle: 'Adorzia is Pakistan\'s first complete fashion entrepreneurship ecosystem. Premium coworking studios in Karachi, Lahore & Islamabad, a curated global marketplace, and the annual Spotlight event that discovers and invests in Pakistan\'s next great fashion brands.', ctaPrimary: { label: 'Reserve Your Studio Spot', to: '/fashionpreneurship' }, ctaSecondary: { label: 'Explore Locations', to: '/contact' } },
-    { image: hero2, eyebrow: 'Spotlight — Fall 2026', title: 'Pakistan\'s Premier Talent Investment Program', subtitle: 'Once a year, Adorzia scours every province to identify the visionary ready to redefine Pakistani fashion on a global scale. Selected designers receive funding, mentorship, and a platform to launch internationally.', ctaPrimary: { label: 'Apply for Spotlight 2026', to: '/contact' }, ctaSecondary: { label: 'Discover the Event', to: '/contact' } },
+    { image: hero2, eyebrow: 'Spotlight - Fall 2026', title: 'Pakistan\'s Premier Talent Investment Program', subtitle: 'Once a year, Adorzia scours every province to identify the visionary ready to redefine Pakistani fashion on a global scale. Selected designers receive funding, mentorship, and a platform to launch internationally.', ctaPrimary: { label: 'Apply for Spotlight 2026', to: '/contact' }, ctaSecondary: { label: 'Discover the Event', to: '/contact' } },
     { image: hero3, eyebrow: 'The Marketplace', title: 'From heritage craft to global curation.', subtitle: 'A curated digital platform connecting independent designers and master craftspeople with international buyers. We bridge Pakistani heritage craftsmanship with global demand.', ctaPrimary: { label: 'List Your Collection', to: '/for-partners' }, ctaSecondary: { label: 'Enter the Marketplace', to: '/fashionpreneurship' } }
   ]
 
@@ -122,7 +122,7 @@ const Home = () => {
     <div className="min-h-screen bg-black text-neutral-100 selection:bg-[#bb9457] selection:text-black font-sans antialiased overflow-x-hidden">
       <SEO
         title="Adorzia - Where Visionaries Rise | Pakistan Fashion"
-        description="Adorzia is Pakistan's first fashion entrepreneurship ecosystem — studios, marketplace, and Spotlight talent investment."
+        description="Adorzia is Pakistan's first fashion entrepreneurship ecosystem - studios, marketplace, and Spotlight talent investment."
         canonicalURL="https://adorzia.com"
         ogTitle="Adorzia - Where Visionaries Rise | Pakistan Fashion"
         ogDescription="Pakistan's first complete fashion entrepreneurship ecosystem. Studios. Marketplace. Spotlight."
@@ -223,7 +223,7 @@ const Home = () => {
               <div className="space-y-6 text-neutral-500 font-light text-base md:text-lg leading-relaxed max-w-xl">
                 <p>For generations, this landscape has birthed master weavers, meticulous artisans, and designers capable of dressing the world. The missing variable was never talent. It was infrastructure. It was capital. It was a global stage.</p>
                 <p className="font-serif text-xl md:text-2xl text-neutral-900 leading-relaxed border-l-2 border-[#bb9457] pl-6">Adorzia is that architecture.</p>
-                <p>We are establishing the definitive ecosystem for fashion entrepreneurship in Pakistan — physical studios, a curated digital marketplace, and an annual vanguard event to discover, fund, and scale independent labels.</p>
+                <p>We are establishing the definitive ecosystem for fashion entrepreneurship in Pakistan - physical studios, a curated digital marketplace, and an annual vanguard event to discover, fund, and scale independent labels.</p>
               </div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-200 bg-neutral-50">
                 <span className="w-1.5 h-1.5 bg-[#bb9457] rounded-full" />
@@ -268,13 +268,13 @@ const Home = () => {
               <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-semibold">Our Ecosystem</span>
             </div>
             <h2 className="font-serif text-4xl md:text-5xl text-white font-normal tracking-tight">Three modules. One synchronized <span className="text-gradient italic font-light">system.</span></h2>
-            <p className="mt-6 text-neutral-400 text-base md:text-lg font-light leading-relaxed max-w-2xl">Designers, brands, manufacturers, artisans, institutions & partners — connected through unified infrastructure.</p>
+            <p className="mt-6 text-neutral-400 text-base md:text-lg font-light leading-relaxed max-w-2xl">Designers, brands, manufacturers, artisans, institutions & partners - connected through unified infrastructure.</p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { title: "Coworking Fashion Studios", image: islamabadStudio, body: "Premium environments engineered for fashion professionals. Industrial-grade machinery, pattern-cutting tables, and a high-caliber network across three cities.", link: "/fashionpreneurship", linkText: "Explore Studios" },
               { title: "The Marketplace", image: heritageCraft, body: "A curated digital platform connecting independent designers and master artisans directly with international collectors. We archive provenance.", link: "/marketplace", linkText: "Enter Marketplace" },
-              { title: "Spotlight — Annual Event", image: hero2, body: "Our signature talent discovery event. We identify fashion entrepreneurs with distinct creative direction and commercial viability — then invest in their vision.", link: "/contact", linkText: "Learn More" }
+              { title: "Spotlight - Annual Event", image: hero2, body: "Our signature talent discovery event. We identify fashion entrepreneurs with distinct creative direction and commercial viability - then invest in their vision.", link: "/contact", linkText: "Learn More" }
             ].map((pillar, idx) => (
               <div key={idx} className={`group relative overflow-hidden rounded-sm transition-all duration-1000 ${isVisible['ecosystem'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`} style={{ transitionDelay: `${idx * 200}ms` }}>
                 <div className="absolute inset-0">
@@ -421,7 +421,7 @@ const Home = () => {
           <div className={`text-center max-w-4xl mx-auto mb-20 transition-all duration-1000 ${isVisible['featured'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
             <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full glass">
               <span className="w-2 h-2 bg-[#bb9457] rounded-full animate-pulse" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-bold">07 — Featured Talent</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-bold">07 - Featured Talent</span>
             </div>
             <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl font-normal tracking-tight text-white leading-[0.9] mb-6">
               Discover the <span className="text-gradient italic font-light">visionaries.</span>
@@ -527,7 +527,7 @@ const Home = () => {
           <div className={`text-center max-w-4xl mx-auto mb-20 transition-all duration-1000 ${isVisible['partners'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`}>
             <div className="inline-flex items-center gap-3 mb-6 px-5 py-2 rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm">
               <span className="w-2 h-2 bg-[#bb9457] rounded-full" />
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-600 font-bold">08 — Our Commitments</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-600 font-bold">08 - Our Commitments</span>
             </div>
             <h2 className="font-serif text-5xl md:text-7xl text-neutral-900 font-normal tracking-tight mb-6">
               Built on <span className="text-gradient italic font-light">principle.</span>
@@ -586,7 +586,7 @@ const Home = () => {
           {/* Badge */}
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full glass">
             <span className="w-2 h-2 bg-[#bb9457] rounded-full animate-pulse" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">09 — Join The Movement</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#bb9457] font-mono font-bold">09 - Join The Movement</span>
           </div>
 
           {/* Headline */}

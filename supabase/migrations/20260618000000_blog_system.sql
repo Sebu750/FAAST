@@ -122,13 +122,13 @@ SELECT
   'The Rise of Fashion Entrepreneurship in Pakistan',
   'rise-of-fashion-entrepreneurship-pakistan',
   'How a new generation of Pakistani designers is building fashion brands from the ground up, blending heritage craft with contemporary vision.',
-  'Pakistan''s fashion industry is undergoing a quiet revolution. While the country has long been known for its rich textile heritage and masterful craftsmanship, a new wave of fashion entrepreneurs is emerging — designers who see themselves not just as creators, but as business builders.
+  'Pakistan''s fashion industry is undergoing a quiet revolution. While the country has long been known for its rich textile heritage and masterful craftsmanship, a new wave of fashion entrepreneurs is emerging - designers who see themselves not just as creators, but as business builders.
 
 # The Entrepreneurial Shift
 
 For decades, Pakistani fashion existed primarily in the realm of bridal wear and formal occasion dressing. Today''s emerging designers are thinking bigger. They''re launching ready-to-wear lines, exploring sustainable production methods, and building brands that speak to global audiences.
 
-The shift is partly driven by necessity. Without established infrastructure for fashion businesses, these designers have had to become entrepreneurs by default — learning marketing, operations, and finance alongside pattern-making and draping.
+The shift is partly driven by necessity. Without established infrastructure for fashion businesses, these designers have had to become entrepreneurs by default - learning marketing, operations, and finance alongside pattern-making and draping.
 
 # Challenges and Opportunities
 
@@ -143,7 +143,7 @@ Yet these challenges have also sparked innovation. Designers are building direct
 
 # The Adorzia Vision
 
-This is precisely why Adorzia exists. We''re building the infrastructure that Pakistani fashion entrepreneurs have never had — premium coworking studios, a curated marketplace connecting designers with global buyers, and the Spotlight program that invests directly in emerging talent.
+This is precisely why Adorzia exists. We''re building the infrastructure that Pakistani fashion entrepreneurs have never had - premium coworking studios, a curated marketplace connecting designers with global buyers, and the Spotlight program that invests directly in emerging talent.
 
 The future of Pakistani fashion isn''t just about beautiful clothes. It''s about building sustainable businesses that honor our craft heritage while creating economic opportunity for the next generation.',
   '/blog/fashion-entrepreneurship.webp',
@@ -161,7 +161,7 @@ INSERT INTO blog_posts (title, slug, excerpt, content, featured_image_url, categ
 SELECT 
   'PIFD: Shaping Pakistan''s Fashion Future',
   'pifd-shaping-pakistan-fashion-future',
-  'Inside the Pakistan Institute of Fashion and Design — where the next generation of fashion talent is being trained and transformed.',
+  'Inside the Pakistan Institute of Fashion and Design - where the next generation of fashion talent is being trained and transformed.',
   'The Pakistan Institute of Fashion and Design (PIFD) stands as one of the country''s most important institutions for fashion education. Located in Lahore, PIFD has been quietly shaping the future of Pakistani fashion for over two decades.
 
 # A Legacy of Excellence
@@ -185,11 +185,11 @@ The institute''s annual graduate showcase has become a key event for industry pr
 
 Despite PIFD''s excellence, graduates often face a challenging transition from student to professional. The gap between academic training and business reality remains significant.
 
-This is where ecosystem support becomes crucial. Programs like Adorzia''s Spotlight are designed to bridge this gap — providing emerging designers with the mentorship, resources, and platform they need to turn their vision into viable businesses.
+This is where ecosystem support becomes crucial. Programs like Adorzia''s Spotlight are designed to bridge this gap - providing emerging designers with the mentorship, resources, and platform they need to turn their vision into viable businesses.
 
 # Looking Forward
 
-As Pakistan''s fashion industry continues to grow, institutions like PIFD will play an increasingly important role. The question isn''t whether Pakistan has fashion talent — it''s whether we can build the infrastructure to support that talent''s growth into sustainable, globally competitive businesses.',
+As Pakistan''s fashion industry continues to grow, institutions like PIFD will play an increasingly important role. The question isn''t whether Pakistan has fashion talent - it''s whether we can build the infrastructure to support that talent''s growth into sustainable, globally competitive businesses.',
   '/blog/pifd-fashion.webp',
   (SELECT id FROM blog_categories WHERE slug = 'pifd'),
   'Adorzia Team',
@@ -205,12 +205,12 @@ INSERT INTO blog_posts (title, slug, excerpt, content, featured_image_url, categ
 SELECT 
   'Spotlight 2026: Investing in Pakistan''s Next Fashion Visionary',
   'spotlight-2026-investing-pakistan-fashion',
-  'Adorzia''s Spotlight program isn''t just a competition — it''s an investment in the designer who will define Pakistani fashion''s next chapter.',
-  'Every year, Adorzia Spotlight searches every province, every city, and every subculture of Pakistan to find one singular visionary — the designer ready to redefine Pakistani fashion on a global scale.
+  'Adorzia''s Spotlight program isn''t just a competition - it''s an investment in the designer who will define Pakistani fashion''s next chapter.',
+  'Every year, Adorzia Spotlight searches every province, every city, and every subculture of Pakistan to find one singular visionary - the designer ready to redefine Pakistani fashion on a global scale.
 
 # More Than a Competition
 
-Spotlight isn''t your typical fashion competition. We''re not looking for the most commercially viable collection or the most Instagram followers. We''re looking for vision — the designer whose work speaks to something deeper, something that could reshape how the world sees Pakistani fashion.
+Spotlight isn''t your typical fashion competition. We''re not looking for the most commercially viable collection or the most Instagram followers. We''re looking for vision - the designer whose work speaks to something deeper, something that could reshape how the world sees Pakistani fashion.
 
 The selected designer receives:
 
@@ -228,11 +228,11 @@ Our selection process is rigorous and holistic. We evaluate:
 - Understanding of heritage and cultural context
 - Potential for global impact
 
-Applications for Spotlight 2026 are open until July 31, 2026. We''re looking for designers who are ready to commit fully to their vision — whether they''re recent graduates, independent creatives, or emerging brand founders.
+Applications for Spotlight 2026 are open until July 31, 2026. We''re looking for designers who are ready to commit fully to their vision - whether they''re recent graduates, independent creatives, or emerging brand founders.
 
 # Why Investment Matters
 
-Pakistani fashion has no shortage of talent. What we lack is investment — not just financial, but the investment of time, mentorship, and infrastructure that allows emerging designers to grow without compromising their vision.
+Pakistani fashion has no shortage of talent. What we lack is investment - not just financial, but the investment of time, mentorship, and infrastructure that allows emerging designers to grow without compromising their vision.
 
 Spotlight is our commitment to changing that. By investing in one designer each year, we''re building a foundation for sustainable fashion entrepreneurship in Pakistan.
 
@@ -240,7 +240,7 @@ Spotlight is our commitment to changing that. By investing in one designer each 
 
 If you''re a Pakistani designer with a vision that demands to be seen, Spotlight is your platform. Applications are open now.
 
-The future of Pakistani fashion won''t be built by institutions alone. It will be built by individual visionaries with the courage to create something new — and the support to make it real.',
+The future of Pakistani fashion won''t be built by institutions alone. It will be built by individual visionaries with the courage to create something new - and the support to make it real.',
   '/blog/spotlight-stage.webp',
   (SELECT id FROM blog_categories WHERE slug = 'spotlight-stories'),
   'Adorzia Team',

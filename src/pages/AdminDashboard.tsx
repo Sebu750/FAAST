@@ -169,13 +169,13 @@ const AdminDashboard = () => {
       if (marketplaceRes.data) {
         marketplaceRes.data.forEach(r => items.push({
           id: r.id, type: 'Marketplace', name: r.founder_name, email: r.email,
-          detail: `${r.brand_name} — ${r.category}`, status: r.status, created_at: r.created_at
+          detail: `${r.brand_name} - ${r.category}`, status: r.status, created_at: r.created_at
         }))
       }
       if (studioRes.data) {
         studioRes.data.forEach(r => items.push({
           id: r.id, type: 'Studio', name: r.name, email: r.email,
-          detail: `${r.discipline} — ${r.preferred_city || 'Any city'}`, status: r.status, created_at: r.created_at
+          detail: `${r.discipline} - ${r.preferred_city || 'Any city'}`, status: r.status, created_at: r.created_at
         }))
       }
       if (partnershipRes.data) {

@@ -62,10 +62,10 @@ const ForPartners = () => {
     <div className="min-h-screen bg-black text-white">
       <SEO
         title="Partnerships - Collaborate with Adorzia to Shape Pakistan's Fashion Future"
-        description="Partner with Adorzia — Pakistan's fashion entrepreneurship ecosystem. Opportunities for manufacturers, artisans, suppliers, institutions, investors, brands, and media to collaborate and build the future of fashion together."
+        description="Partner with Adorzia - Pakistan's fashion entrepreneurship ecosystem. Opportunities for manufacturers, artisans, suppliers, institutions, investors, brands, and media to collaborate and build the future of fashion together."
         canonicalURL="https://adorzia.com/for-partners"
         ogTitle="Partnerships - Build the Future of Pakistani Fashion Together"
-        ogDescription="Manufacturers, artisans, institutions, investors, brands, and media — Adorzia is the ecosystem where fashion partnerships create lasting value."
+        ogDescription="Manufacturers, artisans, institutions, investors, brands, and media - Adorzia is the ecosystem where fashion partnerships create lasting value."
         ogImageAlt="Adorzia partnerships - collaborative fashion ecosystem"
         schemaType="WebPage"
         keywords="fashion partnerships Pakistan, fashion manufacturing collaboration, fashion institution partnerships, fashion investment Pakistan, brand partnerships, fashion supplier collaboration, Adorzia partners, Pakistani fashion ecosystem, fashion industry collaboration, fashion media partnerships, Adorzia"
@@ -115,7 +115,7 @@ const ForPartners = () => {
 
             <div className="mt-8 space-y-6 text-neutral-300 font-light text-base md:text-lg leading-relaxed">
               <p>
-                Adorzia is Pakistan's first complete fashion entrepreneurship ecosystem — and ecosystems are built through partnership. Whether you manufacture, supply, teach, invest, design, or tell the story of fashion — there is a place for you here.
+                Adorzia is Pakistan's first complete fashion entrepreneurship ecosystem - and ecosystems are built through partnership. Whether you manufacture, supply, teach, invest, design, or tell the story of fashion - there is a place for you here.
               </p>
               <p>
                 We are looking for manufacturers, artisans, institutions, investors, brands, and industry professionals who believe in what Pakistani fashion can become and want to be part of building it.
@@ -151,14 +151,14 @@ const ForPartners = () => {
               Every part of the fashion ecosystem has a role.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              Adorzia brings together the full spectrum of fashion industry professionals — each contributing something essential to the ecosystem we are building.
+              Adorzia brings together the full spectrum of fashion industry professionals - each contributing something essential to the ecosystem we are building.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { title: "Manufacturers", body: "Production facilities and factories collaborating with emerging designers on product development and manufacturing." },
-              { title: "Artisans & Craftspeople", body: "Master makers carrying Pakistan's heritage craft traditions — from hand embroidery to weaving, block printing to mirror work." },
+              { title: "Artisans & Craftspeople", body: "Master makers carrying Pakistan's heritage craft traditions - from hand embroidery to weaving, block printing to mirror work." },
               { title: "Suppliers", body: "Fabric mills, trim providers, material sources, and logistics partners supporting the fashion supply chain." },
               { title: "Fashion Institutions", body: "Universities, fashion schools, and educational bodies shaping the next generation of Pakistani fashion talent." },
               { title: "Investors", body: "Individuals, funds, and institutions providing capital to build Pakistani fashion brands into scalable businesses." },
@@ -190,7 +190,7 @@ const ForPartners = () => {
               What partnership with Adorzia delivers.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              When you partner with Adorzia, you plug into Pakistan's only complete fashion entrepreneurship ecosystem — gaining access to opportunities, people, and markets that do not exist elsewhere.
+              When you partner with Adorzia, you plug into Pakistan's only complete fashion entrepreneurship ecosystem - gaining access to opportunities, people, and markets that do not exist elsewhere.
             </p>
           </div>
 
@@ -213,7 +213,7 @@ const ForPartners = () => {
               },
               {
                 title: "Access to Talent",
-                body: "First access to Pakistan's most promising emerging designers, fashion graduates, and heritage craftspeople — vetted and developed through our pipeline.",
+                body: "First access to Pakistan's most promising emerging designers, fashion graduates, and heritage craftspeople - vetted and developed through our pipeline.",
                 icon: "M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"
               },
               {
@@ -247,10 +247,10 @@ const ForPartners = () => {
               </h2>
               <div className="space-y-4 text-neutral-400 font-light text-base leading-relaxed">
                 <p>
-                  Pakistan's manufacturing capability is world-class — yet most factories and workshops have never worked directly with the emerging designers who need them most. Adorzia bridges that gap.
+                  Pakistan's manufacturing capability is world-class - yet most factories and workshops have never worked directly with the emerging designers who need them most. Adorzia bridges that gap.
                 </p>
                 <p>
-                  As a manufacturing partner, you gain access to a curated pipeline of designers with viable collections, clear briefs, and the support infrastructure to make production collaborations successful — from sampling through to full production runs.
+                  As a manufacturing partner, you gain access to a curated pipeline of designers with viable collections, clear briefs, and the support infrastructure to make production collaborations successful - from sampling through to full production runs.
                 </p>
               </div>
 
@@ -307,10 +307,10 @@ const ForPartners = () => {
               </h2>
               <div className="space-y-4 text-neutral-400 font-light text-base leading-relaxed">
                 <p>
-                  For brands, suppliers, and established fashion businesses — Adorzia offers direct access to Pakistan's most promising emerging design talent and a growing community of fashion entrepreneurs.
+                  For brands, suppliers, and established fashion businesses - Adorzia offers direct access to Pakistan's most promising emerging design talent and a growing community of fashion entrepreneurs.
                 </p>
                 <p>
-                  Whether you are looking for design collaborators, sourcing partners, commercial opportunities, or simply want to be connected to the pulse of Pakistan's fashion ecosystem — partnership with Adorzia opens doors.
+                  Whether you are looking for design collaborators, sourcing partners, commercial opportunities, or simply want to be connected to the pulse of Pakistan's fashion ecosystem - partnership with Adorzia opens doors.
                 </p>
               </div>
 
@@ -353,10 +353,10 @@ const ForPartners = () => {
               </h2>
               <div className="space-y-4 text-neutral-400 font-light text-base leading-relaxed">
                 <p>
-                  Pakistan's fashion schools and universities produce extraordinary talent every year. Adorzia partners with institutions to give students real-world pathways from education to industry — and to collaborate on the programs, competitions, and research that shape fashion education itself.
+                  Pakistan's fashion schools and universities produce extraordinary talent every year. Adorzia partners with institutions to give students real-world pathways from education to industry - and to collaborate on the programs, competitions, and research that shape fashion education itself.
                 </p>
                 <p>
-                  From graduate showcases to curriculum input, from student competitions to joint research initiatives — institutional partnerships are central to building the ecosystem's future.
+                  From graduate showcases to curriculum input, from student competitions to joint research initiatives - institutional partnerships are central to building the ecosystem's future.
                 </p>
               </div>
 
@@ -406,16 +406,16 @@ const ForPartners = () => {
               Participate in selected fashion brands and ventures.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              Adorzia's ecosystem creates investable fashion businesses. Through our talent pipeline, incubation programs, and brand development support — we produce validated, supported, market-ready fashion brands for investment partners to back.
+              Adorzia's ecosystem creates investable fashion businesses. Through our talent pipeline, incubation programs, and brand development support - we produce validated, supported, market-ready fashion brands for investment partners to back.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { num: "01", title: "Talent Pipeline", body: "Access designers discovered and validated through Adorzia's national talent search — vetted for both creative excellence and commercial viability." },
+              { num: "01", title: "Talent Pipeline", body: "Access designers discovered and validated through Adorzia's national talent search - vetted for both creative excellence and commercial viability." },
               { num: "02", title: "Brand Investment", body: "Participate in equity or revenue-share arrangements with fashion brands being built through our incubation and development programs." },
               { num: "03", title: "Venture Opportunities", body: "Co-invest in fashion ventures, marketplace opportunities, and ecosystem businesses that emerge from the Adorzia platform." },
-              { num: "04", title: "Ongoing Returns", body: "Long-term partnership returns from a growing portfolio of Pakistani fashion brands — supported by our infrastructure from day one." }
+              { num: "04", title: "Ongoing Returns", body: "Long-term partnership returns from a growing portfolio of Pakistani fashion brands - supported by our infrastructure from day one." }
             ].map((item, idx) => (
               <div key={idx} className="group p-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-sm hover:border-[#bb9457]/60 transition-all duration-500">
                 <div className="font-mono text-[#bb9457] text-xs uppercase tracking-widest mb-3">{item.num}</div>
@@ -448,13 +448,13 @@ const ForPartners = () => {
               How the ecosystem connects.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              Every partner plugs into a value chain that flows from creative talent to end customer — each stage creating value for the next.
+              Every partner plugs into a value chain that flows from creative talent to end customer - each stage creating value for the next.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
             {[
-              { num: "01", title: "Designers", body: "Emerging and established fashion talent — the creative foundation of the ecosystem." },
+              { num: "01", title: "Designers", body: "Emerging and established fashion talent - the creative foundation of the ecosystem." },
               { num: "02", title: "Brands", body: "Fashion labels built and developed through incubation, mentorship, and support." },
               { num: "03", title: "Production", body: "Manufacturers, artisans, and suppliers turning designs into finished products." },
               { num: "04", title: "Market", body: "Marketplace, retail, and wholesale channels connecting products to buyers." },
@@ -477,7 +477,7 @@ const ForPartners = () => {
 
           <div className="mt-16 p-8 border border-neutral-800 rounded-sm bg-neutral-950/50 max-w-4xl mx-auto text-center">
             <p className="text-neutral-300 font-light text-base leading-relaxed">
-              Partners can enter at any point in this chain — and benefit from the value created across all of it. A manufacturer partnering at the production stage gains access to designers, brands, and markets. An institution partnering at the designer stage connects to the entire pipeline. The ecosystem compounds.
+              Partners can enter at any point in this chain - and benefit from the value created across all of it. A manufacturer partnering at the production stage gains access to designers, brands, and markets. An institution partnering at the designer stage connects to the entire pipeline. The ecosystem compounds.
             </p>
           </div>
         </div>
@@ -494,7 +494,7 @@ const ForPartners = () => {
               Explore different ways to collaborate.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              Adorzia offers multiple partnership models — each designed to create mutual value. Find the one that fits your goals.
+              Adorzia offers multiple partnership models - each designed to create mutual value. Find the one that fits your goals.
             </p>
           </div>
 
@@ -561,7 +561,7 @@ const ForPartners = () => {
               Start the conversation.
             </h2>
             <p className="mt-6 text-neutral-400 font-light text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-              Tell us about your organization and how you would like to collaborate with Adorzia. We respond to every serious enquiry personally — with a real conversation about what partnership could look like.
+              Tell us about your organization and how you would like to collaborate with Adorzia. We respond to every serious enquiry personally - with a real conversation about what partnership could look like.
             </p>
           </div>
 

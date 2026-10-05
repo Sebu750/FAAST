@@ -118,10 +118,10 @@ const Blog = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 font-sans antialiased">
       <SEO
-        title={activeCategory ? `${activeCategory.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} — Adorzia Journal` : "Journal — Adorzia | Pakistani Fashion Journalism & Industry Insights"}
-        description={activeCategory ? `Read ${activeCategory.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} articles on Adorzia Journal — Pakistani fashion entrepreneurship, heritage craft, and emerging designers.` : "Explore in-depth stories on Pakistani fashion entrepreneurship, heritage craft preservation, emerging designer spotlights, and industry insights. Designer Stories, Brand Stories, Fashion Industry, Opportunities, and Adorzia Updates."}
+        title={activeCategory ? `${activeCategory.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} - Adorzia Journal` : "Journal - Adorzia | Pakistani Fashion Journalism & Industry Insights"}
+        description={activeCategory ? `Read ${activeCategory.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} articles on Adorzia Journal - Pakistani fashion entrepreneurship, heritage craft, and emerging designers.` : "Explore in-depth stories on Pakistani fashion entrepreneurship, heritage craft preservation, emerging designer spotlights, and industry insights. Designer Stories, Brand Stories, Fashion Industry, Opportunities, and Adorzia Updates."}
         canonicalURL={activeCategory ? `https://adorzia.com/blog/category/${activeCategory}` : "https://adorzia.com/blog"}
-        ogTitle="Journal — Adorzia | Pakistani Fashion Journalism"
+        ogTitle="Journal - Adorzia | Pakistani Fashion Journalism"
         ogDescription="Designer Stories, Brand Stories, Fashion Industry, Opportunities, and Adorzia Updates."
         ogImageAlt="Adorzia Journal - Pakistani Fashion Journalism"
         schemaType="CollectionPage"
@@ -194,7 +194,7 @@ const Blog = () => {
             </div>
             <div className="lg:col-span-4">
               <p className="text-neutral-400 font-light text-base leading-relaxed">
-                Fashion journalism, industry insights, and designer stories from Pakistan's creative ecosystem — told with integrity.
+                Fashion journalism, industry insights, and designer stories from Pakistan's creative ecosystem - told with integrity.
               </p>
             </div>
           </div>

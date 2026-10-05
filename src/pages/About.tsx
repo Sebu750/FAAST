@@ -414,7 +414,7 @@ const About = () => {
 
             <div className={`md:col-span-8 space-y-8 text-neutral-400 leading-relaxed font-light text-base md:text-lg transition-all duration-1000 delay-200 ${isVisible['story'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[40px]'}`}>
               <p className="font-serif text-2xl md:text-4xl text-white leading-[1.25] tracking-tight font-normal border-l-2 border-[#bb9457] pl-6 md:pl-8">
-                Adorzia emerged from that precise vacuum — bridging the sharp divide between raw national talent and non-existent support networks.
+                Adorzia emerged from that precise vacuum - bridging the sharp divide between raw national talent and non-existent support networks.
               </p>
               
               <div className="space-y-6 pl-6 md:pl-8">
@@ -459,7 +459,7 @@ const About = () => {
 
                 <div className="space-y-6 text-neutral-400 font-light leading-relaxed text-base md:text-lg pl-6 md:pl-8">
                   <p>
-                    I created Adorzia to change that. Every designer I met shared the same frustration: brilliant creative vision, limited resources to execute it. So we are building the missing pieces — physical <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">studios</Link>, a curated <Link to="/marketplace" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">marketplace</Link>, and a national <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">spotlight event</Link> — to ensure the next generation of Pakistani fashion entrepreneurs never has to navigate the global market in isolation.
+                    I created Adorzia to change that. Every designer I met shared the same frustration: brilliant creative vision, limited resources to execute it. So we are building the missing pieces - physical <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">studios</Link>, a curated <Link to="/marketplace" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">marketplace</Link>, and a national <Link to="/contact" className="text-[#bb9457] hover:text-white transition-colors underline underline-offset-4">spotlight event</Link> - to ensure the next generation of Pakistani fashion entrepreneurs never has to navigate the global market in isolation.
                   </p>
                   <p className="text-white font-medium">
                     This is not a platform built for designers. It is a platform built by someone who understands what designers need to thrive.
@@ -541,7 +541,7 @@ const About = () => {
                 World-class design, restricted by fragmented foundation.
               </p>
               <p>
-                Walk through any regional bazaar and you will encounter artisanal mastery — from the geometric precision of Ajrak embroidery in contemporary fashion to pristine hand-loomed silk — that commands international reverence. Speak to any design graduate in Karachi and you will find strategic ambition suited for any global runway. Yet, systemic limitations routinely dilute this potential.
+                Walk through any regional bazaar and you will encounter artisanal mastery - from the geometric precision of Ajrak embroidery in contemporary fashion to pristine hand-loomed silk - that commands international reverence. Speak to any design graduate in Karachi and you will find strategic ambition suited for any global runway. Yet, systemic limitations routinely dilute this potential.
               </p>
               <p>
                 The emerging talent lacks a dedicated fashion workspace in Islamabad, Karachi, or Lahore. The heritage artisan is restricted to hyper-localized supply chains. The visionary founder faces an investment climate blind to the commercial power of fashion IP.
@@ -567,7 +567,7 @@ const About = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[
                 { n: "01", t: "Creative Capital", b: "We reject the paradigm of fashion as a passive passion project. Every designer, pattern-maker, and artisan within our network is an economic driver. We build professional support networks to match that reality." },
-                { n: "02", t: "Living Heritage", b: "Traditional craftsmanship is not a relic of nostalgia — it is a distinct competitive advantage. A Pakistani heritage craft fashion brand should not look backward; it should apply historic visual languages to modern global luxury." },
+                { n: "02", t: "Living Heritage", b: "Traditional craftsmanship is not a relic of nostalgia - it is a distinct competitive advantage. A Pakistani heritage craft fashion brand should not look backward; it should apply historic visual languages to modern global luxury." },
                 { n: "03", t: "Decentralized Talent", b: "Exceptional design is not restricted to metropolitan monopolies. Our scouting mechanisms operate nationally, ensuring the Adorzia ecosystem reflects the raw creative output of every province and subculture." },
                 { n: "04", t: "Deliberate Visibility", b: "The correct platform at a critical inflection point permanently alters a brand's trajectory. We engineer high-stakes exposure deliberately, at scale, for the Adorzia visionaries who have earned the stage." },
                 { n: "05", t: "Collective Building", b: "Adorzia is not a corporate entity detached from its industry. We are a community of operators building in absolute alignment and continuous dialogue with the creative community we serve." }
@@ -644,7 +644,7 @@ const About = () => {
               Three Modules. One Synchronized System.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-sm md:text-base leading-relaxed max-w-2xl">
-              Designers, brands, manufacturers, artisans, institutions & partners — connected through a unified infrastructure built for fashion entrepreneurship.
+              Designers, brands, manufacturers, artisans, institutions & partners - connected through a unified infrastructure built for fashion entrepreneurship.
             </p>
           </div>
           
@@ -843,7 +843,7 @@ const About = () => {
               Let's start a <span className="text-gradient italic font-light">conversation.</span>
             </h2>
             <p className="text-neutral-400 text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-              Whether you're a designer seeking resources, a partner exploring collaboration, or an investor interested in Pakistani fashion — we'd love to hear from you.
+              Whether you're a designer seeking resources, a partner exploring collaboration, or an investor interested in Pakistani fashion - we'd love to hear from you.
             </p>
 
             <div className="flex flex-wrap justify-center gap-5 pt-4">

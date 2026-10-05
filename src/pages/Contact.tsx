@@ -111,7 +111,7 @@ const Contact = () => {
           </h1>
 
           <p className="contact-animate-d2 mt-7 text-neutral-400 font-light text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            Whether you're a designer, emerging brand, institution, manufacturer, investor, or potential partner — we'd love to hear from you.
+            Whether you're a designer, emerging brand, institution, manufacturer, investor, or potential partner - we'd love to hear from you.
           </p>
         </div>
       </section>
@@ -275,7 +275,7 @@ const Contact = () => {
                 </svg>
               </div>
               <p className="text-neutral-400 text-[10px] uppercase tracking-[0.25em] font-semibold mb-2">Location</p>
-              <p className="text-white text-sm font-light">Pakistan — <span className="text-neutral-400">Working globally</span></p>
+              <p className="text-white text-sm font-light">Pakistan - <span className="text-neutral-400">Working globally</span></p>
             </div>
           </div>
         </div>

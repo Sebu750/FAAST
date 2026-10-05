@@ -40,7 +40,7 @@ import phulkariRebornBlazer from '../assets/phulkari-reborn-blazer-adorzia.webp'
 import rilliSculptTote from '../assets/rilli-sculpt-tote-adorzia.webp'
 import khaddarModernSuit from '../assets/khaddar-modern-suit-adorzia.webp'
 
-// Aleena Talha — Designer Profile
+// Aleena Talha - Designer Profile
 import aleenaTalha from '../assets/aleena-talha.webp'
 import aleenaTalhaCover from '../assets/aleena-talha-cover.webp'
 import precognitiveLook01 from '../assets/preognitive-look-01.webp'

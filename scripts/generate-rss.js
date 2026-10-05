@@ -86,7 +86,7 @@ ${content}
   <channel>
     <title>Adorzia Journal</title>
     <link>${SITE}/blog</link>
-    <description>Pakistani fashion journalism, industry insights, and emerging designer stories from Adorzia — Pakistan's first fashion entrepreneurship ecosystem.</description>
+    <description>Pakistani fashion journalism, industry insights, and emerging designer stories from Adorzia - Pakistan's first fashion entrepreneurship ecosystem.</description>
     <language>en-us</language>
     <atom:link href="${SITE}/rss.xml" rel="self" type="application/rss+xml" />
     <lastBuildDate>${now}</lastBuildDate>

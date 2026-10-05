@@ -12,7 +12,7 @@
 -- Distributed across major Pakistani cities.
 -- ============================================
 
--- Lahore (15) — Pakistan's fashion capital
+-- Lahore (15) - Pakistan's fashion capital
 UPDATE designers SET location = 'Lahore, Pakistan' WHERE slug = 'aqsa-imtiaz-shaikh';
 UPDATE designers SET location = 'Lahore, Pakistan' WHERE slug = 'aqsa-nazir';
 UPDATE designers SET location = 'Lahore, Pakistan' WHERE slug = 'areeba';
@@ -29,7 +29,7 @@ UPDATE designers SET location = 'Lahore, Pakistan' WHERE slug = 'neyha-mehtab';
 UPDATE designers SET location = 'Lahore, Pakistan' WHERE slug = 'nimra-ayoub';
 UPDATE designers SET location = 'Lahore, Pakistan' WHERE slug = 'saleha';
 
--- Karachi (15) — Pakistan's commercial fashion hub
+-- Karachi (15) - Pakistan's commercial fashion hub
 UPDATE designers SET location = 'Karachi, Pakistan' WHERE slug = 'diksha-suresh';
 UPDATE designers SET location = 'Karachi, Pakistan' WHERE slug = 'farwa-memon';
 UPDATE designers SET location = 'Karachi, Pakistan' WHERE slug = 'fizza-saeed';
@@ -46,7 +46,7 @@ UPDATE designers SET location = 'Karachi, Pakistan' WHERE slug = 'sariakhan';
 UPDATE designers SET location = 'Karachi, Pakistan' WHERE slug = 'shivani';
 UPDATE designers SET location = 'Karachi, Pakistan' WHERE slug = 'sumaiya-siddiqui';
 
--- Islamabad (7) — Emerging design hub
+-- Islamabad (7) - Emerging design hub
 UPDATE designers SET location = 'Islamabad, Pakistan' WHERE slug = 'haniya-amjad-ali';
 UPDATE designers SET location = 'Islamabad, Pakistan' WHERE slug = 'hiba-abubakar';
 UPDATE designers SET location = 'Islamabad, Pakistan' WHERE slug = 'ifza-qadir';
@@ -55,13 +55,13 @@ UPDATE designers SET location = 'Islamabad, Pakistan' WHERE slug = 'minahil-akra
 UPDATE designers SET location = 'Islamabad, Pakistan' WHERE slug = 'noor-ul-huda';
 UPDATE designers SET location = 'Islamabad, Pakistan' WHERE slug = 'syeda-amna-bader';
 
--- Faisalabad (4) — Pakistan's textile capital
+-- Faisalabad (4) - Pakistan's textile capital
 UPDATE designers SET location = 'Faisalabad, Pakistan' WHERE slug = 'muhammad-nihal-tahir';
 UPDATE designers SET location = 'Faisalabad, Pakistan' WHERE slug = 'muhammad-shoaib';
 UPDATE designers SET location = 'Faisalabad, Pakistan' WHERE slug = 'muhammad-waleed-aftab';
 UPDATE designers SET location = 'Faisalabad, Pakistan' WHERE slug = 'syeda-bukhtawar-kulsoom';
 
--- Multan (3) — Heritage craft center
+-- Multan (3) - Heritage craft center
 UPDATE designers SET location = 'Multan, Pakistan' WHERE slug = 'syeda-zehra-zaidi';
 UPDATE designers SET location = 'Multan, Pakistan' WHERE slug = 'warda-tasleem';
 UPDATE designers SET location = 'Multan, Pakistan' WHERE slug = 'waseem-saleem';

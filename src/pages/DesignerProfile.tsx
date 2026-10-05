@@ -6,7 +6,7 @@ import type { DesignerProfile, DesignerFilm } from '../types/database'
 import { resolveAsset } from '../lib/assetResolver'
 
 // Optimized image URL with Supabase transformation
-// Uses pure URL manipulation — no Supabase client needed at render time
+// Uses pure URL manipulation - no Supabase client needed at render time
 const getOptimizedUrl = (url: string | null | undefined, width = 800, height = 1000): string => {
   if (!url) return '/images/placeholder.webp'
   const resolved = resolveAsset(url)
@@ -39,11 +39,11 @@ const getYouTubeEmbedUrl = (url: string): string => {
 // DESIGNER PROFILE
 // ============================================
 // Clean editorial portfolio:
-// 1. Header — banner, name, short bio, socials, photo
-// 2. Latest Collection — moodboard grid
-// 3. Previous Collections — compact cards
-// 4. About Me — 2 paragraphs, location, university, year
-// 5. Films — YouTube embeds
+// 1. Header - banner, name, short bio, socials, photo
+// 2. Latest Collection - moodboard grid
+// 3. Previous Collections - compact cards
+// 4. About Me - 2 paragraphs, location, university, year
+// 5. Films - YouTube embeds
 // ============================================
 
 const DesignerProfile = () => {
@@ -132,10 +132,10 @@ const DesignerProfile = () => {
   return (
     <>
       <SEO
-        title={`${designer.name} — Adorzia`}
+        title={`${designer.name} - Adorzia`}
         description={designer.short_bio || `Discover ${designer.name}, a Pakistani fashion designer on Adorzia.`}
         canonicalURL={`https://adorzia.com/designers/${designer.slug}`}
-        ogTitle={`${designer.name} — Adorzia`}
+        ogTitle={`${designer.name} - Adorzia`}
         ogDescription={designer.short_bio || `Discover ${designer.name} on Adorzia.`}
         ogImage={designer.cover_image_url || designer.image_url || 'https://adorzia.com/og-image.jpeg'}
         ogImageAlt={designer.name}
@@ -218,7 +218,7 @@ const DesignerProfile = () => {
         </div>
       </section>
 
-      {/* ===== 2. LATEST COLLECTION — MOODBOARD ===== */}
+      {/* ===== 2. LATEST COLLECTION - MOODBOARD ===== */}
       {latestCollection && (
         <section className="relative py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-black via-neutral-950 to-black overflow-hidden">
           <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -254,7 +254,7 @@ const DesignerProfile = () => {
                   </div>
                 </div>
 
-                {/* Supporting Grid — asymmetric moodboard */}
+                {/* Supporting Grid - asymmetric moodboard */}
                 {latestCollection.images.length > 1 && (
                   <div className="grid grid-cols-12 gap-1.5">
                     {latestCollection.images.slice(1).map((img, i) => {
@@ -306,7 +306,7 @@ const DesignerProfile = () => {
               </div>
             )}
 
-            {/* Short description — ~50 chars visible */}
+            {/* Short description - ~50 chars visible */}
             <p className="text-neutral-400 text-sm leading-relaxed max-w-lg line-clamp-2">
               {latestCollection.description}
             </p>
@@ -417,7 +417,7 @@ const DesignerProfile = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-            {/* Bio — 2 paragraphs */}
+            {/* Bio - 2 paragraphs */}
             <div className="lg:col-span-8 space-y-5">
               {bioParagraphs.length > 0 ? (
                 bioParagraphs.map((p, i) => (
@@ -462,7 +462,7 @@ const DesignerProfile = () => {
         </div>
       </section>
 
-      {/* ===== 5. FILMS — YouTube Embeds ===== */}
+      {/* ===== 5. FILMS - YouTube Embeds ===== */}
       {designer.films && designer.films.length > 0 && (
         <section className="relative py-16 sm:py-20 lg:py-24 border-t border-neutral-800/50 bg-black overflow-hidden" style={{ contentVisibility: 'auto', containIntrinsicSize: '0 500px' }}>
           <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

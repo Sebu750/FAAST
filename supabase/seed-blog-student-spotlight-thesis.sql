@@ -1,5 +1,5 @@
 -- ==========================================
--- BLOG POST: Student Spotlight — Thesis to Fashion Brand
+-- BLOG POST: Student Spotlight - Thesis to Fashion Brand
 -- Category: Designer Stories
 -- ==========================================
 -- Run this in Supabase SQL Editor to add the blog post

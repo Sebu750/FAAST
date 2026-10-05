@@ -162,7 +162,7 @@ const AdminEventsManagement = () => {
   const inputCls = "w-full px-3 py-2.5 bg-neutral-900 border border-neutral-700 text-white text-sm rounded-sm focus:outline-none focus:border-[#bb9457] transition-colors placeholder-neutral-500"
   const labelCls = "block text-[11px] uppercase tracking-wider text-neutral-400 font-medium mb-1.5"
 
-  const formatDate = (d: string) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'
+  const formatDate = (d: string) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '-'
 
   if (loading) {
     return (
@@ -259,7 +259,7 @@ const AdminEventsManagement = () => {
                       <div>{formatDate(ev.start_date)}</div>
                       <div className="text-neutral-600 text-xs">to {formatDate(ev.end_date)}</div>
                     </td>
-                    <td className="px-6 py-4 text-sm text-neutral-400">{ev.location || ev.city || '—'}</td>
+                    <td className="px-6 py-4 text-sm text-neutral-400">{ev.location || ev.city || '-'}</td>
                     <td className="px-6 py-4">
                       <button onClick={() => handleStatusToggle(ev.id, ev.status)} className={`px-2.5 py-1 text-[10px] uppercase tracking-wider font-medium rounded-sm border transition-colors ${
                         ev.status === 'upcoming' ? 'bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20' :

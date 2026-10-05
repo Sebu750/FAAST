@@ -1,5 +1,5 @@
 -- ==========================================
--- BLOG POST: Behind the Brand — Emerging Fashion Designers
+-- BLOG POST: Behind the Brand - Emerging Fashion Designers
 -- Category: Designer Stories
 -- ==========================================
 -- Run this in Supabase SQL Editor to add the blog post
@@ -151,5 +151,5 @@ If you found this story insightful, explore more about [why Pakistan needs more 
   11,
   ARRAY['Brand Story', 'Emerging Designer', 'Brand Building', 'Startup Guide', 'Growth'],
   'Behind the Brand: Emerging Fashion Designers Journey | Adorzia',
-  'Every fashion brand starts somewhere. Discover the journey of emerging Pakistani fashion designers building their first labels—from finding identity to overcoming challenges.'
+  'Every fashion brand starts somewhere. Discover the journey of emerging Pakistani fashion designers building their first labels-from finding identity to overcoming challenges.'
 ON CONFLICT (slug) DO NOTHING;

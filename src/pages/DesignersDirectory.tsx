@@ -5,7 +5,7 @@ import Breadcrumb from '../components/Breadcrumb'
 import type { Designer } from '../types/database'
 
 // Helper to get optimized thumbnail URL from Supabase storage
-// Uses pure URL manipulation — no Supabase client needed at render time
+// Uses pure URL manipulation - no Supabase client needed at render time
 const getThumbnailUrl = (url: string | null | undefined, width = 400, height = 533): string => {
   if (!url) return '/images/placeholder.webp'
   // If it's a Supabase storage URL, use image transformation endpoint
@@ -23,7 +23,7 @@ const getThumbnailUrl = (url: string | null | undefined, width = 400, height = 5
 }
 
 // ============================================
-// DESIGNERS DIRECTORY — Minimal Editorial Grid
+// DESIGNERS DIRECTORY - Minimal Editorial Grid
 // ============================================
 // Images only. Name appears on hover.
 // Full details on the designer profile page.
@@ -134,10 +134,10 @@ const DesignersDirectory = () => {
   return (
     <>
       <SEO 
-        title="Designers Directory — Adorzia | Pakistan's Emerging Fashion Designers" 
+        title="Designers Directory - Adorzia | Pakistan's Emerging Fashion Designers" 
         description="Discover and connect with Pakistan's most visionary emerging fashion designers. Browse curated profiles, collections, and stories from Lahore, Karachi, and Islamabad. Find independent designers specializing in pret, bridal, textiles, and heritage crafts." 
         canonicalURL="https://adorzia.com/designers"
-        ogTitle="Designers Directory — Adorzia | Pakistani Fashion Talent"
+        ogTitle="Designers Directory - Adorzia | Pakistani Fashion Talent"
         ogDescription="Discover Pakistan's most promising emerging fashion designers. Curated profiles, collections, and stories from the heart of Pakistani fashion."
         ogImageAlt="Adorzia Designers Directory - Pakistani Fashion Designers"
         schemaType="CollectionPage"

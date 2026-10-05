@@ -238,7 +238,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-black text-neutral-100 font-sans antialiased">
       <Helmet>
-        <title>{post.meta_title || `${post.title} — Adorzia Journal`}</title>
+        <title>{post.meta_title || `${post.title} - Adorzia Journal`}</title>
         <meta name="description" content={post.meta_description || post.excerpt || ''} />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="English" />
@@ -524,7 +524,7 @@ const BlogPost = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ArticleCTA
             title="Be Part of Pakistan's Fashion Future"
-            description="Whether you're a designer ready to scale, a creative seeking incubation, or a partner looking to invest — Adorzia is your gateway."
+            description="Whether you're a designer ready to scale, a creative seeking incubation, or a partner looking to invest - Adorzia is your gateway."
             buttons={[
               { text: 'Explore Designers', link: '/designers', variant: 'primary' },
               { text: 'Join Adorzia', link: '/fashionpreneurship', variant: 'secondary' },

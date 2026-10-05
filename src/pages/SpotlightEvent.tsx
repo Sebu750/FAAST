@@ -328,7 +328,7 @@ const SpotlightEvent = () => {
               {/* Timeline - Visual cards */}
               <div className="mt-8 space-y-3">
                 {[
-                  { label: "June 1 - July 31, 2026", detail: "Submission window — ACTIVE NOW", number: "01", active: true },
+                  { label: "June 1 - July 31, 2026", detail: "Submission window - ACTIVE NOW", number: "01", active: true },
                   { label: "August 2026", detail: "Shortlist announced", number: "02" },
                   { label: "September 2026", detail: "Finalist presentations", number: "03" },
                   { label: "Fall 2026", detail: "Spotlight event", number: "04" }

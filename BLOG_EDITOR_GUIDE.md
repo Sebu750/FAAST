@@ -165,7 +165,7 @@ Large, centered quotes with gold accent borders.
 **Example:**
 ```
 "Fashion is the armor of everyday life."
-— Ayesha Khan, Designer
+- Ayesha Khan, Designer
 ```
 
 **Styling:**

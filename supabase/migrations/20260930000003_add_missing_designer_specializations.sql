@@ -9,7 +9,7 @@
 -- ============================================
 -- PART 1: ALREADY ELEVATED (27 designers)
 -- These were handled in the previous version
--- of this migration — kept here for completeness.
+-- of this migration - kept here for completeness.
 -- ============================================
 
 UPDATE designers SET specialization = 'Luxury Embroidered Couture & Heritage Textile Reinterpretation' WHERE slug = 'zara-ahmad';
@@ -42,7 +42,7 @@ UPDATE designers SET specialization = 'Mythological Haute Couture & Narrative Su
 
 -- ============================================
 -- PART 2: EMPTY / NULL SPECIALIZATION (43 designers)
--- Fashion design students & emerging talent —
+-- Fashion design students & emerging talent -
 -- elevated to international luxury positioning.
 -- ============================================
 

@@ -209,7 +209,7 @@ const AdminOpportunities = () => {
   const inputCls = "w-full px-3 py-2.5 bg-neutral-900 border border-neutral-700 text-white text-sm rounded-sm focus:outline-none focus:border-[#bb9457] transition-colors placeholder-neutral-500"
   const labelCls = "block text-[11px] uppercase tracking-wider text-neutral-400 font-medium mb-1.5"
 
-  const formatDate = (d: string | null) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '—'
+  const formatDate = (d: string | null) => d ? new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '-'
 
   if (loading) {
     return (

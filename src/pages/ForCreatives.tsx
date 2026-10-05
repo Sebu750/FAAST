@@ -96,7 +96,7 @@ const ForCreatives = () => {
         "@type": "FAQPage",
         "mainEntity": [
           { "@type": "Question", "name": "Who can join Adorzia?", "acceptedAnswer": { "@type": "Answer", "text": "Adorzia is open to final-year fashion students, recent graduates, emerging designers, early-career designers, designers working for fashion brands, and experienced designers who want to create their own brand." } },
-          { "@type": "Question", "name": "What is fashionpreneurship?", "acceptedAnswer": { "@type": "Answer", "text": "Fashionpreneurship is the intersection of fashion and entrepreneurship. It is the pathway from designer to entrepreneur to brand to market — combining creative talent with business acumen to build sustainable fashion brands." } },
+          { "@type": "Question", "name": "What is fashionpreneurship?", "acceptedAnswer": { "@type": "Answer", "text": "Fashionpreneurship is the intersection of fashion and entrepreneurship. It is the pathway from designer to entrepreneur to brand to market - combining creative talent with business acumen to build sustainable fashion brands." } },
           { "@type": "Question", "name": "How does the Adorzia marketplace work?", "acceptedAnswer": { "@type": "Answer", "text": "The Adorzia Marketplace is a curated online destination focused on emerging fashion brands. It features independent emerging brands and Adorzia-incubated brands. Products are primarily made-to-order and limited-edition, not fast fashion." } },
           { "@type": "Question", "name": "What is the Adorzia incubation model?", "acceptedAnswer": { "@type": "Answer", "text": "Adorzia selects designers and brands to invest in, then provides capital, product development, production support, branding, positioning, and market access. Revenue is shared between Adorzia and the brand according to pre-agreed terms." } }
         ]
@@ -149,7 +149,7 @@ const ForCreatives = () => {
                 Adorzia is Pakistan's first complete fashion entrepreneurship ecosystem. We provide the resources, connections, and opportunities that turn creative talent into thriving fashion brands.
               </p>
               <p>
-                Whether you are a student with your first sketch, a graduate ready to launch, an emerging designer building your label, or an experienced creative scaling your vision — this is where your fashion career finds its foundation.
+                Whether you are a student with your first sketch, a graduate ready to launch, an emerging designer building your label, or an experienced creative scaling your vision - this is where your fashion career finds its foundation.
               </p>
             </div>
 
@@ -182,7 +182,7 @@ const ForCreatives = () => {
               Every stage of the journey has a place here.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              Adorzia is designed for fashion entrepreneurs at every level — from first-year students to established creatives ready to scale.
+              Adorzia is designed for fashion entrepreneurs at every level - from first-year students to established creatives ready to scale.
             </p>
           </div>
 
@@ -200,7 +200,7 @@ const ForCreatives = () => {
               },
               {
                 title: "Emerging Designers",
-                body: "You have started your label and need the next level — production access, market connections, brand strategy, and visibility. Adorzia is built for this stage.",
+                body: "You have started your label and need the next level - production access, market connections, brand strategy, and visibility. Adorzia is built for this stage.",
                 icon: "M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456Z"
               },
               {
@@ -245,7 +245,7 @@ const ForCreatives = () => {
               {
                 num: "01",
                 title: "Build Your Own Brand",
-                body: "Launch and grow your own fashion label. From creative concept to production, branding to market — we provide the infrastructure and guidance to turn your vision into a viable business.",
+                body: "Launch and grow your own fashion label. From creative concept to production, branding to market - we provide the infrastructure and guidance to turn your vision into a viable business.",
                 features: ["Brand strategy & positioning", "Production access", "Marketplace listing", "Investment eligibility"]
               },
               {
@@ -257,7 +257,7 @@ const ForCreatives = () => {
               {
                 num: "03",
                 title: "Develop Your Career",
-                body: "Advance your professional trajectory. Whether you are seeking industry roles, mentorship, or skill development — Adorzia connects you with the people and platforms that move you forward.",
+                body: "Advance your professional trajectory. Whether you are seeking industry roles, mentorship, or skill development - Adorzia connects you with the people and platforms that move you forward.",
                 features: ["Industry mentorship", "Skill development", "Portfolio building", "Career placement support"]
               }
             ].map((path, idx) => (
@@ -308,7 +308,7 @@ const ForCreatives = () => {
               },
               {
                 title: "Production Access",
-                body: "From sampling to full production runs — connect with verified manufacturers and production facilities across Pakistan.",
+                body: "From sampling to full production runs - connect with verified manufacturers and production facilities across Pakistan.",
                 icon: "M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
               },
               {
@@ -347,7 +347,7 @@ const ForCreatives = () => {
               </h2>
               <div className="space-y-4 text-neutral-400 font-light text-base leading-relaxed">
                 <p>
-                  Having a creative vision is not the same as having a brand. Adorzia bridges that gap — helping you transform raw talent and creative ideas into a structured, marketable, investable fashion brand.
+                  Having a creative vision is not the same as having a brand. Adorzia bridges that gap - helping you transform raw talent and creative ideas into a structured, marketable, investable fashion brand.
                 </p>
                 <p>
                   We work with you on every dimension: brand identity and positioning, collection development, production quality, pricing strategy, market entry, and the storytelling that makes buyers and investors pay attention.
@@ -407,9 +407,9 @@ const ForCreatives = () => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { num: "01", title: "National Visibility", body: "Present your work to industry leaders, investors, buyers, and press through Adorzia's annual Spotlight event and ongoing platforms." },
-              { num: "02", title: "Direct Investment", body: "Selected designers receive capital to produce, scale, and launch — not a prize, a partnership. We invest in your vision for the long term." },
+              { num: "02", title: "Direct Investment", body: "Selected designers receive capital to produce, scale, and launch - not a prize, a partnership. We invest in your vision for the long term." },
               { num: "03", title: "Expert Mentorship", body: "Paired with mentors from fashion, business, and creative industries who guide your brand development and strategic decisions." },
-              { num: "04", title: "Long-term Support", body: "We build with you — branding, strategy, positioning, production support, and market access. Our commitment extends well beyond the selection." }
+              { num: "04", title: "Long-term Support", body: "We build with you - branding, strategy, positioning, production support, and market access. Our commitment extends well beyond the selection." }
             ].map((item, idx) => (
               <div key={idx} className="group p-6 bg-white/5 backdrop-blur-md border border-white/20 rounded-sm hover:border-[#bb9457]/60 transition-all duration-500">
                 <div className="font-mono text-[#bb9457] text-xs uppercase tracking-widest mb-3">{item.num}</div>
@@ -448,7 +448,7 @@ const ForCreatives = () => {
                   Great fashion is not made in isolation. Adorzia's community brings together designers, makers, students, and industry professionals in a shared environment where ideas collide and opportunities emerge.
                 </p>
                 <p>
-                  Whether you are looking for a collaborator on a collection, feedback on your designs, connections to buyers, or simply a workspace surrounded by people who understand what you are building — this is your community.
+                  Whether you are looking for a collaborator on a collection, feedback on your designs, connections to buyers, or simply a workspace surrounded by people who understand what you are building - this is your community.
                 </p>
               </div>
 
@@ -511,7 +511,7 @@ const ForCreatives = () => {
               Your journey through Adorzia.
             </h2>
             <p className="mt-4 text-neutral-400 font-light text-base md:text-lg leading-relaxed">
-              From joining to growing — here is how the ecosystem works.
+              From joining to growing - here is how the ecosystem works.
             </p>
           </div>
 
@@ -522,7 +522,7 @@ const ForCreatives = () => {
               { num: "03", title: "Develop", body: "Access resources, mentorship, production facilities, and community support to grow your skills." },
               { num: "04", title: "Get Selected", body: "Stand out through your work and commitment. Selected designers enter our incubation pipeline." },
               { num: "05", title: "Build", body: "Receive investment, brand development support, and strategic guidance to build your fashion brand." },
-              { num: "06", title: "Grow", body: "Scale your practice with ongoing support — market access, buyer connections, and long-term partnership." }
+              { num: "06", title: "Grow", body: "Scale your practice with ongoing support - market access, buyer connections, and long-term partnership." }
             ].map((step, idx) => (
               <div key={idx} className="group relative p-6 bg-neutral-950/60 backdrop-blur-md border border-neutral-800 rounded-sm hover:border-[#bb9457]/40 transition-all duration-500">
                 <div className="font-mono text-2xl text-[#bb9457] mb-3">{step.num}</div>
