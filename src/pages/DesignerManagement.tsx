@@ -508,6 +508,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
   const [currentStep, setCurrentStep] = useState(0)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' | 'info' } | null>(null)
   const [uploadingImage, setUploadingImage] = useState<'profile' | 'cover' | null>(null)
+  const imageUploadInProgressRef = useRef(false)
+  const saveInProgressRef = useRef(false)
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const designerIdRef = useRef<string | null>(designer?.id || null)
   const relatedDataLoadedRef = useRef(false)
@@ -586,28 +588,42 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
 
   const handleAutoSave = async () => {
     if (!form.name || !form.brand) return
+    if (imageUploadInProgressRef.current || saveInProgressRef.current) return
     if (!relatedDataLoadedRef.current) return // Don't auto-save until data is loaded
+    saveInProgressRef.current = true
     setAutoSaving(true)
     try {
       const slug = form.slug || generateSlug(form.name)
       const designerData = { ...form, slug }
       if (designerIdRef.current) {
-        await supabase.from('designers').update(designerData).eq('id', designerIdRef.current)
+        const { error } = await supabase.from('designers').update(designerData).eq('id', designerIdRef.current).select('id').single()
+        if (error) throw error
       } else {
-        const { data } = await supabase.from('designers').insert(designerData).select('id').single()
-        if (data) designerIdRef.current = data.id
+        const { data, error } = await supabase.from('designers').insert(designerData).select('id').single()
+        if (error) throw error
+        designerIdRef.current = data.id
       }
       await saveRelatedData(designerIdRef.current!)
       setLastSaved(new Date())
       setHasUnsavedChanges(false)
     } catch (err) {
       console.error('Auto-save error:', err)
+      showToast('Auto-save failed. Please save your changes again.', 'error')
     } finally {
+      saveInProgressRef.current = false
       setAutoSaving(false)
     }
   }
 
-  const handleSave = async () => {
+  const handleSave = async (overrides: Partial<DesignerFormData> = {}) => {
+    if (imageUploadInProgressRef.current) {
+      showToast('Please wait for the image upload to finish before saving.', 'info')
+      return
+    }
+    if (saveInProgressRef.current) {
+      showToast('A save is already in progress. Please wait.', 'info')
+      return
+    }
     if (!form.name || !form.brand) {
       showToast('Name and Brand are required', 'error')
       return
@@ -616,12 +632,14 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       showToast('Loading designer data, please try again in a moment...', 'info')
       return
     }
+    saveInProgressRef.current = true
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current)
     setSaving(true)
     try {
       const slug = form.slug || generateSlug(form.name)
-      const designerData = { ...form, slug }
+      const designerData = { ...form, ...overrides, slug }
       if (designerIdRef.current) {
-        const { error } = await supabase.from('designers').update(designerData).eq('id', designerIdRef.current)
+        const { error } = await supabase.from('designers').update(designerData).eq('id', designerIdRef.current).select('id').single()
         if (error) throw error
       } else {
         const { data, error } = await supabase.from('designers').insert(designerData).select('id').single()
@@ -635,24 +653,29 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       setHasUnsavedChanges(false)
       showToast('Designer profile saved successfully', 'success')
       onSave()
+      return true
     } catch (err) {
       console.error('Error saving designer:', err)
       showToast('Error saving designer', 'error')
     } finally {
+      saveInProgressRef.current = false
       setSaving(false)
     }
   }
 
   const handlePublish = async () => {
-    updateField('status', 'published')
-    updateField('is_active', true)
-    await handleSave()
-    showToast('Designer profile published!', 'success')
+    const saved = await handleSave({ status: 'published', is_active: true })
+    if (saved) showToast('Designer profile published!', 'success')
   }
 
   const handleDesignerImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'profile' | 'cover') => {
     const file = e.target.files?.[0]
+    e.target.value = ''
     if (!file) return
+    if (imageUploadInProgressRef.current || saveInProgressRef.current) {
+      showToast('Please wait for the current upload or save to finish, then select the image again.', 'info')
+      return
+    }
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
@@ -666,6 +689,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       return
     }
 
+    imageUploadInProgressRef.current = true
     setUploadingImage(type)
     showToast(`Uploading ${type} image...`, 'info')
 
@@ -693,6 +717,7 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
       console.error('Error uploading image:', error)
       showToast('Error uploading image. Please try again.', 'error')
     } finally {
+      imageUploadInProgressRef.current = false
       setUploadingImage(null)
     }
   }
@@ -1318,8 +1343,8 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
             {!isLastStep ? (
               <div className="flex items-center gap-2">
                 <button
-                  onClick={handleSave}
-                  disabled={saving}
+                  onClick={() => handleSave()}
+                  disabled={saving || autoSaving || uploadingImage !== null}
                   className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-all rounded-lg disabled:opacity-50"
                 >
                   <Ic name="save" className="w-3.5 h-3.5" /> Save Draft
@@ -1344,15 +1369,15 @@ const DesignerEditor = ({ designer, onClose, onSave }: {
                   </a>
                 )}
                 <button
-                  onClick={handleSave}
-                  disabled={saving}
+                  onClick={() => handleSave()}
+                  disabled={saving || autoSaving || uploadingImage !== null}
                   className="flex items-center gap-2 px-4 py-2.5 bg-neutral-800 text-white text-xs uppercase tracking-wider font-medium hover:bg-neutral-700 transition-all rounded-lg disabled:opacity-50"
                 >
                   <Ic name="save" className="w-4 h-4" /> Save
                 </button>
                 <button
                   onClick={handlePublish}
-                  disabled={saving}
+                  disabled={saving || autoSaving || uploadingImage !== null}
                   className="flex items-center gap-2 px-6 py-2.5 bg-[#bb9457] text-black text-xs uppercase tracking-wider font-semibold hover:bg-white transition-all rounded-lg disabled:opacity-50"
                 >
                   {saving ? (

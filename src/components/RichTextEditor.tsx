@@ -7,17 +7,23 @@ import TextAlign from '@tiptap/extension-text-align'
 import Underline from '@tiptap/extension-underline'
 import Color from '@tiptap/extension-color'
 import Highlight from '@tiptap/extension-highlight'
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 
 interface RichTextEditorProps {
   content: string
   onChange: (html: string) => void
+  onImageUpload?: (file: File) => Promise<string>
+  imageUploadDisabled?: boolean
   placeholder?: string
 }
 
-const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your blog post...' }: RichTextEditorProps) => {
+const RichTextEditor = ({ content, onChange, onImageUpload, imageUploadDisabled = false, placeholder = 'Start writing your blog post...' }: RichTextEditorProps) => {
   const [showLinkModal, setShowLinkModal] = useState(false)
   const [linkUrl, setLinkUrl] = useState('')
+  const imageInputRef = useRef<HTMLInputElement>(null)
+  const imagePositionRef = useRef<number | null>(null)
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [imageError, setImageError] = useState('')
 
   const editor = useEditor({
     extensions: [
@@ -92,11 +98,12 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
   return (
     <div className="border border-neutral-700 rounded-sm bg-neutral-950">
+      {imageError && <p role="alert" className="px-3 py-2 text-sm text-red-400">{imageError}</p>}
       {/* Toolbar */}
       <div className="border-b border-neutral-700 bg-neutral-900 p-2 flex items-center gap-1 flex-wrap sticky top-0 z-10">
         {/* Text Formatting */}
         <div className="flex items-center gap-0.5">
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
               editor.isActive('heading', { level: 1 }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -105,7 +112,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
           >
             H1
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
               editor.isActive('heading', { level: 2 }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -114,7 +121,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
           >
             H2
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
               editor.isActive('heading', { level: 3 }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -123,7 +130,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
           >
             H3
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
             className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
               editor.isActive('heading', { level: 4 }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -138,7 +145,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
         {/* Text Style */}
         <div className="flex items-center gap-0.5">
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleBold().run()}
             className={`px-2 py-1 rounded text-xs font-bold transition-colors ${
               editor.isActive('bold') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -147,7 +154,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
           >
             B
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleItalic().run()}
             className={`px-2 py-1 rounded text-xs italic transition-colors ${
               editor.isActive('italic') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -156,7 +163,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
           >
             I
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleUnderline().run()}
             className={`px-2 py-1 rounded text-xs underline transition-colors ${
               editor.isActive('underline') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -165,7 +172,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
           >
             U
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleStrike().run()}
             className={`px-2 py-1 rounded text-xs line-through transition-colors ${
               editor.isActive('strike') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -186,7 +193,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
             className="w-6 h-6 rounded cursor-pointer border border-neutral-700"
             title="Text Color"
           />
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().unsetColor().run()}
             className="px-2 py-1 rounded text-xs text-neutral-400 hover:text-white hover:bg-neutral-700 transition-colors"
             title="Reset Color"
@@ -198,7 +205,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
         <div className="w-px h-5 bg-neutral-700 mx-1" />
 
         {/* Highlight */}
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleHighlight().run()}
           className={`px-2 py-1 rounded text-xs transition-colors ${
             editor.isActive('highlight') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -212,7 +219,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
         {/* Alignment */}
         <div className="flex items-center gap-0.5">
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().setTextAlign('left').run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive({ textAlign: 'left' }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -223,7 +230,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6h18M3 12h12M3 18h18" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().setTextAlign('center').run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive({ textAlign: 'center' }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -234,7 +241,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6h18M9 12h6M3 18h18" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().setTextAlign('right').run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive({ textAlign: 'right' }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -245,7 +252,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6h18M9 12h12M3 18h18" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().setTextAlign('justify').run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive({ textAlign: 'justify' }) ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -262,7 +269,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
         {/* Lists */}
         <div className="flex items-center gap-0.5">
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive('bulletList') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -273,7 +280,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive('orderedList') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -290,7 +297,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
         {/* Blockquote & Code */}
         <div className="flex items-center gap-0.5">
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive('blockquote') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -301,7 +308,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().toggleCodeBlock().run()}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive('codeBlock') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -318,19 +325,63 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
         {/* Insert Elements */}
         <div className="flex items-center gap-0.5">
-          <button
+          {onImageUpload && <>
+            <input ref={imageInputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" className="hidden"
+              onChange={async e => {
+                const file = e.target.files?.[0]
+                e.target.value = ''
+                if (!file || uploadingImage || imageUploadDisabled) return
+                const position = imagePositionRef.current ?? editor.state.selection.from
+                setUploadingImage(true)
+                setImageError('')
+                editor.setEditable(false)
+                try {
+                  const url = await onImageUpload(file)
+                  if (!editor.isDestroyed) {
+                    editor.setEditable(true)
+                    const inserted = editor.chain().focus().insertContentAt(Math.min(position, editor.state.doc.content.size), {
+                      type: 'image', attrs: { src: url, alt: file.name },
+                    }).run()
+                    if (!inserted) throw new Error('Could not insert the image here. Place the cursor in a paragraph and try again.')
+                  }
+                } catch (error) {
+                  setImageError(error instanceof Error ? error.message : 'Failed to upload image.')
+                } finally {
+                  if (!editor.isDestroyed) editor.setEditable(true)
+                  imagePositionRef.current = null
+                  setUploadingImage(false)
+                }
+              }} />
+          </>}
+          <button type="button"
             onClick={() => {
-              const url = prompt('Enter image URL:')
-              if (url) addImage(url)
+              if (onImageUpload) {
+                imagePositionRef.current = editor.state.selection.from
+                imageInputRef.current?.click()
+              } else {
+                const url = prompt('Enter image URL:')
+                if (url) addImage(url)
+              }
             }}
-            className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-700 transition-colors"
-            title="Insert Image"
+            className="flex items-center gap-1.5 p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            disabled={uploadingImage || imageUploadDisabled}
+            aria-label={onImageUpload ? 'Upload image from device' : 'Insert image URL'}
+            title={onImageUpload ? 'Upload image from device' : 'Insert image URL'}
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
+            {onImageUpload && <span className="text-xs">{uploadingImage ? 'Uploading...' : 'Upload Image'}</span>}
           </button>
-          <button
+          {onImageUpload && <button type="button"
+            disabled={uploadingImage || imageUploadDisabled}
+            onClick={() => {
+              const url = prompt('Enter image URL:')
+              if (url) addImage(url)
+            }}
+            className="px-2 py-1 text-xs text-neutral-400 hover:text-white disabled:opacity-50"
+            title="Insert image using a URL">Image URL</button>}
+          <button type="button"
             onClick={() => setShowLinkModal(true)}
             className={`p-1.5 rounded transition-colors ${
               editor.isActive('link') ? 'bg-[#bb9457] text-black' : 'text-neutral-400 hover:text-white hover:bg-neutral-700'
@@ -341,7 +392,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().setHorizontalRule().run()}
             className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-700 transition-colors"
             title="Horizontal Rule"
@@ -356,7 +407,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
 
         {/* Undo/Redo */}
         <div className="flex items-center gap-0.5">
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().undo()}
             className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -366,7 +417,7 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6" />
             </svg>
           </button>
-          <button
+          <button type="button"
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().redo()}
             className="p-1.5 rounded text-neutral-400 hover:text-white hover:bg-neutral-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
@@ -396,13 +447,13 @@ const RichTextEditor = ({ content, onChange, placeholder = 'Start writing your b
               autoFocus
             />
             <div className="flex gap-3">
-              <button
+              <button type="button"
                 onClick={setLink}
                 className="flex-1 px-4 py-2 bg-[#bb9457] text-black font-semibold hover:bg-white transition-colors"
               >
                 Apply
               </button>
-              <button
+              <button type="button"
                 onClick={() => {
                   setShowLinkModal(false)
                   setLinkUrl('')

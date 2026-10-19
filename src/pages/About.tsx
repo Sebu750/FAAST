@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, forwardRef } from 'react'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
-import Breadcrumb from '../components/Breadcrumb'
 import founder from '../assets/founder.webp'
 import advisor1 from '../assets/fadnoori-cheif-advisor.webp'
 import naziaOtho from '../assets/naziaotho.webp'
@@ -267,7 +266,6 @@ const About = () => {
           { "@type": "Question", "name": "Where is Adorzia located?", "acceptedAnswer": { "@type": "Answer", "text": "Adorzia is based in Pakistan with coworking studios planned for Karachi, Lahore, and Islamabad, opening in 2026." } }
         ]
       })}</script>
-      <Breadcrumb currentPage="About" />
 
       {/* Luxury Animation Injections */}
       <style>{`
@@ -315,7 +313,7 @@ const About = () => {
       `}</style>
 
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-screen flex items-center overflow-hidden text-white">
+      <section className="relative mt-16 lg:mt-20 min-h-screen flex items-center overflow-hidden text-white">
         <div className="absolute inset-0 z-0">
           <img
             src={imgs.craft}

@@ -102,6 +102,33 @@ const DesignerProfile = () => {
     fetchDesigner()
   }, [slug])
 
+  // Refresh image URLs when returning from editing a profile in another tab.
+  useEffect(() => {
+    if (!designer?.id) return
+    let active = true
+    const refreshImages = async () => {
+      if (document.visibilityState !== 'visible') return
+      try {
+        const { supabase } = await import('../lib/supabase')
+        const { data, error } = await supabase.from('designers')
+          .select('image_url, cover_image_url')
+          .eq('id', designer.id).eq('is_active', true).single()
+        if (active && !error && data) {
+          setDesigner(current => current?.id === designer.id ? { ...current, ...data } : current)
+        }
+      } catch {
+        // Keep the current profile visible if a background refresh fails.
+      }
+    }
+    window.addEventListener('focus', refreshImages)
+    document.addEventListener('visibilitychange', refreshImages)
+    return () => {
+      active = false
+      window.removeEventListener('focus', refreshImages)
+      document.removeEventListener('visibilitychange', refreshImages)
+    }
+  }, [designer?.id])
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black pt-20">

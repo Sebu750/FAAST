@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { BLOG_IMAGE_ACCEPT, uploadBlogImage } from '../lib/blogImages'
 import type { BlogCategory } from '../types/database'
 import RichTextEditor from '../components/RichTextEditor'
 import '../styles/blog-content.css'
@@ -33,6 +34,7 @@ const BlogEditor = () => {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState<string | null>(null)
+  const [uploadError, setUploadError] = useState('')
   const [preview, setPreview] = useState(false)
   const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [hasChanges, setHasChanges] = useState(false)
@@ -64,10 +66,10 @@ const BlogEditor = () => {
 
   // Auto-save every 30 seconds
   useEffect(() => {
-    if (!hasChanges || saving || loading) return
+    if (!hasChanges || saving || loading || uploading) return
     autoSaveTimerRef.current = setTimeout(() => { handleAutoSave() }, 30000)
     return () => { if (autoSaveTimerRef.current) clearTimeout(autoSaveTimerRef.current) }
-  }, [hasChanges, form])
+  }, [hasChanges, form, saving, loading, uploading])
 
   // Warn before leaving with unsaved changes
   useEffect(() => {
@@ -134,18 +136,23 @@ const BlogEditor = () => {
   // ── Image uploads ──
   const handleImageUpload = async (file: File, type: 'featured' | 'banner') => {
     setUploading(type)
+    setUploadError('')
     try {
-      const fileExt = file.name.split('.').pop()
-      const fileName = `${type}/${Date.now()}.${fileExt}`
-      const { data, error } = await supabase.storage.from('blog-images').upload(fileName, file, { cacheControl: '31536000', upsert: false })
-      if (error) throw error
-      const { data: { publicUrl } } = supabase.storage.from('blog-images').getPublicUrl(data.path)
-      if (type === 'featured') setForm(prev => ({ ...prev, featured_image_url: publicUrl }))
-      else if (type === 'banner') setForm(prev => ({ ...prev, banner_image_url: publicUrl }))
+      const publicUrl = await uploadBlogImage(file, type)
+      setForm(prev => ({ ...prev, [type === 'featured' ? 'featured_image_url' : 'banner_image_url']: publicUrl }))
       setHasChanges(true)
+      setAutoSaveStatus('idle')
     } catch (err) {
-      console.error('Error uploading image:', err)
-      alert('Failed to upload image. Make sure the blog-images bucket exists.')
+      setUploadError(err instanceof Error ? err.message : 'Failed to upload image. Please try again.')
+    } finally {
+      setUploading(null)
+    }
+  }
+
+  const handleContentImageUpload = async (file: File) => {
+    setUploading('content')
+    try {
+      return await uploadBlogImage(file, 'content')
     } finally {
       setUploading(null)
     }
@@ -171,6 +178,7 @@ const BlogEditor = () => {
 
   const handleSubmit = async (e: React.FormEvent, publishNow = false) => {
     e.preventDefault()
+    if (uploading) return
     setSaving(true)
     try {
       const scheduledDate = form.scheduled_at ? new Date(form.scheduled_at).toISOString() : undefined
@@ -194,7 +202,7 @@ const BlogEditor = () => {
   }
 
   const handleAutoSave = async () => {
-    if (!isEditing || saving) return
+    if (!isEditing || saving || uploading) return
     const currentStr = JSON.stringify(form)
     if (currentStr === lastSavedRef.current) return
     setAutoSaveStatus('saving')
@@ -252,12 +260,12 @@ const BlogEditor = () => {
               {preview ? 'Edit' : 'Preview'}
             </button>
             <button onClick={(e) => handleSubmit(e)}
-              disabled={saving || !form.title || !form.content}
+              disabled={saving || Boolean(uploading) || !form.title || !form.content}
               className="px-3 py-1.5 bg-neutral-700 text-white text-xs hover:bg-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
               {saving ? 'Saving...' : 'Save Draft'}
             </button>
             <button onClick={(e) => handleSubmit(e, true)}
-              disabled={saving || !form.title || !form.content}
+              disabled={saving || Boolean(uploading) || !form.title || !form.content}
               className="px-3 py-1.5 bg-[#bb9457] text-black text-xs font-semibold hover:bg-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
               {saving ? 'Publishing...' : 'Publish'}
             </button>
@@ -266,6 +274,7 @@ const BlogEditor = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {uploadError && <p role="alert" className="mb-4 text-sm text-red-400">{uploadError}</p>}
         {preview ? (
           /* Preview Mode */
           <article className="max-w-3xl mx-auto">
@@ -279,7 +288,7 @@ const BlogEditor = () => {
           </article>
         ) : (
           /* Edit Mode */
-          <form className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <form onSubmit={e => e.preventDefault()} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-5">
               {/* Title */}
@@ -309,6 +318,8 @@ const BlogEditor = () => {
                 <RichTextEditor
                   content={form.content}
                   onChange={handleContentChange}
+                  onImageUpload={handleContentImageUpload}
+                  imageUploadDisabled={Boolean(uploading) || saving}
                   placeholder="Start writing your blog post... Use the toolbar above to format text, insert headings, lists, links, and images."
                 />
                 <div className="flex items-center justify-between text-[10px] text-neutral-600 mt-2 px-1">
@@ -320,11 +331,15 @@ const BlogEditor = () => {
               {/* Banner Image */}
               <div>
                 <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Banner Image (Article Header)</label>
-                <input ref={bannerInputRef} type="file" accept="image/*" className="hidden"
-                  onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0], 'banner')} />
+                <input ref={bannerInputRef} type="file" accept={BLOG_IMAGE_ACCEPT} className="hidden"
+                  onChange={e => {
+                    const file = e.target.files?.[0]
+                    e.target.value = ''
+                    if (file) void handleImageUpload(file, 'banner')
+                  }} />
                 <div className="flex items-center gap-4">
                   {form.banner_image_url && <img src={form.banner_image_url} alt="" className="h-16 w-24 object-cover" />}
-                  <button type="button" onClick={() => bannerInputRef.current?.click()} disabled={uploading === 'banner'}
+                  <button type="button" onClick={() => bannerInputRef.current?.click()} disabled={Boolean(uploading) || saving}
                     className="px-3 py-1.5 bg-neutral-800 text-xs hover:bg-neutral-700 disabled:opacity-50 transition-colors">
                     {uploading === 'banner' ? 'Uploading...' : form.banner_image_url ? 'Replace Banner' : 'Upload Banner'}
                   </button>
@@ -334,11 +349,15 @@ const BlogEditor = () => {
               {/* Featured Image */}
               <div>
                 <label className="block text-xs text-neutral-500 uppercase tracking-wider mb-2">Featured Image (Card Thumbnail)</label>
-                <input ref={featuredInputRef} type="file" accept="image/*" className="hidden"
-                  onChange={e => e.target.files?.[0] && handleImageUpload(e.target.files[0], 'featured')} />
+                <input ref={featuredInputRef} type="file" accept={BLOG_IMAGE_ACCEPT} className="hidden"
+                  onChange={e => {
+                    const file = e.target.files?.[0]
+                    e.target.value = ''
+                    if (file) void handleImageUpload(file, 'featured')
+                  }} />
                 <div className="flex items-center gap-4">
                   {form.featured_image_url && <img src={form.featured_image_url} alt="" className="h-16 w-16 object-cover" />}
-                  <button type="button" onClick={() => featuredInputRef.current?.click()} disabled={uploading === 'featured'}
+                  <button type="button" onClick={() => featuredInputRef.current?.click()} disabled={Boolean(uploading) || saving}
                     className="px-3 py-1.5 bg-neutral-800 text-xs hover:bg-neutral-700 disabled:opacity-50 transition-colors">
                     {uploading === 'featured' ? 'Uploading...' : form.featured_image_url ? 'Replace Image' : 'Upload Image'}
                   </button>

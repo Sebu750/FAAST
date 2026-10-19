@@ -6,10 +6,10 @@ import hero2 from '../assets/home-hero-runway.webp'
 import hero3 from '../assets/home-hero-craft.webp'
 import heroRunwayCta from '../assets/home-cta-runway.webp'
 import heritageCraft from '../assets/home-heritage-craft.webp'
-import designer1 from '../assets/home-designer-portrait-1.webp'
-import designer2 from '../assets/home-designer-portrait-2.webp'
-import designer3 from '../assets/home-designer-portrait-3.webp'
-import fabricInnovation from '../assets/home-fabric-innovation.webp'
+import HeritageReimagined from '../assets/4.1.png'
+import ModernCouture from '../assets/Sculptural burgundy Pakistani couture gown.png'
+import ContemporaryReadyToWear from '../assets/Ivory Sculptural Couture in Sandstone Light.png'
+import ArtisanAccessories   from '../assets/Pakistani artisan luxury in wine and gold.png'
 import karachiStudio from '../assets/coworking-studio-1.webp'
 import lahoreStudio from '../assets/coworking-studio-2.webp'
 import islamabadStudio from '../assets/coworking-studio-3.webp'
@@ -310,10 +310,12 @@ const Home = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             {[
-              { category: "Contemporary Womenswear", description: "Modern silhouettes rooted in Pakistani sensibility.", image: designer1 },
-              { category: "Streetwear", description: "Urban narratives from Karachi, Lahore, Islamabad.", image: designer2 },
-              { category: "Heritage Fashion", description: "Traditional craft reimagined for contemporary audiences.", image: designer3 },
-              { category: "Fabric Innovation", description: "Sustainable materials, experimental techniques.", image: fabricInnovation }
+              { category: "Heritage Reimagined", description: "Contemporary silhouettes featuring Pakistani embroidery, handwoven textiles, and traditional craft.", image: ModernCouture },
+              { category: "Modern Couture", description: "A model in a sculptural couture gown with dramatic volume and delicate handcrafted embellishments, captured in a refined fashion editorial.", image: ContemporaryReadyToWear },
+              { category: "Contemporary Ready-to-Wear", description: "Refined, wearable collections combining cultural identity with modern tailoring.", image: HeritageReimagined },
+              { category: "Artisan Accessories", description: "Distinctive bags, jewellery, and footwear crafted using local techniques.", image: ArtisanAccessories
+              
+               }
             ].map((d, idx) => (
               <div key={idx} className={`group aspect-[3/4] overflow-hidden rounded-sm bg-neutral-50 border border-neutral-200 hover:border-[#bb9457]/50 transition-all duration-700 hover-lift ${isVisible['for-designers'] ? 'animate-fade-in-up' : 'opacity-0 translate-y-[60px]'}`} style={{ transitionDelay: `${idx * 100}ms` }}>
                 <div className="relative w-full h-full">
